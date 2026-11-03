@@ -76,8 +76,11 @@ The independent [optimization workspace](optimization/README.md) contains
 cached-endpoint, exact-pruning and high-word-first CUDA candidates. They compile
 and pass the 14 existing CPU groups plus eight new groups, with 21,904 high-word
 cases checked against Python and shared row routines checked under ASan/UBSan.
-These CPU results do not establish GPU correctness or performance. No GPU
-speedup is claimed yet. The production baseline remains unchanged.
+The subsequent GPU validation passed all 22 groups. In a single three-region
+benchmark at B=1 million, the high-word variant reduced aggregate search time
+from 1.229287 s to 0.750744 s (about 1.64x); this is not a guaranteed larger-bound
+speedup. The production baseline remains unchanged. See
+[measured timings](results/gpu-optimization-benchmark.json).
 
 When the production GPU is idle, use a normal GPU-visible terminal:
 
@@ -104,3 +107,12 @@ Refresh local result summaries with `python3 scripts/export_results.py` and chec
 the staged repository with `python3 scripts/check_repository.py`. The latter
 checks known credential patterns and generated/binary/large files; it is a
 focused review aid, not a guarantee to recognize every possible secret.
+
+## Beyond 35 million and detached jobs
+
+The separate [192-bit extension](extended/README.md) supports larger exact powers
+and a launcher independent of this chat or the launching terminal. Its CPU and
+detachment checks pass; its new GPU binary still requires device validation.
+The concrete pending proposal is B=70 million with one GPU and a four-hour cap.
+No extended long job has started. Read the resource estimates and validation
+steps before explicitly approving the launch.

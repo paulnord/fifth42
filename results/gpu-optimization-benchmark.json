@@ -1,0 +1,146 @@
+{
+  "bound": 1000000,
+  "coverage_note": "Overlapping sample row ranges; not a complete box search.",
+  "complete": true,
+  "timings": {
+    "reference": {
+      "search_seconds": 1.229287,
+      "wall_seconds": 2.056978590786457
+    },
+    "cached": {
+      "search_seconds": 1.064755,
+      "wall_seconds": 1.8723991885781288
+    },
+    "pruned": {
+      "search_seconds": 1.058048,
+      "wall_seconds": 1.7705018436536193
+    },
+    "highword": {
+      "search_seconds": 0.7507440000000001,
+      "wall_seconds": 1.5620960029773414
+    }
+  },
+  "kernel_speedup_reference_over_highword": 1.6374250077256693,
+  "samples": [
+    {
+      "region": "negative_edge",
+      "variant": "reference",
+      "block_size": 128,
+      "wall_seconds": 0.6231282660737634,
+      "row_start": 0,
+      "row_stop": 65536,
+      "steps": 59578187776,
+      "search_seconds": 0.386289
+    },
+    {
+      "region": "negative_edge",
+      "variant": "cached",
+      "block_size": 128,
+      "wall_seconds": 0.6363694691099226,
+      "row_start": 0,
+      "row_stop": 65536,
+      "steps": 59578187776,
+      "search_seconds": 0.349317
+    },
+    {
+      "region": "negative_edge",
+      "variant": "pruned",
+      "block_size": 128,
+      "wall_seconds": 0.5862223468720913,
+      "row_start": 0,
+      "row_stop": 65536,
+      "steps": 57518458606,
+      "search_seconds": 0.350042
+    },
+    {
+      "region": "negative_edge",
+      "variant": "highword",
+      "block_size": 128,
+      "wall_seconds": 0.5329707278870046,
+      "row_start": 0,
+      "row_stop": 65536,
+      "steps": 57518458606,
+      "search_seconds": 0.248879
+    },
+    {
+      "region": "middle",
+      "variant": "reference",
+      "block_size": 128,
+      "wall_seconds": 0.6046958048827946,
+      "row_start": 58141,
+      "row_stop": 123677,
+      "steps": 59578187776,
+      "search_seconds": 0.30874
+    },
+    {
+      "region": "middle",
+      "variant": "cached",
+      "block_size": 128,
+      "wall_seconds": 0.5903380652889609,
+      "row_start": 58141,
+      "row_stop": 123677,
+      "steps": 59578187776,
+      "search_seconds": 0.356181
+    },
+    {
+      "region": "middle",
+      "variant": "pruned",
+      "block_size": 128,
+      "wall_seconds": 0.5894770789891481,
+      "row_start": 58141,
+      "row_stop": 123677,
+      "steps": 59572009137,
+      "search_seconds": 0.353489
+    },
+    {
+      "region": "middle",
+      "variant": "highword",
+      "block_size": 128,
+      "wall_seconds": 0.5460811848752201,
+      "row_start": 58141,
+      "row_stop": 123677,
+      "steps": 59572009137,
+      "search_seconds": 0.258381
+    },
+    {
+      "region": "positive_edge",
+      "variant": "reference",
+      "block_size": 128,
+      "wall_seconds": 0.8291545198298991,
+      "row_start": 116283,
+      "row_stop": 181819,
+      "steps": 59578187776,
+      "search_seconds": 0.534258
+    },
+    {
+      "region": "positive_edge",
+      "variant": "cached",
+      "block_size": 128,
+      "wall_seconds": 0.6456916541792452,
+      "row_start": 116283,
+      "row_stop": 181819,
+      "steps": 59578187776,
+      "search_seconds": 0.359257
+    },
+    {
+      "region": "positive_edge",
+      "variant": "pruned",
+      "block_size": 128,
+      "wall_seconds": 0.5948024177923799,
+      "row_start": 116283,
+      "row_stop": 181819,
+      "steps": 57518661321,
+      "search_seconds": 0.354517
+    },
+    {
+      "region": "positive_edge",
+      "variant": "highword",
+      "block_size": 128,
+      "wall_seconds": 0.48304409021511674,
+      "row_start": 116283,
+      "row_stop": 181819,
+      "steps": 57518661321,
+      "search_seconds": 0.243484
+    }
+  ]
+}
