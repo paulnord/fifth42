@@ -128,3 +128,29 @@ python3 jobs.py start --bound 70000000 --hours 4 --approve \
 Do not edit/rebuild the extended sources or binaries during a job: fingerprint
 checks deliberately reject changed code. A partial prefix is not proof of the
 whole configured box. See the final status for the coverage actually completed.
+
+## Resuming an interrupted calibration
+
+Calibration keeps completed, validated samples when the source/binary fingerprint
+matches, and runs only missing regions. A new invocation has a fresh 30-second
+budget. No full GPU validation is repeated when the two passing reports still
+match; startup performs the saved-report check before deciding to run tests.
+
+The initial 30-second attempt saved the negative-edge and middle samples, then
+stopped before completing the positive edge. It did not launch the 70-million
+search. Their timing suggests that 70 million may exceed a four-hour budget.
+A more conservative proposed next bound is **50 million**, still beyond the
+completed 35-million box, with the same **four-hour maximum**. Data buffers are
+about **1.09 GB GPU** and **2.37 GB host**, plus runtime overhead. To explicitly
+approve that bound and cap while resuming calibration in the background:
+
+```bash
+bash ~/fifth42/extended/start_background.sh --bound 50000000 --hours 4
+```
+
+The positive-edge sample is measured first. The long job starts only if the
+completed calibration projects this chosen bound within the capped budget with
+reserve. The bound is never changed silently. This attempt's startup log is
+`runs/startup-B50000000.log`; its job directory is `runs/gpu-B50000000`. Use
+`python3 jobs.py status --job runs/gpu-B50000000` after the job starts. Closing
+the terminal or this chat does not stop the detached sequence.
