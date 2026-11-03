@@ -76,6 +76,20 @@ extends the budget or changes the bound.
 
 ## Independence from chat and terminal
 
+To put validation, calibration and the approved 70-million/four-hour launch in
+the background as one sequence, run from the normal Ada terminal:
+
+```bash
+bash ~/fifth42/extended/start_background.sh
+```
+
+It immediately prints a startup PID and log path. The startup shell uses nohup
+and a new OS session, checks for duplicate startup/job directories, validates
+with a five-minute timeout, then calibrates and launches only if every check
+passes. Startup output goes to `runs/startup-B70000000.log`; the search itself
+has its separate `runs/gpu-B70000000/search.log`. Failure is logged and does not
+start the long job. `--dry-run` displays the steps without consuming GPU time.
+
 Run the launcher **from the normal Ada terminal**, not the restricted agent
 environment. It creates a new OS session, closes terminal input, redirects output
 to an ordinary log, and returns immediately with the worker PID and log path.
