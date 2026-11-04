@@ -4,6 +4,12 @@ This directory is separate from the repository's three-fifth-powers search.
 It preserves the full reproduction bundle for
 `a^133 + b^133 + c^133 + d^133 = 42` and a plan for a bounded CPU benchmark on ADA.
 
+**Connector-readable files:** start with [text/README.md](text/README.md).
+The unpacked [source, proofs, and audit manifests](text/INVENTORY.json) are
+ordinary UTF-8 files that can be fetched individually through the GitHub
+connector when the archive or direct Git networking is unavailable. This
+subset does not include raw production logs, checkpoints, or executables.
+
 ## Completed result
 
 No four distinct signed integer bases in **[-4,000,000, 4,000,000]**, inclusive,
