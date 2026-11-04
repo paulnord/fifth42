@@ -1,9 +1,13 @@
 # Exact 192-bit extension and detached jobs
 
 This separate workspace extends the validated 35-million search. The production
-and optimization workspaces remain unchanged. No extended full-box GPU run has
-started. The parser accepts B<=100,000,000, but that arithmetic maximum is not an
-execution recommendation or an approval of a long run.
+and optimization workspaces remain unchanged. The overnight **B=70,000,000**
+GPU run completed with **no solutions** in the full signed box, exit code 0:
+12,727,273 rows in 195 chunks, 3h 7m 22s GPU search time and 3h 15m 38s total
+elapsed time, within an explicitly approved **eight-hour** cap. See
+[coverage and ADA hardware](../COVERAGE.md) and the compact
+[result](../results/gpu-B70000000.json). The parser accepts B<=100,000,000, but
+that arithmetic maximum is not an approval of another run.
 
 ## Arithmetic and validation
 
@@ -53,7 +57,11 @@ calibration then measures three 65,536-row samples at B=10 million with a total
 projection. It is not a full-box search. Incomplete timing returns nonzero;
 neither calibration nor tests launch a long job.
 
-## Proposed next search, pending approval
+## Original four-hour proposal (superseded)
+
+The planning and launch examples below describe the earlier four-hour proposal.
+The user subsequently approved eight hours for B=70 million; that job is now
+complete. The smaller 50-million proposal below was not launched.
 
 Proposed bound: **70,000,000**; resource/time limit: **one GPU for four hours**.
 Approximate data allocations at chunks of 65,536 rows: **1.53 GB VRAM buffers**
@@ -138,10 +146,10 @@ match; startup performs the saved-report check before deciding to run tests.
 
 The initial 30-second attempt saved the negative-edge and middle samples, then
 stopped before completing the positive edge. It did not launch the 70-million
-search. Their timing suggests that 70 million may exceed a four-hour budget.
-A more conservative proposed next bound is **50 million**, still beyond the
-completed 35-million box, with the same **four-hour maximum**. Data buffers are
-about **1.09 GB GPU** and **2.37 GB host**, plus runtime overhead. To explicitly
+search. At that point, the timings suggested that 70 million might exceed four
+hours, and a smaller **50-million** bound was proposed with a **four-hour cap**.
+That proposal was superseded by the completed 70-million/eight-hour job. Data
+buffers are about **1.09 GB GPU** and **2.37 GB host**, plus runtime overhead. To explicitly
 approve that bound and cap while resuming calibration in the background:
 
 ```bash

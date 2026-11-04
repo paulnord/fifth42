@@ -6,13 +6,19 @@ Exact CPU and CUDA searches for integer solutions of
 x^5 + y^5 + z^5 = 42
 ```
 
-**Result:** no solutions with all three absolute values at most **35,000,000**.
-The full signed box was completed on an RTX 3080 Ti using exact arithmetic:
-6,363,637 canonical z rows, 202,479,360,247,934 two-pointer steps, 45.8 minutes
-of GPU search time and 47.6 minutes of engine wall time. This is a finite-box
-result, not a proof of nonexistence for arbitrary integers.
+**Result:** no solutions with all three absolute values at most **70,000,000**.
+The overnight GPU job completed the full signed box on November 3, 2026 (CST),
+using exact 192-bit arithmetic: 12,727,273 canonical z rows in 195 chunks and
+789,730,204,184,468 two-pointer steps. GPU search time was 3h 7m 22s; total job
+elapsed time was 3h 15m 38s, within the approved eight-hour cap. This is a
+finite-box result, not a proof of nonexistence for arbitrary integers.
 
-See [coverage](COVERAGE.md) and the compact [results](results/coverage.json).
+ADA hardware: AMD Ryzen 9 5950X, 16 physical cores / 32 logical CPUs,
+121.44 GiB OS-visible RAM (130,392,805,376 bytes), and NVIDIA GeForce RTX 3080 Ti.
+
+See [coverage and timings](COVERAGE.md), the compact
+[70-million result](results/gpu-B70000000.json), and
+[earlier baseline results](results/coverage.json).
 All development and searches used Ada at Valparaiso; no BNL resources were used.
 
 ## Build and validate
@@ -44,9 +50,9 @@ residues must be a permutation of (0,-1,-1). Assign z the unique multiple of 11
 and order the remaining variables a<=b. Their allowed residues modulo 11 are
 2,6,7,8,10, including normalized residues for negative integers.
 
-For each z, a monotone two-pointer search finds all pairs in the sorted fifth-
-power table. CPU arithmetic uses signed `__int128`; GPU arithmetic uses two
-unsigned 64-bit limbs. Every candidate is checked independently with Python
+In the baseline workspace, a monotone two-pointer search at each z finds all
+pairs in the sorted fifth-power table. CPU arithmetic uses signed `__int128`;
+GPU arithmetic uses two unsigned 64-bit limbs. Every candidate is checked independently with Python
 integers before its chunk counts as covered. There are no floating-point roots.
 At the enforced maximum B=35,000,000, `3*B^5 + 2^63 < 2^127` bounds all actual
 intermediates. Bounds above that maximum are rejected.
@@ -111,8 +117,7 @@ focused review aid, not a guarantee to recognize every possible secret.
 ## Beyond 35 million and detached jobs
 
 The separate [192-bit extension](extended/README.md) supports larger exact powers
-and a launcher independent of this chat or the launching terminal. Its CPU and
-detachment checks pass; its new GPU binary still requires device validation.
-The concrete pending proposal is B=70 million with one GPU and a four-hour cap.
-No extended long job has started. Read the resource estimates and validation
-steps before explicitly approving the launch.
+and a launcher independent of this chat or the launching terminal. Its CPU,
+GPU and detachment checks passed. The completed B=70 million run used this
+extension on one GPU with an approved eight-hour cap. No further search was
+started for this status update.
