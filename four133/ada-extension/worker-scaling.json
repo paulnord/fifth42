@@ -1,0 +1,97 @@
+{
+  "source_commit": "6160c2f765c3898cb328968ad823dd13badd0ddd",
+  "bound": 4000000,
+  "previous_bound": 3000000,
+  "branch": "31pos",
+  "modulus": 2305843009213693921,
+  "normalized_sum": 4206972,
+  "source_sha256": "30365331b8f9e0cde8471b843c3ca38b695417d8dfc8c4c9df25cd0fee968f24",
+  "binary_sha256": "a603c9df51b42c33c53cd58c7dd1d55d0d9fa4ea121eae6c5a6991db5458fc01",
+  "driver_sha256": "df9dfc7b436cc8fba38c2b40c07df463193d759921f8f8d5e9a26838adce9571",
+  "benchmark_sha256": "ca38a5ba02657f9b74e950313a368290f01fa9935b2145738c74d4d3234c8360",
+  "chunks": 128,
+  "gap_checkpoints": 2048,
+  "gaps_per_chunk": 16,
+  "work_sha256": "910a8046ebc7e8c859f23d0eec38dd6522e18591e162f4d5234bdb83bffc08cf",
+  "independent_expected_pair_counts": {
+    "left": 188667691,
+    "right": 99295472
+  },
+  "memory_measurement": "20 ms sampled sum of coordinator and active search-process VmRSS; shared pages may be counted more than once.",
+  "repeats": 3,
+  "summaries": [
+    {
+      "workers": 1,
+      "wall_seconds": [
+        30.406453454867005,
+        30.7696938989684,
+        30.801818943116814
+      ],
+      "median_wall_seconds": 30.7696938989684,
+      "speedup_over_one": 1.0,
+      "child_cpu_seconds": [
+        30.316548,
+        30.675241999999912,
+        30.711551999999926
+      ],
+      "peak_combined_rss_mib": 75.91796875,
+      "max_live_children": 1
+    },
+    {
+      "workers": 8,
+      "wall_seconds": [
+        4.516130757052451,
+        4.569138725753874,
+        4.572947662323713
+      ],
+      "median_wall_seconds": 4.569138725753874,
+      "speedup_over_one": 6.734243748287951,
+      "child_cpu_seconds": [
+        35.815278000000006,
+        36.05467600000003,
+        36.26724300000001
+      ],
+      "peak_combined_rss_mib": 341.5625,
+      "max_live_children": 8
+    },
+    {
+      "workers": 16,
+      "wall_seconds": [
+        2.8375293309800327,
+        2.841403463855386,
+        2.8607546729035676
+      ],
+      "median_wall_seconds": 2.841403463855386,
+      "speedup_over_one": 10.829047789368934,
+      "child_cpu_seconds": [
+        44.490173,
+        44.164017,
+        44.969819000000086
+      ],
+      "peak_combined_rss_mib": 640.96484375,
+      "max_live_children": 16
+    },
+    {
+      "workers": 32,
+      "wall_seconds": [
+        3.0946497758850455,
+        3.104382994584739,
+        3.1031840345822275
+      ],
+      "median_wall_seconds": 3.1031840345822275,
+      "speedup_over_one": 9.91552339663633,
+      "child_cpu_seconds": [
+        93.37001299999999,
+        92.80479100000002,
+        93.56139500000006
+      ],
+      "peak_combined_rss_mib": 1226.72265625,
+      "max_live_children": 32
+    }
+  ],
+  "suggested_workers": 16,
+  "selection_rule": "Fewest workers within 5 percent of the best median; no production configuration changed.",
+  "all_counts_and_candidates_sha256": [
+    "27c7629e766b4fc65e5c544f4abc23b1330aea6dad5e88c96afd40e0b9dd7546"
+  ]
+}

@@ -1,0 +1,282 @@
+{
+  "bound": 10800000,
+  "previous_bound": 4000000,
+  "workers": 16,
+  "budget_seconds": 28800,
+  "chunk_size": 1024,
+  "moduli": [
+    2305843009213693921,
+    2305843009213693951
+  ],
+  "case_count": 15,
+  "cases": [
+    {
+      "pattern": "31",
+      "S": 21034608,
+      "sign": -1,
+      "H": 160000
+    },
+    {
+      "pattern": "31",
+      "S": 16827678,
+      "sign": -1,
+      "H": 160000
+    },
+    {
+      "pattern": "31",
+      "S": 12620748,
+      "sign": -1,
+      "H": 160000
+    },
+    {
+      "pattern": "22",
+      "S": 8413818,
+      "sign": -1,
+      "H": 1173374
+    },
+    {
+      "pattern": "31",
+      "S": 8413818,
+      "sign": -1,
+      "H": 128455
+    },
+    {
+      "pattern": "22",
+      "S": 4206888,
+      "sign": -1,
+      "H": 829698
+    },
+    {
+      "pattern": "31",
+      "S": 4206888,
+      "sign": -1,
+      "H": 64227
+    },
+    {
+      "pattern": "22",
+      "S": 42,
+      "sign": 1,
+      "H": 2621
+    },
+    {
+      "pattern": "22",
+      "S": 4206972,
+      "sign": 1,
+      "H": 829706
+    },
+    {
+      "pattern": "31",
+      "S": 4206972,
+      "sign": 1,
+      "H": 64228
+    },
+    {
+      "pattern": "22",
+      "S": 8413902,
+      "sign": 1,
+      "H": 1173379
+    },
+    {
+      "pattern": "31",
+      "S": 8413902,
+      "sign": 1,
+      "H": 128456
+    },
+    {
+      "pattern": "31",
+      "S": 12620832,
+      "sign": 1,
+      "H": 159999
+    },
+    {
+      "pattern": "31",
+      "S": 16827762,
+      "sign": 1,
+      "H": 159999
+    },
+    {
+      "pattern": "31",
+      "S": 21034692,
+      "sign": 1,
+      "H": 159999
+    }
+  ],
+  "expected_gap_cases": 10708282,
+  "expected_chunks": 10474,
+  "expected_totals": {
+    "left": 1551177189786,
+    "right": 1664859459634
+  },
+  "predicted_seconds": 26540.541178147505,
+  "calibration": "calibration/B10800000/results.json",
+  "calibration_sha256": "e86dad2321f65c913a219780289ca07277b7d8be85f9b36b9f7d361874e89143",
+  "code": {
+    "run.py": "47ce87793231cc029f347e228141a1f44a73dd4c871d92dad50f3cc4feb77023",
+    "math133.py": "5466da377bcf8082c24baad6fc16c910a891ef9f624bf17c7afce3af908834a2",
+    "audit.py": "7036df2caca330ff52829e47ebee6c39989c2ca22725a794f7288fe802656705",
+    "src/search.cpp": "46c7824e38320f6dbe2e844a80d1edcf7e489fe61b9124936563953e1f58bc32",
+    "PROOF.md": "e4ea43d45676a9dbaf5317b0f11604d56300e76858795945281bb8cde382b556",
+    "search": "601f3dfd8140d01b52f6437cab4af1901ecd674e74ffe322629b5b3d5ccd3970"
+  },
+  "status": "ready; production not started",
+  "cpu_model": "AMD Ryzen 9 5950X",
+  "physical_cores": 16,
+  "hardware_threads": 32,
+  "ram_bytes": 130392805376,
+  "predictions": [
+    {
+      "case": "31_s-21034608",
+      "H": 160000,
+      "expected_left_per_modulus": 1263837238,
+      "expected_right_per_modulus": 1263854357,
+      "sample_entries": 6085112,
+      "sample_compute_seconds": 0.35771499999999995,
+      "predicted_child_wall_seconds": 422.73594773788125,
+      "method": "stratified per-case calibration"
+    },
+    {
+      "case": "31_s-16827678",
+      "H": 160000,
+      "expected_left_per_modulus": 17603333647,
+      "expected_right_per_modulus": 17603786095,
+      "sample_entries": 84722468,
+      "sample_compute_seconds": 8.923112,
+      "predicted_child_wall_seconds": 7542.563312259575,
+      "method": "stratified per-case calibration"
+    },
+    {
+      "case": "31_s-12620748",
+      "H": 160000,
+      "expected_left_per_modulus": 33943719373,
+      "expected_right_per_modulus": 33943735261,
+      "sample_entries": 162859434,
+      "sample_compute_seconds": 18.606394,
+      "predicted_child_wall_seconds": 15633.184648950817,
+      "method": "stratified per-case calibration"
+    },
+    {
+      "case": "22_s-8413818",
+      "H": 1173374,
+      "expected_left_per_modulus": 69092433002,
+      "expected_right_per_modulus": 69090837718,
+      "sample_entries": 45147000,
+      "sample_compute_seconds": 5.0228,
+      "predicted_child_wall_seconds": 31582.26180401462,
+      "method": "stratified per-case calibration"
+    },
+    {
+      "case": "31_s-8413818",
+      "H": 128455,
+      "expected_left_per_modulus": 26437497605,
+      "expected_right_per_modulus": 40518108676,
+      "sample_entries": 200176928,
+      "sample_compute_seconds": 25.697343,
+      "predicted_child_wall_seconds": 17282.87104156347,
+      "method": "stratified per-case calibration"
+    },
+    {
+      "case": "22_s-4206888",
+      "H": 829698,
+      "expected_left_per_modulus": 232163434142,
+      "expected_right_per_modulus": 232163231771,
+      "sample_entries": 212243190,
+      "sample_compute_seconds": 28.028955000000003,
+      "predicted_child_wall_seconds": 131561.4850833753,
+      "method": "full-size dominant-case chunk calibration"
+    },
+    {
+      "case": "31_s-4206888",
+      "H": 64227,
+      "expected_left_per_modulus": 6608956402,
+      "expected_right_per_modulus": 21204806559,
+      "sample_entries": 167985604,
+      "sample_compute_seconds": 21.680895,
+      "predicted_child_wall_seconds": 7225.762683511247,
+      "method": "stratified per-case calibration"
+    },
+    {
+      "case": "22_s42",
+      "H": 2621,
+      "expected_left_per_modulus": 1375653170,
+      "expected_right_per_modulus": 865312600,
+      "sample_entries": 327520026,
+      "sample_compute_seconds": 44.932544,
+      "predicted_child_wall_seconds": 617.1502142316542,
+      "method": "stratified per-case calibration"
+    },
+    {
+      "case": "22_s4206972",
+      "H": 829706,
+      "expected_left_per_modulus": 232159966065,
+      "expected_right_per_modulus": 232160337589,
+      "sample_entries": 213442166,
+      "sample_compute_seconds": 30.044984,
+      "predicted_child_wall_seconds": 131150.03431299166,
+      "method": "full-size dominant-case chunk calibration"
+    },
+    {
+      "case": "31_s4206972",
+      "H": 64228,
+      "expected_left_per_modulus": 6609732101,
+      "expected_right_per_modulus": 21203980681,
+      "sample_entries": 163486220,
+      "sample_compute_seconds": 21.220645,
+      "predicted_child_wall_seconds": 7267.368336591208,
+      "method": "stratified per-case calibration"
+    },
+    {
+      "case": "22_s8413902",
+      "H": 1173379,
+      "expected_left_per_modulus": 69084199555,
+      "expected_right_per_modulus": 69086274854,
+      "sample_entries": 44917428,
+      "sample_compute_seconds": 5.174466,
+      "predicted_child_wall_seconds": 32683.843388666275,
+      "method": "stratified per-case calibration"
+    },
+    {
+      "case": "31_s8413902",
+      "H": 128456,
+      "expected_left_per_modulus": 26436428679,
+      "expected_right_per_modulus": 40516035096,
+      "sample_entries": 198505504,
+      "sample_compute_seconds": 23.898959,
+      "predicted_child_wall_seconds": 16213.448033695422,
+      "method": "stratified per-case calibration"
+    },
+    {
+      "case": "31_s12620832",
+      "H": 159999,
+      "expected_left_per_modulus": 33942471518,
+      "expected_right_per_modulus": 33942726195,
+      "sample_entries": 160790792,
+      "sample_compute_seconds": 20.275336,
+      "predicted_child_wall_seconds": 17232.477252656998,
+      "method": "stratified per-case calibration"
+    },
+    {
+      "case": "31_s16827762",
+      "H": 159999,
+      "expected_left_per_modulus": 17603404933,
+      "expected_right_per_modulus": 17603148989,
+      "sample_entries": 84480382,
+      "sample_compute_seconds": 9.274365,
+      "predicted_child_wall_seconds": 7846.229660598335,
+      "method": "stratified per-case calibration"
+    },
+    {
+      "case": "31_s21034692",
+      "H": 159999,
+      "expected_left_per_modulus": 1263527463,
+      "expected_right_per_modulus": 1263553376,
+      "sample_entries": 6033060,
+      "sample_compute_seconds": 0.330477,
+      "predicted_child_wall_seconds": 387.2431295156398,
+      "method": "stratified per-case calibration"
+    }
+  ],
+  "long_chunk_calibration": "calibration/B10800000-long-chunks/results.json",
+  "long_chunk_calibration_sha256": "424de2fb4b498ecbde186c325c7c63c1ed759d35a592fca25e558eeda570ba05",
+  "calibration_peak_combined_rss_mib": 1631.3515625,
+  "prediction_method": "Measured per-case child wall cost scaled by exact independent entry counts, including table setup per 1024-gap chunk; divided by 16 workers. Coordinator reconciliation and scheduling add overhead."
+}
