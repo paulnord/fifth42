@@ -1,0 +1,1886 @@
+{
+  "status": "passed",
+  "experiment": "certified-width-sweep",
+  "workers": 16,
+  "bounds": [
+    8000,
+    32000
+  ],
+  "widths": [
+    2,
+    4,
+    8
+  ],
+  "repeats": 5,
+  "packing": "optimized",
+  "bits": 48,
+  "fresh_geometry_every_timed_variant": true,
+  "host_only": false,
+  "cases": [
+    {
+      "regime": "persistent_engines",
+      "host_workers": 16,
+      "bound": 8000,
+      "width": 2,
+      "complete": true,
+      "status": "passed",
+      "samples": {
+        "cpu": [
+          {
+            "repeat": 1,
+            "request_wall_seconds": 0.01064459799999895,
+            "output_verification_seconds": 0.0009617050000088057,
+            "engine_seconds": 0.00623915,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.1179561549997743,
+            "certificate_seconds": 0.09798176699951,
+            "packing_seconds": 0.09314567699948384,
+            "total_preparation_seconds": 0.30908359899876814,
+            "end_to_end_seconds": 0.3206899019987759,
+            "result_file": "trials/persistent_engines-B8000-W2-R1-cpu.json",
+            "sha256": "acb50a4c3d8a907801095dff0eba29efdba1257664ed9ff7314643646c332f5f"
+          },
+          {
+            "repeat": 2,
+            "request_wall_seconds": 0.010115504999703262,
+            "output_verification_seconds": 0.0008566790002078051,
+            "engine_seconds": 0.00594821,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.12301876099991205,
+            "certificate_seconds": 0.1151463780006452,
+            "packing_seconds": 0.10023532900049759,
+            "total_preparation_seconds": 0.33840046800105483,
+            "end_to_end_seconds": 0.3493726520009659,
+            "result_file": "trials/persistent_engines-B8000-W2-R2-cpu.json",
+            "sha256": "23bc32afa71f14518134e6d2a91931b5ef02219b2d47dd3088f04dad006a124f"
+          },
+          {
+            "repeat": 3,
+            "request_wall_seconds": 0.010410347998913494,
+            "output_verification_seconds": 0.0009012219998112414,
+            "engine_seconds": 0.00607779,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.10650205599995388,
+            "certificate_seconds": 0.09834967700044217,
+            "packing_seconds": 0.09775829699901806,
+            "total_preparation_seconds": 0.3026100299994141,
+            "end_to_end_seconds": 0.31392159999813884,
+            "result_file": "trials/persistent_engines-B8000-W2-R3-cpu.json",
+            "sha256": "6bec8991b22a8d92ed67fd656b6a0b38bd1c3613f3a0f0aae7360076ba95ab25"
+          },
+          {
+            "repeat": 4,
+            "request_wall_seconds": 0.010098143000504933,
+            "output_verification_seconds": 0.000955153998802416,
+            "engine_seconds": 0.00612034,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.1173397370002931,
+            "certificate_seconds": 0.10330645599970012,
+            "packing_seconds": 0.09887839099974371,
+            "total_preparation_seconds": 0.31952458399973693,
+            "end_to_end_seconds": 0.3305778809990443,
+            "result_file": "trials/persistent_engines-B8000-W2-R4-cpu.json",
+            "sha256": "b2e35fe4cb9274c35d72e45766e1ece445ee439ef725088b1bdce5ba0e29aef2"
+          },
+          {
+            "repeat": 5,
+            "request_wall_seconds": 0.010361036000176682,
+            "output_verification_seconds": 0.0009064319983735913,
+            "engine_seconds": 0.0060893,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.10743167200052994,
+            "certificate_seconds": 0.11720112700095342,
+            "packing_seconds": 0.09746428499965987,
+            "total_preparation_seconds": 0.32209708400114323,
+            "end_to_end_seconds": 0.3333645519996935,
+            "result_file": "trials/persistent_engines-B8000-W2-R5-cpu.json",
+            "sha256": "c48d9d077c739049a44e8906f2ac7ae356835b4684662b30801e0f08568b6f8f"
+          }
+        ],
+        "cuda": [
+          {
+            "repeat": 1,
+            "request_wall_seconds": 0.007442345000526984,
+            "output_verification_seconds": 0.0009472780002397485,
+            "engine_seconds": 0.00347608,
+            "kernel_seconds": 0.000262144,
+            "prepare_seconds": 0.1179561549997743,
+            "certificate_seconds": 0.09798176699951,
+            "packing_seconds": 0.09314567699948384,
+            "total_preparation_seconds": 0.30908359899876814,
+            "end_to_end_seconds": 0.31747322199953487,
+            "result_file": "trials/persistent_engines-B8000-W2-R1-cuda.json",
+            "sha256": "3f2fef86086f88494336edc4881e7df554f6b340c077d3f11ecb800c8a9a50ce"
+          },
+          {
+            "repeat": 2,
+            "request_wall_seconds": 0.007250163998833159,
+            "output_verification_seconds": 0.0009450140005355934,
+            "engine_seconds": 0.00319672,
+            "kernel_seconds": 0.000267264,
+            "prepare_seconds": 0.12301876099991205,
+            "certificate_seconds": 0.1151463780006452,
+            "packing_seconds": 0.10023532900049759,
+            "total_preparation_seconds": 0.33840046800105483,
+            "end_to_end_seconds": 0.3465956460004236,
+            "result_file": "trials/persistent_engines-B8000-W2-R2-cuda.json",
+            "sha256": "22863e262d0753e00d51c27a6ed44b04b3f49f25e1ed8cd1475e86a8dffd2b16"
+          },
+          {
+            "repeat": 3,
+            "request_wall_seconds": 0.007800608000252396,
+            "output_verification_seconds": 0.0009174120004900033,
+            "engine_seconds": 0.00345786,
+            "kernel_seconds": 0.000267072,
+            "prepare_seconds": 0.10650205599995388,
+            "certificate_seconds": 0.09834967700044217,
+            "packing_seconds": 0.09775829699901806,
+            "total_preparation_seconds": 0.3026100299994141,
+            "end_to_end_seconds": 0.3113280500001565,
+            "result_file": "trials/persistent_engines-B8000-W2-R3-cuda.json",
+            "sha256": "24b6d54e129f3be84d4eee9ed5eebc62d18c9bb1ed022599032de93d53ddea99"
+          },
+          {
+            "repeat": 4,
+            "request_wall_seconds": 0.00731773100051214,
+            "output_verification_seconds": 0.0009790589992917376,
+            "engine_seconds": 0.00321647,
+            "kernel_seconds": 0.000268288,
+            "prepare_seconds": 0.1173397370002931,
+            "certificate_seconds": 0.10330645599970012,
+            "packing_seconds": 0.09887839099974371,
+            "total_preparation_seconds": 0.31952458399973693,
+            "end_to_end_seconds": 0.3278213739995408,
+            "result_file": "trials/persistent_engines-B8000-W2-R4-cuda.json",
+            "sha256": "63df08b7a56b5b0be6e80eb6851264fa9044651ae36a85862687675cc9870bce"
+          },
+          {
+            "repeat": 5,
+            "request_wall_seconds": 0.0071676089992251946,
+            "output_verification_seconds": 0.0009285140004067216,
+            "engine_seconds": 0.00319333,
+            "kernel_seconds": 0.000271392,
+            "prepare_seconds": 0.10743167200052994,
+            "certificate_seconds": 0.11720112700095342,
+            "packing_seconds": 0.09746428499965987,
+            "total_preparation_seconds": 0.32209708400114323,
+            "end_to_end_seconds": 0.33019320700077515,
+            "result_file": "trials/persistent_engines-B8000-W2-R5-cuda.json",
+            "sha256": "4652e6b0668bce7f5cd5fe0d93dfc2b2ab22ce9af3952d8dec3636a7e01d7741"
+          }
+        ]
+      },
+      "identity": {
+        "certificate_sha256": "e88dd23ee4cc35fb4e43f64363c1a8acca3f4f148ef2dcaf928380ca7427fd5f",
+        "tasks": 3690,
+        "points": 6644070,
+        "packets": [
+          "56cbb3fa047a250a5a3134bb9597eb95b853269baa823a463d9f983e246bfc3c"
+        ]
+      },
+      "medians": {
+        "cpu": {
+          "request_wall_seconds": 0.010361036000176682,
+          "output_verification_seconds": 0.0009064319983735913,
+          "engine_seconds": 0.0060893,
+          "kernel_seconds": 0.0,
+          "prepare_seconds": 0.1173397370002931,
+          "certificate_seconds": 0.10330645599970012,
+          "packing_seconds": 0.09775829699901806,
+          "total_preparation_seconds": 0.31952458399973693,
+          "end_to_end_seconds": 0.3305778809990443
+        },
+        "cuda": {
+          "request_wall_seconds": 0.00731773100051214,
+          "output_verification_seconds": 0.0009450140005355934,
+          "engine_seconds": 0.00321647,
+          "kernel_seconds": 0.000267264,
+          "prepare_seconds": 0.1173397370002931,
+          "certificate_seconds": 0.10330645599970012,
+          "packing_seconds": 0.09775829699901806,
+          "total_preparation_seconds": 0.31952458399973693,
+          "end_to_end_seconds": 0.3278213739995408
+        }
+      }
+    },
+    {
+      "regime": "persistent_engines",
+      "host_workers": 16,
+      "bound": 8000,
+      "width": 4,
+      "complete": true,
+      "status": "passed",
+      "samples": {
+        "cpu": [
+          {
+            "repeat": 1,
+            "request_wall_seconds": 0.011231971000597696,
+            "output_verification_seconds": 0.0005748790008510696,
+            "engine_seconds": 0.00807352,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.05537459000152012,
+            "certificate_seconds": 0.05231110800013994,
+            "packing_seconds": 0.04548250600055326,
+            "total_preparation_seconds": 0.15316820400221332,
+            "end_to_end_seconds": 0.16497505400366208,
+            "result_file": "trials/persistent_engines-B8000-W4-R1-cpu.json",
+            "sha256": "cafb817d7ed6ff283ea7778e7186071ebbcf5baf4f048e10e94b1b0352a882bf"
+          },
+          {
+            "repeat": 2,
+            "request_wall_seconds": 0.01150724799845193,
+            "output_verification_seconds": 0.0008104820008156821,
+            "engine_seconds": 0.00794247,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.050987072001589695,
+            "certificate_seconds": 0.05981273500037787,
+            "packing_seconds": 0.04858648399931553,
+            "total_preparation_seconds": 0.1593862910012831,
+            "end_to_end_seconds": 0.1717040210005507,
+            "result_file": "trials/persistent_engines-B8000-W4-R2-cpu.json",
+            "sha256": "6400d7f6842b4b5a99e854bcef0e8750ba05e95306c2d58fb8f8e3cd1606f7ba"
+          },
+          {
+            "repeat": 3,
+            "request_wall_seconds": 0.010730199001045548,
+            "output_verification_seconds": 0.0006682249986624811,
+            "engine_seconds": 0.00754126,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.06603241400080151,
+            "certificate_seconds": 0.054703289999451954,
+            "packing_seconds": 0.04426813600002788,
+            "total_preparation_seconds": 0.16500384000028134,
+            "end_to_end_seconds": 0.17640226399998937,
+            "result_file": "trials/persistent_engines-B8000-W4-R3-cpu.json",
+            "sha256": "80891451456ed87e41bdec6afaf344e7d4f36a56bdea25d3c08453fff503eb58"
+          },
+          {
+            "repeat": 4,
+            "request_wall_seconds": 0.010471492998476606,
+            "output_verification_seconds": 0.0008814150005491683,
+            "engine_seconds": 0.00733593,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.07169230100043933,
+            "certificate_seconds": 0.04992311400019389,
+            "packing_seconds": 0.04619192700010899,
+            "total_preparation_seconds": 0.1678073420007422,
+            "end_to_end_seconds": 0.17916024999976798,
+            "result_file": "trials/persistent_engines-B8000-W4-R4-cpu.json",
+            "sha256": "ebe1d3cf550902e503fd4ae207e3587524b279e41e310cff83eda6fa6ee24e51"
+          },
+          {
+            "repeat": 5,
+            "request_wall_seconds": 0.010684703000151785,
+            "output_verification_seconds": 0.0006010680008330382,
+            "engine_seconds": 0.00739578,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.06144682299964188,
+            "certificate_seconds": 0.05794747199979611,
+            "packing_seconds": 0.04876363699986541,
+            "total_preparation_seconds": 0.1681579319993034,
+            "end_to_end_seconds": 0.17944370300028822,
+            "result_file": "trials/persistent_engines-B8000-W4-R5-cpu.json",
+            "sha256": "e3673b7171885d38da7fc251b9ecacaf5aad33d77849f4db65806ffb95c1790e"
+          }
+        ],
+        "cuda": [
+          {
+            "repeat": 1,
+            "request_wall_seconds": 0.005088554999019834,
+            "output_verification_seconds": 0.0006196030008140951,
+            "engine_seconds": 0.00203189,
+            "kernel_seconds": 0.000375808,
+            "prepare_seconds": 0.05537459000152012,
+            "certificate_seconds": 0.05231110800013994,
+            "packing_seconds": 0.04548250600055326,
+            "total_preparation_seconds": 0.15316820400221332,
+            "end_to_end_seconds": 0.15887636200204724,
+            "result_file": "trials/persistent_engines-B8000-W4-R1-cuda.json",
+            "sha256": "e1c3e5526bc2a809a17e93f84774bb17d793da29e4ab45a9d478bdde2a83377e"
+          },
+          {
+            "repeat": 2,
+            "request_wall_seconds": 0.005995988998620305,
+            "output_verification_seconds": 0.0014488109991361853,
+            "engine_seconds": 0.00199905,
+            "kernel_seconds": 0.00037888,
+            "prepare_seconds": 0.050987072001589695,
+            "certificate_seconds": 0.05981273500037787,
+            "packing_seconds": 0.04858648399931553,
+            "total_preparation_seconds": 0.1593862910012831,
+            "end_to_end_seconds": 0.1668310909990396,
+            "result_file": "trials/persistent_engines-B8000-W4-R2-cuda.json",
+            "sha256": "0bf248d96f9207dd679d9b304d3cd2a266acaa6dfaac14544c475aa84a1ca811"
+          },
+          {
+            "repeat": 3,
+            "request_wall_seconds": 0.005031278000387829,
+            "output_verification_seconds": 0.0006098449994169641,
+            "engine_seconds": 0.00200103,
+            "kernel_seconds": 0.000386048,
+            "prepare_seconds": 0.06603241400080151,
+            "certificate_seconds": 0.054703289999451954,
+            "packing_seconds": 0.04426813600002788,
+            "total_preparation_seconds": 0.16500384000028134,
+            "end_to_end_seconds": 0.17064496300008614,
+            "result_file": "trials/persistent_engines-B8000-W4-R3-cuda.json",
+            "sha256": "99f4d23aa8ece5038a824babc194520ab3673fbf389ad5e765f6cfc2c9b85b29"
+          },
+          {
+            "repeat": 4,
+            "request_wall_seconds": 0.005592530998910661,
+            "output_verification_seconds": 0.000977095000052941,
+            "engine_seconds": 0.00198734,
+            "kernel_seconds": 0.000382976,
+            "prepare_seconds": 0.07169230100043933,
+            "certificate_seconds": 0.04992311400019389,
+            "packing_seconds": 0.04619192700010899,
+            "total_preparation_seconds": 0.1678073420007422,
+            "end_to_end_seconds": 0.1743769679997058,
+            "result_file": "trials/persistent_engines-B8000-W4-R4-cuda.json",
+            "sha256": "fbd0efc3d91a34942bc0813faef7e77070075da257adea2f766f8d74d8dfe6d5"
+          },
+          {
+            "repeat": 5,
+            "request_wall_seconds": 0.004975111998646753,
+            "output_verification_seconds": 0.0006592179997824132,
+            "engine_seconds": 0.00186071,
+            "kernel_seconds": 0.000380928,
+            "prepare_seconds": 0.06144682299964188,
+            "certificate_seconds": 0.05794747199979611,
+            "packing_seconds": 0.04876363699986541,
+            "total_preparation_seconds": 0.1681579319993034,
+            "end_to_end_seconds": 0.17379226199773257,
+            "result_file": "trials/persistent_engines-B8000-W4-R5-cuda.json",
+            "sha256": "56947b0d13a430657c2cf2d4cc1084f99ab67ca12e5cf217a0691e9828695c6d"
+          }
+        ]
+      },
+      "identity": {
+        "certificate_sha256": "de9be26867a3421506d466e3bcdb74c877ef438c3bf32085cd12cef2db5ccfa4",
+        "tasks": 1847,
+        "points": 13352469,
+        "packets": [
+          "5ad5ed66cc32c98db472f22169da6dd08487b32f5cdf290688ca04cdf443fa19"
+        ]
+      },
+      "medians": {
+        "cpu": {
+          "request_wall_seconds": 0.010730199001045548,
+          "output_verification_seconds": 0.0006682249986624811,
+          "engine_seconds": 0.00754126,
+          "kernel_seconds": 0.0,
+          "prepare_seconds": 0.06144682299964188,
+          "certificate_seconds": 0.054703289999451954,
+          "packing_seconds": 0.04619192700010899,
+          "total_preparation_seconds": 0.16500384000028134,
+          "end_to_end_seconds": 0.17640226399998937
+        },
+        "cuda": {
+          "request_wall_seconds": 0.005088554999019834,
+          "output_verification_seconds": 0.0006592179997824132,
+          "engine_seconds": 0.00199905,
+          "kernel_seconds": 0.000380928,
+          "prepare_seconds": 0.06144682299964188,
+          "certificate_seconds": 0.054703289999451954,
+          "packing_seconds": 0.04619192700010899,
+          "total_preparation_seconds": 0.16500384000028134,
+          "end_to_end_seconds": 0.17064496300008614
+        }
+      }
+    },
+    {
+      "regime": "persistent_engines",
+      "host_workers": 16,
+      "bound": 8000,
+      "width": 8,
+      "complete": true,
+      "status": "passed",
+      "samples": {
+        "cpu": [
+          {
+            "repeat": 1,
+            "request_wall_seconds": 0.015208679000352276,
+            "output_verification_seconds": 0.00036896300116495695,
+            "engine_seconds": 0.0146578,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.031012724999527563,
+            "certificate_seconds": 0.025384776999999303,
+            "packing_seconds": 0.022386526001355378,
+            "total_preparation_seconds": 0.07878402800088224,
+            "end_to_end_seconds": 0.09436167000239948,
+            "result_file": "trials/persistent_engines-B8000-W8-R1-cpu.json",
+            "sha256": "582f7dec925cdb4e91c380c0bc9521a0f6b1b9ad96f9361d936b8625ebb95b62"
+          },
+          {
+            "repeat": 2,
+            "request_wall_seconds": 0.014975812000557198,
+            "output_verification_seconds": 0.0005583889997069491,
+            "engine_seconds": 0.0143026,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.025268358000175795,
+            "certificate_seconds": 0.02769386299951293,
+            "packing_seconds": 0.02202136100095231,
+            "total_preparation_seconds": 0.07498358200064104,
+            "end_to_end_seconds": 0.09051778300090518,
+            "result_file": "trials/persistent_engines-B8000-W8-R2-cpu.json",
+            "sha256": "2b9a4d585df2b56d201fa8654e71fb3f3f0a8230c5f2665c51253460fdf4d487"
+          },
+          {
+            "repeat": 3,
+            "request_wall_seconds": 0.015235709000990028,
+            "output_verification_seconds": 0.0004073749987583142,
+            "engine_seconds": 0.0146012,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.03173133400014194,
+            "certificate_seconds": 0.029752528000244638,
+            "packing_seconds": 0.024906788999942364,
+            "total_preparation_seconds": 0.08639065100032894,
+            "end_to_end_seconds": 0.10203373500007729,
+            "result_file": "trials/persistent_engines-B8000-W8-R3-cpu.json",
+            "sha256": "50a1930d19ddec023469219a53631737dccd6981a1eddbd1a3a44885949c839c"
+          },
+          {
+            "repeat": 4,
+            "request_wall_seconds": 0.015133065999179962,
+            "output_verification_seconds": 0.0005627860009553842,
+            "engine_seconds": 0.0144964,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.024344764000488794,
+            "certificate_seconds": 0.03472579700064671,
+            "packing_seconds": 0.024996157000714447,
+            "total_preparation_seconds": 0.08406671800184995,
+            "end_to_end_seconds": 0.0997625700019853,
+            "result_file": "trials/persistent_engines-B8000-W8-R4-cpu.json",
+            "sha256": "a6d4d6318e928f226bf6237af9544e1b2aee2f2faae822b0292d5c9ca9395693"
+          },
+          {
+            "repeat": 5,
+            "request_wall_seconds": 0.015079075001267483,
+            "output_verification_seconds": 0.0003608170009101741,
+            "engine_seconds": 0.0144839,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.025089692999245017,
+            "certificate_seconds": 0.03000912000061362,
+            "packing_seconds": 0.024641400999826146,
+            "total_preparation_seconds": 0.07974021399968478,
+            "end_to_end_seconds": 0.09518010600186244,
+            "result_file": "trials/persistent_engines-B8000-W8-R5-cpu.json",
+            "sha256": "e2f2b43add440c49dc019abea88c2395a324702cc18f5d8b4023dd7b2f0366da"
+          }
+        ],
+        "cuda": [
+          {
+            "repeat": 1,
+            "request_wall_seconds": 0.0023686179993092082,
+            "output_verification_seconds": 0.00035872300031769555,
+            "engine_seconds": 0.00182515,
+            "kernel_seconds": 0.00096256,
+            "prepare_seconds": 0.031012724999527563,
+            "certificate_seconds": 0.025384776999999303,
+            "packing_seconds": 0.022386526001355378,
+            "total_preparation_seconds": 0.07878402800088224,
+            "end_to_end_seconds": 0.08151136900050915,
+            "result_file": "trials/persistent_engines-B8000-W8-R1-cuda.json",
+            "sha256": "f78f6ff519c9562ef533d0ee7226aa12ae85ba40bcfaa4e97809b0fbb5536e75"
+          },
+          {
+            "repeat": 2,
+            "request_wall_seconds": 0.00244782699883217,
+            "output_verification_seconds": 0.0004875150007137563,
+            "engine_seconds": 0.00181027,
+            "kernel_seconds": 0.000943104,
+            "prepare_seconds": 0.025268358000175795,
+            "certificate_seconds": 0.02769386299951293,
+            "packing_seconds": 0.02202136100095231,
+            "total_preparation_seconds": 0.07498358200064104,
+            "end_to_end_seconds": 0.07791892400018696,
+            "result_file": "trials/persistent_engines-B8000-W8-R2-cuda.json",
+            "sha256": "46aaaf0bbe67e045c9f2548dbf6c567b73d2623afe723c25c161e307c1f904a7"
+          },
+          {
+            "repeat": 3,
+            "request_wall_seconds": 0.002450801999657415,
+            "output_verification_seconds": 0.0006463540012191515,
+            "engine_seconds": 0.0017687,
+            "kernel_seconds": 0.000934912,
+            "prepare_seconds": 0.03173133400014194,
+            "certificate_seconds": 0.029752528000244638,
+            "packing_seconds": 0.024906788999942364,
+            "total_preparation_seconds": 0.08639065100032894,
+            "end_to_end_seconds": 0.08948780700120551,
+            "result_file": "trials/persistent_engines-B8000-W8-R3-cuda.json",
+            "sha256": "c926348af16f9acbdb3f3376b194330aa09641d91199d507924ba493cc3f8132"
+          },
+          {
+            "repeat": 4,
+            "request_wall_seconds": 0.0024086329995043343,
+            "output_verification_seconds": 0.0004312900000513764,
+            "engine_seconds": 0.00184332,
+            "kernel_seconds": 0.000963584,
+            "prepare_seconds": 0.024344764000488794,
+            "certificate_seconds": 0.03472579700064671,
+            "packing_seconds": 0.024996157000714447,
+            "total_preparation_seconds": 0.08406671800184995,
+            "end_to_end_seconds": 0.08690664100140566,
+            "result_file": "trials/persistent_engines-B8000-W8-R4-cuda.json",
+            "sha256": "81bb1b0b407b97f4315949f7121e5601ef92b6bda90320fd1d1ee8f33740e1be"
+          },
+          {
+            "repeat": 5,
+            "request_wall_seconds": 0.002232110999102588,
+            "output_verification_seconds": 0.00041554999916115776,
+            "engine_seconds": 0.00168312,
+            "kernel_seconds": 0.000964544,
+            "prepare_seconds": 0.025089692999245017,
+            "certificate_seconds": 0.03000912000061362,
+            "packing_seconds": 0.024641400999826146,
+            "total_preparation_seconds": 0.07974021399968478,
+            "end_to_end_seconds": 0.08238787499794853,
+            "result_file": "trials/persistent_engines-B8000-W8-R5-cuda.json",
+            "sha256": "66bbaf067bb258744ff529523afbbacc6e40a38de82bddcf2e8684a232eab697"
+          }
+        ]
+      },
+      "identity": {
+        "certificate_sha256": "3b5f2b716296bce0f7705fc59b01d8907e625c4d82e103e431cbfcdecdddc048",
+        "tasks": 926,
+        "points": 33933518,
+        "packets": [
+          "d618e65cfe5cc1f93c1de924b4c74e828d1fe629328f0916eefe152276bfc441"
+        ]
+      },
+      "medians": {
+        "cpu": {
+          "request_wall_seconds": 0.015133065999179962,
+          "output_verification_seconds": 0.0004073749987583142,
+          "engine_seconds": 0.0144964,
+          "kernel_seconds": 0.0,
+          "prepare_seconds": 0.025268358000175795,
+          "certificate_seconds": 0.029752528000244638,
+          "packing_seconds": 0.024641400999826146,
+          "total_preparation_seconds": 0.07974021399968478,
+          "end_to_end_seconds": 0.09518010600186244
+        },
+        "cuda": {
+          "request_wall_seconds": 0.0024086329995043343,
+          "output_verification_seconds": 0.0004312900000513764,
+          "engine_seconds": 0.00181027,
+          "kernel_seconds": 0.00096256,
+          "prepare_seconds": 0.025268358000175795,
+          "certificate_seconds": 0.029752528000244638,
+          "packing_seconds": 0.024641400999826146,
+          "total_preparation_seconds": 0.07974021399968478,
+          "end_to_end_seconds": 0.08238787499794853
+        }
+      }
+    },
+    {
+      "regime": "persistent_engines",
+      "host_workers": 16,
+      "bound": 32000,
+      "width": 2,
+      "complete": true,
+      "status": "passed",
+      "samples": {
+        "cpu": [
+          {
+            "repeat": 1,
+            "request_wall_seconds": 0.04569119699772273,
+            "output_verification_seconds": 0.0038984809998510173,
+            "engine_seconds": 0.03190943,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.4740091889998439,
+            "certificate_seconds": 0.3870847460002551,
+            "packing_seconds": 0.3488890429998719,
+            "total_preparation_seconds": 1.209982977999971,
+            "end_to_end_seconds": 1.2595726559975446,
+            "result_file": "trials/persistent_engines-B32000-W2-R1-cpu.json",
+            "sha256": "62ef5d576ee666ceb1ac692418f32bb1fa1994003c28d99cd6acddc8b7d97acb"
+          },
+          {
+            "repeat": 2,
+            "request_wall_seconds": 0.0413084779993369,
+            "output_verification_seconds": 0.0051271070005896036,
+            "engine_seconds": 0.03177617,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.44874520899975323,
+            "certificate_seconds": 0.38277238800037594,
+            "packing_seconds": 0.3574932000010449,
+            "total_preparation_seconds": 1.189010797001174,
+            "end_to_end_seconds": 1.2354463820011006,
+            "result_file": "trials/persistent_engines-B32000-W2-R2-cpu.json",
+            "sha256": "6bce776a34fc330becc1612d263285421d8f5f3c5e175a66689940e82d1bba11"
+          },
+          {
+            "repeat": 3,
+            "request_wall_seconds": 0.04300674500154855,
+            "output_verification_seconds": 0.0034671589983190643,
+            "engine_seconds": 0.03100513,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.44092899200040847,
+            "certificate_seconds": 0.384440359999644,
+            "packing_seconds": 0.3653198160009197,
+            "total_preparation_seconds": 1.1906891680009721,
+            "end_to_end_seconds": 1.2371630720008397,
+            "result_file": "trials/persistent_engines-B32000-W2-R3-cpu.json",
+            "sha256": "b429e9dc8d7e6f7886b7ee253a8caef587b4cef6bef1ead4fef0b6afffb41c15"
+          },
+          {
+            "repeat": 4,
+            "request_wall_seconds": 0.043280781001158175,
+            "output_verification_seconds": 0.004536909000307787,
+            "engine_seconds": 0.03173775,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.441785680999601,
+            "certificate_seconds": 0.3955426569991687,
+            "packing_seconds": 0.3599425180000253,
+            "total_preparation_seconds": 1.197270855998795,
+            "end_to_end_seconds": 1.245088546000261,
+            "result_file": "trials/persistent_engines-B32000-W2-R4-cpu.json",
+            "sha256": "d6ac55df0b8013e315d3c0b30511f12927fca306ce111cd2e8ecd8f1df7280c5"
+          },
+          {
+            "repeat": 5,
+            "request_wall_seconds": 0.04717296899980283,
+            "output_verification_seconds": 0.005534092997550033,
+            "engine_seconds": 0.03225672,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.44887717600067845,
+            "certificate_seconds": 0.3934592249988782,
+            "packing_seconds": 0.3637322539998422,
+            "total_preparation_seconds": 1.2060686549993989,
+            "end_to_end_seconds": 1.2587757169967517,
+            "result_file": "trials/persistent_engines-B32000-W2-R5-cpu.json",
+            "sha256": "6127c8b56f086bd11dd9208a30585c9567bd39060b90f117281361f878fa2258"
+          }
+        ],
+        "cuda": [
+          {
+            "repeat": 1,
+            "request_wall_seconds": 0.022429499002100783,
+            "output_verification_seconds": 0.0043105739987368,
+            "engine_seconds": 0.013028209999999998,
+            "kernel_seconds": 0.0013905919999999997,
+            "prepare_seconds": 0.4740091889998439,
+            "certificate_seconds": 0.3870847460002551,
+            "packing_seconds": 0.3488890429998719,
+            "total_preparation_seconds": 1.209982977999971,
+            "end_to_end_seconds": 1.2367230510008085,
+            "result_file": "trials/persistent_engines-B32000-W2-R1-cuda.json",
+            "sha256": "aa029ed2bc24c4a61054f1d127a2a0bf6ffac4fcc43ca067f2aa57cd67f892d2"
+          },
+          {
+            "repeat": 2,
+            "request_wall_seconds": 0.023981954002010752,
+            "output_verification_seconds": 0.0044034480015398,
+            "engine_seconds": 0.013752250000000002,
+            "kernel_seconds": 0.001392576,
+            "prepare_seconds": 0.44874520899975323,
+            "certificate_seconds": 0.38277238800037594,
+            "packing_seconds": 0.3574932000010449,
+            "total_preparation_seconds": 1.189010797001174,
+            "end_to_end_seconds": 1.2173961990047246,
+            "result_file": "trials/persistent_engines-B32000-W2-R2-cuda.json",
+            "sha256": "5bb6c005ede032f77217c0b4a4e12bea5ca77bd5d0286eca3c0894b73d6f17f0"
+          },
+          {
+            "repeat": 3,
+            "request_wall_seconds": 0.02674586299872317,
+            "output_verification_seconds": 0.00459315399893967,
+            "engine_seconds": 0.013165070000000001,
+            "kernel_seconds": 0.001387328,
+            "prepare_seconds": 0.44092899200040847,
+            "certificate_seconds": 0.384440359999644,
+            "packing_seconds": 0.3653198160009197,
+            "total_preparation_seconds": 1.1906891680009721,
+            "end_to_end_seconds": 1.222028184998635,
+            "result_file": "trials/persistent_engines-B32000-W2-R3-cuda.json",
+            "sha256": "07a42ab5d86fd34e1a69aee62c77fb9ea3b6585881f56ba93c91947cdb8ece96"
+          },
+          {
+            "repeat": 4,
+            "request_wall_seconds": 0.023532309000074747,
+            "output_verification_seconds": 0.00480266700105858,
+            "engine_seconds": 0.01338265,
+            "kernel_seconds": 0.001384448,
+            "prepare_seconds": 0.441785680999601,
+            "certificate_seconds": 0.3955426569991687,
+            "packing_seconds": 0.3599425180000253,
+            "total_preparation_seconds": 1.197270855998795,
+            "end_to_end_seconds": 1.2256058319999283,
+            "result_file": "trials/persistent_engines-B32000-W2-R4-cuda.json",
+            "sha256": "df4a70d3c089123b516f6136ef30d3db5045b449f07cf7730e43a63a8ce4f9ac"
+          },
+          {
+            "repeat": 5,
+            "request_wall_seconds": 0.02436380000108329,
+            "output_verification_seconds": 0.005492001002494362,
+            "engine_seconds": 0.013971710000000002,
+            "kernel_seconds": 0.001393664,
+            "prepare_seconds": 0.44887717600067845,
+            "certificate_seconds": 0.3934592249988782,
+            "packing_seconds": 0.3637322539998422,
+            "total_preparation_seconds": 1.2060686549993989,
+            "end_to_end_seconds": 1.2359244560029765,
+            "result_file": "trials/persistent_engines-B32000-W2-R5-cuda.json",
+            "sha256": "e1137ebe9566e2ecd788ac388dfe66255be01989930d22f9d6a729a0e3aed49d"
+          }
+        ]
+      },
+      "identity": {
+        "certificate_sha256": "e8c8e3ed720db9c38078a7b746abbe5a1c8dade2e42fb69403de2ab34fd95a61",
+        "tasks": 14750,
+        "points": 50087938,
+        "packets": [
+          "71a2bff1dc9c58a3bbcc7ae8ac4acbd54aa7aafd4063ea8a3c19d386a0c586c6",
+          "cba64a15c3f828b6ea3b1d6f0a34a609ed191d4e2d1f3e05e76fb8407427bf77",
+          "0e5510ea3e1465a2899f3a5336132a15ab16fbb551795a52075669368a9deab3",
+          "65a2389bedb80ae18a3895c6addd3fe9e75089c9842bf057c1a51cd05b45e95e"
+        ]
+      },
+      "medians": {
+        "cpu": {
+          "request_wall_seconds": 0.043280781001158175,
+          "output_verification_seconds": 0.004536909000307787,
+          "engine_seconds": 0.03177617,
+          "kernel_seconds": 0.0,
+          "prepare_seconds": 0.44874520899975323,
+          "certificate_seconds": 0.3870847460002551,
+          "packing_seconds": 0.3599425180000253,
+          "total_preparation_seconds": 1.197270855998795,
+          "end_to_end_seconds": 1.245088546000261
+        },
+        "cuda": {
+          "request_wall_seconds": 0.023981954002010752,
+          "output_verification_seconds": 0.00459315399893967,
+          "engine_seconds": 0.01338265,
+          "kernel_seconds": 0.0013905919999999997,
+          "prepare_seconds": 0.44874520899975323,
+          "certificate_seconds": 0.3870847460002551,
+          "packing_seconds": 0.3599425180000253,
+          "total_preparation_seconds": 1.197270855998795,
+          "end_to_end_seconds": 1.2256058319999283
+        }
+      }
+    },
+    {
+      "regime": "persistent_engines",
+      "host_workers": 16,
+      "bound": 32000,
+      "width": 4,
+      "complete": true,
+      "status": "passed",
+      "samples": {
+        "cpu": [
+          {
+            "repeat": 1,
+            "request_wall_seconds": 0.03885501199874852,
+            "output_verification_seconds": 0.0026807939993886976,
+            "engine_seconds": 0.032279,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.2445621509996272,
+            "certificate_seconds": 0.20794049400137737,
+            "packing_seconds": 0.18013994099965203,
+            "total_preparation_seconds": 0.6326425860006566,
+            "end_to_end_seconds": 0.6741783919987938,
+            "result_file": "trials/persistent_engines-B32000-W4-R1-cpu.json",
+            "sha256": "01a67ad922d0347bc291d2ffed7783a269e2d931c12582d21f76a3d0500a4642"
+          },
+          {
+            "repeat": 2,
+            "request_wall_seconds": 0.03867844899832562,
+            "output_verification_seconds": 0.0024835340009303764,
+            "engine_seconds": 0.0326235,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.21924294699965685,
+            "certificate_seconds": 0.19751444699977583,
+            "packing_seconds": 0.1841691070003435,
+            "total_preparation_seconds": 0.6009265009997762,
+            "end_to_end_seconds": 0.6420884839990322,
+            "result_file": "trials/persistent_engines-B32000-W4-R2-cpu.json",
+            "sha256": "bb41e9477fa924ff29129ab138e52db84ea3a3d80da955f0b5539350f5d2ab19"
+          },
+          {
+            "repeat": 3,
+            "request_wall_seconds": 0.03813930700016499,
+            "output_verification_seconds": 0.0018446639987814706,
+            "engine_seconds": 0.032136,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.2400764979993255,
+            "certificate_seconds": 0.18735151299915742,
+            "packing_seconds": 0.1827006290004647,
+            "total_preparation_seconds": 0.6101286399989476,
+            "end_to_end_seconds": 0.6501126109978941,
+            "result_file": "trials/persistent_engines-B32000-W4-R3-cpu.json",
+            "sha256": "2fc5e099797a2ed9f2d7f3aa1da2826eca392d07f7bcffcbc48417f9e2dd55d5"
+          },
+          {
+            "repeat": 4,
+            "request_wall_seconds": 0.03986325299956661,
+            "output_verification_seconds": 0.0017793910010368563,
+            "engine_seconds": 0.0320893,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.21833167600016168,
+            "certificate_seconds": 0.1866870840003685,
+            "packing_seconds": 0.19613355299952673,
+            "total_preparation_seconds": 0.6011523130000569,
+            "end_to_end_seconds": 0.6427949570006604,
+            "result_file": "trials/persistent_engines-B32000-W4-R4-cpu.json",
+            "sha256": "31623e2f1fc63082e72c77e40200f12ad569705fb936e20db29d0bebccb04aee"
+          },
+          {
+            "repeat": 5,
+            "request_wall_seconds": 0.038069866999649093,
+            "output_verification_seconds": 0.002874136998798349,
+            "engine_seconds": 0.0320955,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.2307732279987249,
+            "certificate_seconds": 0.19743268199999875,
+            "packing_seconds": 0.1876405849998264,
+            "total_preparation_seconds": 0.61584649499855,
+            "end_to_end_seconds": 0.6567904989969975,
+            "result_file": "trials/persistent_engines-B32000-W4-R5-cpu.json",
+            "sha256": "3b9334a99b0ea9845e0f11aee68b5f6970176893c3f7236a465988be51f399ef"
+          }
+        ],
+        "cuda": [
+          {
+            "repeat": 1,
+            "request_wall_seconds": 0.013240061000033165,
+            "output_verification_seconds": 0.0021459300005517434,
+            "engine_seconds": 0.007463249999999999,
+            "kernel_seconds": 0.0016218580000000001,
+            "prepare_seconds": 0.2445621509996272,
+            "certificate_seconds": 0.20794049400137737,
+            "packing_seconds": 0.18013994099965203,
+            "total_preparation_seconds": 0.6326425860006566,
+            "end_to_end_seconds": 0.6480285770012415,
+            "result_file": "trials/persistent_engines-B32000-W4-R1-cuda.json",
+            "sha256": "16ca757fb173a57a3f6418487d8df760a48c56e42c8b465923df6f65287d651f"
+          },
+          {
+            "repeat": 2,
+            "request_wall_seconds": 0.014074607999646105,
+            "output_verification_seconds": 0.0022662050014332635,
+            "engine_seconds": 0.007927449999999999,
+            "kernel_seconds": 0.001643676,
+            "prepare_seconds": 0.21924294699965685,
+            "certificate_seconds": 0.19751444699977583,
+            "packing_seconds": 0.1841691070003435,
+            "total_preparation_seconds": 0.6009265009997762,
+            "end_to_end_seconds": 0.6172673140008555,
+            "result_file": "trials/persistent_engines-B32000-W4-R2-cuda.json",
+            "sha256": "c9d3507646775abc9d532fcd64993cde696290360638f79134e8ffab78bbd809"
+          },
+          {
+            "repeat": 3,
+            "request_wall_seconds": 0.014136324998617056,
+            "output_verification_seconds": 0.001976601999558625,
+            "engine_seconds": 0.00752339,
+            "kernel_seconds": 0.001628132,
+            "prepare_seconds": 0.2400764979993255,
+            "certificate_seconds": 0.18735151299915742,
+            "packing_seconds": 0.1827006290004647,
+            "total_preparation_seconds": 0.6101286399989476,
+            "end_to_end_seconds": 0.6262415669971233,
+            "result_file": "trials/persistent_engines-B32000-W4-R3-cuda.json",
+            "sha256": "5c2fb2cd185ac4c3b617e99da7c2ea7a6c593f1f394f2821da7d57bbeab1f526"
+          },
+          {
+            "repeat": 4,
+            "request_wall_seconds": 0.014030897000338882,
+            "output_verification_seconds": 0.0019780339989665663,
+            "engine_seconds": 0.00754526,
+            "kernel_seconds": 0.001632258,
+            "prepare_seconds": 0.21833167600016168,
+            "certificate_seconds": 0.1866870840003685,
+            "packing_seconds": 0.19613355299952673,
+            "total_preparation_seconds": 0.6011523130000569,
+            "end_to_end_seconds": 0.6171612439993623,
+            "result_file": "trials/persistent_engines-B32000-W4-R4-cuda.json",
+            "sha256": "0e7bd4228fd4ab782f206b92d4840eb0ad7ab2439f2807da806ea2a71d7ea8af"
+          },
+          {
+            "repeat": 5,
+            "request_wall_seconds": 0.0138364320009714,
+            "output_verification_seconds": 0.0021918669990554918,
+            "engine_seconds": 0.007455710000000001,
+            "kernel_seconds": 0.0016383959999999999,
+            "prepare_seconds": 0.2307732279987249,
+            "certificate_seconds": 0.19743268199999875,
+            "packing_seconds": 0.1876405849998264,
+            "total_preparation_seconds": 0.61584649499855,
+            "end_to_end_seconds": 0.6318747939985769,
+            "result_file": "trials/persistent_engines-B32000-W4-R5-cuda.json",
+            "sha256": "a20c8fa4222cbc5ee2bd636003ca5553084b620d8597125c79f2d67728d11c52"
+          }
+        ]
+      },
+      "identity": {
+        "certificate_sha256": "1d90ac85d776c11dfb4bab7c75edd5e1026b63c4d966c244d7e79a3954caaee4",
+        "tasks": 7378,
+        "points": 69176516,
+        "packets": [
+          "0d4639fea5228e1b908e4444542a489107fb33d9695e8327f8889d802128ab03",
+          "43d4fd47fb79608dd914ed9fa06e3f661bc17bce98014ba3aef2e745b354badb"
+        ]
+      },
+      "medians": {
+        "cpu": {
+          "request_wall_seconds": 0.03867844899832562,
+          "output_verification_seconds": 0.0024835340009303764,
+          "engine_seconds": 0.032136,
+          "kernel_seconds": 0.0,
+          "prepare_seconds": 0.2307732279987249,
+          "certificate_seconds": 0.19743268199999875,
+          "packing_seconds": 0.1841691070003435,
+          "total_preparation_seconds": 0.6101286399989476,
+          "end_to_end_seconds": 0.6501126109978941
+        },
+        "cuda": {
+          "request_wall_seconds": 0.014030897000338882,
+          "output_verification_seconds": 0.0021459300005517434,
+          "engine_seconds": 0.00752339,
+          "kernel_seconds": 0.001632258,
+          "prepare_seconds": 0.2307732279987249,
+          "certificate_seconds": 0.19743268199999875,
+          "packing_seconds": 0.1841691070003435,
+          "total_preparation_seconds": 0.6101286399989476,
+          "end_to_end_seconds": 0.6262415669971233
+        }
+      }
+    },
+    {
+      "regime": "persistent_engines",
+      "host_workers": 16,
+      "bound": 32000,
+      "width": 8,
+      "complete": true,
+      "status": "passed",
+      "samples": {
+        "cpu": [
+          {
+            "repeat": 1,
+            "request_wall_seconds": 0.06215757899917662,
+            "output_verification_seconds": 0.0013229250016593141,
+            "engine_seconds": 0.057743100000000006,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.10659531199962657,
+            "certificate_seconds": 0.11276898399955826,
+            "packing_seconds": 0.09291688600023917,
+            "total_preparation_seconds": 0.312281181999424,
+            "end_to_end_seconds": 0.37576168600025994,
+            "result_file": "trials/persistent_engines-B32000-W8-R1-cpu.json",
+            "sha256": "a93d248eafafbd4dc285c27af12023c788fac02cf77bb564f5c18479a904d348"
+          },
+          {
+            "repeat": 2,
+            "request_wall_seconds": 0.06296700799975952,
+            "output_verification_seconds": 0.0015601089999108808,
+            "engine_seconds": 0.0580508,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.10751924599935592,
+            "certificate_seconds": 0.10723521299951244,
+            "packing_seconds": 0.09028848099842435,
+            "total_preparation_seconds": 0.3050429399972927,
+            "end_to_end_seconds": 0.3695700569969631,
+            "result_file": "trials/persistent_engines-B32000-W8-R2-cpu.json",
+            "sha256": "bb9c6d7ac8be6d12855f489cc1e0142311ea256348fc13064968dd812f9a9380"
+          },
+          {
+            "repeat": 3,
+            "request_wall_seconds": 0.06300300600014452,
+            "output_verification_seconds": 0.0016575729987380328,
+            "engine_seconds": 0.0581566,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.10537396799918497,
+            "certificate_seconds": 0.10107956399951945,
+            "packing_seconds": 0.09619235700120043,
+            "total_preparation_seconds": 0.30264588899990486,
+            "end_to_end_seconds": 0.3673064679987874,
+            "result_file": "trials/persistent_engines-B32000-W8-R3-cpu.json",
+            "sha256": "e49cdc1e4ef3e941dca8be4ba84883c6f6316a19af635d4d2f1d55d7f6c59df2"
+          },
+          {
+            "repeat": 4,
+            "request_wall_seconds": 0.062281110000185436,
+            "output_verification_seconds": 0.0013347869989956962,
+            "engine_seconds": 0.05807760000000001,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.1129849290009588,
+            "certificate_seconds": 0.10992728800010809,
+            "packing_seconds": 0.09405478299959213,
+            "total_preparation_seconds": 0.316967000000659,
+            "end_to_end_seconds": 0.38058289699984016,
+            "result_file": "trials/persistent_engines-B32000-W8-R4-cpu.json",
+            "sha256": "3595203cf3aa19cbf06525d9ab2c121df17e84cb57168ed4963663a3b8f7d334"
+          },
+          {
+            "repeat": 5,
+            "request_wall_seconds": 0.06211787299980642,
+            "output_verification_seconds": 0.0016328870005963836,
+            "engine_seconds": 0.05776919999999999,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.10734688299999107,
+            "certificate_seconds": 0.10068081600002188,
+            "packing_seconds": 0.09258251800019934,
+            "total_preparation_seconds": 0.3006102170002123,
+            "end_to_end_seconds": 0.3643609770006151,
+            "result_file": "trials/persistent_engines-B32000-W8-R5-cpu.json",
+            "sha256": "8039b395e00a364e353130ce91f1370dd03ecb41416410f149bd0ace5df93f35"
+          }
+        ],
+        "cuda": [
+          {
+            "repeat": 1,
+            "request_wall_seconds": 0.010881091000555898,
+            "output_verification_seconds": 0.0011377569990145275,
+            "engine_seconds": 0.00671125,
+            "kernel_seconds": 0.00348131,
+            "prepare_seconds": 0.10659531199962657,
+            "certificate_seconds": 0.11276898399955826,
+            "packing_seconds": 0.09291688600023917,
+            "total_preparation_seconds": 0.312281181999424,
+            "end_to_end_seconds": 0.32430002999899443,
+            "result_file": "trials/persistent_engines-B32000-W8-R1-cuda.json",
+            "sha256": "f2d3f403bf8f7cc17aa6a366d92c9515ca0df63a0a5a884e947696d97420f690"
+          },
+          {
+            "repeat": 2,
+            "request_wall_seconds": 0.011195662000318407,
+            "output_verification_seconds": 0.0018827459989552153,
+            "engine_seconds": 0.0067576500000000005,
+            "kernel_seconds": 0.00349696,
+            "prepare_seconds": 0.10751924599935592,
+            "certificate_seconds": 0.10723521299951244,
+            "packing_seconds": 0.09028848099842435,
+            "total_preparation_seconds": 0.3050429399972927,
+            "end_to_end_seconds": 0.31812134799656633,
+            "result_file": "trials/persistent_engines-B32000-W8-R2-cuda.json",
+            "sha256": "f1af4e2176843e919018cbc90b6d2c19b7ea1bc18f2704e7ba77edf5601f3757"
+          },
+          {
+            "repeat": 3,
+            "request_wall_seconds": 0.010862647999601904,
+            "output_verification_seconds": 0.0012992300016776426,
+            "engine_seconds": 0.00670194,
+            "kernel_seconds": 0.003491,
+            "prepare_seconds": 0.10537396799918497,
+            "certificate_seconds": 0.10107956399951945,
+            "packing_seconds": 0.09619235700120043,
+            "total_preparation_seconds": 0.30264588899990486,
+            "end_to_end_seconds": 0.3148077670011844,
+            "result_file": "trials/persistent_engines-B32000-W8-R3-cuda.json",
+            "sha256": "b87d0de653f3530cd7d540dd7e9f660f054d43d2ea204f1ee03209cd909e9205"
+          },
+          {
+            "repeat": 4,
+            "request_wall_seconds": 0.010983304999172105,
+            "output_verification_seconds": 0.001188943000670406,
+            "engine_seconds": 0.006621729999999999,
+            "kernel_seconds": 0.0035041300000000003,
+            "prepare_seconds": 0.1129849290009588,
+            "certificate_seconds": 0.10992728800010809,
+            "packing_seconds": 0.09405478299959213,
+            "total_preparation_seconds": 0.316967000000659,
+            "end_to_end_seconds": 0.32913924800050154,
+            "result_file": "trials/persistent_engines-B32000-W8-R4-cuda.json",
+            "sha256": "d4b6ddacbaf9f111525eee1a3505717b7f8491ed51327d28a309ddf744ac1b59"
+          },
+          {
+            "repeat": 5,
+            "request_wall_seconds": 0.011169923998750164,
+            "output_verification_seconds": 0.0014209379969543079,
+            "engine_seconds": 0.00661245,
+            "kernel_seconds": 0.00350605,
+            "prepare_seconds": 0.10734688299999107,
+            "certificate_seconds": 0.10068081600002188,
+            "packing_seconds": 0.09258251800019934,
+            "total_preparation_seconds": 0.3006102170002123,
+            "end_to_end_seconds": 0.31320107899591676,
+            "result_file": "trials/persistent_engines-B32000-W8-R5-cuda.json",
+            "sha256": "e7a6eafcb22264f9594526e0d09f3bcac738a71023b00abadbbbe9692e259d00"
+          }
+        ]
+      },
+      "identity": {
+        "certificate_sha256": "240128c79d1c932300cd7442790ed1ca5af3e2614da6e93ac8a92849a567b7c6",
+        "tasks": 3692,
+        "points": 141244596,
+        "packets": [
+          "613718340d9e3fb4a23c03657a9885f4a5c33cf2d394432d5822e04777a4a2f3",
+          "3dc36da0ab4b8d2ae0773b798e28e99cda3de0b0cbb96431c6ce5159f90b1355",
+          "0140680a4f376a171bac11a96be9cf84ee2ad5ca7c0aaf818b0c5452a552926f"
+        ]
+      },
+      "medians": {
+        "cpu": {
+          "request_wall_seconds": 0.062281110000185436,
+          "output_verification_seconds": 0.0015601089999108808,
+          "engine_seconds": 0.0580508,
+          "kernel_seconds": 0.0,
+          "prepare_seconds": 0.10734688299999107,
+          "certificate_seconds": 0.10723521299951244,
+          "packing_seconds": 0.09291688600023917,
+          "total_preparation_seconds": 0.3050429399972927,
+          "end_to_end_seconds": 0.3695700569969631
+        },
+        "cuda": {
+          "request_wall_seconds": 0.010983304999172105,
+          "output_verification_seconds": 0.0012992300016776426,
+          "engine_seconds": 0.00670194,
+          "kernel_seconds": 0.00349696,
+          "prepare_seconds": 0.10734688299999107,
+          "certificate_seconds": 0.10723521299951244,
+          "packing_seconds": 0.09291688600023917,
+          "total_preparation_seconds": 0.3050429399972927,
+          "end_to_end_seconds": 0.31812134799656633
+        }
+      }
+    },
+    {
+      "regime": "cold_one_pass",
+      "host_workers": 16,
+      "bound": 32000,
+      "width": 2,
+      "complete": true,
+      "status": "passed",
+      "samples": {
+        "cpu": [
+          {
+            "repeat": 1,
+            "request_wall_seconds": 0.04898792900166882,
+            "output_verification_seconds": 0.004809160996956052,
+            "engine_seconds": 0.03242153,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.58227726000041,
+            "certificate_seconds": 0.3896987120006088,
+            "packing_seconds": 0.365140698999312,
+            "total_preparation_seconds": 1.3371166710003308,
+            "cold_startup_seconds": 0.011234745999900042,
+            "shutdown_seconds": 0.055742440999893006,
+            "cold_one_pass_seconds": 1.4896314479992725,
+            "result_file": "trials/cold_one_pass-B32000-W2-R1-cpu.json",
+            "sha256": "dbfa1f856fc5da3bafb15db4fcdff8f7a2e199cf4539d16b39d343641fc98fd0"
+          },
+          {
+            "repeat": 2,
+            "request_wall_seconds": 0.04693896999924618,
+            "output_verification_seconds": 0.005582412999501685,
+            "engine_seconds": 0.03303613,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.5661769059988728,
+            "certificate_seconds": 0.39862027399976796,
+            "packing_seconds": 0.3739850950005348,
+            "total_preparation_seconds": 1.3387822749991756,
+            "cold_startup_seconds": 0.013854635999450693,
+            "shutdown_seconds": 0.06206957199901808,
+            "cold_one_pass_seconds": 1.4996146199991927,
+            "result_file": "trials/cold_one_pass-B32000-W2-R2-cpu.json",
+            "sha256": "df7c16096af0ed9770c8c0eb074f2d228696fab133f40852ecfb28a7480d0fd8"
+          },
+          {
+            "repeat": 3,
+            "request_wall_seconds": 0.046508161001838744,
+            "output_verification_seconds": 0.0052315640004962916,
+            "engine_seconds": 0.031962,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.578335436000998,
+            "certificate_seconds": 0.383049445999859,
+            "packing_seconds": 0.37163575399972615,
+            "total_preparation_seconds": 1.3330206360005832,
+            "cold_startup_seconds": 0.01303814200036868,
+            "shutdown_seconds": 0.05653197299943713,
+            "cold_one_pass_seconds": 1.487044244999197,
+            "result_file": "trials/cold_one_pass-B32000-W2-R3-cpu.json",
+            "sha256": "d3608478cab05a8e0b5749faf767ffb967f098d863abe1f9273e4778685f3f3c"
+          },
+          {
+            "repeat": 4,
+            "request_wall_seconds": 0.05313480499899015,
+            "output_verification_seconds": 0.0050855490007961635,
+            "engine_seconds": 0.03430707,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.5859183049997227,
+            "certificate_seconds": 0.3894188949998352,
+            "packing_seconds": 0.36842871000044397,
+            "total_preparation_seconds": 1.343765910000002,
+            "cold_startup_seconds": 0.011176857000464224,
+            "shutdown_seconds": 0.055603619999601506,
+            "cold_one_pass_seconds": 1.5009837369998422,
+            "result_file": "trials/cold_one_pass-B32000-W2-R4-cpu.json",
+            "sha256": "d77a9c29b88b5d555a20d5e758c216b4e50590c1e75d5671d2144bdc1f271d15"
+          },
+          {
+            "repeat": 5,
+            "request_wall_seconds": 0.04897765700115997,
+            "output_verification_seconds": 0.006092350000471924,
+            "engine_seconds": 0.032921900000000004,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.587508599001012,
+            "certificate_seconds": 0.3856240090008214,
+            "packing_seconds": 0.3678808820004633,
+            "total_preparation_seconds": 1.3410134900022967,
+            "cold_startup_seconds": 0.014207627998985117,
+            "shutdown_seconds": 0.05487181600074109,
+            "cold_one_pass_seconds": 1.4983993730002112,
+            "result_file": "trials/cold_one_pass-B32000-W2-R5-cpu.json",
+            "sha256": "f4506a59e1456e9b8e87cfe3ab762218b1e185142dc74a0ddb9544584ece9411"
+          }
+        ],
+        "cuda": [
+          {
+            "repeat": 1,
+            "request_wall_seconds": 0.026298111997675733,
+            "output_verification_seconds": 0.004777009002282284,
+            "engine_seconds": 0.0135088,
+            "kernel_seconds": 0.001475584,
+            "prepare_seconds": 0.45983833799982676,
+            "certificate_seconds": 0.38904333200116525,
+            "packing_seconds": 0.37890927199987345,
+            "total_preparation_seconds": 1.2277909420008655,
+            "cold_startup_seconds": 0.2264002360006998,
+            "shutdown_seconds": 0.16922974400040403,
+            "cold_one_pass_seconds": 1.6872335770003701,
+            "result_file": "trials/cold_one_pass-B32000-W2-R1-cuda.json",
+            "sha256": "221af8464f619d4edc7b0f0cf0bb312ac2408ff7fce0b76d4b933cc3fea1e6c1"
+          },
+          {
+            "repeat": 2,
+            "request_wall_seconds": 0.025968210999053554,
+            "output_verification_seconds": 0.0040643720003572525,
+            "engine_seconds": 0.013448349999999998,
+            "kernel_seconds": 0.001483776,
+            "prepare_seconds": 0.4461481010002899,
+            "certificate_seconds": 0.390262070000972,
+            "packing_seconds": 0.37309810999977344,
+            "total_preparation_seconds": 1.2095082810010354,
+            "cold_startup_seconds": 0.2410957909996796,
+            "shutdown_seconds": 0.1701783950011304,
+            "cold_one_pass_seconds": 1.6613576759991702,
+            "result_file": "trials/cold_one_pass-B32000-W2-R2-cuda.json",
+            "sha256": "8256026f3fa8fb63a41e854010c719f00458fdeeb03415ce0c9cab194e5d25c5"
+          },
+          {
+            "repeat": 3,
+            "request_wall_seconds": 0.028673501998127904,
+            "output_verification_seconds": 0.006199299999934738,
+            "engine_seconds": 0.014468360000000003,
+            "kernel_seconds": 0.001491968,
+            "prepare_seconds": 0.4803429990006407,
+            "certificate_seconds": 0.37184441499994136,
+            "packing_seconds": 0.36683315499976743,
+            "total_preparation_seconds": 1.2190205690003495,
+            "cold_startup_seconds": 0.2733470710008987,
+            "shutdown_seconds": 0.16879463599980227,
+            "cold_one_pass_seconds": 1.7289786800010916,
+            "result_file": "trials/cold_one_pass-B32000-W2-R3-cuda.json",
+            "sha256": "4b3790681e9fbcbeda04b1c8e5e3795fef2a987b90f3c5cf1f4fdd9179e4a3db"
+          },
+          {
+            "repeat": 4,
+            "request_wall_seconds": 0.02960880800310406,
+            "output_verification_seconds": 0.004416924000906874,
+            "engine_seconds": 0.014688820000000002,
+            "kernel_seconds": 0.0015001599999999997,
+            "prepare_seconds": 0.4587611539991485,
+            "certificate_seconds": 0.38901461599925824,
+            "packing_seconds": 0.3762138789988967,
+            "total_preparation_seconds": 1.2239896489973034,
+            "cold_startup_seconds": 0.24112727899955644,
+            "shutdown_seconds": 0.16835003099913592,
+            "cold_one_pass_seconds": 1.6787603289994877,
+            "result_file": "trials/cold_one_pass-B32000-W2-R4-cuda.json",
+            "sha256": "f2a8c7364e1ab78989a78c1209b28d67f8cc5d07cd01949397e335418d2697c7"
+          },
+          {
+            "repeat": 5,
+            "request_wall_seconds": 0.024662099000124726,
+            "output_verification_seconds": 0.005163697001989931,
+            "engine_seconds": 0.013600030000000003,
+            "kernel_seconds": 0.0014786560000000003,
+            "prepare_seconds": 0.4716402369995194,
+            "certificate_seconds": 0.3755477679987962,
+            "packing_seconds": 0.3720896739996533,
+            "total_preparation_seconds": 1.219277678997969,
+            "cold_startup_seconds": 0.28374532599991653,
+            "shutdown_seconds": 0.1692516240000259,
+            "cold_one_pass_seconds": 1.734903401000338,
+            "result_file": "trials/cold_one_pass-B32000-W2-R5-cuda.json",
+            "sha256": "f91001a81b4b65df986a38190baae3a52c76a6a7ea9d29f12bba8564afc001d7"
+          }
+        ]
+      },
+      "identity": {
+        "certificate_sha256": "e8c8e3ed720db9c38078a7b746abbe5a1c8dade2e42fb69403de2ab34fd95a61",
+        "tasks": 14750,
+        "points": 50087938,
+        "packets": [
+          "71a2bff1dc9c58a3bbcc7ae8ac4acbd54aa7aafd4063ea8a3c19d386a0c586c6",
+          "cba64a15c3f828b6ea3b1d6f0a34a609ed191d4e2d1f3e05e76fb8407427bf77",
+          "0e5510ea3e1465a2899f3a5336132a15ab16fbb551795a52075669368a9deab3",
+          "65a2389bedb80ae18a3895c6addd3fe9e75089c9842bf057c1a51cd05b45e95e"
+        ]
+      },
+      "medians": {
+        "cpu": {
+          "request_wall_seconds": 0.04897765700115997,
+          "output_verification_seconds": 0.0052315640004962916,
+          "engine_seconds": 0.032921900000000004,
+          "kernel_seconds": 0.0,
+          "prepare_seconds": 0.58227726000041,
+          "certificate_seconds": 0.3894188949998352,
+          "packing_seconds": 0.36842871000044397,
+          "total_preparation_seconds": 1.3387822749991756,
+          "cold_startup_seconds": 0.01303814200036868,
+          "shutdown_seconds": 0.055742440999893006,
+          "cold_one_pass_seconds": 1.4983993730002112
+        },
+        "cuda": {
+          "request_wall_seconds": 0.026298111997675733,
+          "output_verification_seconds": 0.004777009002282284,
+          "engine_seconds": 0.013600030000000003,
+          "kernel_seconds": 0.001483776,
+          "prepare_seconds": 0.45983833799982676,
+          "certificate_seconds": 0.38901461599925824,
+          "packing_seconds": 0.37309810999977344,
+          "total_preparation_seconds": 1.219277678997969,
+          "cold_startup_seconds": 0.24112727899955644,
+          "shutdown_seconds": 0.16922974400040403,
+          "cold_one_pass_seconds": 1.6872335770003701
+        }
+      }
+    },
+    {
+      "regime": "cold_one_pass",
+      "host_workers": 16,
+      "bound": 32000,
+      "width": 8,
+      "complete": true,
+      "status": "passed",
+      "samples": {
+        "cpu": [
+          {
+            "repeat": 1,
+            "request_wall_seconds": 0.06366495799920813,
+            "output_verification_seconds": 0.0017318720019829925,
+            "engine_seconds": 0.058463,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.23331776600025478,
+            "certificate_seconds": 0.1060103829986474,
+            "packing_seconds": 0.09305203900112247,
+            "total_preparation_seconds": 0.43238018800002465,
+            "cold_startup_seconds": 0.013643289001265657,
+            "shutdown_seconds": 0.05504262700014806,
+            "cold_one_pass_seconds": 0.5965657100005046,
+            "result_file": "trials/cold_one_pass-B32000-W8-R1-cpu.json",
+            "sha256": "82b55b2225ea448cb412d8b3bcfbf72c1ee88372d89cc7f8e161a352327719bc"
+          },
+          {
+            "repeat": 2,
+            "request_wall_seconds": 0.06264462300168816,
+            "output_verification_seconds": 0.001571861001139041,
+            "engine_seconds": 0.05824,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.24119892500129936,
+            "certificate_seconds": 0.09955069299940078,
+            "packing_seconds": 0.09417835499880312,
+            "total_preparation_seconds": 0.43492797299950325,
+            "cold_startup_seconds": 0.010237383001367562,
+            "shutdown_seconds": 0.055505244999949355,
+            "cold_one_pass_seconds": 0.5733353380001063,
+            "result_file": "trials/cold_one_pass-B32000-W8-R2-cpu.json",
+            "sha256": "2cf2575894525af0c4579ec81905099fddbe4ca4cb89de050ab9618e33526a52"
+          },
+          {
+            "repeat": 3,
+            "request_wall_seconds": 0.07426178699824959,
+            "output_verification_seconds": 0.0010305959985998925,
+            "engine_seconds": 0.061225600000000005,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.24341234100029396,
+            "certificate_seconds": 0.10052648500095529,
+            "packing_seconds": 0.09432780499992077,
+            "total_preparation_seconds": 0.43826663100117,
+            "cold_startup_seconds": 0.011159766001583193,
+            "shutdown_seconds": 0.055003624000164564,
+            "cold_one_pass_seconds": 0.6098679570004606,
+            "result_file": "trials/cold_one_pass-B32000-W8-R3-cpu.json",
+            "sha256": "1fdafe65dfd4bc9104deee5bd5f668e22da89d0adef4b9b5aa2626b8902fc5a9"
+          },
+          {
+            "repeat": 4,
+            "request_wall_seconds": 0.06690445099957287,
+            "output_verification_seconds": 0.001664536999669508,
+            "engine_seconds": 0.062265600000000004,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.2371155059990997,
+            "certificate_seconds": 0.1034836170001654,
+            "packing_seconds": 0.09371319099955144,
+            "total_preparation_seconds": 0.43431231399881653,
+            "cold_startup_seconds": 0.010986319999574334,
+            "shutdown_seconds": 0.06322633399940969,
+            "cold_one_pass_seconds": 0.5859128150004835,
+            "result_file": "trials/cold_one_pass-B32000-W8-R4-cpu.json",
+            "sha256": "0d944aa6aef0e24ae299ccbcf876e3a07d08ed69cc0f662dbc816c9e977af80c"
+          },
+          {
+            "repeat": 5,
+            "request_wall_seconds": 0.0631037129987817,
+            "output_verification_seconds": 0.0017465789987909375,
+            "engine_seconds": 0.058681,
+            "kernel_seconds": 0.0,
+            "prepare_seconds": 0.2491991959996085,
+            "certificate_seconds": 0.09604578000107722,
+            "packing_seconds": 0.09915404799903627,
+            "total_preparation_seconds": 0.444399023999722,
+            "cold_startup_seconds": 0.011870540000018082,
+            "shutdown_seconds": 0.05762655899889069,
+            "cold_one_pass_seconds": 0.6087704239998857,
+            "result_file": "trials/cold_one_pass-B32000-W8-R5-cpu.json",
+            "sha256": "465897199e02033260961c1d296307e84be420181e0a2c93cf79ac7244afd51f"
+          }
+        ],
+        "cuda": [
+          {
+            "repeat": 1,
+            "request_wall_seconds": 0.011868386001879117,
+            "output_verification_seconds": 0.001208699997732765,
+            "engine_seconds": 0.007171499999999999,
+            "kernel_seconds": 0.0035952,
+            "prepare_seconds": 0.11493172500013316,
+            "certificate_seconds": 0.09844437500032654,
+            "packing_seconds": 0.09710533100042085,
+            "total_preparation_seconds": 0.31048143100088055,
+            "cold_startup_seconds": 0.2345607499992184,
+            "shutdown_seconds": 0.1682607030015788,
+            "cold_one_pass_seconds": 0.7353008520003641,
+            "result_file": "trials/cold_one_pass-B32000-W8-R1-cuda.json",
+            "sha256": "30abafffe6796010b490524e480508640d15e683af25efad743bad98bef4baf8"
+          },
+          {
+            "repeat": 2,
+            "request_wall_seconds": 0.012044356000842527,
+            "output_verification_seconds": 0.002072441999189323,
+            "engine_seconds": 0.007230220000000001,
+            "kernel_seconds": 0.00359123,
+            "prepare_seconds": 0.11466302000008,
+            "certificate_seconds": 0.09679067000070063,
+            "packing_seconds": 0.10702863400001661,
+            "total_preparation_seconds": 0.31848232400079723,
+            "cold_startup_seconds": 0.23946907599929546,
+            "shutdown_seconds": 0.16839120899931004,
+            "cold_one_pass_seconds": 0.7492463670005236,
+            "result_file": "trials/cold_one_pass-B32000-W8-R2-cuda.json",
+            "sha256": "9901efad3cddc9fc9a1565b3565b966e67e11bb26b905177fc2e2ca317629aad"
+          },
+          {
+            "repeat": 3,
+            "request_wall_seconds": 0.011220297999898321,
+            "output_verification_seconds": 0.001160749001428485,
+            "engine_seconds": 0.00689475,
+            "kernel_seconds": 0.00362291,
+            "prepare_seconds": 0.11375354200026777,
+            "certificate_seconds": 0.10768438600098307,
+            "packing_seconds": 0.09492733099978068,
+            "total_preparation_seconds": 0.3163652590010315,
+            "cold_startup_seconds": 0.24134748299911735,
+            "shutdown_seconds": 0.1702483349999966,
+            "cold_one_pass_seconds": 0.7491787689996272,
+            "result_file": "trials/cold_one_pass-B32000-W8-R3-cuda.json",
+            "sha256": "43548c698a99ab75e3b85be6c1b25a7e3cc295aca35781fd84f09b8b872a40e3"
+          },
+          {
+            "repeat": 4,
+            "request_wall_seconds": 0.011562409999896772,
+            "output_verification_seconds": 0.0011395499986974755,
+            "engine_seconds": 0.00714593,
+            "kernel_seconds": 0.0035870700000000004,
+            "prepare_seconds": 0.10070048200032033,
+            "certificate_seconds": 0.09793526900102734,
+            "packing_seconds": 0.09758859800058417,
+            "total_preparation_seconds": 0.29622434900193184,
+            "cold_startup_seconds": 0.2415296049985045,
+            "shutdown_seconds": 0.1667223250005918,
+            "cold_one_pass_seconds": 0.7258073829998466,
+            "result_file": "trials/cold_one_pass-B32000-W8-R4-cuda.json",
+            "sha256": "595bbdd687e1da201578f571b8703aadcf79c2215dc94a40e7a80d65de48f652"
+          },
+          {
+            "repeat": 5,
+            "request_wall_seconds": 0.01143197599776613,
+            "output_verification_seconds": 0.0010951770000247052,
+            "engine_seconds": 0.00690139,
+            "kernel_seconds": 0.00361062,
+            "prepare_seconds": 0.1090127500010567,
+            "certificate_seconds": 0.09467849400061823,
+            "packing_seconds": 0.0937048549985775,
+            "total_preparation_seconds": 0.29739609900025243,
+            "cold_startup_seconds": 0.2053915260003123,
+            "shutdown_seconds": 0.16613744599999336,
+            "cold_one_pass_seconds": 0.690493250000145,
+            "result_file": "trials/cold_one_pass-B32000-W8-R5-cuda.json",
+            "sha256": "8f53dc567b30baa498a12937fb0c5863d439ca40770149043bacdcb81c8421b8"
+          }
+        ]
+      },
+      "identity": {
+        "certificate_sha256": "240128c79d1c932300cd7442790ed1ca5af3e2614da6e93ac8a92849a567b7c6",
+        "tasks": 3692,
+        "points": 141244596,
+        "packets": [
+          "613718340d9e3fb4a23c03657a9885f4a5c33cf2d394432d5822e04777a4a2f3",
+          "3dc36da0ab4b8d2ae0773b798e28e99cda3de0b0cbb96431c6ce5159f90b1355",
+          "0140680a4f376a171bac11a96be9cf84ee2ad5ca7c0aaf818b0c5452a552926f"
+        ]
+      },
+      "medians": {
+        "cpu": {
+          "request_wall_seconds": 0.06366495799920813,
+          "output_verification_seconds": 0.001664536999669508,
+          "engine_seconds": 0.058681,
+          "kernel_seconds": 0.0,
+          "prepare_seconds": 0.24119892500129936,
+          "certificate_seconds": 0.10052648500095529,
+          "packing_seconds": 0.09417835499880312,
+          "total_preparation_seconds": 0.43492797299950325,
+          "cold_startup_seconds": 0.011159766001583193,
+          "shutdown_seconds": 0.055505244999949355,
+          "cold_one_pass_seconds": 0.5965657100005046
+        },
+        "cuda": {
+          "request_wall_seconds": 0.011562409999896772,
+          "output_verification_seconds": 0.001160749001428485,
+          "engine_seconds": 0.00714593,
+          "kernel_seconds": 0.0035952,
+          "prepare_seconds": 0.11375354200026777,
+          "certificate_seconds": 0.09793526900102734,
+          "packing_seconds": 0.09710533100042085,
+          "total_preparation_seconds": 0.31048143100088055,
+          "cold_startup_seconds": 0.23946907599929546,
+          "shutdown_seconds": 0.1682607030015788,
+          "cold_one_pass_seconds": 0.7353008520003641
+        }
+      }
+    }
+  ],
+  "controls": [
+    {
+      "bound": 34,
+      "cap": 384,
+      "widths": [
+        2,
+        4,
+        8
+      ],
+      "exact_hits": [
+        [
+          1,
+          1,
+          2,
+          -30
+        ],
+        [
+          1,
+          1,
+          3,
+          -241
+        ],
+        [
+          1,
+          2,
+          3,
+          -210
+        ],
+        [
+          2,
+          2,
+          3,
+          -179
+        ],
+        [
+          13,
+          16,
+          17,
+          12
+        ],
+        [
+          26,
+          32,
+          34,
+          384
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "bound": 100,
+      "cap": 2951,
+      "widths": [
+        2,
+        4,
+        8
+      ],
+      "exact_hits": [
+        [
+          1,
+          1,
+          2,
+          -30
+        ],
+        [
+          1,
+          1,
+          3,
+          -241
+        ],
+        [
+          1,
+          1,
+          4,
+          -1022
+        ],
+        [
+          1,
+          2,
+          3,
+          -210
+        ],
+        [
+          1,
+          2,
+          4,
+          -991
+        ],
+        [
+          1,
+          3,
+          4,
+          -780
+        ],
+        [
+          1,
+          3,
+          5,
+          -2881
+        ],
+        [
+          1,
+          4,
+          5,
+          -2100
+        ],
+        [
+          2,
+          2,
+          3,
+          -179
+        ],
+        [
+          2,
+          2,
+          4,
+          -960
+        ],
+        [
+          2,
+          3,
+          4,
+          -749
+        ],
+        [
+          2,
+          3,
+          5,
+          -2850
+        ],
+        [
+          2,
+          4,
+          5,
+          -2069
+        ],
+        [
+          3,
+          3,
+          4,
+          -538
+        ],
+        [
+          3,
+          3,
+          5,
+          -2639
+        ],
+        [
+          3,
+          4,
+          5,
+          -1858
+        ],
+        [
+          4,
+          4,
+          5,
+          -1077
+        ],
+        [
+          5,
+          5,
+          6,
+          -1526
+        ],
+        [
+          6,
+          6,
+          7,
+          -1255
+        ],
+        [
+          7,
+          7,
+          8,
+          846
+        ],
+        [
+          9,
+          10,
+          11,
+          -2002
+        ],
+        [
+          13,
+          16,
+          17,
+          12
+        ],
+        [
+          26,
+          32,
+          34,
+          384
+        ],
+        [
+          39,
+          48,
+          51,
+          2916
+        ],
+        [
+          42,
+          71,
+          72,
+          2951
+        ]
+      ],
+      "passed": true
+    }
+  ],
+  "orders": [
+    {
+      "bound": 8000,
+      "repeat": 1,
+      "widths": [
+        2,
+        4,
+        8
+      ]
+    },
+    {
+      "bound": 8000,
+      "repeat": 2,
+      "widths": [
+        2,
+        8,
+        4
+      ]
+    },
+    {
+      "bound": 8000,
+      "repeat": 3,
+      "widths": [
+        8,
+        2,
+        4
+      ]
+    },
+    {
+      "bound": 8000,
+      "repeat": 4,
+      "widths": [
+        8,
+        4,
+        2
+      ]
+    },
+    {
+      "bound": 8000,
+      "repeat": 5,
+      "widths": [
+        4,
+        8,
+        2
+      ]
+    },
+    {
+      "bound": 32000,
+      "repeat": 1,
+      "widths": [
+        2,
+        4,
+        8
+      ]
+    },
+    {
+      "bound": 32000,
+      "repeat": 2,
+      "widths": [
+        2,
+        8,
+        4
+      ]
+    },
+    {
+      "bound": 32000,
+      "repeat": 3,
+      "widths": [
+        8,
+        2,
+        4
+      ]
+    },
+    {
+      "bound": 32000,
+      "repeat": 4,
+      "widths": [
+        8,
+        4,
+        2
+      ]
+    },
+    {
+      "bound": 32000,
+      "repeat": 5,
+      "widths": [
+        4,
+        8,
+        2
+      ]
+    }
+  ],
+  "gpu_request_wall_seconds": 3.062808694990963,
+  "domain": "1 <= a <= b < c <= bound, abs(a^5+b^5-c^5) <= 42",
+  "selection": {
+    "bound": 32000,
+    "width": 8,
+    "backend": "cuda",
+    "persistent_end_to_end_seconds": 0.31812134799656633,
+    "rule": "lowest complete 32000 persistent pipeline median",
+    "workers": 16,
+    "packing": "optimized",
+    "bits": 48
+  },
+  "all_exact_oracles_equal": true,
+  "guarded_cases": []
+}
