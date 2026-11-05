@@ -1,0 +1,120 @@
+import copy
+from dataclasses import FrozenInstanceError,replace,asdict
+import importlib.util
+import json
+import multiprocessing
+import os
+from pathlib import Path
+import subprocess
+import sys
+import time
+import unittest
+from unittest.mock import patch
+
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT))
+import scaling_core as core
+from engine_session import EngineSession
+SOURCE=Path(os.environ.get('SCALING_LATTICE_SOURCE','${EVIDENCE_CHECKOUT}/lattice_prototype'))
+
+def build_plan(bound,cap):
+    specifications,direct=core.specs(bound,cap)
+    tasks=[core.prepare_task(row) for row in specifications]
+    certificates=[core.certify_task(task) for task in tasks]
+    return core.assemble(bound,cap,specifications,direct,tasks,certificates)
+
+class ScalingCertificates(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        core.initialize(SOURCE)
+
+    def test_gmp_fpylll_certificates_pass_the_independent_original_model(self):
+        sys.path.insert(0,str(ROOT))
+        import model
+        specifications,direct=core.specs(34,384)
+        tasks=[core.prepare_task(row) for row in specifications]
+        for task in tasks:core.certify_task(task)
+        records=[]
+        for task in tasks:
+            d=json.loads(json.dumps(asdict(task)))
+            d['grid_index']=task.id-sum(1 for row in specifications[:task.id] if row[1]!=task.cmin)
+            shell=[r for r in specifications if r[1]==task.cmin]
+            d['grid_index']=next(i for i,r in enumerate(shell) if r[0]==task.id)
+            d['grid_count']=len(shell)
+            records.append(d)
+        plan=dict(schema=1,kind='full-positive-domain',bound=34,mode='constant',cap=384,width=2,
+            tasks=records,direct_shells=[list(v) for v in direct],points=sum(t.points for t in tasks))
+        self.assertTrue(model.verify_plan(plan))
+
+    def test_tampered_certificates_missing_patches_and_false_cache_tokens_fail(self):
+        specifications,direct=core.specs(10,42)
+        tasks=[core.prepare_task(row) for row in specifications]
+        digests=[core.certify_task(t) for t in tasks]
+        task=tasks[0]
+        with self.assertRaises((ValueError,ZeroDivisionError)):
+            core.certify_task(replace(task,J=(task.J[0]+1,*task.J[1:])))
+        with self.assertRaises(ValueError):core.assemble(10,42,specifications,direct,tasks[:-1],digests[:-1])
+        with self.assertRaises(ValueError):core.assemble(10,42,specifications,direct,tasks,['0'*64]*len(tasks))
+        with self.assertRaises(FrozenInstanceError):task.points=1
+
+    def test_output_counts_are_checked_on_each_reuse(self):
+        plan=build_plan(4,42);batch=plan.batches[0]
+        result=dict(backend='gpu',box_complete=True,points_visited=batch.points,
+            counts=[dict(id=i,expected=t.points,visited=t.points) for i,t in enumerate(batch.tasks)],hits=[])
+        core.decode_batch(batch,result,'gpu')
+        result['counts'][0]['visited']-=1
+        with self.assertRaises(ValueError):core.decode_batch(batch,result,'gpu')
+
+    def test_extended_shells_are_complete_and_resource_limits_stay_finite(self):
+        for bound in (8000,32000):
+            specifications,direct=core.specs(bound,42)
+            intervals=sorted(set((s[1],s[2]) for s in specifications).union(direct))
+            self.assertEqual(intervals[0][0],1);self.assertEqual(intervals[-1][1],bound)
+            for a,b in zip(intervals,intervals[1:]):self.assertEqual(a[1]+1,b[0])
+            self.assertLessEqual(len(specifications),core.MAX_TOTAL_TASKS)
+        for invalid in (0,32001,True):
+            with self.assertRaises(ValueError):core.specs(invalid,42)
+        self.assertEqual(core.MAX_TASKS,4096);self.assertEqual(core.MAX_POINTS,50_000_000)
+
+    def test_spawned_worker_certificates_equal_serial_certificates(self):
+        specifications,_=core.specs(34,384)
+        serial=[core.prepare_task(row) for row in specifications]
+        allowed=sorted(os.sched_getaffinity(0))[:2]
+        context=multiprocessing.get_context('spawn')
+        with context.Pool(2,initializer=core.initialize,initargs=(SOURCE,allowed)) as pool:
+            parallel=pool.map(core.prepare_task,specifications,4)
+            tokens=pool.map(core.certify_task,parallel,4)
+        self.assertEqual(parallel,serial)
+        self.assertEqual(tokens,[core.certify_task(t) for t in serial])
+
+class PersistentCPU(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):core.initialize(SOURCE)
+
+    def test_threaded_streams_split_domain_and_match_independent_oracle(self):
+        with patch.object(core,'MAX_TASKS',4):plan=build_plan(34,384)
+        oracle=json.loads(subprocess.check_output([str(ROOT/'bin/scaling_oracle'),'34','384'],text=True))
+        expected=set(map(tuple,oracle['hits']))
+        for binary in ('scaling_cpu','scaling_cpu_sanitize'):
+            environment=dict(os.environ,ASAN_OPTIONS='detect_leaks=0')
+            with EngineSession([str(ROOT/'bin'/binary),'--threads','4'],'emulated',time.monotonic()+30,environment) as session:
+                pid=session.process.pid
+                for _ in range(2):
+                    hits=set(plan.direct_hits)
+                    for batch in plan.batches:
+                        result,_=session.run(batch.packet)
+                        hits|=core.decode_batch(batch,result,'emulated')
+                    self.assertEqual(hits,expected)
+                    self.assertEqual(session.process.pid,pid)
+
+    def test_failed_capacity_and_bad_packet_recover_without_stale_results(self):
+        packet='LATTICE_GPU_V1 0 18098 1\n0 1 10 10 10 10 1 0 0 0 1 0 0 0 1\n'
+        with EngineSession([str(ROOT/'bin/scaling_cpu'),'--threads','2','--capacity','1'],
+                           'emulated',time.monotonic()+30) as session:
+            failed,_=session.run(packet);self.assertFalse(failed['box_complete'])
+            bad,_=session.run('LATTICE_GPU_V1 0 42 4097\n');self.assertFalse(bad['box_complete'])
+            valid,_=session.run('LATTICE_GPU_V1 0 42 0\n')
+            self.assertTrue(valid['box_complete']);self.assertEqual(valid['points_visited'],0)
+            self.assertEqual(valid['hits'],[]);self.assertEqual(valid['request_id'],3)
+
+if __name__=='__main__':unittest.main(verbosity=2)
