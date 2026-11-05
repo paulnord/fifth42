@@ -1,0 +1,78 @@
+{
+  "complete": true,
+  "domain": "1 <= a <= b < c <= bound",
+  "bound": 100,
+  "backend": "sympy",
+  "mode": "constant",
+  "constant_cap": 42,
+  "residual_convention": "a^5+b^5-c^5",
+  "hits": [
+    [
+      1,
+      1,
+      2,
+      -30
+    ],
+    [
+      13,
+      16,
+      17,
+      12
+    ]
+  ],
+  "stats": {
+    "patches": 58,
+    "enumeration_nodes": 19476,
+    "sphere_points": 16506,
+    "box_points": 316,
+    "exact_tests": 316,
+    "direct_pairs": 3,
+    "direct_candidates": 3,
+    "seconds": 1.5152142960578203
+  },
+  "shells": [
+    {
+      "cmin": 1,
+      "cmax": 1,
+      "method": "direct-small-shell"
+    },
+    {
+      "cmin": 2,
+      "cmax": 3,
+      "method": "direct-small-shell"
+    },
+    {
+      "cmin": 4,
+      "cmax": 7,
+      "method": "lattice",
+      "patches": 2
+    },
+    {
+      "cmin": 8,
+      "cmax": 15,
+      "method": "lattice",
+      "patches": 4
+    },
+    {
+      "cmin": 16,
+      "cmax": 31,
+      "method": "lattice",
+      "patches": 8
+    },
+    {
+      "cmin": 32,
+      "cmax": 63,
+      "method": "lattice",
+      "patches": 15
+    },
+    {
+      "cmin": 64,
+      "cmax": 100,
+      "method": "lattice",
+      "patches": 29
+    }
+  ],
+  "signed_hits": [],
+  "signed_domain": "all x,y,z in [-100,100], modulo permutations",
+  "target": 42
+}

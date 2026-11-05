@@ -1,0 +1,1103 @@
+{
+  "status": "passed",
+  "source_commit": "91bb89b0ff49974e9458faf19015908e44b85cb8",
+  "source": "${SOURCE_DIR}",
+  "scratch": "${RUN_DIR}/scratch/lattice_prototype",
+  "started_utc": "2026-11-05T16:23:50.197427+00:00",
+  "host": "ADA",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "execution": "Sequential, one CPU, nice 19, native thread counts 1, 2 GiB per process",
+  "bounds": "signed smoke 100; positive controls 34; upstream comparison 100 and 1000",
+  "fresh_bound_1000_lattice_search": false,
+  "gpu_execution": false,
+  "larger_search_started": false,
+  "commands": [
+    {
+      "name": "smoke-reference",
+      "command": [
+        "timeout",
+        "-k",
+        "5s",
+        "60s",
+        "${VALIDATION_PYTHON}",
+        "lattice5.py",
+        "--bound",
+        "100",
+        "--mode",
+        "signed42",
+        "--backend",
+        "reference",
+        "--max-seconds",
+        "30"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 2.258333486970514,
+      "cpu_seconds": 2.037307,
+      "stdout": "logs/smoke-reference.stdout.txt",
+      "stderr": "logs/smoke-reference.stderr.txt",
+      "results": {
+        "complete": true,
+        "domain": "1 <= a <= b < c <= bound",
+        "bound": 100,
+        "backend": "reference",
+        "mode": "constant",
+        "constant_cap": 42,
+        "residual_convention": "a^5+b^5-c^5",
+        "hits": [
+          [
+            1,
+            1,
+            2,
+            -30
+          ],
+          [
+            13,
+            16,
+            17,
+            12
+          ]
+        ],
+        "stats": {
+          "patches": 58,
+          "enumeration_nodes": 19476,
+          "sphere_points": 16506,
+          "box_points": 316,
+          "exact_tests": 316,
+          "direct_pairs": 3,
+          "direct_candidates": 3,
+          "seconds": 1.9983128998428583
+        },
+        "shells": [
+          {
+            "cmin": 1,
+            "cmax": 1,
+            "method": "direct-small-shell"
+          },
+          {
+            "cmin": 2,
+            "cmax": 3,
+            "method": "direct-small-shell"
+          },
+          {
+            "cmin": 4,
+            "cmax": 7,
+            "method": "lattice",
+            "patches": 2
+          },
+          {
+            "cmin": 8,
+            "cmax": 15,
+            "method": "lattice",
+            "patches": 4
+          },
+          {
+            "cmin": 16,
+            "cmax": 31,
+            "method": "lattice",
+            "patches": 8
+          },
+          {
+            "cmin": 32,
+            "cmax": 63,
+            "method": "lattice",
+            "patches": 15
+          },
+          {
+            "cmin": 64,
+            "cmax": 100,
+            "method": "lattice",
+            "patches": 29
+          }
+        ],
+        "signed_hits": [],
+        "signed_domain": "all x,y,z in [-100,100], modulo permutations",
+        "target": 42
+      },
+      "archived_semantic_equal_excluding_seconds": true
+    },
+    {
+      "name": "smoke-sympy",
+      "command": [
+        "timeout",
+        "-k",
+        "5s",
+        "60s",
+        "${VALIDATION_PYTHON}",
+        "lattice5.py",
+        "--bound",
+        "100",
+        "--mode",
+        "signed42",
+        "--backend",
+        "sympy",
+        "--max-seconds",
+        "30"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 1.7570484480820596,
+      "cpu_seconds": 1.5773820000000003,
+      "stdout": "logs/smoke-sympy.stdout.txt",
+      "stderr": "logs/smoke-sympy.stderr.txt",
+      "results": {
+        "complete": true,
+        "domain": "1 <= a <= b < c <= bound",
+        "bound": 100,
+        "backend": "sympy",
+        "mode": "constant",
+        "constant_cap": 42,
+        "residual_convention": "a^5+b^5-c^5",
+        "hits": [
+          [
+            1,
+            1,
+            2,
+            -30
+          ],
+          [
+            13,
+            16,
+            17,
+            12
+          ]
+        ],
+        "stats": {
+          "patches": 58,
+          "enumeration_nodes": 19476,
+          "sphere_points": 16506,
+          "box_points": 316,
+          "exact_tests": 316,
+          "direct_pairs": 3,
+          "direct_candidates": 3,
+          "seconds": 1.5152142960578203
+        },
+        "shells": [
+          {
+            "cmin": 1,
+            "cmax": 1,
+            "method": "direct-small-shell"
+          },
+          {
+            "cmin": 2,
+            "cmax": 3,
+            "method": "direct-small-shell"
+          },
+          {
+            "cmin": 4,
+            "cmax": 7,
+            "method": "lattice",
+            "patches": 2
+          },
+          {
+            "cmin": 8,
+            "cmax": 15,
+            "method": "lattice",
+            "patches": 4
+          },
+          {
+            "cmin": 16,
+            "cmax": 31,
+            "method": "lattice",
+            "patches": 8
+          },
+          {
+            "cmin": 32,
+            "cmax": 63,
+            "method": "lattice",
+            "patches": 15
+          },
+          {
+            "cmin": 64,
+            "cmax": 100,
+            "method": "lattice",
+            "patches": 29
+          }
+        ],
+        "signed_hits": [],
+        "signed_domain": "all x,y,z in [-100,100], modulo permutations",
+        "target": 42
+      }
+    },
+    {
+      "name": "smoke-fpylll",
+      "command": [
+        "timeout",
+        "-k",
+        "5s",
+        "60s",
+        "${VALIDATION_PYTHON}",
+        "lattice5.py",
+        "--bound",
+        "100",
+        "--mode",
+        "signed42",
+        "--backend",
+        "fpylll",
+        "--max-seconds",
+        "30"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 1.506473718676716,
+      "cpu_seconds": 1.4056350000000006,
+      "stdout": "logs/smoke-fpylll.stdout.txt",
+      "stderr": "logs/smoke-fpylll.stderr.txt",
+      "results": {
+        "complete": true,
+        "domain": "1 <= a <= b < c <= bound",
+        "bound": 100,
+        "backend": "fpylll",
+        "mode": "constant",
+        "constant_cap": 42,
+        "residual_convention": "a^5+b^5-c^5",
+        "hits": [
+          [
+            1,
+            1,
+            2,
+            -30
+          ],
+          [
+            13,
+            16,
+            17,
+            12
+          ]
+        ],
+        "stats": {
+          "patches": 58,
+          "enumeration_nodes": 19476,
+          "sphere_points": 16506,
+          "box_points": 316,
+          "exact_tests": 316,
+          "direct_pairs": 3,
+          "direct_candidates": 3,
+          "seconds": 1.3650626777671278
+        },
+        "shells": [
+          {
+            "cmin": 1,
+            "cmax": 1,
+            "method": "direct-small-shell"
+          },
+          {
+            "cmin": 2,
+            "cmax": 3,
+            "method": "direct-small-shell"
+          },
+          {
+            "cmin": 4,
+            "cmax": 7,
+            "method": "lattice",
+            "patches": 2
+          },
+          {
+            "cmin": 8,
+            "cmax": 15,
+            "method": "lattice",
+            "patches": 4
+          },
+          {
+            "cmin": 16,
+            "cmax": 31,
+            "method": "lattice",
+            "patches": 8
+          },
+          {
+            "cmin": 32,
+            "cmax": 63,
+            "method": "lattice",
+            "patches": 15
+          },
+          {
+            "cmin": 64,
+            "cmax": 100,
+            "method": "lattice",
+            "patches": 29
+          }
+        ],
+        "signed_hits": [],
+        "signed_domain": "all x,y,z in [-100,100], modulo permutations",
+        "target": 42
+      },
+      "archived_semantic_equal_excluding_seconds": true
+    },
+    {
+      "name": "smoke-modular-fpylll",
+      "command": [
+        "timeout",
+        "-k",
+        "5s",
+        "60s",
+        "${VALIDATION_PYTHON}",
+        "-c",
+        "import json\nimport lattice5 as l\nimport modular_filters as f\nrows = []\nfor mode in ('none', 'prune'):\n    r = f.signed42_filtered(100, mode=mode, backend='fpylll', max_seconds=20)\n    if not r['complete'] or set(map(tuple, r['signed_hits'])) != l.signed_reference(100, 42):\n        raise RuntimeError('signed bound-100 check failed')\n    rows.append(r)\nr = f.search_targets_positive(34, [12, 384], mode='prune', backend='fpylll', max_seconds=20)\nexpected = l.direct_positive(1, 34, lambda c: 384, lambda r, c: r in (12, 384))\nif not r['complete'] or not expected or set(map(tuple, r['hits'])) != expected:\n    raise RuntimeError('nonempty control failed')\nrows.append(r)\nprint(json.dumps(rows, indent=2))\n"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 1.756716514006257,
+      "cpu_seconds": 1.6834909999999996,
+      "stdout": "logs/smoke-modular-fpylll.stdout.txt",
+      "stderr": "logs/smoke-modular-fpylll.stderr.txt",
+      "results": [
+        {
+          "complete": true,
+          "domain": "1 <= a <= b < c <= bound",
+          "bound": 100,
+          "targets": [
+            -42,
+            42
+          ],
+          "hits": [],
+          "stats": {
+            "patches": 58,
+            "enumeration_nodes": 19476,
+            "sphere_points": 16506,
+            "box_points": 316,
+            "exact_tests": 316,
+            "direct_pairs": 3,
+            "direct_candidates": 3,
+            "seconds": 1.3685764838010073
+          },
+          "filter_stats": {
+            "residue_candidates": 0,
+            "modular_rejects": 0,
+            "norm_tests": 0,
+            "cache_entries": 0,
+            "interval_rejects": 0,
+            "integer_intervals": 0
+          },
+          "shells": [
+            {
+              "cmin": 1,
+              "cmax": 1,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 2,
+              "cmax": 3,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 4,
+              "cmax": 7,
+              "method": "lattice",
+              "patches": 2
+            },
+            {
+              "cmin": 8,
+              "cmax": 15,
+              "method": "lattice",
+              "patches": 4
+            },
+            {
+              "cmin": 16,
+              "cmax": 31,
+              "method": "lattice",
+              "patches": 8
+            },
+            {
+              "cmin": 32,
+              "cmax": 63,
+              "method": "lattice",
+              "patches": 15
+            },
+            {
+              "cmin": 64,
+              "cmax": 100,
+              "method": "lattice",
+              "patches": 29
+            }
+          ],
+          "mode": "none",
+          "moduli": [
+            25,
+            31,
+            61
+          ],
+          "backend": "fpylll",
+          "target": 42,
+          "signed_hits": [],
+          "signed_domain": "all x,y,z in [-100,100], modulo permutations"
+        },
+        {
+          "complete": true,
+          "domain": "1 <= a <= b < c <= bound",
+          "bound": 100,
+          "targets": [
+            -42,
+            42
+          ],
+          "hits": [],
+          "stats": {
+            "patches": 58,
+            "enumeration_nodes": 19476,
+            "sphere_points": 0,
+            "box_points": 0,
+            "exact_tests": 0,
+            "direct_pairs": 3,
+            "direct_candidates": 3,
+            "seconds": 0.19041589461266994
+          },
+          "filter_stats": {
+            "residue_candidates": 17810,
+            "modular_rejects": 17810,
+            "norm_tests": 1666,
+            "cache_entries": 3522,
+            "interval_rejects": 0,
+            "integer_intervals": 0
+          },
+          "shells": [
+            {
+              "cmin": 1,
+              "cmax": 1,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 2,
+              "cmax": 3,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 4,
+              "cmax": 7,
+              "method": "lattice",
+              "patches": 2
+            },
+            {
+              "cmin": 8,
+              "cmax": 15,
+              "method": "lattice",
+              "patches": 4
+            },
+            {
+              "cmin": 16,
+              "cmax": 31,
+              "method": "lattice",
+              "patches": 8
+            },
+            {
+              "cmin": 32,
+              "cmax": 63,
+              "method": "lattice",
+              "patches": 15
+            },
+            {
+              "cmin": 64,
+              "cmax": 100,
+              "method": "lattice",
+              "patches": 29
+            }
+          ],
+          "mode": "prune",
+          "moduli": [
+            25,
+            31,
+            61
+          ],
+          "backend": "fpylll",
+          "target": 42,
+          "signed_hits": [],
+          "signed_domain": "all x,y,z in [-100,100], modulo permutations"
+        },
+        {
+          "complete": true,
+          "domain": "1 <= a <= b < c <= bound",
+          "bound": 34,
+          "targets": [
+            12,
+            384
+          ],
+          "hits": [
+            [
+              13,
+              16,
+              17,
+              12
+            ],
+            [
+              26,
+              32,
+              34,
+              384
+            ]
+          ],
+          "stats": {
+            "patches": 27,
+            "enumeration_nodes": 6569,
+            "sphere_points": 8,
+            "box_points": 2,
+            "exact_tests": 2,
+            "direct_pairs": 21,
+            "direct_candidates": 22,
+            "seconds": 0.07864296203479171
+          },
+          "filter_stats": {
+            "residue_candidates": 5901,
+            "modular_rejects": 5893,
+            "norm_tests": 676,
+            "cache_entries": 1383,
+            "interval_rejects": 0,
+            "integer_intervals": 0
+          },
+          "shells": [
+            {
+              "cmin": 1,
+              "cmax": 1,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 2,
+              "cmax": 3,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 4,
+              "cmax": 7,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 8,
+              "cmax": 15,
+              "method": "lattice",
+              "patches": 4
+            },
+            {
+              "cmin": 16,
+              "cmax": 31,
+              "method": "lattice",
+              "patches": 8
+            },
+            {
+              "cmin": 32,
+              "cmax": 34,
+              "method": "lattice",
+              "patches": 15
+            }
+          ],
+          "mode": "prune",
+          "moduli": [
+            25,
+            31,
+            61
+          ],
+          "backend": "fpylll"
+        }
+      ],
+      "archived_semantic_equal_excluding_seconds": true
+    },
+    {
+      "name": "smoke-oracle",
+      "command": [
+        "timeout",
+        "-k",
+        "5s",
+        "60s",
+        "${VALIDATION_PYTHON}",
+        "-c",
+        "from pathlib import Path\nROOT=Path('${RUN_DIR}')\nimport json\nimport lattice5 as l\nfor name in ('smoke-reference', 'smoke-fpylll', 'smoke-sympy'):\n    p = ROOT / 'logs' / (name + '.stdout.txt')\n    if not p.is_file(): continue\n    r = json.loads(p.read_text())\n    if not r['complete'] or set(map(tuple,r['signed_hits'])) != l.signed_reference(100,42):\n        raise RuntimeError('signed smoke mismatch: '+name)\nprint('PASS: available signed smoke results agree with independent exact oracle')\n"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.2532934150658548,
+      "cpu_seconds": 0.04299800000000065,
+      "stdout": "logs/smoke-oracle.stdout.txt",
+      "stderr": "logs/smoke-oracle.stderr.txt"
+    },
+    {
+      "name": "smoke-modular-reference",
+      "command": [
+        "timeout",
+        "-k",
+        "5s",
+        "60s",
+        "${VALIDATION_PYTHON}",
+        "-c",
+        "import json\nimport lattice5 as l\nimport modular_filters as f\nrows = []\nfor mode in ('none', 'prune'):\n    r = f.signed42_filtered(100, mode=mode, backend='reference', max_seconds=20)\n    if not r['complete'] or set(map(tuple, r['signed_hits'])) != l.signed_reference(100, 42):\n        raise RuntimeError('signed bound-100 check failed')\n    rows.append(r)\nr = f.search_targets_positive(34, [12, 384], mode='prune', backend='reference', max_seconds=20)\nexpected = l.direct_positive(1, 34, lambda c: 384, lambda r, c: r in (12, 384))\nif not r['complete'] or not expected or set(map(tuple, r['hits'])) != expected:\n    raise RuntimeError('nonempty control failed')\nrows.append(r)\nprint(json.dumps(rows, indent=2))\n"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 3.2598836263641715,
+      "cpu_seconds": 3.2522930000000003,
+      "stdout": "logs/smoke-modular-reference.stdout.txt",
+      "stderr": "logs/smoke-modular-reference.stderr.txt",
+      "results": [
+        {
+          "complete": true,
+          "domain": "1 <= a <= b < c <= bound",
+          "bound": 100,
+          "targets": [
+            -42,
+            42
+          ],
+          "hits": [],
+          "stats": {
+            "patches": 58,
+            "enumeration_nodes": 19476,
+            "sphere_points": 16506,
+            "box_points": 316,
+            "exact_tests": 316,
+            "direct_pairs": 3,
+            "direct_candidates": 3,
+            "seconds": 1.992245951667428
+          },
+          "filter_stats": {
+            "residue_candidates": 0,
+            "modular_rejects": 0,
+            "norm_tests": 0,
+            "cache_entries": 0,
+            "interval_rejects": 0,
+            "integer_intervals": 0
+          },
+          "shells": [
+            {
+              "cmin": 1,
+              "cmax": 1,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 2,
+              "cmax": 3,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 4,
+              "cmax": 7,
+              "method": "lattice",
+              "patches": 2
+            },
+            {
+              "cmin": 8,
+              "cmax": 15,
+              "method": "lattice",
+              "patches": 4
+            },
+            {
+              "cmin": 16,
+              "cmax": 31,
+              "method": "lattice",
+              "patches": 8
+            },
+            {
+              "cmin": 32,
+              "cmax": 63,
+              "method": "lattice",
+              "patches": 15
+            },
+            {
+              "cmin": 64,
+              "cmax": 100,
+              "method": "lattice",
+              "patches": 29
+            }
+          ],
+          "mode": "none",
+          "moduli": [
+            25,
+            31,
+            61
+          ],
+          "backend": "reference",
+          "target": 42,
+          "signed_hits": [],
+          "signed_domain": "all x,y,z in [-100,100], modulo permutations"
+        },
+        {
+          "complete": true,
+          "domain": "1 <= a <= b < c <= bound",
+          "bound": 100,
+          "targets": [
+            -42,
+            42
+          ],
+          "hits": [],
+          "stats": {
+            "patches": 58,
+            "enumeration_nodes": 19476,
+            "sphere_points": 0,
+            "box_points": 0,
+            "exact_tests": 0,
+            "direct_pairs": 3,
+            "direct_candidates": 3,
+            "seconds": 0.8619813756085932
+          },
+          "filter_stats": {
+            "residue_candidates": 17810,
+            "modular_rejects": 17810,
+            "norm_tests": 1666,
+            "cache_entries": 3522,
+            "interval_rejects": 0,
+            "integer_intervals": 0
+          },
+          "shells": [
+            {
+              "cmin": 1,
+              "cmax": 1,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 2,
+              "cmax": 3,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 4,
+              "cmax": 7,
+              "method": "lattice",
+              "patches": 2
+            },
+            {
+              "cmin": 8,
+              "cmax": 15,
+              "method": "lattice",
+              "patches": 4
+            },
+            {
+              "cmin": 16,
+              "cmax": 31,
+              "method": "lattice",
+              "patches": 8
+            },
+            {
+              "cmin": 32,
+              "cmax": 63,
+              "method": "lattice",
+              "patches": 15
+            },
+            {
+              "cmin": 64,
+              "cmax": 100,
+              "method": "lattice",
+              "patches": 29
+            }
+          ],
+          "mode": "prune",
+          "moduli": [
+            25,
+            31,
+            61
+          ],
+          "backend": "reference",
+          "target": 42,
+          "signed_hits": [],
+          "signed_domain": "all x,y,z in [-100,100], modulo permutations"
+        },
+        {
+          "complete": true,
+          "domain": "1 <= a <= b < c <= bound",
+          "bound": 34,
+          "targets": [
+            12,
+            384
+          ],
+          "hits": [
+            [
+              13,
+              16,
+              17,
+              12
+            ],
+            [
+              26,
+              32,
+              34,
+              384
+            ]
+          ],
+          "stats": {
+            "patches": 27,
+            "enumeration_nodes": 6569,
+            "sphere_points": 8,
+            "box_points": 2,
+            "exact_tests": 2,
+            "direct_pairs": 21,
+            "direct_candidates": 22,
+            "seconds": 0.35673669120296836
+          },
+          "filter_stats": {
+            "residue_candidates": 5901,
+            "modular_rejects": 5893,
+            "norm_tests": 676,
+            "cache_entries": 1383,
+            "interval_rejects": 0,
+            "integer_intervals": 0
+          },
+          "shells": [
+            {
+              "cmin": 1,
+              "cmax": 1,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 2,
+              "cmax": 3,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 4,
+              "cmax": 7,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 8,
+              "cmax": 15,
+              "method": "lattice",
+              "patches": 4
+            },
+            {
+              "cmin": 16,
+              "cmax": 31,
+              "method": "lattice",
+              "patches": 8
+            },
+            {
+              "cmin": 32,
+              "cmax": 34,
+              "method": "lattice",
+              "patches": 15
+            }
+          ],
+          "mode": "prune",
+          "moduli": [
+            25,
+            31,
+            61
+          ],
+          "backend": "reference"
+        }
+      ]
+    },
+    {
+      "name": "tests",
+      "command": [
+        "timeout",
+        "-k",
+        "5s",
+        "300s",
+        "${VALIDATION_PYTHON}",
+        "-m",
+        "unittest",
+        "-v",
+        "test_lattice5",
+        "audit_tests",
+        "test_backends",
+        "test_modular_filters"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 35.33294658921659,
+      "cpu_seconds": 35.196291,
+      "stdout": "logs/tests.stdout.txt",
+      "stderr": "logs/tests.stderr.txt",
+      "tests_run": 31,
+      "suite_reported_seconds": 35.098,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 31
+    },
+    {
+      "name": "tests-optimized",
+      "command": [
+        "timeout",
+        "-k",
+        "5s",
+        "300s",
+        "${VALIDATION_PYTHON}",
+        "-O",
+        "-m",
+        "unittest",
+        "-v",
+        "test_backends",
+        "test_modular_filters"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 17.04276300687343,
+      "cpu_seconds": 16.975967999999998,
+      "stdout": "logs/tests-optimized.stdout.txt",
+      "stderr": "logs/tests-optimized.stderr.txt",
+      "tests_run": 14,
+      "suite_reported_seconds": 16.688,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 14
+    },
+    {
+      "name": "compiled-tests",
+      "command": [
+        "timeout",
+        "-k",
+        "5s",
+        "300s",
+        "${VALIDATION_PYTHON}",
+        "compiled_experiment/test_mpq.py"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.2533971038646996,
+      "cpu_seconds": 0.09961000000000253,
+      "stdout": "logs/compiled-tests.stdout.txt",
+      "stderr": "logs/compiled-tests.stderr.txt",
+      "tests_run": 5,
+      "suite_reported_seconds": 0.044,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5
+    },
+    {
+      "name": "compiled-tests-optimized",
+      "command": [
+        "timeout",
+        "-k",
+        "5s",
+        "300s",
+        "${VALIDATION_PYTHON}",
+        "-O",
+        "compiled_experiment/test_mpq.py"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.5038125389255583,
+      "cpu_seconds": 0.23474899999999382,
+      "stdout": "logs/compiled-tests-optimized.stdout.txt",
+      "stderr": "logs/compiled-tests-optimized.stderr.txt",
+      "tests_run": 5,
+      "suite_reported_seconds": 0.043,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 5
+    },
+    {
+      "name": "upstream-comparison",
+      "command": [
+        "timeout",
+        "-k",
+        "5s",
+        "300s",
+        "${VALIDATION_PYTHON}",
+        "compare_upstream.py"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 2.2590395458973944,
+      "cpu_seconds": 2.0825270000000113,
+      "stdout": "logs/upstream-comparison.stdout.txt",
+      "stderr": "logs/upstream-comparison.stderr.txt",
+      "comparison_cases": 4,
+      "upstream_runs": 20,
+      "fresh_output_sha256": "a0db3a43a5c4478a22ab8494b1082f4b023a5e4ad491efb1563c743a584ed8b4",
+      "archived_comparisons": {
+        "results/upstream-comparison.json": true,
+        "publication_validation/upstream-comparison.json": true
+      },
+      "lattice_bound_1000_inputs": "retained published healy-1000.json and signed42-1000.json; not regenerated",
+      "fresh_output": "upstream-comparison.json"
+    }
+  ],
+  "deferred": [],
+  "environment": {
+    "python": "3.12.4 | packaged by Anaconda, Inc. | (main, Jun 18 2024, 15:12:24) [GCC 11.2.0]",
+    "python_minor": [
+      3,
+      12
+    ],
+    "packages": {
+      "sympy": "1.14.0",
+      "fpylll": "0.6.4",
+      "cysignals": "1.12.5",
+      "numpy": "2.3.5",
+      "gmpy2": "2.2.2",
+      "mpmath": "1.3.0"
+    },
+    "fplll_version": "5.5.0",
+    "gmp_version": "GMP 6.3.0",
+    "mpfr_version": "MPFR 4.2.1",
+    "mpc_version": "MPC 1.3.1"
+  },
+  "dependency_mismatches": {},
+  "published_files_unchanged": true,
+  "total_wall_seconds": 66.20517808524892,
+  "finished_utc": "2026-11-05T16:24:56.737242+00:00",
+  "published_file_count": 110,
+  "evidence_checkout_clean": true,
+  "production_status_matches_initial_observation": true,
+  "source_identities": {
+    "commit": "91bb89b0ff49974e9458faf19015908e44b85cb8",
+    "tree": "78bc2c0368febc59efc5b055b351ba756456072b",
+    "files": [
+      {
+        "path": "PACKAGE_SHA256SUMS",
+        "sha256": "a33ccb8ca5e4db64e4f040905ef1a1cebd5e4c85033ec772232b30e46af9053f"
+      },
+      {
+        "path": "SHA256SUMS",
+        "sha256": "971371fee549a3aa96126cf0daeecd157f27461dc86e95a3dd913a1f01bdf64e"
+      },
+      {
+        "path": "compiled_experiment/SHA256SUMS",
+        "sha256": "0935cd8ea03c4b50d6b19ec40a8db2bf3d4cf62182ba47be1bfe7d0e6494d2e3"
+      },
+      {
+        "path": "lattice5.py",
+        "sha256": "89c55504aa70a41f16cc3d2b4d39d8a563af499221ede48d725bc32ce1ff03eb"
+      },
+      {
+        "path": "modular_filters.py",
+        "sha256": "d5f789da3b61e6bf120fb5daf928d91df1a1e87eedaa884a614ed9c084d90f36"
+      },
+      {
+        "path": "ADA_OPTIMIZATION_HANDOFF.md",
+        "sha256": "fdbacd4960b313ec532a9ac2c2b486bb36e040d2da7e48f1ff6239ff86ef004b"
+      }
+    ]
+  },
+  "manifest_verification": [
+    {
+      "manifest": "PACKAGE_SHA256SUMS",
+      "exit_code": 0,
+      "passed": 109,
+      "log": "package-checksums/verify-PACKAGE_SHA256SUMS.txt"
+    },
+    {
+      "manifest": "SHA256SUMS",
+      "exit_code": 0,
+      "passed": 95,
+      "log": "package-checksums/verify-SHA256SUMS.txt"
+    },
+    {
+      "manifest": "compiled_experiment/SHA256SUMS",
+      "exit_code": 0,
+      "passed": 12,
+      "log": "package-checksums/verify-compiled_experiment-SHA256SUMS.txt"
+    }
+  ],
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "validation_summary": {
+    "complete": true,
+    "required_test_groups": {
+      "tests": 31,
+      "tests-optimized": 14,
+      "compiled-tests": 5,
+      "compiled-tests-optimized": 5
+    },
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "upstream_runs_matched": 20,
+    "native_dependencies_match_handoff": true,
+    "timing_samples_per_smoke": 1,
+    "fresh_bound_1000_lattice_search": false,
+    "larger_search_started": false
+  },
+  "review_finished_utc": "2026-11-05T16:25:52.949601+00:00",
+  "publication": {
+    "published_utc": "2026-11-05T16:31:03.871858+00:00",
+    "tested_commit": "91bb89b0ff49974e9458faf19015908e44b85cb8",
+    "local_report_sha256": "1b527d8de7b3930ca82b6864bb0c0e93559b5c7f12bf3570b28bbfd40ca64c94",
+    "absolute_execution_paths": "Replaced by documented path aliases; commands otherwise retained.",
+    "omitted_fields": [
+      "production_status_after"
+    ],
+    "path_aliases": {
+      "VALIDATION_PYTHON": "Python executable in the isolated Python 3.12 validation environment",
+      "RUN_DIR": "Fresh validation output directory",
+      "SOURCE_DIR": "lattice_prototype at the tested commit",
+      "SOURCE_CHECKOUT": "Repository checkout at the tested commit",
+      "VALIDATION_ROOT": "Local validation coordinator workspace"
+    }
+  }
+}
