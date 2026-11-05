@@ -1,0 +1,115 @@
+{
+  "bound": 2000,
+  "repeat": 2,
+  "variant": "mpq_prune",
+  "metrics": {
+    "pipeline_seconds": 1.7747731739655137,
+    "cpu_seconds": 1.768633866,
+    "search_seconds": 1.7747267768718302
+  },
+  "oracle_equal": true,
+  "result": {
+    "complete": true,
+    "domain": "1 <= a <= b < c <= bound",
+    "bound": 2000,
+    "targets": [
+      -42,
+      42
+    ],
+    "hits": [],
+    "stats": {
+      "patches": 924,
+      "enumeration_nodes": 397924,
+      "sphere_points": 8,
+      "box_points": 0,
+      "exact_tests": 0,
+      "direct_pairs": 3,
+      "direct_candidates": 3,
+      "seconds": 1.7747267768718302
+    },
+    "filter_stats": {
+      "residue_candidates": 372378,
+      "modular_rejects": 372368,
+      "norm_tests": 25556,
+      "cache_entries": 51420,
+      "interval_rejects": 0,
+      "integer_intervals": 0
+    },
+    "shells": [
+      {
+        "cmin": 1,
+        "cmax": 1,
+        "method": "direct-small-shell"
+      },
+      {
+        "cmin": 2,
+        "cmax": 3,
+        "method": "direct-small-shell"
+      },
+      {
+        "cmin": 4,
+        "cmax": 7,
+        "method": "lattice",
+        "patches": 2
+      },
+      {
+        "cmin": 8,
+        "cmax": 15,
+        "method": "lattice",
+        "patches": 4
+      },
+      {
+        "cmin": 16,
+        "cmax": 31,
+        "method": "lattice",
+        "patches": 8
+      },
+      {
+        "cmin": 32,
+        "cmax": 63,
+        "method": "lattice",
+        "patches": 15
+      },
+      {
+        "cmin": 64,
+        "cmax": 127,
+        "method": "lattice",
+        "patches": 29
+      },
+      {
+        "cmin": 128,
+        "cmax": 255,
+        "method": "lattice",
+        "patches": 58
+      },
+      {
+        "cmin": 256,
+        "cmax": 511,
+        "method": "lattice",
+        "patches": 116
+      },
+      {
+        "cmin": 512,
+        "cmax": 1023,
+        "method": "lattice",
+        "patches": 231
+      },
+      {
+        "cmin": 1024,
+        "cmax": 2000,
+        "method": "lattice",
+        "patches": 461
+      }
+    ],
+    "mode": "prune",
+    "moduli": [
+      25,
+      31,
+      61
+    ],
+    "backend": "fpylll",
+    "target": 42,
+    "signed_hits": [],
+    "signed_domain": "all x,y,z in [-2000,2000], modulo permutations"
+  }
+}
