@@ -1,0 +1,145 @@
+{
+  "bound": 64000,
+  "repeat": 4,
+  "variant": "mpq_prune",
+  "metrics": {
+    "pipeline_seconds": 58.98102598200006,
+    "cpu_seconds": 58.77183883500001,
+    "search_seconds": 58.98097400099999
+  },
+  "oracle_equal": true,
+  "result": {
+    "complete": true,
+    "domain": "1 <= a <= b < c <= bound",
+    "bound": 64000,
+    "targets": [
+      -42,
+      42
+    ],
+    "hits": [],
+    "stats": {
+      "patches": 29496,
+      "enumeration_nodes": 43892218,
+      "sphere_points": 692,
+      "box_points": 39,
+      "exact_tests": 39,
+      "direct_pairs": 3,
+      "direct_candidates": 3,
+      "seconds": 58.98097400099999
+    },
+    "filter_stats": {
+      "residue_candidates": 43133646,
+      "modular_rejects": 43132878,
+      "norm_tests": 759340,
+      "cache_entries": 1452786,
+      "interval_rejects": 0,
+      "integer_intervals": 0
+    },
+    "shells": [
+      {
+        "cmin": 1,
+        "cmax": 1,
+        "method": "direct-small-shell"
+      },
+      {
+        "cmin": 2,
+        "cmax": 3,
+        "method": "direct-small-shell"
+      },
+      {
+        "cmin": 4,
+        "cmax": 7,
+        "method": "lattice",
+        "patches": 2
+      },
+      {
+        "cmin": 8,
+        "cmax": 15,
+        "method": "lattice",
+        "patches": 4
+      },
+      {
+        "cmin": 16,
+        "cmax": 31,
+        "method": "lattice",
+        "patches": 8
+      },
+      {
+        "cmin": 32,
+        "cmax": 63,
+        "method": "lattice",
+        "patches": 15
+      },
+      {
+        "cmin": 64,
+        "cmax": 127,
+        "method": "lattice",
+        "patches": 29
+      },
+      {
+        "cmin": 128,
+        "cmax": 255,
+        "method": "lattice",
+        "patches": 58
+      },
+      {
+        "cmin": 256,
+        "cmax": 511,
+        "method": "lattice",
+        "patches": 116
+      },
+      {
+        "cmin": 512,
+        "cmax": 1023,
+        "method": "lattice",
+        "patches": 231
+      },
+      {
+        "cmin": 1024,
+        "cmax": 2047,
+        "method": "lattice",
+        "patches": 461
+      },
+      {
+        "cmin": 2048,
+        "cmax": 4095,
+        "method": "lattice",
+        "patches": 922
+      },
+      {
+        "cmin": 4096,
+        "cmax": 8191,
+        "method": "lattice",
+        "patches": 1844
+      },
+      {
+        "cmin": 8192,
+        "cmax": 16383,
+        "method": "lattice",
+        "patches": 3687
+      },
+      {
+        "cmin": 16384,
+        "cmax": 32767,
+        "method": "lattice",
+        "patches": 7373
+      },
+      {
+        "cmin": 32768,
+        "cmax": 64000,
+        "method": "lattice",
+        "patches": 14746
+      }
+    ],
+    "mode": "prune",
+    "moduli": [
+      25,
+      31,
+      61
+    ],
+    "backend": "fpylll",
+    "target": 42,
+    "signed_hits": [],
+    "signed_domain": "all x,y,z in [-64000,64000], modulo permutations"
+  }
+}

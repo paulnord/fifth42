@@ -1,0 +1,1180 @@
+{
+  "status": "stopped_at_guard",
+  "bounds": [
+    64000,
+    128000,
+    256000
+  ],
+  "repeats": 5,
+  "cases": [
+    {
+      "bound": 64000,
+      "target": 42,
+      "complete": true,
+      "phase": "complete",
+      "samples": {
+        "mpq_prune": [
+          {
+            "repeat": 1,
+            "pipeline_seconds": 59.223478245000024,
+            "cpu_seconds": 59.01283582599999,
+            "search_seconds": 59.223434079000015,
+            "oracle_equal": true,
+            "result_file": "trials/B64000-repeat1-mpq_prune.json",
+            "result_sha256": "cc95c92a00ed6d4c6492319d239616de96483ee43a0df9a2f0da2f5242cca003"
+          },
+          {
+            "repeat": 2,
+            "pipeline_seconds": 59.04073343900001,
+            "cpu_seconds": 58.83211410099999,
+            "search_seconds": 59.04067832200002,
+            "oracle_equal": true,
+            "result_file": "trials/B64000-repeat2-mpq_prune.json",
+            "result_sha256": "d92152883866b55f4c417d53ba5d5290f8fdd871a67395d2dab8f0c223e62725"
+          },
+          {
+            "repeat": 3,
+            "pipeline_seconds": 58.98368365699997,
+            "cpu_seconds": 58.775951968999976,
+            "search_seconds": 58.98364952000003,
+            "oracle_equal": true,
+            "result_file": "trials/B64000-repeat3-mpq_prune.json",
+            "result_sha256": "49e063a0c67fced338d49f501ad01d206ef9ee93376addac0d3e62bfaf075c31"
+          },
+          {
+            "repeat": 4,
+            "pipeline_seconds": 58.98102598200006,
+            "cpu_seconds": 58.77183883500001,
+            "search_seconds": 58.98097400099999,
+            "oracle_equal": true,
+            "result_file": "trials/B64000-repeat4-mpq_prune.json",
+            "result_sha256": "46dae1364e932c8f81c8f9239486b6bdacbbbdd6768fce94c3f103d600ede0cb"
+          },
+          {
+            "repeat": 5,
+            "pipeline_seconds": 58.94540260200006,
+            "cpu_seconds": 58.73615044100001,
+            "search_seconds": 58.94536635199995,
+            "oracle_equal": true,
+            "result_file": "trials/B64000-repeat5-mpq_prune.json",
+            "result_sha256": "c4405b0a7ff89f9db68797953cc282d985123f6a6470fcf39643b69d053a5734"
+          }
+        ],
+        "direct_native128": [
+          {
+            "repeat": 1,
+            "pipeline_seconds": 0.713863154,
+            "setup_seconds": 0.000700154,
+            "search_seconds": 0.713163,
+            "process_wall_seconds": 0.7203046839999843,
+            "cpu_seconds": 0.7147049999999986,
+            "oracle_equal": true,
+            "result_file": "trials/B64000-repeat1-direct_native128.json",
+            "result_sha256": "54b6d3f9492eff0d3761fb559a55bf4caac0bdddaf3c0db24a8b064a7b1f3ee6"
+          },
+          {
+            "repeat": 2,
+            "pipeline_seconds": 0.710815184,
+            "setup_seconds": 0.000654184,
+            "search_seconds": 0.710161,
+            "process_wall_seconds": 0.7156142380000006,
+            "cpu_seconds": 0.7113080000000005,
+            "oracle_equal": true,
+            "result_file": "trials/B64000-repeat2-direct_native128.json",
+            "result_sha256": "edb32df11dd377d94a1320ae9fce3f57fe547a675ad8465caeab2d7f263c91a6"
+          },
+          {
+            "repeat": 3,
+            "pipeline_seconds": 0.7128460000000001,
+            "setup_seconds": 0.000693,
+            "search_seconds": 0.712153,
+            "process_wall_seconds": 0.7193104629999993,
+            "cpu_seconds": 0.7144659999999998,
+            "oracle_equal": true,
+            "result_file": "trials/B64000-repeat3-direct_native128.json",
+            "result_sha256": "1e5a5108c6c834dd95c490ae4e966ff1a8679299d1b87cf0375955b5da2456bc"
+          },
+          {
+            "repeat": 4,
+            "pipeline_seconds": 0.7176556660000001,
+            "setup_seconds": 0.000660666,
+            "search_seconds": 0.716995,
+            "process_wall_seconds": 0.7225072100000034,
+            "cpu_seconds": 0.7176110000000014,
+            "oracle_equal": true,
+            "result_file": "trials/B64000-repeat4-direct_native128.json",
+            "result_sha256": "d0affeef391dc2af141dc2c1477640517568bd2efb6e623165205240d9f52b64"
+          },
+          {
+            "repeat": 5,
+            "pipeline_seconds": 0.7165411349999999,
+            "setup_seconds": 0.000711135,
+            "search_seconds": 0.71583,
+            "process_wall_seconds": 0.7230370110000877,
+            "cpu_seconds": 0.7172029999999981,
+            "oracle_equal": true,
+            "result_file": "trials/B64000-repeat5-direct_native128.json",
+            "result_sha256": "d923c8806e6721901d126a705cdbe75dc45fa36ec3d95017742e29a193359017"
+          }
+        ]
+      },
+      "orders": [
+        [
+          "mpq_prune",
+          "direct_native128"
+        ],
+        [
+          "direct_native128",
+          "mpq_prune"
+        ],
+        [
+          "mpq_prune",
+          "direct_native128"
+        ],
+        [
+          "direct_native128",
+          "mpq_prune"
+        ],
+        [
+          "mpq_prune",
+          "direct_native128"
+        ]
+      ],
+      "oracle": {
+        "kind": "independent exhaustive sorted signed native128 CPU, no modular filter",
+        "hits": [],
+        "result_file": "oracles/B64000-signed-unfiltered.json",
+        "sha256": "3500a46112e91bb7dabff4195112cfa86a83ad5893bf086a25fbfb20ba826d37",
+        "pipeline_seconds": 6.839845924,
+        "setup_seconds": 0.000989848,
+        "search_seconds": 6.838856076,
+        "process_wall_seconds": 6.845454774000018,
+        "cpu_seconds": 6.819481000000001
+      },
+      "geometry": {
+        "exact_fraction_mpq_equal": true,
+        "patches": 29496,
+        "sha256": "6463924c3ee4ec79532be18032c4eca5fd67219ea5816691bceca4ca89fabf2e",
+        "serialization": "one sorted normalized JSON record plus LF per patch",
+        "verification_seconds": 40.48172756599996
+      },
+      "medians": {
+        "mpq_prune": {
+          "pipeline_seconds": 58.98368365699997,
+          "cpu_seconds": 58.775951968999976,
+          "search_seconds": 58.98364952000003
+        },
+        "direct_native128": {
+          "pipeline_seconds": 0.713863154,
+          "setup_seconds": 0.000693,
+          "search_seconds": 0.713163,
+          "process_wall_seconds": 0.7203046839999843,
+          "cpu_seconds": 0.7147049999999986
+        }
+      },
+      "lattice_over_direct_pipeline": 82.62603739455639,
+      "lattice_over_direct_process_wall": 81.88713049796198,
+      "all_oracles_equal": true
+    },
+    {
+      "bound": 128000,
+      "target": 42,
+      "complete": false,
+      "phase": "paired_repeats",
+      "samples": {
+        "mpq_prune": [],
+        "direct_native128": []
+      },
+      "orders": [
+        [
+          "mpq_prune",
+          "direct_native128"
+        ]
+      ],
+      "oracle": {
+        "kind": "independent exhaustive sorted signed native128 CPU, no modular filter",
+        "hits": [],
+        "result_file": "oracles/B128000-signed-unfiltered.json",
+        "sha256": "8215f8dff818295eea8dbbd5bc2cddcd39b79b1843694bed893f968ee7b7b408",
+        "pipeline_seconds": 26.963697888,
+        "setup_seconds": 0.00209478,
+        "search_seconds": 26.961603108,
+        "process_wall_seconds": 26.969074338999917,
+        "cpu_seconds": 26.87451
+      },
+      "geometry": {
+        "exact_fraction_mpq_equal": true,
+        "patches": 58988,
+        "sha256": "0b4cbec5bcf9147b73d59aa6dc2682e78b9eda4d7b21dd80ab3599b4c2daab57",
+        "serialization": "one sorted normalized JSON record plus LF per patch",
+        "verification_seconds": 81.219264845
+      }
+    }
+  ],
+  "controls": [
+    {
+      "bound": 34,
+      "targets": [
+        12,
+        384
+      ],
+      "positive_oracle": [
+        [
+          13,
+          16,
+          17,
+          12
+        ],
+        [
+          26,
+          32,
+          34,
+          384
+        ]
+      ],
+      "lattice": {
+        "fraction": {
+          "complete": true,
+          "domain": "1 <= a <= b < c <= bound",
+          "bound": 34,
+          "targets": [
+            12,
+            384
+          ],
+          "hits": [
+            [
+              13,
+              16,
+              17,
+              12
+            ],
+            [
+              26,
+              32,
+              34,
+              384
+            ]
+          ],
+          "stats": {
+            "patches": 27,
+            "enumeration_nodes": 6569,
+            "sphere_points": 8,
+            "box_points": 2,
+            "exact_tests": 2,
+            "direct_pairs": 21,
+            "direct_candidates": 22,
+            "seconds": 0.07897177000000966
+          },
+          "filter_stats": {
+            "residue_candidates": 5901,
+            "modular_rejects": 5893,
+            "norm_tests": 676,
+            "cache_entries": 1383,
+            "interval_rejects": 0,
+            "integer_intervals": 0
+          },
+          "shells": [
+            {
+              "cmin": 1,
+              "cmax": 1,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 2,
+              "cmax": 3,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 4,
+              "cmax": 7,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 8,
+              "cmax": 15,
+              "method": "lattice",
+              "patches": 4
+            },
+            {
+              "cmin": 16,
+              "cmax": 31,
+              "method": "lattice",
+              "patches": 8
+            },
+            {
+              "cmin": 32,
+              "cmax": 34,
+              "method": "lattice",
+              "patches": 15
+            }
+          ],
+          "mode": "prune",
+          "moduli": [
+            25,
+            31,
+            61
+          ],
+          "backend": "fpylll"
+        },
+        "mpq": {
+          "complete": true,
+          "domain": "1 <= a <= b < c <= bound",
+          "bound": 34,
+          "targets": [
+            12,
+            384
+          ],
+          "hits": [
+            [
+              13,
+              16,
+              17,
+              12
+            ],
+            [
+              26,
+              32,
+              34,
+              384
+            ]
+          ],
+          "stats": {
+            "patches": 27,
+            "enumeration_nodes": 6569,
+            "sphere_points": 8,
+            "box_points": 2,
+            "exact_tests": 2,
+            "direct_pairs": 21,
+            "direct_candidates": 22,
+            "seconds": 0.04333975999998074
+          },
+          "filter_stats": {
+            "residue_candidates": 5901,
+            "modular_rejects": 5893,
+            "norm_tests": 676,
+            "cache_entries": 1383,
+            "interval_rejects": 0,
+            "integer_intervals": 0
+          },
+          "shells": [
+            {
+              "cmin": 1,
+              "cmax": 1,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 2,
+              "cmax": 3,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 4,
+              "cmax": 7,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 8,
+              "cmax": 15,
+              "method": "lattice",
+              "patches": 4
+            },
+            {
+              "cmin": 16,
+              "cmax": 31,
+              "method": "lattice",
+              "patches": 8
+            },
+            {
+              "cmin": 32,
+              "cmax": 34,
+              "method": "lattice",
+              "patches": 15
+            }
+          ],
+          "mode": "prune",
+          "moduli": [
+            25,
+            31,
+            61
+          ],
+          "backend": "fpylll"
+        }
+      }
+    },
+    {
+      "bound": 100,
+      "targets": [
+        2951
+      ],
+      "positive_oracle": [
+        [
+          42,
+          71,
+          72,
+          2951
+        ]
+      ],
+      "lattice": {
+        "fraction": {
+          "complete": true,
+          "domain": "1 <= a <= b < c <= bound",
+          "bound": 100,
+          "targets": [
+            2951
+          ],
+          "hits": [
+            [
+              42,
+              71,
+              72,
+              2951
+            ]
+          ],
+          "stats": {
+            "patches": 56,
+            "enumeration_nodes": 21536,
+            "sphere_points": 2,
+            "box_points": 1,
+            "exact_tests": 1,
+            "direct_pairs": 21,
+            "direct_candidates": 30,
+            "seconds": 0.1916617589999987
+          },
+          "filter_stats": {
+            "residue_candidates": 19886,
+            "modular_rejects": 19883,
+            "norm_tests": 1653,
+            "cache_entries": 3524,
+            "interval_rejects": 0,
+            "integer_intervals": 0
+          },
+          "shells": [
+            {
+              "cmin": 1,
+              "cmax": 1,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 2,
+              "cmax": 3,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 4,
+              "cmax": 7,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 8,
+              "cmax": 15,
+              "method": "lattice",
+              "patches": 4
+            },
+            {
+              "cmin": 16,
+              "cmax": 31,
+              "method": "lattice",
+              "patches": 8
+            },
+            {
+              "cmin": 32,
+              "cmax": 63,
+              "method": "lattice",
+              "patches": 15
+            },
+            {
+              "cmin": 64,
+              "cmax": 100,
+              "method": "lattice",
+              "patches": 29
+            }
+          ],
+          "mode": "prune",
+          "moduli": [
+            25,
+            31,
+            61
+          ],
+          "backend": "fpylll"
+        },
+        "mpq": {
+          "complete": true,
+          "domain": "1 <= a <= b < c <= bound",
+          "bound": 100,
+          "targets": [
+            2951
+          ],
+          "hits": [
+            [
+              42,
+              71,
+              72,
+              2951
+            ]
+          ],
+          "stats": {
+            "patches": 56,
+            "enumeration_nodes": 21536,
+            "sphere_points": 2,
+            "box_points": 1,
+            "exact_tests": 1,
+            "direct_pairs": 21,
+            "direct_candidates": 30,
+            "seconds": 0.10759712499998386
+          },
+          "filter_stats": {
+            "residue_candidates": 19886,
+            "modular_rejects": 19883,
+            "norm_tests": 1653,
+            "cache_entries": 3524,
+            "interval_rejects": 0,
+            "integer_intervals": 0
+          },
+          "shells": [
+            {
+              "cmin": 1,
+              "cmax": 1,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 2,
+              "cmax": 3,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 4,
+              "cmax": 7,
+              "method": "direct-small-shell"
+            },
+            {
+              "cmin": 8,
+              "cmax": 15,
+              "method": "lattice",
+              "patches": 4
+            },
+            {
+              "cmin": 16,
+              "cmax": 31,
+              "method": "lattice",
+              "patches": 8
+            },
+            {
+              "cmin": 32,
+              "cmax": 63,
+              "method": "lattice",
+              "patches": 15
+            },
+            {
+              "cmin": 64,
+              "cmax": 100,
+              "method": "lattice",
+              "patches": 29
+            }
+          ],
+          "mode": "prune",
+          "moduli": [
+            25,
+            31,
+            61
+          ],
+          "backend": "fpylll"
+        }
+      }
+    }
+  ],
+  "max_nodes": 500000000,
+  "max_patches": 150000,
+  "per_call_wall_guard_seconds": 120,
+  "environment": {
+    "python": "3.12.4 | packaged by Anaconda, Inc. | (main, Jun 18 2024, 15:12:24) [GCC 11.2.0]",
+    "packages": {
+      "sympy": "1.14.0",
+      "fpylll": "0.6.4",
+      "cysignals": "1.12.5",
+      "numpy": "2.3.5",
+      "gmpy2": "2.2.2"
+    },
+    "fplll": "5.5.0",
+    "gmp": "GMP 6.3.0",
+    "mpfr": "MPFR 4.2.1",
+    "mpc": "MPC 1.3.1"
+  },
+  "cold_import_and_engine_seconds": 0.1569421169999714,
+  "independent_oracle_controls": [
+    {
+      "bound": 0,
+      "target": -384,
+      "hits": []
+    },
+    {
+      "bound": 0,
+      "target": -42,
+      "hits": []
+    },
+    {
+      "bound": 0,
+      "target": -12,
+      "hits": []
+    },
+    {
+      "bound": 0,
+      "target": -3,
+      "hits": []
+    },
+    {
+      "bound": 0,
+      "target": -1,
+      "hits": []
+    },
+    {
+      "bound": 0,
+      "target": 0,
+      "hits": [
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "bound": 0,
+      "target": 1,
+      "hits": []
+    },
+    {
+      "bound": 0,
+      "target": 3,
+      "hits": []
+    },
+    {
+      "bound": 0,
+      "target": 12,
+      "hits": []
+    },
+    {
+      "bound": 0,
+      "target": 42,
+      "hits": []
+    },
+    {
+      "bound": 0,
+      "target": 384,
+      "hits": []
+    },
+    {
+      "bound": 1,
+      "target": -384,
+      "hits": []
+    },
+    {
+      "bound": 1,
+      "target": -42,
+      "hits": []
+    },
+    {
+      "bound": 1,
+      "target": -12,
+      "hits": []
+    },
+    {
+      "bound": 1,
+      "target": -3,
+      "hits": [
+        [
+          -1,
+          -1,
+          -1
+        ]
+      ]
+    },
+    {
+      "bound": 1,
+      "target": -1,
+      "hits": [
+        [
+          -1,
+          -1,
+          1
+        ],
+        [
+          -1,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "bound": 1,
+      "target": 0,
+      "hits": [
+        [
+          -1,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "bound": 1,
+      "target": 1,
+      "hits": [
+        [
+          -1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "bound": 1,
+      "target": 3,
+      "hits": [
+        [
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "bound": 1,
+      "target": 12,
+      "hits": []
+    },
+    {
+      "bound": 1,
+      "target": 42,
+      "hits": []
+    },
+    {
+      "bound": 1,
+      "target": 384,
+      "hits": []
+    },
+    {
+      "bound": 2,
+      "target": -384,
+      "hits": []
+    },
+    {
+      "bound": 2,
+      "target": -42,
+      "hits": []
+    },
+    {
+      "bound": 2,
+      "target": -12,
+      "hits": []
+    },
+    {
+      "bound": 2,
+      "target": -3,
+      "hits": [
+        [
+          -1,
+          -1,
+          -1
+        ]
+      ]
+    },
+    {
+      "bound": 2,
+      "target": -1,
+      "hits": [
+        [
+          -2,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -1,
+          1
+        ],
+        [
+          -1,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "bound": 2,
+      "target": 0,
+      "hits": [
+        [
+          -2,
+          0,
+          2
+        ],
+        [
+          -1,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "bound": 2,
+      "target": 1,
+      "hits": [
+        [
+          -2,
+          1,
+          2
+        ],
+        [
+          -1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "bound": 2,
+      "target": 3,
+      "hits": [
+        [
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "bound": 2,
+      "target": 12,
+      "hits": []
+    },
+    {
+      "bound": 2,
+      "target": 42,
+      "hits": []
+    },
+    {
+      "bound": 2,
+      "target": 384,
+      "hits": []
+    },
+    {
+      "bound": 10,
+      "target": -384,
+      "hits": []
+    },
+    {
+      "bound": 10,
+      "target": -42,
+      "hits": []
+    },
+    {
+      "bound": 10,
+      "target": -12,
+      "hits": []
+    },
+    {
+      "bound": 10,
+      "target": -3,
+      "hits": [
+        [
+          -1,
+          -1,
+          -1
+        ]
+      ]
+    },
+    {
+      "bound": 10,
+      "target": -1,
+      "hits": [
+        [
+          -10,
+          -1,
+          10
+        ],
+        [
+          -9,
+          -1,
+          9
+        ],
+        [
+          -8,
+          -1,
+          8
+        ],
+        [
+          -7,
+          -1,
+          7
+        ],
+        [
+          -6,
+          -1,
+          6
+        ],
+        [
+          -5,
+          -1,
+          5
+        ],
+        [
+          -4,
+          -1,
+          4
+        ],
+        [
+          -3,
+          -1,
+          3
+        ],
+        [
+          -2,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -1,
+          1
+        ],
+        [
+          -1,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "bound": 10,
+      "target": 0,
+      "hits": [
+        [
+          -10,
+          0,
+          10
+        ],
+        [
+          -9,
+          0,
+          9
+        ],
+        [
+          -8,
+          0,
+          8
+        ],
+        [
+          -7,
+          0,
+          7
+        ],
+        [
+          -6,
+          0,
+          6
+        ],
+        [
+          -5,
+          0,
+          5
+        ],
+        [
+          -4,
+          0,
+          4
+        ],
+        [
+          -3,
+          0,
+          3
+        ],
+        [
+          -2,
+          0,
+          2
+        ],
+        [
+          -1,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "bound": 10,
+      "target": 1,
+      "hits": [
+        [
+          -10,
+          1,
+          10
+        ],
+        [
+          -9,
+          1,
+          9
+        ],
+        [
+          -8,
+          1,
+          8
+        ],
+        [
+          -7,
+          1,
+          7
+        ],
+        [
+          -6,
+          1,
+          6
+        ],
+        [
+          -5,
+          1,
+          5
+        ],
+        [
+          -4,
+          1,
+          4
+        ],
+        [
+          -3,
+          1,
+          3
+        ],
+        [
+          -2,
+          1,
+          2
+        ],
+        [
+          -1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "bound": 10,
+      "target": 3,
+      "hits": [
+        [
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "bound": 10,
+      "target": 12,
+      "hits": []
+    },
+    {
+      "bound": 10,
+      "target": 42,
+      "hits": []
+    },
+    {
+      "bound": 10,
+      "target": 384,
+      "hits": []
+    }
+  ],
+  "archived_gmp_oracle_crosschecks": [
+    {
+      "bound": 2000,
+      "archived_gmp_sha256": "5146fc4a863894084d52716a691feeeff3b12fe66633ab79f24150d7a0228de8",
+      "oracle_equal": true,
+      "metrics": {
+        "pipeline_seconds": 0.006638677,
+        "setup_seconds": 2.8175e-05,
+        "search_seconds": 0.006610502,
+        "process_wall_seconds": 0.011011008000025413,
+        "cpu_seconds": 0.008724999999999997
+      }
+    },
+    {
+      "bound": 4000,
+      "archived_gmp_sha256": "6d6b50db515a785a71130940ba46254739d3b2b476011430ae4e789ee2d4202c",
+      "oracle_equal": true,
+      "metrics": {
+        "pipeline_seconds": 0.026769538,
+        "setup_seconds": 5.9456e-05,
+        "search_seconds": 0.026710082,
+        "process_wall_seconds": 0.03085690400001795,
+        "cpu_seconds": 0.028769999999999976
+      }
+    },
+    {
+      "bound": 8000,
+      "archived_gmp_sha256": "18d6129a84dd863266264dc392cf4cac6a13d60c2895334fdb96eca1312d076a",
+      "oracle_equal": true,
+      "metrics": {
+        "pipeline_seconds": 0.10707992599999999,
+        "setup_seconds": 0.00012314,
+        "search_seconds": 0.106956786,
+        "process_wall_seconds": 0.11119712999999365,
+        "cpu_seconds": 0.10821899999999998
+      }
+    },
+    {
+      "bound": 16000,
+      "archived_gmp_sha256": "9f1122be1cfbb1a5584263edc037054d4b8c3189be5dff6542ccb5a9525fe936",
+      "oracle_equal": true,
+      "metrics": {
+        "pipeline_seconds": 0.42235222099999997,
+        "setup_seconds": 0.000246861,
+        "search_seconds": 0.42210536,
+        "process_wall_seconds": 0.42652646599998434,
+        "cpu_seconds": 0.4235469999999999
+      }
+    },
+    {
+      "bound": 32000,
+      "archived_gmp_sha256": "95c2296c95fac5cc8b39f9378302953fe09921134159c9f097fe897aa715d797",
+      "oracle_equal": true,
+      "metrics": {
+        "pipeline_seconds": 1.733506403,
+        "setup_seconds": 0.000496247,
+        "search_seconds": 1.733010156,
+        "process_wall_seconds": 1.7383131299999945,
+        "cpu_seconds": 1.729595
+      }
+    }
+  ],
+  "error": "BudgetExceeded: time limit; no complete coverage",
+  "traceback": "Traceback (most recent call last):\n  File \"${RUN_DIR}/code/scaling_more_ada.py\", line 181, in worker\n    d,m=lattice(bound);hits=set(map(tuple,d['signed_hits']))\n        ^^^^^^^^^^^^^^\n  File \"${RUN_DIR}/code/scaling_more_ada.py\", line 68, in lattice\n    d=f.signed42_filtered(bound,**kwargs) if targets is None else f.search_targets_positive(bound,targets,**kwargs)\n      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"${RUN_DIR}/scratch/lattice_prototype/compiled_experiment/modular_filters_snapshot.py\", line 221, in signed42_filtered\n    result = search_targets_positive(bound,[-42,42],**kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"${RUN_DIR}/scratch/lattice_prototype/compiled_experiment/modular_filters_snapshot.py\", line 202, in search_targets_positive\n    result = search_patch(p,targets,mode,moduli,backend,remaining_budget)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"${RUN_DIR}/scratch/lattice_prototype/compiled_experiment/modular_filters_snapshot.py\", line 146, in search_patch\n    for n in candidates:\n  File \"${RUN_DIR}/scratch/lattice_prototype/compiled_experiment/modular_filters_snapshot.py\", line 125, in filtered_sphere\n    budget.check(stats)\n  File \"${RUN_DIR}/scratch/lattice_prototype/compiled_experiment/lattice5_snapshot.py\", line 204, in check\n    raise BudgetExceeded(\"time limit; no complete coverage\")\n_experiment_lattice_mpq.BudgetExceeded: time limit; no complete coverage\n"
+}

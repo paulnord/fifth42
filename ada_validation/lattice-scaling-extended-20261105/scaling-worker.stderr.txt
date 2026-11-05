@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "${RUN_DIR}/code/scaling_more_ada.py", line 181, in worker
+    d,m=lattice(bound);hits=set(map(tuple,d['signed_hits']))
+        ^^^^^^^^^^^^^^
+  File "${RUN_DIR}/code/scaling_more_ada.py", line 68, in lattice
+    d=f.signed42_filtered(bound,**kwargs) if targets is None else f.search_targets_positive(bound,targets,**kwargs)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "${RUN_DIR}/scratch/lattice_prototype/compiled_experiment/modular_filters_snapshot.py", line 221, in signed42_filtered
+    result = search_targets_positive(bound,[-42,42],**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "${RUN_DIR}/scratch/lattice_prototype/compiled_experiment/modular_filters_snapshot.py", line 202, in search_targets_positive
+    result = search_patch(p,targets,mode,moduli,backend,remaining_budget)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "${RUN_DIR}/scratch/lattice_prototype/compiled_experiment/modular_filters_snapshot.py", line 146, in search_patch
+    for n in candidates:
+  File "${RUN_DIR}/scratch/lattice_prototype/compiled_experiment/modular_filters_snapshot.py", line 125, in filtered_sphere
+    budget.check(stats)
+  File "${RUN_DIR}/scratch/lattice_prototype/compiled_experiment/lattice5_snapshot.py", line 204, in check
+    raise BudgetExceeded("time limit; no complete coverage")
+_experiment_lattice_mpq.BudgetExceeded: time limit; no complete coverage

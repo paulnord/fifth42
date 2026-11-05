@@ -1,0 +1,4 @@
+mkdir -p bin
+g++ -std=c++17 -O3 -Wall -Wextra -Werror src/emulated.cpp -o bin/emulated
+g++ -std=c++17 -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all src/emulated.cpp -o bin/emulated-sanitized
+/usr/local/cuda/bin/nvcc -std=c++17 -O3 -arch=sm_86 -ccbin g++ src/enumerate.cu -o bin/cuda
