@@ -1,6 +1,6 @@
 {
-  "phase": "preparing",
-  "updated_utc": "2026-11-05T23:12:05.347628+00:00",
+  "phase": "running",
+  "updated_utc": "2026-11-05T23:19:21.196815+00:00",
   "safe_to_log_out": false,
   "stop_local": "2026-11-06T09:00:00-06:00",
   "selection": {
@@ -14,5 +14,167 @@
     "bits": 48
   },
   "reported_prior_bound": 100000000000,
-  "independently_checked_local_prior_bound": 70000000
+  "independently_checked_local_prior_bound": 70000000,
+  "config": {
+    "backend": "cuda",
+    "chunk_tasks": 256,
+    "deadline_monotonic": 71398.31211846792,
+    "domain": "1 <= a <= b < c, abs(a^5+b^5-c^5) <= 42",
+    "extended_range_validation": {
+      "arithmetic_cases_per_backend": 272,
+      "backends": [
+        "emulated",
+        "emulated-sanitized",
+        "cuda"
+      ],
+      "binary_sha256": {
+        "cuda": "ce4acdf8da4433a3abaa2d6d4e527079028e5227b436a4266a27ce6f2e812910",
+        "direct_cpu": "faa0cbfb71a64ba5920f597b4dde53f4e7fe3634dbca1c2a142abb270076cb47",
+        "direct_gpu": "197dffa90fa89163905b622d9260b5f43412edd9610e1ef24aaa4d93bcb0eae5",
+        "emulated": "486a10ca4c783eece6c20870169bbc3e277e306620f7c59974d90ec27e42e43d",
+        "emulated-sanitized": "e09c0066e56bdc79cb858fd53e0296a087206049ea6cc203a5b17f24a782b66b",
+        "scaling_cpu": "a4ac507b369c1baaf0f2b8b3f0fa7745f90ec957c0e38cbc9fbb7a86271098b8",
+        "scaling_cpu_sanitize": "087453a9f948e4af917b052df3fb40381b3c3e00b67e83acf7809af8283f673e",
+        "scaling_gpu": "d513a7bdb938c0f62e75e045b3197e3760f323af995018bf14a1d1fc9dc01b16",
+        "scaling_oracle": "7ccdfd899f20f9d091f766a93a01a72962e2262c8b2d9c519f7e424587de7dee"
+      },
+      "commands": [
+        {
+          "command": [
+            "make",
+            "-j1",
+            "all"
+          ],
+          "exit_code": 0
+        },
+        {
+          "command": [
+            "make",
+            "-f",
+            "scaling.mk",
+            "-j1",
+            "scaling"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "exact_range_proof": "3*max_base^5 < 2^191",
+      "kernel_sha256": "dc42b5dbfc4bfa64511acb081d0597c90e407c11efeefe81cfa6c260305a8f3b",
+      "max_base": 200000000000,
+      "source_change": "One base-range guard in an isolated scratch copy; original source preserved",
+      "status": "passed"
+    },
+    "initial_patch": 3750000000,
+    "max_bound": 200000000000,
+    "native_max_base": 200000000000,
+    "original_full_domain_cap": 32000,
+    "original_packet_guards_retained": true,
+    "oversized_patch_method": "original-exact-sphere with 10M node and 300s guards",
+    "physical_cpus": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "run": "${GPU_ROOT}/overnight-runs/20261105T231850Z-bxr6mn4c",
+    "selection_report": "${WIDTH_RUN_DIR}/report.json",
+    "selection_report_sha256": "8da054b5e3e8ab7f1dd22057fead598771fafad7292eb1d539d3d3df1b06c0d1",
+    "source_identity": "b4a14a719e28452488c01ea05dddf8121df6a3c5ff0c1521bb490a3f7be844d3",
+    "start_bound": 100000000001,
+    "stop_epoch": 1793977200.0,
+    "stop_local": "2026-11-06T09:00:00-06:00",
+    "width": 8,
+    "workers": 16
+  },
+  "run": "${GPU_ROOT}/overnight-runs/20261105T231850Z-bxr6mn4c",
+  "checkpoint": {
+    "backend": "cuda",
+    "cap": 42,
+    "chunks": 78,
+    "completed_bound": null,
+    "controls_passed": true,
+    "cpu_sphere_patches": 0,
+    "guarded_patches": 0,
+    "hits": [],
+    "independent_oracle_verified_through": 0,
+    "journal_offset": 66087,
+    "journal_sha256": "5227d6dcafe61d362e54c5836a415cb12d751fea0b542aa01840662ebb74ac7c",
+    "native_points": 43389698,
+    "next_patch": 3750019968,
+    "patches": 19968,
+    "region_initial_patch": 3750000000,
+    "region_start_bound": 100000000001,
+    "shell_lo": 100000000001,
+    "source_identity": "b4a14a719e28452488c01ea05dddf8121df6a3c5ff0c1521bb490a3f7be844d3",
+    "started_utc": "2026-11-05T23:18:59.270618+00:00",
+    "status": "running",
+    "updated_utc": "2026-11-05T23:19:21.104096+00:00",
+    "width": 8
+  },
+  "detached_service": {
+    "service": "fifth-lattice-overnight-20261105.service",
+    "service_pid": 42349,
+    "coordinator_pid": 42350,
+    "stop_local": "2026-11-06T09:00:00-06:00",
+    "update_interval_seconds": 900,
+    "independently_authenticated_git": true,
+    "logout_persistence": "loginctl linger + systemd user service",
+    "search_scope": "selected patches for 100000000001 <= c <= 200000000000; partial coverage only"
+  },
+  "extended_range_validation": {
+    "arithmetic_cases_per_backend": 272,
+    "backends": [
+      "emulated",
+      "emulated-sanitized",
+      "cuda"
+    ],
+    "binary_sha256": {
+      "cuda": "ce4acdf8da4433a3abaa2d6d4e527079028e5227b436a4266a27ce6f2e812910",
+      "direct_cpu": "faa0cbfb71a64ba5920f597b4dde53f4e7fe3634dbca1c2a142abb270076cb47",
+      "direct_gpu": "197dffa90fa89163905b622d9260b5f43412edd9610e1ef24aaa4d93bcb0eae5",
+      "emulated": "486a10ca4c783eece6c20870169bbc3e277e306620f7c59974d90ec27e42e43d",
+      "emulated-sanitized": "e09c0066e56bdc79cb858fd53e0296a087206049ea6cc203a5b17f24a782b66b",
+      "scaling_cpu": "a4ac507b369c1baaf0f2b8b3f0fa7745f90ec957c0e38cbc9fbb7a86271098b8",
+      "scaling_cpu_sanitize": "087453a9f948e4af917b052df3fb40381b3c3e00b67e83acf7809af8283f673e",
+      "scaling_gpu": "d513a7bdb938c0f62e75e045b3197e3760f323af995018bf14a1d1fc9dc01b16",
+      "scaling_oracle": "7ccdfd899f20f9d091f766a93a01a72962e2262c8b2d9c519f7e424587de7dee"
+    },
+    "commands": [
+      {
+        "command": [
+          "make",
+          "-j1",
+          "all"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "make",
+          "-f",
+          "scaling.mk",
+          "-j1",
+          "scaling"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "exact_range_proof": "3*max_base^5 < 2^191",
+    "kernel_sha256": "dc42b5dbfc4bfa64511acb081d0597c90e407c11efeefe81cfa6c260305a8f3b",
+    "max_base": 200000000000,
+    "source_change": "One base-range guard in an isolated scratch copy; original source preserved",
+    "status": "passed"
+  }
 }

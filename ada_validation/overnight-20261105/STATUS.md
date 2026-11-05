@@ -1,8 +1,8 @@
 # ADA lattice overnight status
 
-Last GitHub snapshot: **2026-11-05T23:12:05.347628+00:00**
+Last GitHub snapshot: **2026-11-05T23:19:21.196815+00:00**
 
-State: **preparing**. Stop deadline: **9:00 a.m. Central, November 6, 2026**.
+State: **running**. Stop deadline: **9:00 a.m. Central, November 6, 2026**.
 Configuration: width **8**, optimized packing, persistent CUDA, **16 physical CPU workers**.
 
 Reported prior near-miss bound: **10^11** (Healy). The separately verified local
@@ -11,14 +11,14 @@ extend a full-box bound. The present job's exact region and completed patch
 cursor are recorded below; a partial region must not be described as a full
 search through its upper denominator bound.
 
-Configured denominator start: **not launched**.
-Configured upper arithmetic/search limit: **not launched**.
-Last completed shell bound: **not launched**.
-Current shell lower bound: **not launched**.
-Next grid patch: **not launched**.
-Completed chunks: **0**.
-Completed patches: **0**.
-Last checkpoint: **not launched**.
+Configured denominator start: **100000000001**.
+Configured upper arithmetic/search limit: **200000000000**.
+Last completed shell bound: **None**.
+Current shell lower bound: **100000000001**.
+Next grid patch: **3750019968**.
+Completed chunks: **78**.
+Completed patches: **19968**.
+Last checkpoint: **2026-11-05T23:19:21.104096+00:00**.
 Stop/failure reason: **none recorded**.
 
 Check [status.json](status.json) for machine-readable state and verified counters.
