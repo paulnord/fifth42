@@ -50,3 +50,20 @@ Read `COVERAGE.md` for the completeness argument and assumptions; `AUDIT.md` for
 * [Existing fifth42 exact search](https://github.com/paulnord/fifth42/tree/main/extended/src). Frozen file identities are recorded in the artifact.
 
 This is an implementation inspired by the method, not a reproduction of the authors' source code or an audit of their complete searches.
+
+## Optional published reduction backends (bounded experiment)
+
+Install optional pinned dependencies from `requirements-sympy.txt` and/or
+`requirements-fpylll.txt`, then select `--backend sympy` or `--backend fpylll`.
+The default `reference` keeps the dependency-free original implementation.
+Run `python3 -m unittest -v test_lattice5 audit_tests test_backends` and
+`python3 benchmark_backends.py` to reproduce paired exact controls and timings.
+See `THIRD_PARTY.md` for provenance, licenses and the exact safety boundary.
+Run `./run_validation.sh --published-backends` for the aggregate original plus
+optional-backend suite and both benchmarks (both pinned optional dependencies
+must be installed). Without that argument the original validation remains
+standard-library-compatible, apart from its existing GMP C++ comparison.
+
+The optional modular and enumeration experiments are documented in `MODULAR_FILTERS.md` and `ENUMERATION_OPTIMIZATIONS.md`. These include measured negative results as well as improvements; no experimental mode is silently enabled.
+
+Start with `CURRENT_RESULTS.md` for the consolidated new findings. The separate optional compiled-rational experiment is documented in `COMPILED_RATIONALS.md`; it does not change the default modules.

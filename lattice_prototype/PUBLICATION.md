@@ -1,3 +1,5 @@
+> Historical baseline document. The published-library adaptation and newer bounded measurements are documented in ADAPTATION.md, THIRD_PARTY.md, MODULAR_FILTERS.md and ENUMERATION_OPTIMIZATIONS.md. This document does not authorize any new ADA activity.
+
 # Publication scope and source snapshot
 
 Published on 2026-11-04 to the private `paulnord/fifth42` repository for Codex on ADA.

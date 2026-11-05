@@ -1,3 +1,5 @@
+> Historical baseline document. The published-library adaptation and newer bounded measurements are documented in ADAPTATION.md, THIRD_PARTY.md, MODULAR_FILTERS.md and ENUMERATION_OPTIMIZATIONS.md. This document does not authorize any new ADA activity.
+
 # Handoff for Codex on ADA
 
 ## Task

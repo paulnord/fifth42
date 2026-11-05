@@ -1,3 +1,5 @@
+> Historical baseline document. The published-library adaptation and newer bounded measurements are documented in ADAPTATION.md, THIRD_PARTY.md, MODULAR_FILTERS.md and ENUMERATION_OPTIMIZATIONS.md. This document does not authorize any new ADA activity.
+
 # Results and interpretation
 
 Recorded 2026-11-04 in the x86_64 cloud execution environment, Python 3.12.14, g++ 14.2.0. These are small correctness runs, not resource estimates for ADA or for ranges beyond 10^11. Exact source and output files accompany this report.

@@ -1,0 +1,958 @@
+[
+  {
+    "bound": 100,
+    "targets": [
+      -42,
+      42
+    ],
+    "signed": true,
+    "mode": "prune",
+    "times": {
+      "fraction": [
+        0.26388709399907384,
+        0.2900968899994041,
+        0.28601799799798755,
+        0.27520291000109864,
+        0.28107233100308804
+      ],
+      "mpq": [
+        0.1432912390009733,
+        0.14357839199510636,
+        0.16745707399968524,
+        0.1484170020048623,
+        0.14646992699999828
+      ]
+    },
+    "medians": {
+      "fraction": 0.28107233100308804,
+      "mpq": 0.14646992699999828
+    },
+    "exact_geometry_equal": true,
+    "geometry_sha256": "24e9e373a009be5e72540e739a858ed32650c9c03123b5d7fbed5a144c5fd55e",
+    "geometry_patches": 58,
+    "all_results_and_counters_equal": true,
+    "oracle_equal": true,
+    "result": {
+      "complete": true,
+      "domain": "1 <= a <= b < c <= bound",
+      "bound": 100,
+      "targets": [
+        -42,
+        42
+      ],
+      "hits": [],
+      "stats": {
+        "patches": 58,
+        "enumeration_nodes": 19476,
+        "sphere_points": 0,
+        "box_points": 0,
+        "exact_tests": 0,
+        "direct_pairs": 3,
+        "direct_candidates": 3
+      },
+      "filter_stats": {
+        "residue_candidates": 17810,
+        "modular_rejects": 17810,
+        "norm_tests": 1666,
+        "cache_entries": 3522,
+        "interval_rejects": 0,
+        "integer_intervals": 0
+      },
+      "shells": [
+        {
+          "cmin": 1,
+          "cmax": 1,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 2,
+          "cmax": 3,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 4,
+          "cmax": 7,
+          "method": "lattice",
+          "patches": 2
+        },
+        {
+          "cmin": 8,
+          "cmax": 15,
+          "method": "lattice",
+          "patches": 4
+        },
+        {
+          "cmin": 16,
+          "cmax": 31,
+          "method": "lattice",
+          "patches": 8
+        },
+        {
+          "cmin": 32,
+          "cmax": 63,
+          "method": "lattice",
+          "patches": 15
+        },
+        {
+          "cmin": 64,
+          "cmax": 100,
+          "method": "lattice",
+          "patches": 29
+        }
+      ],
+      "mode": "prune",
+      "moduli": [
+        25,
+        31,
+        61
+      ],
+      "backend": "fpylll",
+      "target": 42,
+      "signed_hits": [],
+      "signed_domain": "all x,y,z in [-100,100], modulo permutations"
+    },
+    "speedup": 1.9189763848458212
+  },
+  {
+    "bound": 100,
+    "targets": [
+      -42,
+      42
+    ],
+    "signed": true,
+    "mode": "interval",
+    "times": {
+      "fraction": [
+        0.33127241900365334,
+        0.3632813499934855,
+        0.3625794970066636,
+        0.32433761599531863,
+        0.33241567100048997
+      ],
+      "mpq": [
+        0.17693157099711243,
+        0.20165355300559895,
+        0.16567098099767463,
+        0.18154597000102513,
+        0.16928980500233592
+      ]
+    },
+    "medians": {
+      "fraction": 0.33241567100048997,
+      "mpq": 0.17693157099711243
+    },
+    "exact_geometry_equal": true,
+    "geometry_sha256": "24e9e373a009be5e72540e739a858ed32650c9c03123b5d7fbed5a144c5fd55e",
+    "geometry_patches": 58,
+    "all_results_and_counters_equal": true,
+    "oracle_equal": true,
+    "result": {
+      "complete": true,
+      "domain": "1 <= a <= b < c <= bound",
+      "bound": 100,
+      "targets": [
+        -42,
+        42
+      ],
+      "hits": [],
+      "stats": {
+        "patches": 58,
+        "enumeration_nodes": 19476,
+        "sphere_points": 0,
+        "box_points": 0,
+        "exact_tests": 0,
+        "direct_pairs": 3,
+        "direct_candidates": 3
+      },
+      "filter_stats": {
+        "residue_candidates": 16506,
+        "modular_rejects": 16506,
+        "norm_tests": 1666,
+        "cache_entries": 3522,
+        "interval_rejects": 1304,
+        "integer_intervals": 1174
+      },
+      "shells": [
+        {
+          "cmin": 1,
+          "cmax": 1,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 2,
+          "cmax": 3,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 4,
+          "cmax": 7,
+          "method": "lattice",
+          "patches": 2
+        },
+        {
+          "cmin": 8,
+          "cmax": 15,
+          "method": "lattice",
+          "patches": 4
+        },
+        {
+          "cmin": 16,
+          "cmax": 31,
+          "method": "lattice",
+          "patches": 8
+        },
+        {
+          "cmin": 32,
+          "cmax": 63,
+          "method": "lattice",
+          "patches": 15
+        },
+        {
+          "cmin": 64,
+          "cmax": 100,
+          "method": "lattice",
+          "patches": 29
+        }
+      ],
+      "mode": "interval",
+      "moduli": [
+        25,
+        31,
+        61
+      ],
+      "backend": "fpylll",
+      "target": 42,
+      "signed_hits": [],
+      "signed_domain": "all x,y,z in [-100,100], modulo permutations"
+    },
+    "speedup": 1.8787809836714504
+  },
+  {
+    "bound": 1000,
+    "targets": [
+      -42,
+      42
+    ],
+    "signed": true,
+    "mode": "prune",
+    "times": {
+      "fraction": [
+        2.489544415002456,
+        2.2495688470007735,
+        2.412962096001138,
+        2.2865765659953468,
+        2.4502529119999963
+      ],
+      "mpq": [
+        1.3078948760012281,
+        1.2835779909946723,
+        1.3596135249972576,
+        1.2856356070042239,
+        1.2391706950002117
+      ]
+    },
+    "medians": {
+      "fraction": 2.412962096001138,
+      "mpq": 1.2856356070042239
+    },
+    "exact_geometry_equal": true,
+    "geometry_sha256": "489ce463f9ad2895ac6bedccbb0a7b2a76d8f5b724292efc5cebeefc44bd4dbc",
+    "geometry_patches": 463,
+    "all_results_and_counters_equal": true,
+    "oracle_equal": true,
+    "result": {
+      "complete": true,
+      "domain": "1 <= a <= b < c <= bound",
+      "bound": 1000,
+      "targets": [
+        -42,
+        42
+      ],
+      "hits": [],
+      "stats": {
+        "patches": 463,
+        "enumeration_nodes": 198033,
+        "sphere_points": 6,
+        "box_points": 0,
+        "exact_tests": 0,
+        "direct_pairs": 3,
+        "direct_candidates": 3
+      },
+      "filter_stats": {
+        "residue_candidates": 184901,
+        "modular_rejects": 184893,
+        "norm_tests": 13140,
+        "cache_entries": 26949,
+        "interval_rejects": 0,
+        "integer_intervals": 0
+      },
+      "shells": [
+        {
+          "cmin": 1,
+          "cmax": 1,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 2,
+          "cmax": 3,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 4,
+          "cmax": 7,
+          "method": "lattice",
+          "patches": 2
+        },
+        {
+          "cmin": 8,
+          "cmax": 15,
+          "method": "lattice",
+          "patches": 4
+        },
+        {
+          "cmin": 16,
+          "cmax": 31,
+          "method": "lattice",
+          "patches": 8
+        },
+        {
+          "cmin": 32,
+          "cmax": 63,
+          "method": "lattice",
+          "patches": 15
+        },
+        {
+          "cmin": 64,
+          "cmax": 127,
+          "method": "lattice",
+          "patches": 29
+        },
+        {
+          "cmin": 128,
+          "cmax": 255,
+          "method": "lattice",
+          "patches": 58
+        },
+        {
+          "cmin": 256,
+          "cmax": 511,
+          "method": "lattice",
+          "patches": 116
+        },
+        {
+          "cmin": 512,
+          "cmax": 1000,
+          "method": "lattice",
+          "patches": 231
+        }
+      ],
+      "mode": "prune",
+      "moduli": [
+        25,
+        31,
+        61
+      ],
+      "backend": "fpylll",
+      "target": 42,
+      "signed_hits": [],
+      "signed_domain": "all x,y,z in [-1000,1000], modulo permutations"
+    },
+    "speedup": 1.8768631506899531
+  },
+  {
+    "bound": 1000,
+    "targets": [
+      -42,
+      42
+    ],
+    "signed": true,
+    "mode": "interval",
+    "times": {
+      "fraction": [
+        3.1227306410000892,
+        3.224003465998976,
+        3.22247057200002,
+        2.9286767410012544,
+        3.0588143690038123
+      ],
+      "mpq": [
+        1.9444220420045895,
+        1.8341562479981803,
+        1.8256037989995093,
+        1.4403991829967708,
+        1.4821348170007695
+      ]
+    },
+    "medians": {
+      "fraction": 3.1227306410000892,
+      "mpq": 1.8256037989995093
+    },
+    "exact_geometry_equal": true,
+    "geometry_sha256": "489ce463f9ad2895ac6bedccbb0a7b2a76d8f5b724292efc5cebeefc44bd4dbc",
+    "geometry_patches": 463,
+    "all_results_and_counters_equal": true,
+    "oracle_equal": true,
+    "result": {
+      "complete": true,
+      "domain": "1 <= a <= b < c <= bound",
+      "bound": 1000,
+      "targets": [
+        -42,
+        42
+      ],
+      "hits": [],
+      "stats": {
+        "patches": 463,
+        "enumeration_nodes": 198033,
+        "sphere_points": 6,
+        "box_points": 0,
+        "exact_tests": 0,
+        "direct_pairs": 3,
+        "direct_candidates": 3
+      },
+      "filter_stats": {
+        "residue_candidates": 175363,
+        "modular_rejects": 175357,
+        "norm_tests": 13132,
+        "cache_entries": 26949,
+        "interval_rejects": 9538,
+        "integer_intervals": 8987
+      },
+      "shells": [
+        {
+          "cmin": 1,
+          "cmax": 1,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 2,
+          "cmax": 3,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 4,
+          "cmax": 7,
+          "method": "lattice",
+          "patches": 2
+        },
+        {
+          "cmin": 8,
+          "cmax": 15,
+          "method": "lattice",
+          "patches": 4
+        },
+        {
+          "cmin": 16,
+          "cmax": 31,
+          "method": "lattice",
+          "patches": 8
+        },
+        {
+          "cmin": 32,
+          "cmax": 63,
+          "method": "lattice",
+          "patches": 15
+        },
+        {
+          "cmin": 64,
+          "cmax": 127,
+          "method": "lattice",
+          "patches": 29
+        },
+        {
+          "cmin": 128,
+          "cmax": 255,
+          "method": "lattice",
+          "patches": 58
+        },
+        {
+          "cmin": 256,
+          "cmax": 511,
+          "method": "lattice",
+          "patches": 116
+        },
+        {
+          "cmin": 512,
+          "cmax": 1000,
+          "method": "lattice",
+          "patches": 231
+        }
+      ],
+      "mode": "interval",
+      "moduli": [
+        25,
+        31,
+        61
+      ],
+      "backend": "fpylll",
+      "target": 42,
+      "signed_hits": [],
+      "signed_domain": "all x,y,z in [-1000,1000], modulo permutations"
+    },
+    "speedup": 1.7105193595189974
+  },
+  {
+    "bound": 34,
+    "targets": [
+      12,
+      384
+    ],
+    "signed": false,
+    "mode": "prune",
+    "times": {
+      "fraction": [
+        0.11904120099643478,
+        0.1307230870006606,
+        0.12238714300474385,
+        0.1235227049983223,
+        0.11662306099606212
+      ],
+      "mpq": [
+        0.08159929400426336,
+        0.07960431800165679,
+        0.06717959500383586,
+        0.07210539499646984,
+        0.0666755140046007
+      ]
+    },
+    "medians": {
+      "fraction": 0.12238714300474385,
+      "mpq": 0.07210539499646984
+    },
+    "exact_geometry_equal": true,
+    "geometry_sha256": "de9674db1f8370e91f8eaf11bf5d17210e0e03ec1350669d2ae68ac3e6820985",
+    "geometry_patches": 27,
+    "all_results_and_counters_equal": true,
+    "oracle_equal": true,
+    "result": {
+      "complete": true,
+      "domain": "1 <= a <= b < c <= bound",
+      "bound": 34,
+      "targets": [
+        12,
+        384
+      ],
+      "hits": [
+        [
+          13,
+          16,
+          17,
+          12
+        ],
+        [
+          26,
+          32,
+          34,
+          384
+        ]
+      ],
+      "stats": {
+        "patches": 27,
+        "enumeration_nodes": 6569,
+        "sphere_points": 8,
+        "box_points": 2,
+        "exact_tests": 2,
+        "direct_pairs": 21,
+        "direct_candidates": 22
+      },
+      "filter_stats": {
+        "residue_candidates": 5901,
+        "modular_rejects": 5893,
+        "norm_tests": 676,
+        "cache_entries": 1383,
+        "interval_rejects": 0,
+        "integer_intervals": 0
+      },
+      "shells": [
+        {
+          "cmin": 1,
+          "cmax": 1,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 2,
+          "cmax": 3,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 4,
+          "cmax": 7,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 8,
+          "cmax": 15,
+          "method": "lattice",
+          "patches": 4
+        },
+        {
+          "cmin": 16,
+          "cmax": 31,
+          "method": "lattice",
+          "patches": 8
+        },
+        {
+          "cmin": 32,
+          "cmax": 34,
+          "method": "lattice",
+          "patches": 15
+        }
+      ],
+      "mode": "prune",
+      "moduli": [
+        25,
+        31,
+        61
+      ],
+      "backend": "fpylll"
+    },
+    "speedup": 1.6973368360402952
+  },
+  {
+    "bound": 34,
+    "targets": [
+      12,
+      384
+    ],
+    "signed": false,
+    "mode": "interval",
+    "times": {
+      "fraction": [
+        0.13717634600470774,
+        0.13922445999924093,
+        0.12644339200051036,
+        0.12953361900144955,
+        0.14424768299795687
+      ],
+      "mpq": [
+        0.08418225599598372,
+        0.08961829399777343,
+        0.065659678002703,
+        0.06718546400225023,
+        0.07585529200150631
+      ]
+    },
+    "medians": {
+      "fraction": 0.13717634600470774,
+      "mpq": 0.07585529200150631
+    },
+    "exact_geometry_equal": true,
+    "geometry_sha256": "de9674db1f8370e91f8eaf11bf5d17210e0e03ec1350669d2ae68ac3e6820985",
+    "geometry_patches": 27,
+    "all_results_and_counters_equal": true,
+    "oracle_equal": true,
+    "result": {
+      "complete": true,
+      "domain": "1 <= a <= b < c <= bound",
+      "bound": 34,
+      "targets": [
+        12,
+        384
+      ],
+      "hits": [
+        [
+          13,
+          16,
+          17,
+          12
+        ],
+        [
+          26,
+          32,
+          34,
+          384
+        ]
+      ],
+      "stats": {
+        "patches": 27,
+        "enumeration_nodes": 6569,
+        "sphere_points": 8,
+        "box_points": 2,
+        "exact_tests": 2,
+        "direct_pairs": 21,
+        "direct_candidates": 22
+      },
+      "filter_stats": {
+        "residue_candidates": 5427,
+        "modular_rejects": 5419,
+        "norm_tests": 668,
+        "cache_entries": 1383,
+        "interval_rejects": 474,
+        "integer_intervals": 461
+      },
+      "shells": [
+        {
+          "cmin": 1,
+          "cmax": 1,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 2,
+          "cmax": 3,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 4,
+          "cmax": 7,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 8,
+          "cmax": 15,
+          "method": "lattice",
+          "patches": 4
+        },
+        {
+          "cmin": 16,
+          "cmax": 31,
+          "method": "lattice",
+          "patches": 8
+        },
+        {
+          "cmin": 32,
+          "cmax": 34,
+          "method": "lattice",
+          "patches": 15
+        }
+      ],
+      "mode": "interval",
+      "moduli": [
+        25,
+        31,
+        61
+      ],
+      "backend": "fpylll"
+    },
+    "speedup": 1.8083952007195983
+  },
+  {
+    "bound": 100,
+    "targets": [
+      2951
+    ],
+    "signed": false,
+    "mode": "prune",
+    "times": {
+      "fraction": [
+        0.27097405099630123,
+        0.29489201300020795,
+        0.30076040800486226,
+        0.2956021369973314,
+        0.2667880660010269
+      ],
+      "mpq": [
+        0.17568671400658786,
+        0.13594494499557186,
+        0.19424670100124786,
+        0.14953143700404326,
+        0.13899095600208966
+      ]
+    },
+    "medians": {
+      "fraction": 0.29489201300020795,
+      "mpq": 0.14953143700404326
+    },
+    "exact_geometry_equal": true,
+    "geometry_sha256": "bc5eefe948b01a28ef793bbc3303ca9d4aedeac36f33c2eb3b30173acc7ebed3",
+    "geometry_patches": 56,
+    "all_results_and_counters_equal": true,
+    "oracle_equal": true,
+    "result": {
+      "complete": true,
+      "domain": "1 <= a <= b < c <= bound",
+      "bound": 100,
+      "targets": [
+        2951
+      ],
+      "hits": [
+        [
+          42,
+          71,
+          72,
+          2951
+        ]
+      ],
+      "stats": {
+        "patches": 56,
+        "enumeration_nodes": 21536,
+        "sphere_points": 2,
+        "box_points": 1,
+        "exact_tests": 1,
+        "direct_pairs": 21,
+        "direct_candidates": 30
+      },
+      "filter_stats": {
+        "residue_candidates": 19886,
+        "modular_rejects": 19883,
+        "norm_tests": 1653,
+        "cache_entries": 3524,
+        "interval_rejects": 0,
+        "integer_intervals": 0
+      },
+      "shells": [
+        {
+          "cmin": 1,
+          "cmax": 1,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 2,
+          "cmax": 3,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 4,
+          "cmax": 7,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 8,
+          "cmax": 15,
+          "method": "lattice",
+          "patches": 4
+        },
+        {
+          "cmin": 16,
+          "cmax": 31,
+          "method": "lattice",
+          "patches": 8
+        },
+        {
+          "cmin": 32,
+          "cmax": 63,
+          "method": "lattice",
+          "patches": 15
+        },
+        {
+          "cmin": 64,
+          "cmax": 100,
+          "method": "lattice",
+          "patches": 29
+        }
+      ],
+      "mode": "prune",
+      "moduli": [
+        25,
+        31,
+        61
+      ],
+      "backend": "fpylll"
+    },
+    "speedup": 1.9721071295010308
+  },
+  {
+    "bound": 100,
+    "targets": [
+      2951
+    ],
+    "signed": false,
+    "mode": "interval",
+    "times": {
+      "fraction": [
+        0.3278384730001562,
+        0.32340119099535514,
+        0.3243672299940954,
+        0.3500063669998781,
+        0.37980293400323717
+      ],
+      "mpq": [
+        0.1558621750009479,
+        0.15487540200410876,
+        0.1822344900065218,
+        0.1931269019987667,
+        0.17915798299509333
+      ]
+    },
+    "medians": {
+      "fraction": 0.3278384730001562,
+      "mpq": 0.17915798299509333
+    },
+    "exact_geometry_equal": true,
+    "geometry_sha256": "bc5eefe948b01a28ef793bbc3303ca9d4aedeac36f33c2eb3b30173acc7ebed3",
+    "geometry_patches": 56,
+    "all_results_and_counters_equal": true,
+    "oracle_equal": true,
+    "result": {
+      "complete": true,
+      "domain": "1 <= a <= b < c <= bound",
+      "bound": 100,
+      "targets": [
+        2951
+      ],
+      "hits": [
+        [
+          42,
+          71,
+          72,
+          2951
+        ]
+      ],
+      "stats": {
+        "patches": 56,
+        "enumeration_nodes": 21536,
+        "sphere_points": 2,
+        "box_points": 1,
+        "exact_tests": 1,
+        "direct_pairs": 21,
+        "direct_candidates": 30
+      },
+      "filter_stats": {
+        "residue_candidates": 18624,
+        "modular_rejects": 18622,
+        "norm_tests": 1650,
+        "cache_entries": 3524,
+        "interval_rejects": 1262,
+        "integer_intervals": 1176
+      },
+      "shells": [
+        {
+          "cmin": 1,
+          "cmax": 1,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 2,
+          "cmax": 3,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 4,
+          "cmax": 7,
+          "method": "direct-small-shell"
+        },
+        {
+          "cmin": 8,
+          "cmax": 15,
+          "method": "lattice",
+          "patches": 4
+        },
+        {
+          "cmin": 16,
+          "cmax": 31,
+          "method": "lattice",
+          "patches": 8
+        },
+        {
+          "cmin": 32,
+          "cmax": 63,
+          "method": "lattice",
+          "patches": 15
+        },
+        {
+          "cmin": 64,
+          "cmax": 100,
+          "method": "lattice",
+          "patches": 29
+        }
+      ],
+      "mode": "interval",
+      "moduli": [
+        25,
+        31,
+        61
+      ],
+      "backend": "fpylll"
+    },
+    "speedup": 1.829884817407968
+  }
+]

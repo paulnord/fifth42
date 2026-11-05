@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Exact tangent-patch search. Python standard library only; see COVERAGE.md."""
+"""Exact tangent-patch search; optional published LLL backends. See COVERAGE.md."""
 from __future__ import annotations
 import argparse
 import json
 from dataclasses import asdict, dataclass
 from fractions import Fraction as Q
-from math import isqrt
+from math import isqrt, lcm
 from time import perf_counter
 from typing import Callable
 
@@ -104,6 +104,74 @@ def lll(basis):
     assert abs(det3(u)) == 1
     assert matmul(u, basis) == b
     return b, u
+
+
+def sympy_lll(basis):
+    """Published SymPy exact LLL; common scaling preserves lattice geometry.
+
+    No floating-point enumeration/pruning is used. Independently verify the
+    returned integer unimodular transform before admitting it to enumeration.
+    See THIRD_PARTY.md for the pinned dependency and license.
+    """
+    try:
+        from sympy import __version__
+        from sympy.polys.domains import ZZ, QQ
+        from sympy.polys.matrices import DM
+    except ImportError as exc:
+        raise BudgetExceeded("sympy backend unavailable; install requirements-sympy.txt") from exc
+    if __version__ != "1.14.0":
+        raise BudgetExceeded("sympy backend requires validated version 1.14.0")
+    original = [[Q(x) for x in row] for row in basis]
+    scale = lcm(*(x.denominator for row in original for x in row))
+    integer_basis = [[int(x * scale) for x in row] for row in original]
+    try:
+        reduced, transform = DM(integer_basis, ZZ).lll_transform(delta=QQ(3, 4))
+        u = [[int(x) for x in row] for row in transform.to_list()]
+        b = [[Q(int(x), scale) for x in row] for row in reduced.to_list()]
+    except Exception as exc:
+        raise BudgetExceeded("sympy reduction failed; no complete coverage") from exc
+    if abs(det3(u)) != 1 or matmul(u, original) != b:
+        raise BudgetExceeded("sympy transform verification failed; no complete coverage")
+    return b, u
+
+
+def fpylll_lll(basis):
+    """fplll via fpylll for reduction only, with exact transform certification.
+
+    Approximate Gram-Schmidt inside reduction cannot exclude lattice points:
+    only the exact certified integer U is consumed by our exact enumerator.
+    """
+    try:
+        import fpylll
+        from fpylll import IntegerMatrix, LLL
+    except ImportError as exc:
+        raise BudgetExceeded("fpylll backend unavailable; install requirements-fpylll.txt") from exc
+    if fpylll.__version__ != "0.6.4":
+        raise BudgetExceeded("fpylll backend requires validated version 0.6.4")
+    original = [[Q(x) for x in row] for row in basis]
+    scale = lcm(*(x.denominator for row in original for x in row))
+    integer_basis = [[int(x * scale) for x in row] for row in original]
+    try:
+        b_int = IntegerMatrix.from_matrix(integer_basis)
+        transform = IntegerMatrix.identity(3)
+        LLL.reduction(b_int, transform, delta=0.75, method="proved")
+        u = [[int(transform[i,j]) for j in range(3)] for i in range(3)]
+        b = [[Q(int(b_int[i,j]), scale) for j in range(3)] for i in range(3)]
+    except Exception as exc:
+        raise BudgetExceeded("fpylll reduction failed; no complete coverage") from exc
+    if abs(det3(u)) != 1 or matmul(u, original) != b:
+        raise BudgetExceeded("fpylll transform verification failed; no complete coverage")
+    return b, u
+
+
+def reduce_basis(basis, backend="reference"):
+    if backend == "reference":
+        return lll(basis)
+    if backend == "sympy":
+        return sympy_lll(basis)
+    if backend == "fpylll":
+        return fpylll_lll(basis)
+    raise ValueError("unknown LLL backend")
 
 
 @dataclass
@@ -215,11 +283,12 @@ def make_patch(cmin: int, cmax: int, left: Q, right: Q, cap: int, bits: int = 48
     return Patch(cmin, cmax, left, right, p, q, m, eps, cap)
 
 
-def patch_search(p: Patch, accept: Callable[[int,int], bool], stats=None, budget=None):
+def patch_search(p: Patch, accept: Callable[[int,int], bool], stats=None, budget=None, backend="reference"):
     stats, budget = stats or Stats(), budget or Budget(start=perf_counter())
     stats.patches += 1
     budget.check(stats)
-    reduced, u = lll(p.basis())
+    reduced, u = reduce_basis(p.basis(), backend)
+    budget.check(stats)
     hits = set()
     for ns in sphere_coefficients(reduced, stats, budget):
         c, a, b = [sum(ns[k]*u[k][j] for k in range(3)) for j in range(3)]
@@ -258,10 +327,13 @@ def direct_positive(cmin, cmax, cap_at, accept, stats=None, budget=None):
 
 
 def search_positive(bound: int, mode="constant", cap=42, width=2, bits=48,
-                    max_nodes=2_000_000, max_patches=20_000, max_seconds=180):
+                    max_nodes=2_000_000, max_patches=20_000, max_seconds=180,
+                    backend="reference"):
     """All 1<=a<=b<c<=bound with |r|<=cap, or |r|<=5*c^2 in healy mode."""
     if bound < 1 or cap < 0 or mode not in ("constant", "healy") or width <= 0:
         raise ValueError("invalid search arguments")
+    if backend not in ("reference", "sympy", "fpylll"):
+        raise ValueError("unknown LLL backend")
     stats = Stats()
     budget = Budget(max_nodes,max_patches,max_seconds,perf_counter())
     cap_at = (lambda c: cap) if mode == "constant" else (lambda c: 5*c*c)
@@ -281,14 +353,14 @@ def search_positive(bound: int, mode="constant", cap=42, width=2, bits=48,
             for i in range(count):
                 left, right = Q(9*i,10*count), Q(9*(i+1),10*count)
                 patch = make_patch(cmin,cmax,left,right,rmax,bits)
-                hits |= patch_search(patch,accept,stats,budget)
+                hits |= patch_search(patch,accept,stats,budget,backend=backend)
             shells.append({"cmin":cmin,"cmax":cmax,"method":"lattice",
                            "patches":stats.patches-first_patch})
         budget.check(stats)
         cmin *= 2
     stats.seconds = perf_counter()-budget.start
     return {"complete":True,"domain":"1 <= a <= b < c <= bound","bound":bound,
-            "mode":mode,"constant_cap":cap if mode=="constant" else None,
+            "backend":backend,"mode":mode,"constant_cap":cap if mode=="constant" else None,
             "residual_convention":"a^5+b^5-c^5","hits":sorted(hits),
             "stats":asdict(stats),"shells":shells}
 
@@ -324,6 +396,7 @@ def signed42(bound: int, **kwargs):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--backend", choices=["reference", "sympy", "fpylll"], default="reference")
     p.add_argument("--bound",type=int,default=100)
     p.add_argument("--mode",choices=["constant","healy","signed42"],default="signed42")
     p.add_argument("--cap",type=int,default=42)

@@ -1,0 +1,92 @@
+{
+  "complete": true,
+  "domain": "1 <= a <= b < c <= bound",
+  "bound": 100,
+  "backend": "sympy",
+  "mode": "healy",
+  "constant_cap": null,
+  "residual_convention": "a^5+b^5-c^5",
+  "hits": [
+    [
+      13,
+      16,
+      17,
+      12
+    ],
+    [
+      26,
+      32,
+      34,
+      384
+    ],
+    [
+      39,
+      48,
+      51,
+      2916
+    ],
+    [
+      42,
+      71,
+      72,
+      2951
+    ],
+    [
+      52,
+      64,
+      68,
+      12288
+    ]
+  ],
+  "stats": {
+    "patches": 56,
+    "enumeration_nodes": 25680,
+    "sphere_points": 22574,
+    "box_points": 331,
+    "exact_tests": 331,
+    "direct_pairs": 21,
+    "direct_candidates": 21,
+    "seconds": 2.901105124998139
+  },
+  "shells": [
+    {
+      "cmin": 1,
+      "cmax": 1,
+      "method": "direct-small-shell"
+    },
+    {
+      "cmin": 2,
+      "cmax": 3,
+      "method": "direct-small-shell"
+    },
+    {
+      "cmin": 4,
+      "cmax": 7,
+      "method": "direct-small-shell"
+    },
+    {
+      "cmin": 8,
+      "cmax": 15,
+      "method": "lattice",
+      "patches": 4
+    },
+    {
+      "cmin": 16,
+      "cmax": 31,
+      "method": "lattice",
+      "patches": 8
+    },
+    {
+      "cmin": 32,
+      "cmax": 63,
+      "method": "lattice",
+      "patches": 15
+    },
+    {
+      "cmin": 64,
+      "cmax": 100,
+      "method": "lattice",
+      "patches": 29
+    }
+  ]
+}
