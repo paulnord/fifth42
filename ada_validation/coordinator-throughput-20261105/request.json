@@ -1,0 +1,38 @@
+{
+  "automatic_launch_scheduled": false,
+  "current_search_must_remain_unchanged": true,
+  "exact_checks_required": true,
+  "gpu_ownership": "one persistent engine owner with bounded queues; no independent competing CUDA contexts",
+  "initial_experiment_wall_cap_seconds": 3600,
+  "not_before_local": "2026-11-06T09:00:00-06:00",
+  "order": "counterbalanced fixed-work paired trials",
+  "per_coordinator_checkpoints_and_outputs": true,
+  "performance_recommendation_before_production_changes": true,
+  "pipeline_control": "one coordinator / 16 workers / bounded certified-frame prefetch",
+  "prerequisites": [
+    "Overnight search and final publisher have exited.",
+    "CPU/GPU production leases are free.",
+    "No production job is competing."
+  ],
+  "primary_comparison": [
+    "one coordinator / 16 workers",
+    "two coordinators / 8 workers each"
+  ],
+  "repeats": 5,
+  "report_metrics": [
+    "aggregate verified patches/second",
+    "aggregate coefficient points/second",
+    "wall time",
+    "CPU utilization by role",
+    "GPU utilization and kernel duty",
+    "stage timings",
+    "queue starvation and backpressure",
+    "host/GPU memory",
+    "contention",
+    "coverage and exact-result equality"
+  ],
+  "source": "Dot, relayed by Paul on 2026-11-05",
+  "status": "planned_for_after_overnight",
+  "total_physical_cpu_allocation": 16,
+  "verify_disjoint_complete_patch_union": true
+}

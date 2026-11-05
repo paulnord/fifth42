@@ -1,0 +1,44 @@
+{
+  "arithmetic_cases_per_backend": 272,
+  "backends": [
+    "emulated",
+    "emulated-sanitized",
+    "cuda"
+  ],
+  "binary_sha256": {
+    "cuda": "ce4acdf8da4433a3abaa2d6d4e527079028e5227b436a4266a27ce6f2e812910",
+    "direct_cpu": "faa0cbfb71a64ba5920f597b4dde53f4e7fe3634dbca1c2a142abb270076cb47",
+    "direct_gpu": "197dffa90fa89163905b622d9260b5f43412edd9610e1ef24aaa4d93bcb0eae5",
+    "emulated": "486a10ca4c783eece6c20870169bbc3e277e306620f7c59974d90ec27e42e43d",
+    "emulated-sanitized": "e09c0066e56bdc79cb858fd53e0296a087206049ea6cc203a5b17f24a782b66b",
+    "scaling_cpu": "a4ac507b369c1baaf0f2b8b3f0fa7745f90ec957c0e38cbc9fbb7a86271098b8",
+    "scaling_cpu_sanitize": "087453a9f948e4af917b052df3fb40381b3c3e00b67e83acf7809af8283f673e",
+    "scaling_gpu": "d513a7bdb938c0f62e75e045b3197e3760f323af995018bf14a1d1fc9dc01b16",
+    "scaling_oracle": "7ccdfd899f20f9d091f766a93a01a72962e2262c8b2d9c519f7e424587de7dee"
+  },
+  "commands": [
+    {
+      "command": [
+        "make",
+        "-j1",
+        "all"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "make",
+        "-f",
+        "scaling.mk",
+        "-j1",
+        "scaling"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "exact_range_proof": "3*max_base^5 < 2^191",
+  "kernel_sha256": "dc42b5dbfc4bfa64511acb081d0597c90e407c11efeefe81cfa6c260305a8f3b",
+  "max_base": 200000000000,
+  "source_change": "One base-range guard in an isolated scratch copy; original source preserved",
+  "status": "passed"
+}
