@@ -1,0 +1,444 @@
+#!/usr/bin/env python3
+"""One-CPU, ten-minute paired benchmark of the validated lattice candidates."""
+from datetime import datetime, timezone
+from pathlib import Path
+import ast
+import ctypes
+import fcntl
+import hashlib
+import importlib.metadata
+import json
+import os
+import platform
+import resource
+import shutil
+import signal
+import statistics
+import subprocess
+import sys
+import tempfile
+import time
+import traceback
+
+WORKSPACE = Path('${CPU_BENCHMARK_WORKSPACE}')
+SOURCE = Path('${EVIDENCE_CHECKOUT}/lattice_prototype')
+PRODUCTION = Path('${PRODUCTION_CHECKOUT}')
+PYTHON = WORKSPACE / 'venv/bin/python'
+PINS = {'sympy': '1.14.0', 'fpylll': '0.6.4', 'cysignals': '1.12.5',
+        'numpy': '2.3.5', 'gmpy2': '2.2.2'}
+VARIANTS = ['fraction_none', 'fraction_prune', 'mpq_prune', 'direct_native128']
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+def write_json(path, value):
+    tmp = path.with_name(path.name + '.tmp')
+    tmp.write_text(json.dumps(value, indent=2) + '\n')
+    tmp.replace(path)
+
+def package_hashes():
+    return {str(p.relative_to(SOURCE)): sha(p) for p in SOURCE.rglob('*') if p.is_file()}
+
+def parent_death_signal():
+    parent = os.getppid()
+    if ctypes.CDLL(None, use_errno=True).prctl(1, signal.SIGKILL, 0, 0, 0):
+        raise OSError(ctypes.get_errno(), 'PR_SET_PDEATHSIG failed')
+    if os.getppid() != parent:
+        os.kill(os.getpid(), signal.SIGKILL)
+
+def lock_paths():
+    paths = []
+    for base in [PRODUCTION/'runs', PRODUCTION/'extended/runs', PRODUCTION/'optimization/runs',
+                 Path('${USER_HOME}/four133-eight-hour/jobs')]:
+        if base.is_dir():
+            paths.extend(p for p in base.rglob('*') if p.is_file() and 'lock' in p.name.lower())
+    return paths
+
+def blockers(locks, running=False):
+    result = []
+    latest = Path('${USER_HOME}/four133-eight-hour/jobs/latest.json')
+    if latest.is_file():
+        job = Path(json.loads(latest.read_text())['job'])
+        d = json.loads((job/'progress.json').read_text())
+        if d.get('status') in ('starting', 'running') or d.get('active_workers'):
+            result.append('four133 active')
+    for p in PRODUCTION.glob('*/runs/*/job.json'):
+        if json.loads(p.read_text()).get('status') in ('starting', 'running', 'validating',
+                'searching', 'calibrating', 'stopping'):
+            result.append('production job active: ' + str(p))
+    for p in locks:
+        if not p.is_file():
+            continue
+        try:
+            with p.open('rb') as stream:
+                fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                fcntl.flock(stream, fcntl.LOCK_UN)
+        except BlockingIOError:
+            result.append('busy lock: ' + str(p))
+    if os.getloadavg()[0] > (4 if running else 2):
+        result.append('CPU load exceeds idle threshold')
+    available = int(next(x.split()[1] for x in Path('/proc/meminfo').read_text().splitlines()
+                         if x.startswith('MemAvailable:'))) * 1024
+    if available < 4 * 1024**3:
+        result.append('less than 4 GiB memory available')
+    return result
+
+def worker(config):
+    run, source = Path(config['run']), Path(config['scratch'])
+    result_path = run/'benchmark-results.json'
+    report = dict(status='running', variants=VARIANTS, repeats=5, bounds=[100, 1000],
+                  controls=[], cases=[], cold_setup={}, default_modules_preserved=False)
+
+    def save():
+        write_json(result_path, report)
+
+    def event(kind, **values):
+        with (run/'events.jsonl').open('a') as stream:
+            stream.write(json.dumps(dict(event=kind, **values))+'\n')
+
+    def remaining():
+        seconds = config['deadline_monotonic'] - time.monotonic() - 8
+        if seconds < 1:
+            raise TimeoutError('Benchmark budget exhausted; no complete benchmark claim')
+        return min(180, seconds)
+
+    try:
+        t = time.perf_counter()
+        sys.path[:0] = [str(source), str(source/'compiled_experiment')]
+        from fractions import Fraction
+        import lattice5 as live
+        import modular_filters as live_filter
+        import benchmark_mpq as experiment
+        import fpylll
+        import gmpy2
+        versions = {name: importlib.metadata.version(name) for name in PINS}
+        if versions != PINS or sys.version_info[:2] != (3, 12):
+            raise RuntimeError('Pinned Python/dependency versions do not match')
+        report['environment'] = dict(python=sys.version, packages=versions,
+            fplll=fpylll.config.version, gmp=gmpy2.mp_version(),
+            mpfr=gmpy2.mpfr_version(), mpc=gmpy2.mpc_version())
+        engines = {kind: experiment.engine(kind) for kind in ['fraction', 'mpq']}
+        report['cold_setup']['imports_and_engine_creation_seconds'] = time.perf_counter()-t
+
+        class StripDocstrings(ast.NodeTransformer):
+            def visit(self, node):
+                node = super().visit(node)
+                if isinstance(node, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                    if (node.body and isinstance(node.body[0], ast.Expr)
+                            and isinstance(node.body[0].value, ast.Constant)
+                            and isinstance(node.body[0].value.value, str)):
+                        node.body = node.body[1:]
+                return node
+        for name in ['lattice5', 'modular_filters']:
+            a = StripDocstrings().visit(ast.parse((source/(name+'.py')).read_text()))
+            b = StripDocstrings().visit(ast.parse((source/'compiled_experiment'/(name+'_snapshot.py')).read_text()))
+            if ast.dump(a) != ast.dump(b):
+                raise RuntimeError('Frozen arithmetic experiment differs from live behavior: '+name)
+        report['frozen_snapshots_match_live_ast'] = True
+        t = time.perf_counter()
+        for l, f in engines.values():
+            l.reduce_basis([[l.Q(int(i == j)) for j in range(3)] for i in range(3)], 'fpylll')
+        report['cold_setup']['reducer_warmup_seconds'] = time.perf_counter()-t
+        save()
+
+        def isolate():
+            if live.Q is not Fraction or live_filter.Q is not Fraction or live_filter.l is not live:
+                raise RuntimeError('Default module globals changed')
+
+        def geometry(bound, targets):
+            t = time.perf_counter()
+            a = experiment.geometry(*engines['fraction'], bound, targets)
+            b = experiment.geometry(*engines['mpq'], bound, targets)
+            if a != b:
+                raise RuntimeError('Fraction/GMP exact geometry mismatch')
+            return dict(exact_equal=True, patches=len(a),
+                sha256=hashlib.sha256(json.dumps(a,sort_keys=True).encode()).hexdigest(),
+                verification_seconds=time.perf_counter()-t)
+
+        def lattice(variant, bound, signed=True, targets=None):
+            remaining_seconds = remaining()
+            l, f = engines['mpq' if variant == 'mpq_prune' else 'fraction']
+            mode = 'none' if variant == 'fraction_none' else 'prune'
+            start_wall, start_cpu = time.perf_counter(), time.process_time()
+            result = (f.signed42_filtered(bound, mode=mode, backend='fpylll', max_seconds=remaining_seconds)
+                      if signed else f.search_targets_positive(bound, targets, mode=mode,
+                          backend='fpylll', max_seconds=remaining_seconds))
+            metrics = dict(pipeline_seconds=time.perf_counter()-start_wall,
+                cpu_seconds=time.process_time()-start_cpu,
+                search_seconds=float(result['stats']['seconds']))
+            if not result['complete']:
+                raise RuntimeError('Incomplete lattice search')
+            isolate()
+            return experiment.normalize(result), metrics
+
+        def direct(bound, target=42):
+            remaining_seconds = remaining()
+            command = [config['direct_binary'], '--bound', str(bound), '--target', str(target),
+                       '--filter', 'mod11' if target == 42 else 'none']
+            before = resource.getrusage(resource.RUSAGE_CHILDREN)
+            start = time.perf_counter()
+            p = subprocess.run(command, capture_output=True, text=True,
+                timeout=min(15,remaining_seconds), preexec_fn=parent_death_signal)
+            wall = time.perf_counter()-start
+            after = resource.getrusage(resource.RUSAGE_CHILDREN)
+            if p.returncode:
+                raise RuntimeError('Direct CPU solver failed: '+p.stderr)
+            d = json.loads(p.stdout)
+            if (d['bound'] != bound or d['target'] != target or d['row_start'] != 0
+                    or d['row_stop'] != d['total_rows'] or d.get('arithmetic_bits',128) != 128):
+                raise RuntimeError('Direct CPU domain/coverage metadata mismatch')
+            if any(any(abs(x)>bound for x in hit) or sum(x**5 for x in hit)!=target for hit in d['hits']):
+                raise RuntimeError('Direct CPU returned invalid exact residual')
+            return d, dict(pipeline_seconds=d['setup_seconds']+d['search_seconds'],
+                search_seconds=d['search_seconds'], setup_seconds=d['setup_seconds'],
+                process_wall_seconds=wall,
+                cpu_seconds=after.ru_utime+after.ru_stime-before.ru_utime-before.ru_stime)
+
+        def comparable(d):
+            d = json.loads(json.dumps(d))
+            d['stats'].pop('seconds')
+            return d
+
+        # Nonempty controls are correctness work outside the timed comparisons.
+        for bound, targets in [(34, [12, 384]), (100, [2951])]:
+            remaining()
+            expected = live.direct_positive(1,bound,lambda c:max(map(abs,targets)),lambda r,c:r in targets)
+            if not expected:
+                raise RuntimeError('Nonempty control oracle unexpectedly empty')
+            controls = dict(bound=bound,targets=targets,expected=sorted(expected),
+                            geometry=geometry(bound,targets),variants={})
+            for variant in VARIANTS[:3]:
+                d, metrics = lattice(variant,bound,False,targets)
+                if set(map(tuple,d['hits'])) != expected:
+                    raise RuntimeError('Nonempty lattice control mismatch')
+                controls['variants'][variant] = d
+            if comparable(controls['variants']['fraction_prune']) != comparable(controls['variants']['mpq_prune']):
+                raise RuntimeError('Nonempty control counters differ between Fraction and GMP')
+            controls['fraction_mpq_counters_equal'] = True
+            controls['direct_signed_controls'] = []
+            for target in targets:
+                expected_signed = live.signed_reference(bound,target)
+                d, metrics = direct(bound,target)
+                if not expected_signed or {tuple(sorted(h)) for h in d['hits']} != expected_signed:
+                    raise RuntimeError('Nonempty direct CPU control mismatch')
+                controls['direct_signed_controls'].append(dict(target=target,result=d,oracle_equal=True))
+            report['controls'].append(controls)
+            save();event('controls_passed',bound=bound,targets=targets)
+
+        (run/'trials').mkdir()
+        for bound in [100, 1000]:
+            remaining()
+            t = time.perf_counter()
+            oracle = live.signed_reference(bound,42)
+            case = dict(bound=bound,target=42,domain='complete signed box modulo permutations',
+                oracle_hits=sorted(oracle),oracle_seconds=time.perf_counter()-t,
+                geometry=geometry(bound,[-42,42]),samples={v:[] for v in VARIANTS},
+                orders=[],checks=dict(all_oracles_equal=True,fraction_mpq_results_and_counters_equal=True,
+                                     conservative_enumeration_counts_equal=True))
+            report['cases'].append(case);save();event('case_started',bound=bound)
+            for repeat in range(5):
+                order = VARIANTS[:] if repeat % 2 == 0 else list(reversed(VARIANTS))
+                case['orders'].append(order)
+                round_results = {}
+                for variant in order:
+                    d, metrics = direct(bound) if variant == 'direct_native128' else lattice(variant,bound)
+                    hits = {tuple(sorted(h)) for h in d['hits']} if variant == 'direct_native128' else set(map(tuple,d['signed_hits']))
+                    if hits != oracle:
+                        raise RuntimeError('Exact oracle mismatch: '+variant)
+                    filename = f'trials/B{bound}-repeat{repeat+1}-{variant}.json'
+                    row = dict(bound=bound,repeat=repeat+1,variant=variant,metrics=metrics,
+                               oracle_equal=True,result=d)
+                    write_json(run/filename,row)
+                    sample = dict(repeat=repeat+1,**metrics,result_file=filename,
+                                  result_sha256=sha(run/filename),oracle_equal=True)
+                    case['samples'][variant].append(sample)
+                    round_results[variant] = d
+                    save()
+                a,b = round_results['fraction_prune'],round_results['mpq_prune']
+                if comparable(a) != comparable(b):
+                    raise RuntimeError('Fraction/GMP result or counter mismatch')
+                for key in ['patches','enumeration_nodes','direct_pairs','direct_candidates']:
+                    if round_results['fraction_none']['stats'][key] != a['stats'][key]:
+                        raise RuntimeError('Unfiltered/pruned conservative coverage mismatch: '+key)
+                if round_results['fraction_none']['shells'] != a['shells']:
+                    raise RuntimeError('Shell plans differ')
+                event('round_complete',bound=bound,repeat=repeat+1,
+                      pipeline_seconds={v:case['samples'][v][-1]['pipeline_seconds'] for v in VARIANTS})
+            case['medians'] = {}
+            for variant in VARIANTS:
+                samples = case['samples'][variant]
+                if len(samples) != 5:
+                    raise RuntimeError('Missing planned repeat')
+                case['medians'][variant] = {key:statistics.median(s[key] for s in samples)
+                    for key in samples[0] if key.endswith('_seconds')}
+            case['ratios'] = {
+                'fraction_pruning_vs_none':case['medians']['fraction_none']['pipeline_seconds']/case['medians']['fraction_prune']['pipeline_seconds'],
+                'mpq_vs_fraction_prune':case['medians']['fraction_prune']['pipeline_seconds']/case['medians']['mpq_prune']['pipeline_seconds'],
+                'mpq_prune_over_direct_pipeline':case['medians']['mpq_prune']['pipeline_seconds']/case['medians']['direct_native128']['pipeline_seconds'],
+                'mpq_prune_over_direct_process_wall':case['medians']['mpq_prune']['pipeline_seconds']/case['medians']['direct_native128']['process_wall_seconds']}
+            case['complete'] = True
+            save();event('case_complete',bound=bound,medians=case['medians'])
+        isolate();report.update(status='passed',default_modules_preserved=True)
+        save();event('finished',status='passed')
+        return 0
+    except BaseException as error:
+        report.update(status='failed_or_incomplete',error=type(error).__name__+': '+str(error),
+                      traceback=traceback.format_exc())
+        save();event('finished',status=report['status'],error=report['error'])
+        traceback.print_exc()
+        return 1
+
+def coordinator(prior_config=None):
+    start = time.monotonic()
+    deadline = (json.loads(prior_config.read_text())['deadline_monotonic']
+                if prior_config else start+600)
+    if deadline-start < 1:
+        print('Original ten-minute budget has expired; no benchmark started')
+        return 3
+    os.nice(19)
+    os.sched_setaffinity(0,{min(os.sched_getaffinity(0))})
+    resource.setrlimit(resource.RLIMIT_AS,(2*1024**3,2*1024**3))
+    env = dict(os.environ,OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',
+               NUMEXPR_NUM_THREADS='1',BLIS_NUM_THREADS='1',VECLIB_MAXIMUM_THREADS='1',
+               PYTHONDONTWRITEBYTECODE='1')
+    locks = lock_paths()
+    busy = blockers(locks)
+    if busy:
+        print('Deferred: '+', '.join(busy));return 3
+    baseline = json.loads((WORKSPACE/'published-sha256.json').read_text())
+    if package_hashes() != baseline:
+        raise RuntimeError('Tested package no longer matches the verified publication')
+    base = WORKSPACE/'benchmark-runs';base.mkdir(exist_ok=True)
+    run = Path(tempfile.mkdtemp(prefix=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ-'),dir=base))
+    scratch = run/'scratch/lattice_prototype';scratch.parent.mkdir()
+    shutil.copytree(SOURCE,scratch)
+    (run/'code').mkdir();shutil.copyfile(Path(__file__),run/'code/benchmark_ada.py')
+    (run/'direct-source').mkdir()
+    direct_hashes = {}
+    for name in ['search_cpu.cpp','search_common.hpp','exact.hpp']:
+        src = PRODUCTION/'src'/name
+        shutil.copyfile(src,run/'direct-source'/name)
+        direct_hashes[name] = sha(src)
+    initial_status = subprocess.check_output(['git','-C',str(PRODUCTION),'status','--short','--branch'],text=True)
+    report = dict(status='running',started_utc=datetime.now(timezone.utc).isoformat(),
+        run=str(run),source_commit='91bb89b0ff49974e9458faf19015908e44b85cb8',
+        source_directory=str(SOURCE),execution='one logical CPU, nice 19, native threads 1, 2 GiB/process',
+        hard_wall_cap_seconds=600,bounds=[100,1000],paired_repeats=5,variants=VARIANTS,
+        prior_attempt_config=str(prior_config) if prior_config else None,
+        remaining_budget_at_start_seconds=deadline-start,
+        gpu_execution=False,larger_search_started=False,automatic_resume=False,
+        host=platform.node(),platform=platform.platform(),
+        runner_sha256=sha(run/'code/benchmark_ada.py'),direct_source_sha256=direct_hashes,
+        direct_baseline='Production native signed-128-bit CPU solver, copied and rebuilt with its Makefile flags; mod11 target42 filter',
+        commands=[],timing_definition={
+            'lattice_pipeline':'warm callable wall time including patch construction, exact LLL, enumeration, and signed reduction; excludes independent oracle and imports',
+            'direct_pipeline':'executable-reported setup_seconds + search_seconds; excludes process startup and JSON I/O',
+            'direct_process_wall':'full native process invocation, output capture, and return; separately reported',
+            'cold_setup':'compiler process and Python/native imports recorded separately; no profiling runs'},
+        notes=['Five alternating forward/reverse paired rounds at each signed bound.',
+               'Nonempty positive lattice controls and corresponding signed direct controls are separate correctness work.',
+               'Direct pipeline times at these small bounds are very short; retain full process times and every sample.'])
+    write_json(run/'report.json',report)
+    print('RUN_DIRECTORY '+str(run),flush=True)
+    offset = 0
+
+    def relay():
+        nonlocal offset
+        p = run/'events.jsonl'
+        if not p.is_file():return
+        with p.open() as stream:
+            stream.seek(offset)
+            while True:
+                position = stream.tell()
+                line = stream.readline()
+                if not line:break
+                if not line.endswith('\n'):
+                    stream.seek(position)
+                    break
+                event = json.loads(line)
+                print('PROGRESS '+json.dumps(event),flush=True)
+            offset = stream.tell()
+
+    def run_command(name,command,cap):
+        if time.monotonic() >= deadline-8:
+            raise TimeoutError('Overall benchmark deadline reached before '+name)
+        busy = blockers(locks,running=True)
+        if busy:raise RuntimeError('Yielding to active work: '+', '.join(busy))
+        t = time.monotonic();before = resource.getrusage(resource.RUSAGE_CHILDREN)
+        out,err = run/(name+'.stdout.txt'),run/(name+'.stderr.txt')
+        process = None
+        try:
+            with out.open('x') as stdout,err.open('x') as stderr:
+                process = subprocess.Popen(command,cwd=scratch,env=env,stdout=stdout,stderr=stderr,
+                    start_new_session=True,preexec_fn=parent_death_signal)
+                while process.poll() is None:
+                    relay()
+                    if (run/'STOP').exists():raise RuntimeError('User stop requested')
+                    if time.monotonic() >= min(t+cap,deadline-5):
+                        raise TimeoutError('Process/overall deadline reached: '+name)
+                    busy = blockers(locks,running=True)
+                    if busy:raise RuntimeError('Yielding to active work: '+', '.join(busy))
+                    time.sleep(.25)
+            relay()
+            after = resource.getrusage(resource.RUSAGE_CHILDREN)
+            row = dict(name=name,command=command,exit_code=process.returncode,
+                       wall_seconds=time.monotonic()-t,
+                       cpu_seconds=after.ru_utime+after.ru_stime-before.ru_utime-before.ru_stime,
+                       stdout=out.name,stderr=err.name)
+            report['commands'].append(row);write_json(run/'report.json',report)
+            if row['exit_code']:
+                raise RuntimeError(name+' failed; see '+str(err))
+            return row
+        finally:
+            if process is not None and process.poll() is None:
+                os.killpg(process.pid,signal.SIGTERM)
+                try:process.wait(timeout=2)
+                except subprocess.TimeoutExpired:
+                    os.killpg(process.pid,signal.SIGKILL);process.wait()
+
+    try:
+        for i,name in enumerate(['PACKAGE_SHA256SUMS','SHA256SUMS','compiled_experiment/SHA256SUMS']):
+            run_command('manifest-'+str(i),['sha256sum','-c',name],10)
+        compiler = '/usr/bin/g++-13'
+        report['compiler'] = subprocess.check_output([compiler,'--version'],text=True).splitlines()[0]
+        direct_binary = run/'direct-search-cpu'
+        run_command('compile-direct',[compiler,'-O3','-std=c++17','-Wall','-Wextra','-Wconversion',
+                    str(run/'direct-source/search_cpu.cpp'),'-o',str(direct_binary)],30)
+        report['direct_binary_sha256'] = sha(direct_binary)
+        freeze = subprocess.check_output([str(PYTHON),'-m','pip','freeze'],text=True,env=env)
+        (run/'pip-freeze.txt').write_text(freeze)
+        config = dict(run=str(run),scratch=str(scratch),direct_binary=str(direct_binary),
+                      deadline_monotonic=deadline)
+        write_json(run/'config.json',config)
+        run_command('benchmark-worker',[str(PYTHON),str(run/'code/benchmark_ada.py'),
+                    '--worker',str(run/'config.json')],590)
+        data = json.loads((run/'benchmark-results.json').read_text())
+        if data['status'] != 'passed' or len(data['cases']) != 2:
+            raise RuntimeError('Benchmark did not complete all required cases')
+        report.update(status='passed',results=data)
+    except BaseException as error:
+        report.update(status='failed_or_incomplete',error=type(error).__name__+': '+str(error))
+        print(report['error'],flush=True)
+    finally:
+        report['elapsed_seconds'] = time.monotonic()-start
+        report['total_budget_elapsed_seconds'] = 600-(deadline-time.monotonic())
+        report['finished_utc'] = datetime.now(timezone.utc).isoformat()
+        report['published_package_unchanged'] = package_hashes()==baseline
+        report['production_sources_unchanged'] = all(sha(PRODUCTION/'src'/name)==digest for name,digest in direct_hashes.items())
+        report['production_status_unchanged'] = subprocess.check_output(['git','-C',str(PRODUCTION),'status','--short','--branch'],text=True)==initial_status
+        if not all(report[k] for k in ['published_package_unchanged','production_sources_unchanged','production_status_unchanged']):
+            report['status'] = 'preservation_check_failed'
+        write_json(run/'report.json',report)
+        print('REPORT '+str(run/'report.json')+' STATUS '+report['status'],flush=True)
+    return 0 if report['status']=='passed' else 1
+
+if __name__ == '__main__':
+    if sys.flags.optimize:
+        raise SystemExit('Do not run benchmark/oracle code with python -O')
+    if len(sys.argv)==3 and sys.argv[1]=='--worker':
+        raise SystemExit(worker(json.loads(Path(sys.argv[2]).read_text())))
+    if len(sys.argv)==3 and sys.argv[1]=='--remaining-budget-from':
+        raise SystemExit(coordinator(Path(sys.argv[2])))
+    if len(sys.argv)!=1:
+        raise SystemExit('Usage: benchmark_ada.py [--worker CONFIG]')
+    raise SystemExit(coordinator())

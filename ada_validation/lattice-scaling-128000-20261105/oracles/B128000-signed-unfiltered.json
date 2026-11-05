@@ -1,0 +1,33 @@
+{
+  "command": [
+    "${RUN_DIR}/oracle-signed",
+    "--bound",
+    "128000",
+    "--target",
+    "42",
+    "--filter",
+    "none"
+  ],
+  "result": {
+    "backend": "independent_sorted_native128",
+    "bound": 128000,
+    "target": 42,
+    "filter": "none",
+    "row_start": 0,
+    "row_stop": 256001,
+    "total_rows": 256001,
+    "canonical_sorted": true,
+    "steps": 32768384001,
+    "setup_seconds": 0.002012525,
+    "search_seconds": 26.82809259,
+    "hits": []
+  },
+  "metrics": {
+    "pipeline_seconds": 26.830105115000002,
+    "setup_seconds": 0.002012525,
+    "search_seconds": 26.82809259,
+    "process_wall_seconds": 26.835335522999912,
+    "cpu_seconds": 26.745675
+  },
+  "complete": true
+}

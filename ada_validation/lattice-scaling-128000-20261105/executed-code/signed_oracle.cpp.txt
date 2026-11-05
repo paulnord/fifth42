@@ -1,0 +1,89 @@
+// Independent full signed-box oracle; no lattice code or modular filters.
+// Sorting removes permutations only: for each largest z, search x <= y <= z.
+#include <chrono>
+#include <cstdint>
+#include <iomanip>
+#include <iostream>
+#include <stdexcept>
+#include <string>
+#include <vector>
+
+using Integer = __int128;
+using Clock = std::chrono::steady_clock;
+struct Hit { int x, y, z; };
+
+static long long integer(const std::string& s) {
+    std::size_t used = 0;
+    const auto value = std::stoll(s, &used);
+    if (used != s.size()) throw std::runtime_error("invalid integer");
+    return value;
+}
+
+int main(int argc, char** argv) {
+    try {
+        const auto begin = Clock::now();
+        int bound = -1;
+        std::int64_t target = 42;
+        for (int k = 1; k < argc; k += 2) {
+            if (k + 1 >= argc) throw std::runtime_error("missing value");
+            const std::string key = argv[k], value = argv[k+1];
+            if (key == "--filter") {
+                if (value != "none") throw std::runtime_error("oracle has no filter");
+            } else if (key == "--bound") {
+                const auto n = integer(value);
+                if (n < 0 || n > 1000000) throw std::runtime_error("bound outside [0,1000000]");
+                bound = static_cast<int>(n);
+            } else if (key == "--target") target = integer(value);
+            else throw std::runtime_error("unknown option");
+        }
+        if (bound < 0) throw std::runtime_error("bound required");
+        // At B <= 1,000,000, 3*B^5 + 2^63 < 2^127. All operations are exact.
+        std::vector<Integer> powers;
+        powers.reserve(static_cast<std::size_t>(2 * bound + 1));
+        for (int n = -bound; n <= bound; ++n) {
+            Integer value = 1;
+            for (int k = 0; k < 5; ++k) value *= static_cast<Integer>(n);
+            powers.push_back(value);
+        }
+        const auto ready = Clock::now();
+        std::vector<Hit> hits;
+        std::uint64_t steps = 0;
+        for (std::size_t z = 0; z < powers.size(); ++z) {
+            const Integer goal = static_cast<Integer>(target) - powers[z];
+            long long left = 0, right = static_cast<long long>(z);
+            while (left <= right) {
+                ++steps;
+                const Integer sum = powers[static_cast<std::size_t>(left)]
+                                  + powers[static_cast<std::size_t>(right)];
+                if (sum < goal) ++left;
+                else if (sum > goal) --right;
+                else {
+                    if (hits.size() >= 1000000) throw std::runtime_error("hit capacity exhausted");
+                    hits.push_back({static_cast<int>(left) - bound,
+                                    static_cast<int>(right) - bound,
+                                    static_cast<int>(z) - bound});
+                    ++left;
+                    --right;
+                }
+            }
+        }
+        const auto end = Clock::now();
+        std::cout << std::setprecision(17)
+                  << "{\"backend\":\"independent_sorted_native128\",\"bound\":" << bound
+                  << ",\"target\":" << target << ",\"filter\":\"none\",\"row_start\":0"
+                  << ",\"row_stop\":" << powers.size() << ",\"total_rows\":" << powers.size()
+                  << ",\"canonical_sorted\":true,\"steps\":" << steps
+                  << ",\"setup_seconds\":" << std::chrono::duration<double>(ready-begin).count()
+                  << ",\"search_seconds\":" << std::chrono::duration<double>(end-ready).count()
+                  << ",\"hits\":[";
+        for (std::size_t k = 0; k < hits.size(); ++k) {
+            if (k) std::cout << ',';
+            const auto h = hits[k];
+            std::cout << '[' << h.x << ',' << h.y << ',' << h.z << ']';
+        }
+        std::cout << "]}\n";
+    } catch (const std::exception& e) {
+        std::cerr << "ERROR: " << e.what() << '\n';
+        return 1;
+    }
+}

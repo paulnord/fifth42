@@ -1,0 +1,29 @@
+{
+  "status": "host_preparation_passed",
+  "gpu_execution_in_codex_sandbox": false,
+  "command": "python3 ~/fifth-lattice-gpu/benchmark.py --wait",
+  "host_tests": 11,
+  "independent_oracle_python_cases": 7,
+  "oracle_report": "${GPU_WORKSPACE}/oracle-host-check-j_nobenc/report.json",
+  "passing_cuda_validation": "${GPU_WORKSPACE}/validation-runs/20261105T191235Z/report.json",
+  "validated_source_files_preserved": 16,
+  "source_sha256": {
+    "benchmark.py": "18266c0d47f8d6945fd82b6075087d6db5e05927e6c4b42dac7acd0698e7983c",
+    "near_oracle.cpp": "aa754a7754f6b853845ba6a1f16bf3cf9086507ea8e47a2ce05e11571c57fdb4",
+    "tests/test_benchmark.py": "d9a23dd1d97f94b35b4584ed94100e68bfcc9b9719e2cbe4c8d3c9749c09909c",
+    "BENCHMARK.md": "5cd869f9f886b0add3a9f0a0c644a4adbcdb35945d202310df86dd61d20ed30e"
+  },
+  "expected_sandbox_readiness_blockers": [
+    "CUDA device unavailable in sandbox",
+    "CPU benchmark lock busy"
+  ],
+  "bounds": [
+    2000,
+    4000,
+    8000
+  ],
+  "repeats": 5,
+  "benchmark_wall_limit_seconds": 600,
+  "cumulative_cuda_process_limit_seconds": 120,
+  "waiting_limit_seconds": 1800
+}
