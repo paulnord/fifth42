@@ -1,0 +1,125 @@
+{
+  "status": "failed_or_incomplete",
+  "started_utc": "2026-11-05T18:19:06.450242+00:00",
+  "run": "${INITIAL_ATTEMPT_DIR}",
+  "source_commit": "91bb89b0ff49974e9458faf19015908e44b85cb8",
+  "source_directory": "${SOURCE_DIR}",
+  "execution": "one logical CPU, nice 19, native threads 1, 2 GiB/process",
+  "hard_wall_cap_seconds": 600,
+  "bounds": [
+    100,
+    1000
+  ],
+  "paired_repeats": 5,
+  "variants": [
+    "fraction_none",
+    "fraction_prune",
+    "mpq_prune",
+    "direct_native128"
+  ],
+  "gpu_execution": false,
+  "larger_search_started": false,
+  "automatic_resume": false,
+  "host": "ada",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "runner_sha256": "dc42fb214d18028ab33711a4be8e5562f96173793f61d23ed11a300669500c73",
+  "direct_source_sha256": {
+    "search_cpu.cpp": "359a63026e540aaafbc5cebd7a166fc61e21e1396e723dff17a1d37a90425c84",
+    "search_common.hpp": "862921b097e11ba13883769af123ec931ae775ad22607d9024408bd065e1a23a",
+    "exact.hpp": "70f95108601bc90d7c27c160f6c2b42f951576c9a7fa5053f21df07859f01907"
+  },
+  "direct_baseline": "Production native signed-128-bit CPU solver, copied and rebuilt with its Makefile flags; mod11 target42 filter",
+  "commands": [
+    {
+      "name": "manifest-0",
+      "command": [
+        "sha256sum",
+        "-c",
+        "PACKAGE_SHA256SUMS"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.2535756388679147,
+      "cpu_seconds": 0.004742999999999999,
+      "stdout": "manifest-0.stdout.txt",
+      "stderr": "manifest-0.stderr.txt"
+    },
+    {
+      "name": "manifest-1",
+      "command": [
+        "sha256sum",
+        "-c",
+        "SHA256SUMS"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.2537141600623727,
+      "cpu_seconds": 0.004403000000000001,
+      "stdout": "manifest-1.stdout.txt",
+      "stderr": "manifest-1.stderr.txt"
+    },
+    {
+      "name": "manifest-2",
+      "command": [
+        "sha256sum",
+        "-c",
+        "compiled_experiment/SHA256SUMS"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.253832901827991,
+      "cpu_seconds": 0.003183,
+      "stdout": "manifest-2.stdout.txt",
+      "stderr": "manifest-2.stderr.txt"
+    },
+    {
+      "name": "compile-direct",
+      "command": [
+        "/usr/bin/g++-13",
+        "-O3",
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-Wconversion",
+        "${INITIAL_ATTEMPT_DIR}/direct-source/search_cpu.cpp",
+        "-o",
+        "${INITIAL_ATTEMPT_DIR}/direct-search-cpu"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.5067456760443747,
+      "cpu_seconds": 0.470433,
+      "stdout": "compile-direct.stdout.txt",
+      "stderr": "compile-direct.stderr.txt"
+    },
+    {
+      "name": "benchmark-worker",
+      "command": [
+        "${VALIDATION_PYTHON}",
+        "${INITIAL_ATTEMPT_DIR}/code/benchmark_ada.py",
+        "--worker",
+        "${INITIAL_ATTEMPT_DIR}/config.json"
+      ],
+      "exit_code": 1,
+      "wall_seconds": 1.006533611100167,
+      "cpu_seconds": 0.777976,
+      "stdout": "benchmark-worker.stdout.txt",
+      "stderr": "benchmark-worker.stderr.txt"
+    }
+  ],
+  "timing_definition": {
+    "lattice_pipeline": "warm callable wall time including patch construction, exact LLL, enumeration, and signed reduction; excludes independent oracle and imports",
+    "direct_pipeline": "executable-reported setup_seconds + search_seconds; excludes process startup and JSON I/O",
+    "direct_process_wall": "full native process invocation, output capture, and return; separately reported",
+    "cold_setup": "compiler process and Python/native imports recorded separately; no profiling runs"
+  },
+  "notes": [
+    "Five alternating forward/reverse paired rounds at each signed bound.",
+    "Nonempty positive lattice controls and corresponding signed direct controls are separate correctness work.",
+    "Direct pipeline times at these small bounds are very short; retain full process times and every sample."
+  ],
+  "compiler": "g++-13 (Ubuntu 13.4.0-10ubuntu1) 13.4.0",
+  "direct_binary_sha256": "c819f6c1be3460cb168a858221b41494645ba6a29f5aa0d598965ba14a505784",
+  "error": "RuntimeError: benchmark-worker failed; see ${INITIAL_ATTEMPT_DIR}/benchmark-worker.stderr.txt",
+  "elapsed_seconds": 2.6597605948336422,
+  "finished_utc": "2026-11-05T18:19:08.942329+00:00",
+  "published_package_unchanged": true,
+  "production_sources_unchanged": true,
+  "production_status_unchanged": true
+}

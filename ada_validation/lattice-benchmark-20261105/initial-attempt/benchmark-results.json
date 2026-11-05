@@ -1,0 +1,38 @@
+{
+  "status": "failed_or_incomplete",
+  "variants": [
+    "fraction_none",
+    "fraction_prune",
+    "mpq_prune",
+    "direct_native128"
+  ],
+  "repeats": 5,
+  "bounds": [
+    100,
+    1000
+  ],
+  "controls": [],
+  "cases": [],
+  "cold_setup": {
+    "imports_and_engine_creation_seconds": 0.07400055695325136,
+    "reducer_warmup_seconds": 0.00028509506955742836
+  },
+  "default_modules_preserved": false,
+  "environment": {
+    "python": "3.12.4 | packaged by Anaconda, Inc. | (main, Jun 18 2024, 15:12:24) [GCC 11.2.0]",
+    "packages": {
+      "sympy": "1.14.0",
+      "fpylll": "0.6.4",
+      "cysignals": "1.12.5",
+      "numpy": "2.3.5",
+      "gmpy2": "2.2.2"
+    },
+    "fplll": "5.5.0",
+    "gmp": "GMP 6.3.0",
+    "mpfr": "MPFR 4.2.1",
+    "mpc": "MPC 1.3.1"
+  },
+  "frozen_snapshots_match_live_ast": true,
+  "error": "KeyError: 'arithmetic_bits'",
+  "traceback": "Traceback (most recent call last):\n  File \"${INITIAL_ATTEMPT_DIR}/code/benchmark_ada.py\", line 221, in worker\n    d, metrics = direct(bound,target)\n                 ^^^^^^^^^^^^^^^^^^^^\n  File \"${INITIAL_ATTEMPT_DIR}/code/benchmark_ada.py\", line 188, in direct\n    or d['row_stop'] != d['total_rows'] or d['arithmetic_bits'] != 128):\n                                           ~^^^^^^^^^^^^^^^^^^^\nKeyError: 'arithmetic_bits'\n"
+}
