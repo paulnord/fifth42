@@ -1,6 +1,6 @@
 # ADA lattice overnight status
 
-Last GitHub snapshot: **2026-11-06T10:35:36.570249+00:00**
+Last GitHub snapshot: **2026-11-06T10:50:38.299311+00:00**
 
 State: **running**. Stop deadline: **9:00 a.m. Central, November 6, 2026**.
 Configuration: width **8**, optimized packing, persistent CUDA, **16 physical CPU workers**.
@@ -15,10 +15,10 @@ Configured denominator start: **100000000001**.
 Configured upper arithmetic/search limit: **200000000000**.
 Last completed shell bound: **None**.
 Current shell lower bound: **100000000001**.
-Next grid patch: **3792818560**.
-Completed chunks: **167260**.
-Completed patches: **42818560**.
-Last checkpoint: **2026-11-06T10:35:36.474480+00:00**.
+Next grid patch: **3793772160**.
+Completed chunks: **170985**.
+Completed patches: **43772160**.
+Last checkpoint: **2026-11-06T10:50:38.258467+00:00**.
 Stop/failure reason: **none recorded**.
 
 Check [status.json](status.json) for machine-readable state and verified counters.
