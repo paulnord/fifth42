@@ -1,0 +1,291 @@
+{
+  "status": "passed",
+  "backend": "emulated",
+  "ubsan": true,
+  "repeats": 1,
+  "cuda_executed": false,
+  "no_new_coverage_claim": true,
+  "raw_timings": [
+    {
+      "repeat": 0,
+      "variant": "baseline",
+      "packet": "small1000",
+      "request_wall_seconds": 0.22157275900099194,
+      "engine_seconds": 0.221086,
+      "kernel_seconds": 0,
+      "decode_seconds": 0.0011149630008731037,
+      "packet_sha256": "87989c9937e9edf6d065f8e74fcf7d47fdab07a387c058002a40e859188ecc6d"
+    },
+    {
+      "repeat": 0,
+      "variant": "baseline",
+      "packet": "controls100",
+      "request_wall_seconds": 0.03006796299814596,
+      "engine_seconds": 0.0298344,
+      "kernel_seconds": 0,
+      "decode_seconds": 0.0001485640023020096,
+      "packet_sha256": "b0de8a9585b947d0cb26f23112e579e948c976b07c5c7b6845a75ee86bb60a8a"
+    },
+    {
+      "repeat": 0,
+      "variant": "baseline",
+      "packet": "high8",
+      "request_wall_seconds": 0.04302233199996408,
+      "engine_seconds": 0.0425653,
+      "kernel_seconds": 0,
+      "decode_seconds": 0.0010824540004250593,
+      "packet_sha256": "7c31fde369839951b0b2bc307a3b397678c132f43e752e6ed137a2e32167bc89"
+    },
+    {
+      "repeat": 0,
+      "variant": "baseline",
+      "packet": "high32",
+      "request_wall_seconds": 0.354168292000395,
+      "engine_seconds": 0.353855,
+      "kernel_seconds": 0,
+      "decode_seconds": 0.00023029699877952226,
+      "packet_sha256": "24740d9ab4dff13713b117bc901e15b48ca6a5f3cb117f40216ff8ca76436aed"
+    },
+    {
+      "repeat": 0,
+      "variant": "low64",
+      "packet": "small1000",
+      "request_wall_seconds": 0.1960951409964764,
+      "engine_seconds": 0.195677,
+      "kernel_seconds": 0,
+      "decode_seconds": 0.00038461100120912306,
+      "packet_sha256": "87989c9937e9edf6d065f8e74fcf7d47fdab07a387c058002a40e859188ecc6d"
+    },
+    {
+      "repeat": 0,
+      "variant": "low64",
+      "packet": "controls100",
+      "request_wall_seconds": 0.039100553000025684,
+      "engine_seconds": 0.0388512,
+      "kernel_seconds": 0,
+      "decode_seconds": 0.00013187900185585022,
+      "packet_sha256": "b0de8a9585b947d0cb26f23112e579e948c976b07c5c7b6845a75ee86bb60a8a"
+    },
+    {
+      "repeat": 0,
+      "variant": "low64",
+      "packet": "high8",
+      "request_wall_seconds": 0.02826208099941141,
+      "engine_seconds": 0.0278991,
+      "kernel_seconds": 0,
+      "decode_seconds": 0.0015019569982541725,
+      "packet_sha256": "7c31fde369839951b0b2bc307a3b397678c132f43e752e6ed137a2e32167bc89"
+    },
+    {
+      "repeat": 0,
+      "variant": "low64",
+      "packet": "high32",
+      "request_wall_seconds": 0.2476089360025071,
+      "engine_seconds": 0.247336,
+      "kernel_seconds": 0,
+      "decode_seconds": 0.00021813900093548,
+      "packet_sha256": "24740d9ab4dff13713b117bc901e15b48ca6a5f3cb117f40216ff8ca76436aed"
+    }
+  ],
+  "checks": [
+    {
+      "variant": "baseline",
+      "case": "small1000",
+      "points": 4483388,
+      "hit_records": 2,
+      "passed": true
+    },
+    {
+      "variant": "baseline",
+      "case": "controls100",
+      "points": 589483,
+      "hit_records": 10,
+      "passed": true
+    },
+    {
+      "variant": "baseline",
+      "case": "high8",
+      "points": 560484,
+      "hit_records": 0,
+      "passed": true
+    },
+    {
+      "variant": "baseline",
+      "case": "high32",
+      "points": 5885988,
+      "hit_records": 0,
+      "passed": true
+    },
+    {
+      "variant": "baseline",
+      "case": "triple-mode0-cap0",
+      "points": 18,
+      "hit_records": 0,
+      "passed": true
+    },
+    {
+      "variant": "baseline",
+      "case": "triple-mode0-cap1",
+      "points": 18,
+      "hit_records": 0,
+      "passed": true
+    },
+    {
+      "variant": "baseline",
+      "case": "triple-mode0-cap12",
+      "points": 18,
+      "hit_records": 1,
+      "passed": true
+    },
+    {
+      "variant": "baseline",
+      "case": "triple-mode0-cap42",
+      "points": 18,
+      "hit_records": 2,
+      "passed": true
+    },
+    {
+      "variant": "baseline",
+      "case": "triple-mode0-cap960",
+      "points": 18,
+      "hit_records": 3,
+      "passed": true
+    },
+    {
+      "variant": "baseline",
+      "case": "triple-mode0-cap2951",
+      "points": 18,
+      "hit_records": 3,
+      "passed": true
+    },
+    {
+      "variant": "baseline",
+      "case": "triple-mode0-cap9223372036854775807",
+      "points": 18,
+      "hit_records": 3,
+      "passed": true
+    },
+    {
+      "variant": "baseline",
+      "case": "triple-mode1-cap0",
+      "points": 18,
+      "hit_records": 1,
+      "passed": true
+    },
+    {
+      "variant": "baseline",
+      "case": "nonempty-identity",
+      "points": 9261,
+      "hit_records": 68,
+      "passed": true
+    },
+    {
+      "variant": "baseline",
+      "case": "capacity-and-invalid-request-recovery",
+      "passed": true
+    },
+    {
+      "variant": "low64",
+      "case": "small1000",
+      "points": 4483388,
+      "hit_records": 2,
+      "passed": true
+    },
+    {
+      "variant": "low64",
+      "case": "controls100",
+      "points": 589483,
+      "hit_records": 10,
+      "passed": true
+    },
+    {
+      "variant": "low64",
+      "case": "high8",
+      "points": 560484,
+      "hit_records": 0,
+      "passed": true
+    },
+    {
+      "variant": "low64",
+      "case": "high32",
+      "points": 5885988,
+      "hit_records": 0,
+      "passed": true
+    },
+    {
+      "variant": "low64",
+      "case": "triple-mode0-cap0",
+      "points": 18,
+      "hit_records": 0,
+      "passed": true
+    },
+    {
+      "variant": "low64",
+      "case": "triple-mode0-cap1",
+      "points": 18,
+      "hit_records": 0,
+      "passed": true
+    },
+    {
+      "variant": "low64",
+      "case": "triple-mode0-cap12",
+      "points": 18,
+      "hit_records": 1,
+      "passed": true
+    },
+    {
+      "variant": "low64",
+      "case": "triple-mode0-cap42",
+      "points": 18,
+      "hit_records": 2,
+      "passed": true
+    },
+    {
+      "variant": "low64",
+      "case": "triple-mode0-cap960",
+      "points": 18,
+      "hit_records": 3,
+      "passed": true
+    },
+    {
+      "variant": "low64",
+      "case": "triple-mode0-cap2951",
+      "points": 18,
+      "hit_records": 3,
+      "passed": true
+    },
+    {
+      "variant": "low64",
+      "case": "triple-mode0-cap9223372036854775807",
+      "points": 18,
+      "hit_records": 3,
+      "passed": true
+    },
+    {
+      "variant": "low64",
+      "case": "triple-mode1-cap0",
+      "points": 18,
+      "hit_records": 1,
+      "passed": true
+    },
+    {
+      "variant": "low64",
+      "case": "nonempty-identity",
+      "points": 9261,
+      "hit_records": 68,
+      "passed": true
+    },
+    {
+      "variant": "low64",
+      "case": "capacity-and-invalid-request-recovery",
+      "passed": true
+    }
+  ],
+  "binary_sha256": {
+    "baseline": "80b89cf083b1b6ef34f2455cda9fe3ff48a824986fc5bc90e23393bc2be43413",
+    "low64": "aa15668b6e7c6694ddac9a708cca5cbc06c5d240c2e2e2e495e9875b9853f2ed"
+  },
+  "source_manifest_sha256": "19808d1a932163bf2ee420d7b922cf89dbc81631b505c80135c5285e79fadebc",
+  "wall_seconds": 2.552694579000672,
+  "timing_scope": "Warmed fixed-packet calibration only; excludes preparation, certification and durable commits. No full end-to-end speedup."
+}

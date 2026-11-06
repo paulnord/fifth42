@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "cases": 60368,
+  "seed": 20261106,
+  "ubsan": true,
+  "cuda_executed": false,
+  "scope": "New candidate helper against Python integers; exact engine parity is in the separate probe",
+  "source_sha256": "849831603eb2222dfd95da5d249d94d324604ba370693d280a48e94e14305e07",
+  "command": [
+    "g++",
+    "-std=c++17",
+    "-O1",
+    "-g",
+    "-fsanitize=undefined",
+    "-fno-sanitize-recover=all",
+    "-I",
+    "/workspace/scratch/adfdc30d1ec5/ada-low64-local/low64/src",
+    "/workspace/scratch/adfdc30d1ec5/ada-low64-predicate-audit/predicate.cpp",
+    "-o",
+    "/workspace/scratch/adfdc30d1ec5/ada-low64-predicate-audit/predicate"
+  ],
+  "stderr": ""
+}

@@ -1,0 +1,111 @@
+{
+  "mode": "native",
+  "status": "passed",
+  "checks": [
+    {
+      "packet": "small1000",
+      "binary": "bench",
+      "exact_parity": true
+    },
+    {
+      "packet": "small1000",
+      "binary": "bench_cached",
+      "exact_parity": true
+    },
+    {
+      "packet": "high8",
+      "binary": "bench",
+      "exact_parity": true
+    },
+    {
+      "packet": "high8",
+      "binary": "bench_cached",
+      "exact_parity": true
+    },
+    {
+      "packet": "high32",
+      "binary": "bench",
+      "exact_parity": true
+    },
+    {
+      "packet": "high32",
+      "binary": "bench_cached",
+      "exact_parity": true
+    },
+    {
+      "packet": "controls100",
+      "binary": "bench",
+      "exact_parity": true
+    },
+    {
+      "packet": "controls100",
+      "binary": "bench_cached",
+      "exact_parity": true
+    }
+  ],
+  "independent_audit": {
+    "boundary_checks": 18228,
+    "bigint_triples": 100008,
+    "actual_aliases": 1,
+    "all_passed": true,
+    "cap_zero_preserves_but_does_not_filter": true
+  },
+  "additional_sieve_packets": [
+    {
+      "sample": "small1000.target",
+      "exact_counts_and_hits_match": true,
+      "points": 4483388,
+      "shape": 261114,
+      "hits": 0
+    },
+    {
+      "sample": "high8.target",
+      "exact_counts_and_hits_match": true,
+      "points": 560484,
+      "shape": 70445,
+      "hits": 0
+    },
+    {
+      "sample": "high32.target",
+      "exact_counts_and_hits_match": true,
+      "points": 5885988,
+      "shape": 836817,
+      "hits": 0
+    },
+    {
+      "sample": "controls100.target",
+      "exact_counts_and_hits_match": true,
+      "points": 589483,
+      "shape": 20080,
+      "hits": 6
+    },
+    {
+      "sample": "small1000.interval",
+      "exact_counts_and_hits_match": true,
+      "points": 4483388,
+      "shape": 261114,
+      "hits": 2
+    },
+    {
+      "sample": "high8.interval",
+      "exact_counts_and_hits_match": true,
+      "points": 560484,
+      "shape": 70445,
+      "hits": 0
+    },
+    {
+      "sample": "high32.interval",
+      "exact_counts_and_hits_match": true,
+      "points": 5885988,
+      "shape": 836817,
+      "hits": 0
+    },
+    {
+      "sample": "controls100.interval",
+      "exact_counts_and_hits_match": true,
+      "points": 589483,
+      "shape": 20080,
+      "hits": 10
+    }
+  ]
+}
