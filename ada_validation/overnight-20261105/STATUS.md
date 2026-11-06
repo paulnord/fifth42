@@ -1,8 +1,8 @@
 # ADA lattice overnight status
 
-Last GitHub snapshot: **2026-11-06T14:51:05.328129+00:00**
+Last GitHub snapshot: **2026-11-06T14:59:45.961316+00:00**
 
-State: **running**. Stop deadline: **9:00 a.m. Central, November 6, 2026**.
+State: **stopped**. Stop deadline: **9:00 a.m. Central, November 6, 2026**.
 Configuration: width **8**, optimized packing, persistent CUDA, **16 physical CPU workers**.
 
 Reported prior near-miss bound: **10^11** (Healy). The separately verified local
@@ -15,11 +15,11 @@ Configured denominator start: **100000000001**.
 Configured upper arithmetic/search limit: **200000000000**.
 Last completed shell bound: **None**.
 Current shell lower bound: **100000000001**.
-Next grid patch: **3809019776**.
-Completed chunks: **230546**.
-Completed patches: **59019776**.
-Last checkpoint: **2026-11-06T14:51:05.217663+00:00**.
-Stop/failure reason: **none recorded**.
+Next grid patch: **3809566592**.
+Completed chunks: **232682**.
+Completed patches: **59566592**.
+Last checkpoint: **2026-11-06T14:59:45.044878+00:00**.
+Stop/failure reason: **Morning deadline reached**.
 
 Check [status.json](status.json) for machine-readable state and verified counters.
 The service aims to publish every 15 minutes and once on exit. The timestamp
