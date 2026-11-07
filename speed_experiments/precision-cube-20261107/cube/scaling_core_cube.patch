@@ -1,0 +1,16 @@
+--- a/lattice_gpu/scaling_core.py
++++ b/lattice_gpu/scaling_core.py
+@@ -72,7 +72,12 @@
+           -b[(j+1)%3][(i+2)%3]*b[(j+2)%3][(i+1)%3])/d for j in range(3)] for i in range(3)]
+     if l.matmul(b,inv)!=[[int(i==j) for j in range(3)] for i in range(3)]:
+         raise ValueError('Exact inverse certificate failed')
+-    return tuple(ceil_sqrt(3*sum(inv[i][j]**2 for i in range(3))) for j in range(3))
++    # Every valid mapped point is in the normalized cube [-1,1]^3.
++    # n = x B^-1 implies |n_j| <= sum_i |(B^-1)_ij|. Since n_j is
++    # integer, floor is the exact outward integer bound. This intentionally
++    # drops irrelevant sphere/box points, never a point in the covered cube.
++    bounds=[sum(abs(inv[i][j]) for i in range(3)) for j in range(3)]
++    return tuple(int(v.numerator//v.denominator) for v in bounds)
+ 
+ @dataclass(frozen=True)
+ class Task:
