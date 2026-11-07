@@ -1,7 +1,7 @@
 # ADA adaptive-precision weekend search
 
-Last GitHub snapshot: **2026-11-07T23:32:40.038147+00:00**.
-Search state: **running**. Worker status refreshed: **2026-11-07T23:32:37.125952+00:00**.
+Last GitHub snapshot: **2026-11-07T23:47:42.196376+00:00**.
+Search state: **running**. Worker status refreshed: **2026-11-07T23:47:40.974694+00:00**.
 
 The original weekend search started Friday, November 6, 2026 at 5:19:57 p.m. Central.
 This fresh adaptive-precision continuation starts at verified cursor **3,917,103,232**.
@@ -14,15 +14,15 @@ Automatic restart/resume of the search is disabled.
 
 | Measurement | Saved value |
 |---|---:|
-| New committed patches in this continuation | 23,846,912 |
-| New committed chunks in this continuation | 93,152 |
-| Next patch cursor | 3,940,950,144 |
-| Cumulative selected patches including prior runs | 190,950,144 |
-| Coefficient points in this continuation | 58,295,555,584 |
-| Average search throughput at worker status timestamp | 4,346.7 patches/s |
-| Search elapsed at worker status timestamp | 1.52 hours |
+| New committed patches in this continuation | 27,768,576 |
+| New committed chunks in this continuation | 108,471 |
+| Next patch cursor | 3,944,871,808 |
+| Cumulative selected patches including prior runs | 194,871,808 |
+| Coefficient points in this continuation | 67,969,989,542 |
+| Average search throughput at worker status timestamp | 4,346.8 patches/s |
+| Search elapsed at worker status timestamp | 1.77 hours |
 | Recorded hits | 0 |
-| Periodic independent GMP audits at worker status timestamp | 728 |
+| Periodic independent GMP audits at worker status timestamp | 848 |
 | Preparation pacing | 0.0 seconds |
 
 Configuration: 16 workers pinned to physical CPUs 0–15, optimized packed/prefetched
@@ -46,7 +46,7 @@ Alerts: **None reported**.
 Worker reason: **None**. Worker error: **None**.
 Supervisor error: **None**.
 Worker/service stderr sizes: **0 / 0 bytes**.
-Free disk: **168.9 GiB**;
+Free disk: **167.9 GiB**;
 available memory: **118.0 GiB**.
 
 This separate publisher aims to update every 15 minutes and after the search
