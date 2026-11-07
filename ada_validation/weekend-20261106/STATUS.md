@@ -1,7 +1,7 @@
 # ADA fifth-power weekend search
 
-Last GitHub snapshot: **2026-11-07T19:33:31.558253+00:00**.
-Search state: **running**. Worker status refreshed: **2026-11-07T19:33:27.797940+00:00**.
+Last GitHub snapshot: **2026-11-07T19:48:33.881486+00:00**.
+Search state: **running**. Worker status refreshed: **2026-11-07T19:48:25.160799+00:00**.
 
 Started Friday, November 6, 2026 at 5:19:57 p.m. Central.
 Stop deadline: **Monday, November 9 at 9:00 a.m. Central**.
@@ -12,15 +12,15 @@ Automatic restart/resume of the search is disabled.
 
 | Measurement | Saved value |
 |---|---:|
-| New committed patches this weekend | 93,074,176 |
-| New committed chunks | 363,571 |
-| Next patch cursor | 3,906,040,192 |
-| Cumulative selected patches including prior runs | 156,040,192 |
-| Coefficient points this weekend | 217,503,708,676 |
+| New committed patches this weekend | 94,227,456 |
+| New committed chunks | 368,076 |
+| Next patch cursor | 3,907,193,472 |
+| Cumulative selected patches including prior runs | 157,193,472 |
+| Coefficient points this weekend | 220,281,787,916 |
 | Average search throughput at worker status timestamp | 1,278.3 patches/s |
-| Search elapsed at worker status timestamp | 20.22 hours |
+| Search elapsed at worker status timestamp | 20.47 hours |
 | Recorded hits | 0 |
-| Periodic independent GMP audits at worker status timestamp | 2,841 |
+| Periodic independent GMP audits at worker status timestamp | 2,876 |
 | Preparation pacing | 0.0 seconds |
 
 Configuration: 16 workers pinned to physical CPUs 0–15, optimized packed/prefetched
@@ -36,7 +36,7 @@ Alerts: **None reported**.
 Worker reason: **None**. Worker error: **None**.
 Supervisor error: **None**.
 Worker/service stderr sizes: **0 / 0 bytes**.
-Free disk: **175.6 GiB**;
+Free disk: **175.4 GiB**;
 available memory: **118.0 GiB**.
 
 This separate publisher aims to update every 15 minutes and after the search
