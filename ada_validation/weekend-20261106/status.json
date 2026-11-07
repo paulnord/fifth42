@@ -1,29 +1,31 @@
 {
-  "snapshot_utc": "2026-11-07T21:58:52.380528+00:00",
-  "run_id": "20261106T230428Z",
-  "phase": "stopped",
+  "snapshot_utc": "2026-11-07T22:02:27.222229+00:00",
+  "run_id": "20261107T213849Z-precision",
+  "phase": "running",
   "search_service": {
-    "LoadState": "not-found",
-    "ActiveState": "inactive",
-    "SubState": "dead",
-    "MainPID": "0",
+    "LoadState": "loaded",
+    "ActiveState": "active",
+    "SubState": "running",
+    "ActiveEnterTimestamp": "Sat 2026-11-07 16:01:06 CST",
+    "MainPID": "645518",
     "NRestarts": "0"
   },
   "stop_timer": {
     "LoadState": "loaded",
     "ActiveState": "active",
     "SubState": "waiting",
+    "ActiveEnterTimestamp": "Sat 2026-11-07 16:01:06 CST",
     "NextElapseUSecRealtime": "Mon 2026-11-09 08:59:50 CST"
   },
   "alerts": [],
   "resources": {
     "load_average": [
-      1.271484375,
-      4.02197265625,
-      5.26025390625
+      4.97412109375,
+      3.7626953125,
+      4.84716796875
     ],
-    "free_disk_bytes": 187101736960,
-    "available_memory_bytes": 127255822336
+    "free_disk_bytes": 187044032512,
+    "available_memory_bytes": 126705897472
   },
   "error_log_bytes": {
     "worker.stderr.log": 0,
@@ -32,26 +34,117 @@
   "stop_local": "2026-11-09T09:00:00-06:00",
   "stop_epoch": 1794236400.0,
   "workers": 16,
-  "initial_patch": 3812966016,
-  "parent_selected_patches": 62966016,
-  "combined_selected_patches": 167103232,
+  "initial_patch": 3917103232,
+  "geometry_policy": "adaptive",
+  "ledger_root": "/mnt/nfs_share/fifth42-shared-20261107",
+  "ledger_claim_sha256": "7d6b55c80d480208b324d6748fcc3660e12a0b70a7f2a21ad8c28bf0b0a16b33",
+  "coverage_sha256": "e19f86245f1c4607680c5e3266f9436209881889270abe55f007ecc8174f1f49",
+  "gpu_validation": {
+    "status": "passed",
+    "trials": [
+      {
+        "geometry_policy": "baseline",
+        "repeat": 0,
+        "patches": 8192,
+        "search_seconds": 6.498926248023054,
+        "patches_per_second": 1260.5159202248176,
+        "process_wall_seconds": 7.233495624997886,
+        "points": 19808396,
+        "exact_hits": [],
+        "independent_audits": 1
+      },
+      {
+        "geometry_policy": "adaptive",
+        "repeat": 0,
+        "patches": 8192,
+        "search_seconds": 1.9491346279974096,
+        "patches_per_second": 4202.890802066694,
+        "process_wall_seconds": 2.5597107780049555,
+        "points": 19808396,
+        "exact_hits": [],
+        "independent_audits": 1
+      },
+      {
+        "geometry_policy": "adaptive",
+        "repeat": 1,
+        "patches": 8192,
+        "search_seconds": 1.980906437995145,
+        "patches_per_second": 4135.480526930408,
+        "process_wall_seconds": 2.5810220079729334,
+        "points": 19808396,
+        "exact_hits": [],
+        "independent_audits": 1
+      },
+      {
+        "geometry_policy": "baseline",
+        "repeat": 1,
+        "patches": 8192,
+        "search_seconds": 6.467916846013395,
+        "patches_per_second": 1266.5592639845504,
+        "process_wall_seconds": 7.103265871992335,
+        "points": 19808396,
+        "exact_hits": [],
+        "independent_audits": 1
+      },
+      {
+        "geometry_policy": "baseline",
+        "repeat": 2,
+        "patches": 8192,
+        "search_seconds": 6.537157477985602,
+        "patches_per_second": 1253.1440503899764,
+        "process_wall_seconds": 7.143985664006323,
+        "points": 19808396,
+        "exact_hits": [],
+        "independent_audits": 1
+      },
+      {
+        "geometry_policy": "adaptive",
+        "repeat": 2,
+        "patches": 8192,
+        "search_seconds": 1.9892695299931802,
+        "patches_per_second": 4118.094545000186,
+        "process_wall_seconds": 2.624750054004835,
+        "points": 19808396,
+        "exact_hits": [],
+        "independent_audits": 1
+      }
+    ],
+    "median_patches_per_second": {
+      "baseline": 1260.5159202248176,
+      "adaptive": 4135.480526930408
+    },
+    "speedup": 3.2807840508613566,
+    "supported_nonempty_controls_every_trial": true,
+    "exact_hit_sets_equal": true,
+    "signal_stop_passed": true,
+    "absolute_deadline_stop_passed": true,
+    "production_coverage": false,
+    "workers": 16,
+    "limitations": [
+      "Short matched tests at the verified final cursor; no full-domain bound or constant-rate forecast.",
+      "Timings include the pipeline, durable journal/checkpoint and periodic GMP audit overhead."
+    ]
+  },
+  "parent_selected_patches": 167103232,
+  "combined_selected_patches": 167425536,
   "checkpoint": {
-    "chunks": 406786,
+    "chunks": 1259,
     "completed_bound": null,
     "hits": [],
     "identity": {
-      "source_identity": "fe7236021e384f6dde39f96053618b117a90dcd98a6036b58a6d4c4dc2efede9",
-      "trial": "20261106T230428Z"
+      "source_identity": "e19b6d92def97ca37adf6c2b9361ce78fe53ddea79856a94d88498cb3228f62f",
+      "trial": "20261107T213849Z-precision"
     },
-    "journal_offset": 12991784355,
-    "journal_sha256": "677ffbcfc0e414745b2d7ccc6cc29b041534d54a3cdcf943150a56c58423b12d",
-    "next_patch": 3917103232,
-    "patches": 104137216,
-    "points": 244243720030,
+    "journal_offset": 45474421,
+    "journal_sha256": "5f0abe72e4945f53ae0910eab6b37eb12c613f530b83ae088b4f4e5d2a0fb075",
+    "next_patch": 3917425536,
+    "patches": 322304,
+    "points": 782520566,
     "window": {
       "bits": 222,
       "cap": 42,
-      "first": 3812966016,
+      "first": 3917103232,
+      "geometry_policy": "adaptive",
       "hi": 200000000000,
       "last": 11250000001,
       "lo": 100000000001,
@@ -59,28 +152,28 @@
     }
   },
   "worker_metrics": {
-    "status": "stopped",
-    "updated_utc": "2026-11-07T21:57:54.247850+00:00",
-    "patches": 104137216,
-    "chunks": 406786,
-    "patches_per_second": 1278.1396024851065,
-    "search_seconds": 81475.619562624,
-    "gmp_audited_chunks": 3179,
+    "status": "running",
+    "updated_utc": "2026-11-07T22:02:24.076439+00:00",
+    "patches": 308480,
+    "chunks": 1205,
+    "patches_per_second": 4392.287078092738,
+    "search_seconds": 70.23220352298813,
+    "gmp_audited_chunks": 10,
     "preparation_pacing_seconds": 0.0,
     "independent_oracle_verified_through": 0,
-    "reason": "Stop requested",
+    "reason": null,
     "error": null,
-    "source_identity": "fe7236021e384f6dde39f96053618b117a90dcd98a6036b58a6d4c4dc2efede9"
+    "source_identity": "e19b6d92def97ca37adf6c2b9361ce78fe53ddea79856a94d88498cb3228f62f"
   },
   "supervisor": {
-    "status": "finished",
-    "updated_utc": "2026-11-07T21:57:54.623203+00:00",
+    "status": "running",
+    "updated_utc": "2026-11-07T22:02:24.557689+00:00",
     "error": null,
-    "worker_exit_code": 0
+    "worker_exit_code": null
   },
-  "config_sha256": "8eb45ccedc41cf78cdc4280e42c45ae8a63bc0ad115e777823513cd64752468a",
+  "config_sha256": "30ebd4dabba29e083ff8bbabffe4e1244ccd7217661b014111fc079d3d6394f4",
   "reporting": {
-    "service": "weekend-progress-20261106T230428Z.service",
+    "service": "weekend-precision-report-20261107T213849Z-precision.service",
     "interval_seconds": 900,
     "publication": "separate read-only publisher",
     "terminal_snapshot": "published after the search service stops"

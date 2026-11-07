@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "completed_utc": "2026-11-07T21:57:18.353902+00:00",
+  "checks": [
+    {
+      "command": "pinned Python -B -m unittest -v test_precision_policy",
+      "tests": 5,
+      "status": "passed"
+    },
+    {
+      "command": "pinned Python -B -m unittest -v tests.test_coordinator_pipeline",
+      "tests": 12,
+      "status": "passed"
+    },
+    {
+      "command": "pinned Python -B -m unittest -v test_continuation test_supervisor_cleanup test_weekend",
+      "tests": 15,
+      "status": "passed"
+    },
+    {
+      "command": "python3 -B -m unittest -v test_reporter (reporting directory)",
+      "tests": 5,
+      "status": "passed"
+    },
+    {
+      "command": "pinned Python -B -m unittest -v test_continuation.PolicyTests.test_shared_claim_read_retries_transient_registry_contention",
+      "tests": 1,
+      "status": "passed"
+    },
+    {
+      "command": "python3 -B -m unittest adaptive publisher lineage/formatting and mixed-source rejection checks",
+      "tests": 2,
+      "status": "passed"
+    }
+  ],
+  "limitations": [
+    "Policy/configuration validation fixtures precede sealed final parent; real launch preflight must also pass."
+  ]
+}
