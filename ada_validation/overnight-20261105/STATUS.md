@@ -1,3 +1,6 @@
+<!-- current-weekend-search -->
+> **Current search:** [16-worker weekend continuation](../weekend-20261106/STATUS.md), with 15-minute updates through Monday, November 9. The page below is the historical overnight run.
+
 # ADA lattice overnight status
 
 Last GitHub snapshot: **2026-11-06T14:59:45.961316+00:00**
