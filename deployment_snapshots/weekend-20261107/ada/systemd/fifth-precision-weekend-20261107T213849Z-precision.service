@@ -1,0 +1,21 @@
+# /run/user/1330/systemd/transient/fifth-precision-weekend-20261107T213849Z-precision.service
+# This is a transient unit file, created programmatically via the systemd API. Do not edit.
+[Unit]
+Description=Sixteen-worker fifth-power weekend continuation
+CollectMode=inactive-or-failed
+
+[Service]
+RuntimeMaxSec=1d 16h 58min 43s
+TimeoutStopSec=8s
+KillMode=mixed
+Restart=no
+Nice=19
+CPUAffinity=0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+UMask=0077
+StandardOutput=append:/home/pnord/fifth-optimized-20261107/candidate/service.stdout.log
+StandardError=append:/home/pnord/fifth-optimized-20261107/candidate/service.stderr.log
+Type=exec
+WorkingDirectory=/home/pnord/fifth-optimized-20261107/candidate
+Environment="PYTHONDONTWRITEBYTECODE=1" "PYTHONUNBUFFERED=1" "CUDA_VISIBLE_DEVICES=0"
+ExecStart=
+ExecStart="/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python" "-B" "-u" "/home/pnord/fifth-optimized-20261107/candidate/search_supervisor.py" "--config" "/home/pnord/fifth-optimized-20261107/candidate/config.json"

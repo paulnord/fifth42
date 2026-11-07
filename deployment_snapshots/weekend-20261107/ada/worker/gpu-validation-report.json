@@ -1,0 +1,86 @@
+{
+  "status": "passed",
+  "trials": [
+    {
+      "geometry_policy": "baseline",
+      "repeat": 0,
+      "patches": 8192,
+      "search_seconds": 6.498926248023054,
+      "patches_per_second": 1260.5159202248176,
+      "process_wall_seconds": 7.233495624997886,
+      "points": 19808396,
+      "exact_hits": [],
+      "independent_audits": 1
+    },
+    {
+      "geometry_policy": "adaptive",
+      "repeat": 0,
+      "patches": 8192,
+      "search_seconds": 1.9491346279974096,
+      "patches_per_second": 4202.890802066694,
+      "process_wall_seconds": 2.5597107780049555,
+      "points": 19808396,
+      "exact_hits": [],
+      "independent_audits": 1
+    },
+    {
+      "geometry_policy": "adaptive",
+      "repeat": 1,
+      "patches": 8192,
+      "search_seconds": 1.980906437995145,
+      "patches_per_second": 4135.480526930408,
+      "process_wall_seconds": 2.5810220079729334,
+      "points": 19808396,
+      "exact_hits": [],
+      "independent_audits": 1
+    },
+    {
+      "geometry_policy": "baseline",
+      "repeat": 1,
+      "patches": 8192,
+      "search_seconds": 6.467916846013395,
+      "patches_per_second": 1266.5592639845504,
+      "process_wall_seconds": 7.103265871992335,
+      "points": 19808396,
+      "exact_hits": [],
+      "independent_audits": 1
+    },
+    {
+      "geometry_policy": "baseline",
+      "repeat": 2,
+      "patches": 8192,
+      "search_seconds": 6.537157477985602,
+      "patches_per_second": 1253.1440503899764,
+      "process_wall_seconds": 7.143985664006323,
+      "points": 19808396,
+      "exact_hits": [],
+      "independent_audits": 1
+    },
+    {
+      "geometry_policy": "adaptive",
+      "repeat": 2,
+      "patches": 8192,
+      "search_seconds": 1.9892695299931802,
+      "patches_per_second": 4118.094545000186,
+      "process_wall_seconds": 2.624750054004835,
+      "points": 19808396,
+      "exact_hits": [],
+      "independent_audits": 1
+    }
+  ],
+  "median_patches_per_second": {
+    "baseline": 1260.5159202248176,
+    "adaptive": 4135.480526930408
+  },
+  "speedup": 3.2807840508613566,
+  "supported_nonempty_controls_every_trial": true,
+  "exact_hit_sets_equal": true,
+  "signal_stop_passed": true,
+  "absolute_deadline_stop_passed": true,
+  "production_coverage": false,
+  "workers": 16,
+  "limitations": [
+    "Short matched tests at the verified final cursor; no full-domain bound or constant-rate forecast.",
+    "Timings include the pipeline, durable journal/checkpoint and periodic GMP audit overhead."
+  ]
+}

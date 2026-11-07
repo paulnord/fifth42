@@ -1,0 +1,115 @@
+{
+  "status": "WORKER_VALIDATED_NOT_LAUNCHED",
+  "report": {
+    "status": "PASS",
+    "TEST_ONLY": true,
+    "mathematical_production_coverage": false,
+    "source_manifest_sha256": "5053fb4c9709d037b6119e2e5b639dcd6f1caa382f40749c8dcd995b0fcc882b",
+    "trials": [
+      {
+        "case": "0-baseline",
+        "first": 3000000000,
+        "last": 3000008192,
+        "geometry": "baseline",
+        "rate": 1402.719302045809,
+        "chunks": 32,
+        "hits": [],
+        "points": 10318328,
+        "independent_audits": 1
+      },
+      {
+        "case": "0-adaptive",
+        "first": 3000000000,
+        "last": 3000008192,
+        "geometry": "adaptive",
+        "rate": 4599.09019979968,
+        "chunks": 32,
+        "hits": [],
+        "points": 10318328,
+        "independent_audits": 1
+      },
+      {
+        "case": "1-adaptive",
+        "first": 3375000000,
+        "last": 3375008192,
+        "geometry": "adaptive",
+        "rate": 4651.830477116277,
+        "chunks": 32,
+        "hits": [],
+        "points": 13716590,
+        "independent_audits": 1
+      },
+      {
+        "case": "1-baseline",
+        "first": 3375000000,
+        "last": 3375008192,
+        "geometry": "baseline",
+        "rate": 1407.653694430736,
+        "chunks": 32,
+        "hits": [],
+        "points": 13716590,
+        "independent_audits": 1
+      },
+      {
+        "case": "2-baseline",
+        "first": 3749991808,
+        "last": 3750000000,
+        "geometry": "baseline",
+        "rate": 1404.7122559321222,
+        "chunks": 32,
+        "hits": [],
+        "points": 17801040,
+        "independent_audits": 1
+      },
+      {
+        "case": "2-adaptive",
+        "first": 3749991808,
+        "last": 3750000000,
+        "geometry": "adaptive",
+        "rate": 4552.451911919072,
+        "chunks": 32,
+        "hits": [],
+        "points": 17801040,
+        "independent_audits": 1
+      }
+    ],
+    "median_rates": {
+      "baseline": 1404.7122559321222,
+      "adaptive": 4599.09019979968
+    },
+    "speedup": 3.274044332123998,
+    "signal_stop": true,
+    "deadline_stop": true,
+    "ledger": "/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/boole-validation/221623",
+    "production_claims_created": false,
+    "production_launched": false,
+    "limitations": [
+      "Test-only exact enumeration; no coverage allocated to production.",
+      "Publisher and production launch configuration are separate readiness gates."
+    ]
+  },
+  "unit_tests": {
+    "coordinator_pipeline": 12,
+    "bounded_prefetch": 11,
+    "status": "PASS"
+  },
+  "adaptive_recovery": {
+    "status": "PASS",
+    "TEST_ONLY": true,
+    "adaptive_actual_gpu_journal": true,
+    "committed_chunks": 32,
+    "partial_tail_preserved": true,
+    "checkpoint_unchanged": true,
+    "journal_inode_unchanged": true,
+    "source_manifest_sha256": "5053fb4c9709d037b6119e2e5b639dcd6f1caa382f40749c8dcd995b0fcc882b",
+    "timestamp_utc": "2026-11-07T22:17:07.092542+00:00"
+  },
+  "source_manifest_sha256": "5053fb4c9709d037b6119e2e5b639dcd6f1caa382f40749c8dcd995b0fcc882b",
+  "production_reserved": false,
+  "production_launched": false,
+  "remaining": [
+    "GitHub publisher configuration/credentials and preview checks",
+    "Final production config and reservation; independent service/timer launch verification"
+  ],
+  "storage_note": "Conservative32GiB Boole journal cap and8GiB free-space reserve. Ada96GiB cap unchanged. Storage budget can stop earlier than Monday."
+}

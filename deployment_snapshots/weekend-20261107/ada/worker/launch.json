@@ -1,0 +1,62 @@
+{
+  "started_utc": "2026-11-07T22:01:06.331387+00:00",
+  "stop_local": "2026-11-09T09:00:00-06:00",
+  "resume_cursor": 3917103232,
+  "commands": [
+    {
+      "kind": "timer",
+      "command": [
+        "systemd-run",
+        "--user",
+        "--unit=fifth-precision-weekend-20261107T213849Z-precision-deadline",
+        "--collect",
+        "--service-type=oneshot",
+        "--on-calendar=2026-11-09 14:59:50 UTC",
+        "--timer-property=AccuracySec=1s",
+        "--timer-property=RandomizedDelaySec=0",
+        "--timer-property=Persistent=no",
+        "/usr/bin/systemctl",
+        "--user",
+        "stop",
+        "fifth-precision-weekend-20261107T213849Z-precision.service"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Running timer as unit: fifth-precision-weekend-20261107T213849Z-precision-deadline.timer\nWill run service as unit: fifth-precision-weekend-20261107T213849Z-precision-deadline.service\n"
+    },
+    {
+      "kind": "service",
+      "command": [
+        "systemd-run",
+        "--user",
+        "--unit=fifth-precision-weekend-20261107T213849Z-precision",
+        "--collect",
+        "--service-type=exec",
+        "--description=Sixteen-worker fifth-power weekend continuation",
+        "--property=RuntimeMaxSec=147523",
+        "--property=TimeoutStopSec=8s",
+        "--property=KillMode=mixed",
+        "--property=Restart=no",
+        "--property=Nice=19",
+        "--property=CPUAffinity=0-15",
+        "--property=UMask=0077",
+        "--working-directory=/home/pnord/fifth-optimized-20261107/candidate",
+        "--property=StandardOutput=append:/home/pnord/fifth-optimized-20261107/candidate/service.stdout.log",
+        "--property=StandardError=append:/home/pnord/fifth-optimized-20261107/candidate/service.stderr.log",
+        "--setenv=PYTHONDONTWRITEBYTECODE=1",
+        "--setenv=PYTHONUNBUFFERED=1",
+        "--setenv=CUDA_VISIBLE_DEVICES=0",
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "-u",
+        "/home/pnord/fifth-optimized-20261107/candidate/search_supervisor.py",
+        "--config",
+        "/home/pnord/fifth-optimized-20261107/candidate/config.json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Running as unit: fifth-precision-weekend-20261107T213849Z-precision.service; invocation ID: 37fcffde2da842adb489988a03a79d10\n"
+    }
+  ],
+  "status": "service_started"
+}

@@ -1,0 +1,25 @@
+{
+  "command": [
+    "systemd-run",
+    "--user",
+    "--unit=weekend-precision-report-20261107T213849Z-precision",
+    "--collect",
+    "--service-type=exec",
+    "--property=RuntimeMaxSec=149253",
+    "--property=TimeoutStopSec=5",
+    "--property=KillMode=control-group",
+    "--property=Restart=no",
+    "--property=Nice=19",
+    "--property=UMask=0077",
+    "--working-directory=/home/pnord/fifth-optimized-20261107/reporting",
+    "--property=StandardOutput=append:/home/pnord/fifth-optimized-20261107/reporting/service.stdout.log",
+    "--property=StandardError=append:/home/pnord/fifth-optimized-20261107/reporting/service.stderr.log",
+    "/usr/bin/python3",
+    "-B",
+    "-u",
+    "/home/pnord/fifth-optimized-20261107/reporting/weekend_reporter.py"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "Running as unit: weekend-precision-report-20261107T213849Z-precision.service; invocation ID: 36a1a80011884b078e0afe473a648057\n"
+}

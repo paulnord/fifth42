@@ -1,0 +1,82 @@
+RESTORING THE SEARCH SETUP
+
+1. Obtain and verify the snapshot.
+   Clone paulnord/fifth42 and check out the fixed tag in BACKUP_METADATA.json.
+   Enter deployment_snapshots/weekend-20261107 and run:
+     sha256sum -c SHA256SUMS
+   The deployed per-host source manifests provide a second byte-level check of
+   the worker trees. Both original native executables and their build inputs are
+   retained so a compatible machine can verify or rebuild them.
+
+2. Recreate each host's isolated runtime.
+   Read its runtime inventory and pinned requirements. Ada used Python 3.12.4;
+   Boole used Python 3.12.16. Both use sympy 1.14.0, fpylll 0.6.4,
+   cysignals 1.12.5, numpy 2.3.5, gmpy2 2.2.2 and mpmath 1.3.0, with GMP 6.3.0,
+   MPFR 4.2.1 and MPC 1.3.1. Use ordinary Python, not -O. Native finite-range
+   builds and CUDA/compiler details are captured per host; use the actual build
+   overlays, not older native templates with the original denominator limit.
+
+3. Restore the filesystem layout or prepare a new validated derivative.
+   Historical Ada runtime root:
+     /home/pnord/fifth-optimized-20261107/candidate
+   Historical Boole runtime root:
+     /home/pnord/boole-production-validation-20261107/worker
+   Ada external helper paths are mirrored beneath ada/external-helpers/ and
+   recorded in the source manifest. Publisher and collector launch records show
+   their original interpreter/code locations. Some code deliberately checks
+   absolute paths and hostnames. Relocating it, rebuilding binaries or changing
+   configuration requires a new frozen identity and fresh journal; keep the
+   original claimed bundles unchanged.
+
+4. Recreate the tested shared filesystem and host identity.
+   The active deployment uses Ada's /mnt/nfs_share export. Boole mounts exactly
+   ada:/mnt/nfs_share there using NFSv4 and server-coherent POSIX locks
+   (local_lock=none). The active deployment does not use the older NAS prototype.
+   Ada's actual export snapshots are under ada/nfs/. The private workspace is:
+     /mnt/nfs_share/fifth42-shared-20261107
+   Both clients used uid/gid 1330:1330 and private workspace permissions.
+   Verify the real export, permissions, stable-inode byte-range locks,
+   cross-client reservation visibility, job exclusion and recovery before use.
+   The deployment guard rejects a missing/wrong mount instead of a local fallback.
+
+5. Reconcile saved coverage before allocating work.
+   Preserve and audit the real previous journals/checkpoints; compare their
+   hashes with the handoff evidence. The ledger in this Git snapshot is a
+   point-in-time copy, not a replacement for the current live ledger. Claims do
+   not expire automatically. Allocate only verified nonoverlapping work through
+   one common ledger, with explicit half-open ranges. If journals are unavailable,
+   do not infer completed coverage from a small metadata snapshot alone.
+
+6. Validate and create a fresh independently managed run.
+   Use 16 distinct physical CPU cores (derive the IDs on the actual host), nice
+   19, one GPU/journal owner, bounded prefetch, exact packet/transform/point guards
+   and GMP audits. Repeat supported nonempty controls, real range samples,
+   journal verification/recovery, signal stop and actual deadline cleanup tests.
+   Keep TEST_ONLY ledgers and journals separate from production.
+
+   Service/timer snapshots and launch JSON preserve the exact systemd recipe.
+   The historical hard deadline was Monday 2026-11-09 09:00 America/Chicago
+   (15:00 UTC); cleanup starts ten seconds earlier with an eight-second stop
+   allowance. These dated configurations intentionally become invalid after the
+   deadline. Prepare a newly authorized future deadline and source identity;
+   do not blindly start an expired historical service definition.
+   Retain Restart=no, RuntimeMaxSec, the independent deadline timer, resource
+   and free-space guards. Enable user linger on each execution host so its user
+   services survive logout. Native/pool children retain parent-lifetime guards.
+
+7. Restore reporting independently from the searches.
+   Both GitHub publishers run on Ada; Boole's collector runs on Boole and writes
+   shared status/supervisor/checkpoint snapshots. Each publisher writes its own
+   repository directory, updates every 900 seconds and publishes a terminal
+   snapshot. Git updates build on the latest remote tree, retry concurrent
+   changes and never force-push over another publisher.
+   Configure an authorized repository write credential on Ada and its SSH known
+   hosts. Credentials are not in this backup. The historical credential filename
+   in the code is a reference, not a bundled private key. Boole needs no GitHub
+   credential. Verify both first publications and active user services before
+   disconnecting.
+
+Historical disk caps were 96 GiB/4 GiB free reserve for Ada and 32 GiB/8 GiB
+reserve for Boole. Both write to Ada's filesystem, so size the aggregate budget.
+Storage guards may stop a job before its time deadline. Automatic restart is
+disabled; interruption requires inspection and a verified continuation.

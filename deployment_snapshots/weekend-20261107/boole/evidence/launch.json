@@ -1,0 +1,187 @@
+{
+  "status": "started",
+  "started_utc": "2026-11-07T22:22:32.433527+00:00",
+  "config_sha256": "c3e4adb7ef8720cd1975f2d7a934a0ab7fdc48f4d8282cae4f6bc2726a24dd1c",
+  "source_manifest_sha256": "5053fb4c9709d037b6119e2e5b639dcd6f1caa382f40749c8dcd995b0fcc882b",
+  "claim": {
+    "job": "boole-precision-20261107T222232Z",
+    "first": 3000000000,
+    "last": 3750000000,
+    "identity": "5053fb4c9709d037b6119e2e5b639dcd6f1caa382f40749c8dcd995b0fcc882b",
+    "coverage": {
+      "sha256": "e19f86245f1c4607680c5e3266f9436209881889270abe55f007ecc8174f1f49",
+      "manifest": {
+        "status": "verified_receipts",
+        "final_checkpoint": true,
+        "sealed_utc": "2026-11-07T21:58:55.283176+00:00",
+        "grid": {
+          "cmin": 100000000001,
+          "cmax": 200000000000,
+          "width": 8,
+          "cap": 42,
+          "count": 11250000001
+        },
+        "next_patch": 3917103232,
+        "parent_checkpoint_sha256": "791e72adb13247abc6645eb6429c9a9f78768103249eac20adb014e3d14923b8",
+        "parent_journal_sha256": "677ffbcfc0e414745b2d7ccc6cc29b041534d54a3cdcf943150a56c58423b12d",
+        "parent_journal_raw_sha256": "fec85d44c19492d26a6425a5741409d481bfcb2711bca3ee2f481c2f68d631c9",
+        "parent_journal_committed_bytes": 12991784355,
+        "covered_intervals": [
+          [
+            3750000000,
+            3917103232
+          ]
+        ],
+        "remaining_intervals": [
+          [
+            0,
+            3750000000
+          ],
+          [
+            3917103232,
+            11250000001
+          ]
+        ],
+        "unsupported_uncovered_patches": [
+          {
+            "patch": 0,
+            "reason": "Original integer-transform guard; never completed or silently skipped"
+          }
+        ],
+        "segments": [
+          {
+            "run": "/home/pnord/fifth-lattice-gpu/overnight-runs/20261105T231850Z-bxr6mn4c",
+            "first": 3750000000,
+            "last": 3809566592,
+            "patches": 59566592,
+            "checkpoint_sha256": "604c226fc26335647488db9a88ef34c800a8027482023e907b879b5b7d12653a",
+            "journal_offset": 198023846,
+            "journal_chain_sha256": "344f48fcbd555c9810b2473c7bd012e5ff0ec8b6a47aa170a74bbdb5decd175c"
+          },
+          {
+            "run": "/home/pnord/fifth-afternoon-runs/20261106T191039Z/run",
+            "first": 3809566592,
+            "last": 3809653120,
+            "patches": 86528,
+            "checkpoint_sha256": "b17d6472c18f7c5cb31e1094287194ae3522ecba80533a93b40a6a65826a18a9",
+            "journal_offset": 10793638,
+            "journal_chain_sha256": "e9ca61485e1f64ad5746c9366c03712cca975cbf50235da1935da2d970e2b60e"
+          },
+          {
+            "run": "/home/pnord/fifth-afternoon-runs/20261106T193915Z/run",
+            "first": 3809653120,
+            "last": 3812966016,
+            "patches": 3312896,
+            "checkpoint_sha256": "5bd79d6348c0d8298c039f66c3c46917d1e1d4322eca5cf8c5107e1366b05fa3",
+            "journal_offset": 413276151,
+            "journal_chain_sha256": "b493d5b1a00c0f9546628cac1c369f3f88ae552e56087df10ec184d5f8bc032f"
+          },
+          {
+            "run": "/home/pnord/fifth-weekend-runs/20261106T230428Z/run",
+            "first": 3812966016,
+            "last": 3917103232,
+            "patches": 104137216,
+            "checkpoint_sha256": "791e72adb13247abc6645eb6429c9a9f78768103249eac20adb014e3d14923b8",
+            "journal_offset": 12991784355,
+            "journal_chain_sha256": "677ffbcfc0e414745b2d7ccc6cc29b041534d54a3cdcf943150a56c58423b12d"
+          }
+        ],
+        "selected_patches": 167103232,
+        "completed_bound": null,
+        "independent_oracle_verified_through": 0,
+        "successor_geometry_policy": "adaptive",
+        "successor_executor": "persistent_gpu",
+        "successor_manifest_sha256": "a7aea624ca71a44aeff905976f944573b036e2f7a6b614dc79fdc4aed587dffe",
+        "audit_report_sha256": "fd2e13ccc60a9dfb9a5733beca5f3dbfb060c7dab1920a721df08a2cad41f04d",
+        "limitation": "Verified committed receipts and lineage; historical coefficients were not all recomputed. Selected coverage only."
+      }
+    },
+    "grid": {
+      "cmin": 100000000001,
+      "cmax": 200000000000,
+      "width": 8,
+      "cap": 42,
+      "count": 11250000001
+    },
+    "created_ns": 1794090152294024662,
+    "sha256": "5ca9cd96357e7f0261e320ca42ded98a1affe2efc9cba379dec8bd0cea2e3342"
+  },
+  "commands": [
+    {
+      "kind": "deadline",
+      "command": [
+        "systemd-run",
+        "--user",
+        "--unit=boole-precision-20261107T222232Z-deadline",
+        "--collect",
+        "--service-type=oneshot",
+        "--on-calendar=2026-11-09 14:59:50 UTC",
+        "--timer-property=AccuracySec=1s",
+        "--timer-property=RandomizedDelaySec=0",
+        "--timer-property=Persistent=no",
+        "/usr/bin/systemctl",
+        "--user",
+        "stop",
+        "boole-precision-20261107T222232Z.service"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Running timer as unit: boole-precision-20261107T222232Z-deadline.timer\nWill run service as unit: boole-precision-20261107T222232Z-deadline.service\n"
+    },
+    {
+      "kind": "worker",
+      "command": [
+        "systemd-run",
+        "--user",
+        "--unit=boole-precision-20261107T222232Z",
+        "--collect",
+        "--service-type=exec",
+        "--property=RuntimeMaxSec=146237",
+        "--property=TimeoutStopSec=8",
+        "--property=KillMode=mixed",
+        "--property=Restart=no",
+        "--property=Nice=19",
+        "--property=CPUAffinity=0-15",
+        "--property=UMask=0077",
+        "--property=StandardOutput=append:/home/pnord/boole-production-validation-20261107/production.stdout",
+        "--property=StandardError=append:/home/pnord/boole-production-validation-20261107/production.stderr",
+        "--setenv=OPENBLAS_NUM_THREADS=1",
+        "--setenv=OMP_NUM_THREADS=1",
+        "--setenv=MKL_NUM_THREADS=1",
+        "--setenv=NUMEXPR_NUM_THREADS=1",
+        "--setenv=BLIS_NUM_THREADS=1",
+        "/home/pnord/boole-results-20261107/venv312/bin/python",
+        "-B",
+        "-u",
+        "/home/pnord/boole-production-validation-20261107/worker/boole_supervisor.py",
+        "--config",
+        "/home/pnord/boole-production-validation-20261107/worker/production-config.json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Running as unit: boole-precision-20261107T222232Z.service; invocation ID: 7477618505924220bfa3ff25a51d63bc\n"
+    },
+    {
+      "kind": "collector",
+      "command": [
+        "systemd-run",
+        "--user",
+        "--unit=boole-precision-20261107T222232Z-progress",
+        "--collect",
+        "--property=RuntimeMaxSec=148047",
+        "--property=Restart=no",
+        "--property=Nice=19",
+        "--property=UMask=0077",
+        "--property=StandardOutput=append:/home/pnord/boole-production-validation-20261107/collector.stdout",
+        "--property=StandardError=append:/home/pnord/boole-production-validation-20261107/collector.stderr",
+        "/home/pnord/boole-results-20261107/venv312/bin/python",
+        "-B",
+        "-u",
+        "/home/pnord/boole-production-validation-20261107/boole_progress.py"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Running as unit: boole-precision-20261107T222232Z-progress.service; invocation ID: 8da780e5a27649558aa74f6365aaefd4\n"
+    }
+  ]
+}

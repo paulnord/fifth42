@@ -1,0 +1,158 @@
+Boole fifth42 validation, benchmark and bounded-worker report — 2026-11-07
+Checkout: paulnord/fifth42, branch handoff/precision-cube-20261107, detached pinned commit c36f41a2edd0a1458fdb03b5277b3ec461dea565.
+Separate checkout: /home/pnord/fifth42-boole-test-20261107; scratch results: /home/pnord/boole-results-20261107
+No Ada access, stop, deployment, production range allocation, old-journal resume, service or publisher change was performed. No current completion date is inferred.
+
+Conclusion: reduced geometry precision merits a controlled Ada adoption test after its clean-stop coverage handoff. On Boole, matched pinned preparation/certification/packing plus persistent CUDA execution improved about 3x at the two sampled cursors. Cube pruning reduced work substantially but added little total-time gain there. Gains are measured together and separately below; do not multiply stage ratios. Before a switch: cross-host NFS validation, verified final Ada checkpoint/gaps, new source identity and fresh journal linked to that coverage. Boole timing is not a measured Ada speedup.
+
+Machine and environment
+AMD Ryzen 9 5950X, 16 cores/32 threads; RTX3060 12GiB; Ubuntu26.04.1; g++15.2.0, nvcc13.3.73 at /usr/local/cuda/bin/nvcc, driver595.99.02. Initial CPU load0.01, GPU0%, no compute job (Xorg only). CPU/GPU availability was checked before bounded tests. See machine.txt.
+Initial system Python3.14.4 lacked required stack; unchanged --ada-source initializer correctly rejected it. User then authorized isolated installation. Python3.12.16 and every package pin installed in venv312, without changing system/Ada Python. No installation or network errors occurred; uv-download.log and environment-install.log retain download/install output. Exact pins and GMP/MPFR/MPC versions follow:
+{
+  "python": "3.12.16 (main, Oct 26 2026, 14:08:45) [Clang 23.1.3 ]",
+  "packages": {
+    "sympy": "1.14.0",
+    "fpylll": "0.6.4",
+    "cysignals": "1.12.5",
+    "numpy": "2.3.5",
+    "gmpy2": "2.2.2",
+    "mpmath": "1.3.0"
+  },
+  "gmp": "GMP 6.3.0",
+  "mpfr": "MPFR 4.2.1",
+  "mpc": "MPC 1.3.1",
+  "initializer": "passed"
+}
+
+Correctness and preservation
+PACKAGE_SHA256SUMS passed before and after; original archived reports remain unchanged in the pinned checkout. Tracked git status is clean. Scratch reproduction overwrote only scratch copies of report outputs. Five precision unit tests; six high-shell patches; cube/reproduce.sh complete domains, seeded bases, boundary controls, tamper tests and UBSan; bounded CUDA CPU/GPU/oracle/count/reconstruction probe all passed. Supported nonempty device controls passed. Deliberately enlarged-cap high-range controls remained HOST ONLY.
+Native original high-shell binary correctly rejected >100-billion cmax. Existing overnight_search.extend_arithmetic_range rebuilt isolated sources with finite 200-billion guard and proved 3*(200 billion)^5 < 2^191. All 272 signed/boundary/random arithmetic cases passed on CPU, sanitized CPU and CUDA against Python integers. Every native transform/range/point/cap/output/count guard remained. See high-range/extended-range-validation.json. No active source was altered.
+Hit agreement is equality of accepted exact sets, not equality of raw work or certificates. Production fpylll/mpq and Fraction/LLL reduce differently; their point totals need not match. Each backend checked against its own exact certificates. High-shell cap42 sets were empty; independent complete small domains and planted nonempty controls limit that weakness. First ratio patch rejects Invalid integer transform in all variants; this is an explicit uncovered guard exclusion, never completed coverage. The bounded worker stops on that guard.
+
+Pinned six-patch production precision comparison (five alternating paired trials)
+case | bits old/new | box points old/new | exact hits | median prepare old/new seconds | speed ratio
+ratio-index-3750000000 | 222/96 | 2261/2261 | 0 | {'222': 0.0034231689933221787, '96': 0.0012127159861847758} | 2.823x
+ratio-index-3902545280 | 222/96 | 2205/2205 | 0 | {'222': 0.003448468982242048, '96': 0.0012308159784879535} | 2.802x
+ratio-index-6250000000 | 222/88 | 7429/7429 | 0 | {'222': 0.0033787289867177606, '88': 0.0011208569922018796} | 3.014x
+ratio-index-10625000000 | 222/88 | 93015/93015 | 0 | {'222': 0.0034401279990561306, '88': 0.001151345990365371} | 2.988x
+healy-scaled-5 | 222/88 | 115797/115797 | 1 | {'222': 0.003382997994776815, '88': 0.0011262159969191998} | 3.004x
+healy-scaled-4000 | 222/88 | 215991/215991 | 375 | {'222': 0.0018991710094269365, '88': 0.0007331840170081705} | 2.590x
+The 1-hit and 375-hit controls are enlarged caps, not solutions to42; host-only geometry/enumeration and independent local planted-point oracles passed. host-controls.json also tests combined bounds at both precisions.
+
+Matched production pipeline: five alternating four-variant repeats
+16 persistent spawned workers prepare and certify; packing_opt preserves canonical exact certificates; CPU threads16 and persistent CUDA use unchanged kernels with the validated finite range guard. Fresh preparation each trial. Order baseline/precision/cube/combined alternates with reverse. Initial warmup excludes pool/engine startup from warm clocks. Each accepted CPU/GPU hit set agrees across all variants and repeats, with per-task count checks and independent GMP residual/reconstruction checks. Complete small domains compare independent exact oracles. All actual specs, points, bits, certificates and timings are retained in matched-pipeline-results.json and samples JSONL.
+Ratio0.30: [3750000000,3750000256). Ratio0.3122036224: [3902545280,3902545536). Other high cases: singleton at6250000000,10625000000,0,11250000000. Grid uses c=[100000000001,200000000000], width8, N=11250000001, cap42.
+Each timing below is a separate median in seconds; stage medians need not sum exactly to median total. Prep includes parallel task creation/policy; cert parallel exact remakes; packing exact checks/serialization. Engine excludes IPC/startup. Full total includes specification, dispatch, fresh prep, cert, packing, IPC, validated decode. It excludes journal/checkpoint/publisher, service supervision, dependency setup and cold process startup. It is a measured compute pipeline, not full independent-service throughput.
+case variant | patches points hits | prep cert pack | CPUengine GPUengine | CPUtotal GPUtotal | GPUipc GPUdecode | n
+small34 baseline | 7 275699 6 | 0.002668 0.002767 0.000212 | 0.000603234 0.000194761 | 0.006812 0.006400 | 0.000234 0.000278 | 5
+small34 precision | 7 275699 6 | 0.002790 0.002694 0.000265 | 0.000608863 0.000204691 | 0.007023 0.006559 | 0.000249 0.000287 | 5
+small34 cube | 7 103901 6 | 0.002525 0.002746 0.000265 | 0.000451552 0.000168221 | 0.006513 0.006175 | 0.000208 0.000158 | 5
+small34 combined | 7 103901 6 | 0.002588 0.002690 0.000267 | 0.000462112 0.000173991 | 0.006636 0.006337 | 0.000222 0.000158 | 5
+small100 baseline | 15 589483 25 | 0.003194 0.003208 0.000549 | 0.000879705 0.000241471 | 0.008701 0.008025 | 0.000294 0.000500 | 5
+small100 precision | 15 589483 25 | 0.003191 0.003126 0.000547 | 0.000830464 0.000240071 | 0.008516 0.007878 | 0.000294 0.000500 | 5
+small100 cube | 15 264247 25 | 0.003213 0.002971 0.000526 | 0.000715694 0.000217421 | 0.008691 0.008125 | 0.000267 0.000429 | 5
+small100 combined | 15 264247 25 | 0.003274 0.003078 0.000537 | 0.000712424 0.000221942 | 0.008290 0.007774 | 0.000272 0.000434 | 5
+small1000 baseline | 118 4483388 2 | 0.006004 0.006560 0.003414 | 0.002650140 0.000644184 | 0.019086 0.016835 | 0.000734 0.000170 | 5
+small1000 precision | 118 4483388 2 | 0.006175 0.006627 0.003327 | 0.002650440 0.000637653 | 0.019436 0.017221 | 0.000734 0.000167 | 5
+small1000 cube | 118 1887678 2 | 0.005944 0.006552 0.003334 | 0.001606780 0.000543373 | 0.017976 0.016680 | 0.000630 0.000106 | 5
+small1000 combined | 118 1887678 2 | 0.006059 0.006618 0.003289 | 0.001628660 0.000528573 | 0.018395 0.017055 | 0.000617 0.000109 | 5
+chunk030 baseline | 256 557532 0 | 0.048486 0.053437 0.067050 | 0.000886254 0.000374062 | 0.172318 0.171102 | 0.000532 0.000052 | 5
+chunk030 precision | 256 557532 0 | 0.019601 0.020716 0.014367 | 0.000879225 0.000366872 | 0.059105 0.057488 | 0.000527 0.000051 | 5
+chunk030 cube | 256 207310 0 | 0.046709 0.051657 0.066200 | 0.000704424 0.000339682 | 0.166885 0.165856 | 0.000491 0.000052 | 5
+chunk030 combined | 256 207310 0 | 0.018419 0.021883 0.014251 | 0.000693094 0.000342082 | 0.056392 0.055286 | 0.000501 0.000052 | 5
+chunk03122 baseline | 256 606094 0 | 0.047807 0.053849 0.065982 | 0.000863885 0.000394882 | 0.169631 0.168581 | 0.000551 0.000053 | 5
+chunk03122 precision | 256 606094 0 | 0.022446 0.019914 0.013967 | 0.000937905 0.000401023 | 0.058291 0.056864 | 0.000573 0.000057 | 5
+chunk03122 cube | 256 238212 0 | 0.045821 0.053156 0.068689 | 0.000731884 0.000376242 | 0.168930 0.168012 | 0.000538 0.000055 | 5
+chunk03122 combined | 256 238212 0 | 0.019840 0.021537 0.014561 | 0.000724784 0.000347632 | 0.057096 0.055983 | 0.000507 0.000055 | 5
+separated050 baseline | 1 7429 0 | 0.002277 0.002530 0.000369 | 0.000121651 0.000058990 | 0.005324 0.005256 | 0.000088 0.000003 | 5
+separated050 precision | 1 7429 0 | 0.001141 0.001086 0.000105 | 0.000103191 0.000059281 | 0.002485 0.002432 | 0.000089 0.000003 | 5
+separated050 cube | 1 2805 0 | 0.002225 0.002429 0.000373 | 0.000078490 0.000051210 | 0.005145 0.005107 | 0.000080 0.000003 | 5
+separated050 combined | 1 2805 0 | 0.001056 0.001058 0.000099 | 0.000076580 0.000046821 | 0.002340 0.002296 | 0.000074 0.000003 | 5
+separated085 baseline | 1 93015 0 | 0.002260 0.002480 0.000381 | 0.000626943 0.000253422 | 0.005753 0.005387 | 0.000282 0.000003 | 5
+separated085 precision | 1 93015 0 | 0.001135 0.001138 0.000104 | 0.000634254 0.000259271 | 0.003056 0.002664 | 0.000289 0.000004 | 5
+separated085 cube | 1 50505 0 | 0.002177 0.002470 0.000375 | 0.000566674 0.000240071 | 0.005698 0.005382 | 0.000275 0.000003 | 5
+separated085 combined | 1 50505 0 | 0.001074 0.001064 0.000101 | 0.000572973 0.000243191 | 0.002851 0.002517 | 0.000286 0.000003 | 5
+left-boundary baseline | GUARD (5/5): ValueError('Invalid integer transform') — excluded coverage
+left-boundary precision | GUARD (5/5): ValueError('Invalid integer transform') — excluded coverage
+left-boundary cube | GUARD (5/5): ValueError('Invalid integer transform') — excluded coverage
+left-boundary combined | GUARD (5/5): ValueError('Invalid integer transform') — excluded coverage
+right-boundary baseline | 1 189873 0 | 0.002265 0.002588 0.000388 | 0.000482033 0.000169201 | 0.005802 0.005476 | 0.000198 0.000003 | 5
+right-boundary precision | 1 189873 0 | 0.001157 0.001101 0.000097 | 0.000483083 0.000167691 | 0.002968 0.002657 | 0.000198 0.000003 | 5
+right-boundary cube | 1 114595 0 | 0.002260 0.002516 0.000384 | 0.000457992 0.000170861 | 0.005694 0.005397 | 0.000203 0.000003 | 5
+right-boundary combined | 1 114595 0 | 0.001133 0.001024 0.000096 | 0.000464993 0.000168451 | 0.002846 0.002524 | 0.000198 0.000003 | 5
+
+High-chunk GPU compute-pipeline ratios versus baseline:
+chunk030 baseline: 1.000x total; 557532 points
+chunk030 precision: 2.976x total; 557532 points
+chunk030 cube: 1.032x total; 207310 points
+chunk030 combined: 3.095x total; 207310 points
+chunk03122 baseline: 1.000x total; 606094 points
+chunk03122 precision: 2.965x total; 606094 points
+chunk03122 cube: 1.003x total; 238212 points
+chunk03122 combined: 3.011x total; 238212 points
+
+Cold executions (one sample per case/variant; not five-repeat cold medians)
+case variant | CPUengine CPUexecution CPUtotal | GPUengine GPUexecution GPUtotal
+small34 baseline | 0.001515410 0.003907 0.009754 | 0.000465883 0.141584 0.147432
+small34 precision | 0.001651860 0.003542 0.009564 | 0.000464763 0.144418 0.150439
+small34 cube | 0.000643084 0.002384 0.008284 | 0.000453822 0.144327 0.150227
+small34 combined | 0.000700784 0.003593 0.009447 | 0.000436083 0.145378 0.151232
+small100 baseline | 0.003427680 0.005562 0.012755 | 0.000528512 0.142884 0.150077
+small100 precision | 0.003486140 0.005994 0.013757 | 0.000513463 0.145795 0.153559
+small100 cube | 0.001660090 0.003745 0.011547 | 0.000488982 0.144020 0.151822
+small100 combined | 0.001657440 0.003727 0.010672 | 0.000488203 0.144274 0.151219
+small1000 baseline | 0.026923900 0.028789 0.044028 | 0.001042220 0.143337 0.158576
+small1000 precision | 0.026031600 0.027986 0.044227 | 0.001147240 0.143191 0.159433
+small1000 cube | 0.013087500 0.014926 0.030670 | 0.000920835 0.141421 0.157164
+small1000 combined | 0.012609000 0.014488 0.030467 | 0.000969515 0.142191 0.158170
+chunk030 baseline | 0.005274750 0.007397 0.176261 | 0.001721760 0.146033 0.314897
+chunk030 precision | 0.005269150 0.007299 0.061153 | 0.001661070 0.150267 0.204121
+chunk030 cube | 0.002737990 0.004964 0.168090 | 0.001629110 0.150385 0.313510
+chunk030 combined | 0.002876330 0.005066 0.058682 | 0.001592160 0.147647 0.201264
+chunk03122 baseline | 0.005939880 0.008183 0.179920 | 0.001662760 0.145739 0.317477
+chunk03122 precision | 0.005678190 0.007750 0.070325 | 0.001676850 0.145965 0.208540
+chunk03122 cube | 0.003023080 0.005268 0.174265 | 0.001642740 0.144957 0.313954
+chunk03122 combined | 0.003024790 0.005169 0.059777 | 0.001607610 0.147395 0.202003
+separated050 baseline | 0.000085411 0.002057 0.007226 | 0.000346702 0.147758 0.152928
+separated050 precision | 0.000080350 0.001787 0.004360 | 0.000326732 0.140975 0.143548
+separated050 cube | 0.000049131 0.001680 0.006815 | 0.000313442 0.143438 0.148573
+separated050 combined | 0.000048041 0.001566 0.004024 | 0.000306911 0.143700 0.146159
+separated085 baseline | 0.000746994 0.003245 0.008295 | 0.000515783 0.140206 0.145256
+separated085 precision | 0.000744874 0.002567 0.005071 | 0.000504843 0.143182 0.145687
+separated085 cube | 0.000430822 0.001905 0.006970 | 0.000485173 0.139559 0.144624
+separated085 combined | 0.000429823 0.001812 0.004273 | 0.000492942 0.142429 0.144890
+right-boundary baseline | 0.000991005 0.002478 0.007740 | 0.000420972 0.139849 0.145112
+right-boundary precision | 0.000992826 0.002436 0.005016 | 0.000436192 0.141289 0.143869
+right-boundary cube | 0.000612124 0.002015 0.007427 | 0.000427002 0.140103 0.145515
+right-boundary combined | 0.000606704 0.002007 0.004390 | 0.000425853 0.142596 0.144979
+Cold full totals reuse the current freshly prepared plan; they add one newly launched engine process and validation per batch. They do not include a newly created Python pool. Cold CUDA initialization dominates these short chunks. Persistent medians are the relevant compute-pipeline comparison for an independently running search.
+
+Additional standard-library and GPU measurements
+chunk-results.json retains all five-repeat Fraction/LLL four-variant high-shell stages and point/hit counts. That harness includes serial certification and cold plus persistent CPU calls; do not treat its total as the production coordinator. pinned-pipeline-results.json is an earlier serial-certification production experiment, superseded for recommendations by matched-pipeline-results.json. Neither is deleted.
+GPU-only cube benchmark: five alternating repeats with geometry shared/prepared once, complete small-domain independent oracles. Medians seconds, not preparation or service gains:
+bound mode variant | points hits | coldengine persistentengine persistentIPC coldvalidatedwall
+34 constant sphere | 275699 6 | 0.000463573 0.000286871 0.000369392 0.149039735
+34 constant cube | 103901 6 | 0.000433852 0.000252431 0.000327731 0.148205491
+100 constant sphere | 589483 25 | 0.000505893 0.000302051 0.000369572 0.151481989
+100 constant cube | 264247 25 | 0.000478623 0.000288112 0.000351252 0.156561177
+1000 constant sphere | 4483388 2 | 0.001092590 0.000766754 0.000881125 0.212519133
+1000 constant cube | 1887678 2 | 0.000945805 0.000589233 0.000708684 0.231621138
+1000 healy sphere | 4835479 10 | 0.001094290 0.000745564 0.000865135 0.219210740
+1000 healy cube | 1930335 10 | 0.000892755 0.000555523 0.000688253 0.234163822
+
+Share and portable worker
+findmnt verified /mnt/diskBox is NFSv4.1 export192.168.5.3:/volume1/clusterData. It is writable. Private /mnt/diskBox/pnord/fifth42 and worker/test directories have mode0700, server uid1024 gid100; share-permissions.log and share-mount.json record evidence. No local substitute was created.
+Prepared /mnt/diskBox/pnord/fifth42/worker-20261107/bundle. Local identical source in portable-worker/. Manifest checks all bundled code/binaries. Exact combined-candidate CPU adapter uses pinned source, adaptive precision, cube proof, normal certification/packing/count/GMP guards and fresh independently enumerated nonempty controls. It accepts explicit half-open ranges, reserves the whole range in a registry, checkpoints at256 validated patches, and has one hash-chained journal/checkpoint per job. No automatic claim expiration. Source/provenance changes cannot resume. Unknown/unsafe native cases halt without claiming coverage. No GPU worker or publisher installed.
+Lifecycle tests passed on real NFS between Boole processes: half-open range, full chunks, partial final chunk, restart; overlap rejected; adjacent claim accepted; concurrent overlapping claim processes: exactly one accepted; SIGTERM commits at most current validated chunk; restart completes; SIGKILL after checkpoint; restart has no duplicate committed chunks; injected storage errors before append and after fsync: cursor unchanged; suffix preserved and replayed; second process cannot run same job concurrently; committed journal corruption fails closed; changed provenance cannot resume claim; ENOSPC injected at fsync and replace propagates; old checkpoint retained; wrong/missing export fails closed.
+Large simulation-only reservation [100000000,110000000) accepted without enumeration in the test area. Test claims are isolated from any future production ledger.
+Exact shared-bundle test:
+256 patches [3750000000,3750000256): 207310 points, 0 hits, matching earlier pinned combined results. Whole process 0.863989s includes manifest hashing, startup, nonempty controls, exact chunk, checkpoint/journal, shutdown. Single validation sample, NOT worker throughput benchmark. Stage times {"certification_seconds": 0.08060249200207181, "packing_seconds": 0.014044746989384294, "prep_seconds": 0.17223046300932765, "total_seconds": 0.26826345900190063}. Identical completed-job restart preserved checkpoint. Test path /mnt/diskBox/pnord/fifth42/tests-20261107/exact-final.
+Actual NAS outage was not induced. ENOSPC, fsync/rename errors and write ordering failures were injected. Boole-only POSIX lock contention passed; cross-machine cache/locking semantics remain UNVERIFIED. Hard NFS I/O may block indefinitely. Current attribute/directory caches are1800 seconds. These limits prohibit treating the worker as production ready for distributed execution today.
+Ada needs: correct NFS mount, NFSv4 locking, private UID mapping/server ACL access to uid1024 mode0700 paths, separate Python3.12 environment with exact pins, compatible Linux runtime or a separately rebuilt/validated bundle with new identity, and a two-machine test of concurrent claims/exclusion/visibility. See WORKER_README.txt. Do not broaden privacy or remount an active client without a deliberate administrator decision.
+After a later clean Ada stop: capture/hash final checkpoint, verify journal prefix and all covered intervals/gaps/guard exclusions, preserve old artifacts, allocate only verified nonoverlapping remaining ranges, and link a fresh optimized journal to the coverage manifest. No stop or switch is authorized/performed by this preparation.
+
+Limitations and diagnostics
+Sampled high chunks are not full-shell coverage; no independent high-shell oracle exists here. CPU/GPU may share mathematical preparation defects, mitigated by exact certificates, complete small-domain oracles and planted host controls. No affinity/frequency control in benchmark; scheduling/thermal noise limits tiny engine differences. Journal/publisher service costs and Ada hardware differ. Test-only worker uses CPU; a durable CUDA worker needs its own bounded validation. Do not extrapolate completion time.
+Expected initial failures: unavailable production environment; unchanged original100-billion native guard. Harness-only initial host-controls tuple/list normalization mismatch had empty mathematical set difference and was fixed before final rerun. Initial serial-certification pipeline retained for audit. No unresolved mathematical disagreement.
+Commands/logs
+COMMANDS.txt and supplemental commands below; harnesses preserve executable benchmark details. Logs precision-unit.log, precision.log, pinned-precision.log, cube.log, cuda.log, build.log, high-range/*log, environment-install.log, uv-download.log, matched-pipeline.log, worker-tests.log, worker-exact-final.log. Raw JSON/JSONL alongside. Original archive checksum evidence checksums.log and final-archive-checksums.log. Worker README explains launch shape only; no production launch happened.

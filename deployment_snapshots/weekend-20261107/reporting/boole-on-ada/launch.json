@@ -1,0 +1,25 @@
+{
+  "command": [
+    "systemd-run",
+    "--user",
+    "--unit=boole-github-publisher-20261107",
+    "--collect",
+    "--service-type=exec",
+    "--property=RuntimeMaxSec=147811",
+    "--property=TimeoutStopSec=5",
+    "--property=KillMode=control-group",
+    "--property=Restart=no",
+    "--property=Nice=19",
+    "--property=UMask=0077",
+    "--working-directory=/home/pnord/boole-reporting-20261107",
+    "--property=StandardOutput=append:/home/pnord/boole-reporting-20261107/service.stdout.log",
+    "--property=StandardError=append:/home/pnord/boole-reporting-20261107/service.stderr.log",
+    "/usr/bin/python3",
+    "-B",
+    "-u",
+    "/home/pnord/boole-reporting-20261107/boole_github_bridge.py"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "Running as unit: boole-github-publisher-20261107.service; invocation ID: 5de3083465e04793812d595af22728a3\n"
+}

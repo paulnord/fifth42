@@ -1,0 +1,19 @@
+# /run/user/1330/systemd/transient/weekend-precision-report-20261107T213849Z-precision.service
+# This is a transient unit file, created programmatically via the systemd API. Do not edit.
+[Unit]
+Description=[systemd-run] /usr/bin/python3 -B -u /home/pnord/fifth-optimized-20261107/reporting/weekend_reporter.py
+CollectMode=inactive-or-failed
+
+[Service]
+RuntimeMaxSec=1d 17h 27min 33s
+TimeoutStopSec=5s
+KillMode=control-group
+Restart=no
+Nice=19
+UMask=0077
+StandardOutput=append:/home/pnord/fifth-optimized-20261107/reporting/service.stdout.log
+StandardError=append:/home/pnord/fifth-optimized-20261107/reporting/service.stderr.log
+Type=exec
+WorkingDirectory=/home/pnord/fifth-optimized-20261107/reporting
+ExecStart=
+ExecStart="/usr/bin/python3" "-B" "-u" "/home/pnord/fifth-optimized-20261107/reporting/weekend_reporter.py"

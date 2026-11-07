@@ -1,0 +1,93 @@
+Boole final outcome — 2026-11-07
+
+Pinned commit c36f41a2edd0a1458fdb03b5277b3ec461dea565 was tested in its own
+checkout. Original PACKAGE_SHA256SUMS pass and tracked checkout is clean;
+archived reports are preserved. Ada was not accessed, stopped or modified.
+No production worker, service, journal resume, publisher or deployment launched.
+
+The requested Python3.12 environment is installed separately in venv312, with
+sympy1.14.0, fpylll0.6.4, cysignals1.12.5, numpy2.3.5, gmpy2 2.2.2 and
+mpmath1.3.0. Python3.12.16, GMP6.3.0. No installation or network errors.
+Original initial dependency rejection is retained as historical evidence.
+
+Passed: precision unit tests, six high-shell precision comparisons with five
+alternating repeats, pinned --ada-source comparison, cube/reproduce.sh including
+UBSan and independent small-domain oracles, bounded CUDA probe, supported
+nonempty device controls, host-only enlarged-cap controls and combined variants.
+The supported finite200-billion native extension passed its exact signed192-bit
+range proof and272 arithmetic cases per CPU/sanitized CPU/CUDA backend. No
+range, transform, point-count, capacity, reconstruction or overflow guard bypass.
+
+The current-coordinator comparison uses16 preparation/certification workers,
+chunksize8, unchanged optimized packing,16-thread CPU and persistent CUDA.
+Five alternating repeats per variant/case. Median fresh-preparation plus
+persistent-CUDA compute-pipeline seconds for256-patch chunks:
+ratio      baseline   precision    cube        combined
+0.30       0.171102   0.057488     0.165856    0.055286
+0.3122     0.168581   0.056864     0.168012    0.055983
+
+Point counts baseline/precision versus cube/combined:
+0.30:   557532 versus207310
+0.3122: 606094 versus238212
+Accepted high-shell cap42 hit sets are empty and agree in every dispatchable
+case. Nonempty small-domain and host control sets also agree. First ratio patch
+fails the existing integer-transform guard in all variants; it has no native
+coverage credit. Separated0.50/0.85 and right-boundary cases are recorded.
+
+Precision gives about3x in this compute pipeline. Cube reduces points61–63%
+but adds little total benefit at these cursors; its native CPU engine-only gain
+in small domains is a separate result. GPU engine work here is below0.5ms;
+geometry/certification/packing dominate. Do not multiply stage gains or infer
+an Ada completion date. Journal, NFS checkpoint and publisher costs are excluded
+from these compute-pipeline medians. Cold startup is measured separately.
+Full stage/raw samples, commands, machine versions and limitations: REPORT.txt,
+matched-pipeline-results.json, COMMANDS.txt and adjacent logs.
+
+Network worker
+Verified exact NFSv4.1 source192.168.5.3:/volume1/clusterData at/mnt/diskBox.
+Created private mode0700 pnord/fifth42 workspace. Server ownership is1024:100,
+while Boole pnord is1330:1330; Ada needs compatible NAS mapping or private ACL.
+This is privacy by mapped server identity; it does not isolate clients that the
+NAS maps to the same identity.
+
+The workspace contains two distinct prototypes; neither is production work.
+The separately validated stable-inode entry point for this protocol suite is:
+/mnt/diskBox/pnord/fifth42/worker-20261107/range_worker.py
+Read its RANGE_WORKER_README.txt for exact invocation and source identity.
+Its chunk evaluator has the combined precision/cube candidate, exact pinned
+certification/native reconstruction/count/GMP checks and a SHA256 manifest.
+It deliberately starts one CPU evaluator per chunk; these worker timings are
+not the persistent-CUDA benchmark above. The separate bundle/ prototype and
+its tests/report remain intact and use a persistent CPU adapter.
+
+Final stable-inode protocol suite:13 tests passed on real Boole NFS. Explicit
+half-open patch reservations; adjacent100-million-patch test-only reservations;
+concurrent overlap rejection; one worker per job;256-patch journal checkpoints;
+SIGKILL/SIGTERM/restart; source changes/tampering; malformed completion and-O
+rejection; partial ENOSPC journal write; EIO checkpoint failure; metadata linking;
+and missing/wrong mount refusal. Real exact test chunks were enumerated. Large
+reservations were not enumerated. All test ledgers remain under tests-20261107.
+
+Reservation/journal inodes remain stable and locked. Recovery verifies hash
+chains and contiguous bounds, rolls forward durable complete chunks after a
+checkpoint failure, and preserves partial tails before recomputation. Failed
+checks never skip a chunk. No local fallback and no automatic claim expiry.
+Runtime identity:
+fc6f97166781319603dfa445001e6b7cf59d3eec768682309a6547866f59a1e1
+Logs: worker-tests-final.log; range-worker-final-verification.json; shared
+range-worker-tests-final.log. Earlier test journals retain earlier identities.
+
+Outstanding gates before Ada/distributed adoption
+- Test actual two-client NFS locking, reservation visibility and restart behavior.
+  Boole has1800-second directory/attribute caching. Same-client tests cannot prove
+  cross-client semantics. Do not remount Ada or broaden permissions here.
+- Ada needs the correct mounted export, server access/identity, pinned Python3.12
+  environment and compatible binaries or a new independently validated build.
+- Storage failures were injected; no NAS outage was induced. Hard NFS I/O can
+  block indefinitely. No fully durable distributed-failure guarantee is claimed.
+- When separately authorized, stop Ada cleanly and preserve/hash the final
+  checkpoint, committed journal, source identity and all gaps/guard exclusions.
+  Allocate only verified remaining ranges. Use a fresh optimized journal linked
+  to that verified coverage, never resume the old journal under changed code.
+- Prefer evaluating precision first. Cube is optional where engine cost matters.
+  Keep Ada searching until handoff and distributed-worker gates are ready.

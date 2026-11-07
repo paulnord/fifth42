@@ -1,0 +1,19 @@
+# /run/user/1330/systemd/transient/boole-github-publisher-20261107.service
+# This is a transient unit file, created programmatically via the systemd API. Do not edit.
+[Unit]
+Description=[systemd-run] /usr/bin/python3 -B -u /home/pnord/boole-reporting-20261107/boole_github_bridge.py
+CollectMode=inactive-or-failed
+
+[Service]
+RuntimeMaxSec=1d 17h 3min 31s
+TimeoutStopSec=5s
+KillMode=control-group
+Restart=no
+Nice=19
+UMask=0077
+StandardOutput=append:/home/pnord/boole-reporting-20261107/service.stdout.log
+StandardError=append:/home/pnord/boole-reporting-20261107/service.stderr.log
+Type=exec
+WorkingDirectory=/home/pnord/boole-reporting-20261107
+ExecStart=
+ExecStart="/usr/bin/python3" "-B" "-u" "/home/pnord/boole-reporting-20261107/boole_github_bridge.py"

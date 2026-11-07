@@ -1,0 +1,85 @@
+{
+  "status": "DISCONNECT_READY",
+  "verified_utc": "2026-11-07T22:28:27.822621+00:00",
+  "both_searches_running": true,
+  "both_deadline_timers_verified": true,
+  "ada_hosted_publishers": {
+    "boole-github-publisher-20261107.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "MainPID": "656471"
+    },
+    "weekend-precision-report-20261107T213849Z-precision.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "MainPID": "646120"
+    },
+    "fifth-precision-weekend-20261107T213849Z-precision.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "MainPID": "645518"
+    },
+    "fifth-precision-weekend-20261107T213849Z-precision-deadline.timer": {
+      "ActiveState": "active",
+      "SubState": "waiting",
+      "NextElapseUSecRealtime": "Mon 2026-11-09 08:59:50 CST"
+    }
+  },
+  "boole_service_proof": {
+    "status": "started",
+    "observed_utc": "2026-11-07T22:22:56.508967+00:00",
+    "host": "boole",
+    "linger": "yes",
+    "units": {
+      "boole-precision-20261107T222232Z.service": {
+        "Id": "boole-precision-20261107T222232Z.service",
+        "ActiveState": "active",
+        "SubState": "running",
+        "Restart": "no",
+        "TimeoutStopUSec": "8s",
+        "RuntimeMaxUSec": "1d 16h 37min 17s",
+        "MainPID": "49002",
+        "NRestarts": "0",
+        "KillMode": "mixed"
+      },
+      "boole-precision-20261107T222232Z-deadline.timer": {
+        "Id": "boole-precision-20261107T222232Z-deadline.timer",
+        "ActiveState": "active",
+        "SubState": "waiting",
+        "NextElapseUSecRealtime": "Mon 2026-11-09 08:59:50 CST",
+        "AccuracyUSec": "1s",
+        "RandomizedDelayUSec": "0"
+      },
+      "boole-precision-20261107T222232Z-progress.service": {
+        "Id": "boole-precision-20261107T222232Z-progress.service",
+        "ActiveState": "active",
+        "SubState": "running",
+        "Restart": "no",
+        "TimeoutStopUSec": "1min 30s",
+        "RuntimeMaxUSec": "1d 17h 7min 27s",
+        "MainPID": "49004",
+        "NRestarts": "0",
+        "KillMode": "control-group"
+      }
+    },
+    "production_config_sha256": "c3e4adb7ef8720cd1975f2d7a934a0ab7fdc48f4d8282cae4f6bc2726a24dd1c",
+    "source_manifest_sha256": "5053fb4c9709d037b6119e2e5b639dcd6f1caa382f40749c8dcd995b0fcc882b"
+  },
+  "boole_publication_receipt": {
+    "status": "published",
+    "commit": "c9e8ffa2e6a82aa946c02f7ae3ae60e27ef4e4f1",
+    "run_id": "boole-precision-20261107T222232Z",
+    "snapshot_utc": "2026-11-07T22:26:18.496747+00:00",
+    "published_utc": "2026-11-07T22:26:31.061074+00:00",
+    "phase": "running",
+    "next_patch": 3000843264
+  },
+  "github_readback_verified_commit": "c9e8ffa2e6a82aa946c02f7ae3ae60e27ef4e4f1",
+  "nonoverlapping_common_ledger_verified": true,
+  "console_independent": true,
+  "latest_deadline": "2026-11-09T09:00:00-06:00",
+  "boole_journal_cap_gib": 32,
+  "boole_may_stop_earlier_at_storage_budget": true,
+  "boole_next_push_expected_central": "2026-11-07T16:41:31.061074-06:00",
+  "next_push_note": "15-second polling and Git/network time can add a short delay."
+}

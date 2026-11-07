@@ -1,0 +1,162 @@
+#!/usr/bin/env python3
+"""Publish a bounded public status snapshot using an explicit repository deploy key."""
+from datetime import datetime,timezone
+import argparse
+import fcntl
+import hashlib
+import json
+import os
+from pathlib import Path
+import statistics
+import subprocess
+
+ROOT=Path(__file__).resolve().parent
+BRANCH='handoff/fifth-lattice-optimizations-20261105'
+REMOTE='git@github.com:paulnord/fifth42.git'
+CHECKOUT=ROOT/'github-status-checkout'
+WIDTH_RUN=ROOT/'width-runs/20261105T225458Z-20i6opud'
+STATUS_PATH='ada_validation/overnight-20261105'
+REPORT_PATH='ada_validation/lattice-width-20261105'
+
+def environment():
+    env=dict(os.environ,GIT_TERMINAL_PROMPT='0',
+        GIT_SSH_COMMAND='ssh -i /home/pnord/.ssh/fifth42_status_20261105 -o IdentitiesOnly=yes -o IdentityAgent=none -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/home/pnord/fifth-lattice-gpu/github_known_hosts')
+    return env
+
+def git(*args,cwd=None,check=True):
+    return subprocess.run(['git',*args],cwd=cwd,env=environment(),text=True,capture_output=True,timeout=120,check=check)
+
+def public(value):
+    if isinstance(value,str):return value.replace(str(WIDTH_RUN),'${WIDTH_RUN_DIR}').replace(str(ROOT),'${GPU_ROOT}').replace('/home/pnord','${ADA_HOME}')
+    if isinstance(value,list):return [public(x) for x in value]
+    if isinstance(value,dict):return {k:public(v) for k,v in value.items()}
+    return value
+
+def write(path,text):
+    path.parent.mkdir(parents=True,exist_ok=True);path.write_text(text)
+
+def publish():
+    lock=(ROOT/'github-status.lock').open('a+')
+    fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+    if not (CHECKOUT/'.git').is_dir():
+        git('clone','--single-branch','--depth','1','--branch',BRANCH,REMOTE,str(CHECKOUT),cwd=ROOT)
+    else:
+        if git('status','--porcelain',cwd=CHECKOUT).stdout.strip():raise RuntimeError('Publisher checkout has uncommitted changes')
+        git('fetch','origin',BRANCH,cwd=CHECKOUT);git('merge','--ff-only','FETCH_HEAD',cwd=CHECKOUT)
+    report=json.loads((WIDTH_RUN/'report.json').read_text());result=report['results']
+    if report['status']!='passed' or result['status']!='passed':raise RuntimeError('Width comparison has not passed')
+    rows=[];observations=0
+    for case in result['cases']:
+        if not case['complete']:continue
+        for backend,samples in case['samples'].items():
+            if len(samples)!=5:raise RuntimeError('Missing width repeat')
+            for key,value in case['medians'][backend].items():
+                if statistics.median(row[key] for row in samples)!=value:raise RuntimeError('Width median mismatch')
+            observations+=len(samples)
+        if case['regime']=='persistent_engines':
+            rows.append(f"| {case['bound']:,} | {case['width']} | {case['identity']['tasks']:,} | {case['identity']['points']:,} | "
+                f"{case['medians']['cpu']['end_to_end_seconds']:.6f} | {case['medians']['cuda']['end_to_end_seconds']:.6f} |")
+    destination=CHECKOUT/REPORT_PATH
+    for name in ('report.json','results.json','selection.json'):
+        write(destination/name,json.dumps(public(json.loads((WIDTH_RUN/name).read_text())),indent=2)+'\n')
+    for name in ('width_benchmark.py','tests/test_widths.py'):
+        write(destination/'executed-source'/(name+'.txt'),public((WIDTH_RUN/'workspace'/name).read_text()))
+    write(destination/'README.md',f'''# Certified width comparison — 2026-11-05
+
+PASS: {observations} timed CPU/CUDA pipeline observations, five rotating paired
+repeats, 16 physical CPU workers, fresh preparation on every timed variant.
+All widths passed exact certificates, full per-task count checks, independent
+oracles at both benchmark bounds, and nonempty controls at 34 and 100.
+The optimized packer is used throughout. Suite elapsed: {report['elapsed_seconds']:.3f} s.
+
+| Bound | Width | Patches | Coefficient points | CPU pipeline (s) | CUDA pipeline (s) |
+|---:|---:|---:|---:|---:|---:|
+{chr(10).join(rows)}
+
+These are per-search medians with persistent engines and a worker pool.
+At 32,000, CUDA width 2 took 1.225606 s and width 8 took 0.318121 s,
+about 74.0% less time (3.85x throughput). Wider patches increased enumeration
+from 50,087,938 to 141,244,596 points, while reducing patches from 14,750 to 3,692.
+
+Actual cold one-pass CUDA medians were 1.687234 s (width 2) and 0.735301 s
+(width 8), about 56.4% less time. Cold runs included actual pool/process startup
+and shutdown. The corresponding CPU cold medians were 1.498399 and 0.596566 s.
+Width 8/CUDA is the selected persistent configuration, rather than a claim
+that CUDA wins cold one-pass searches. Broader widths have not been tested.
+
+This comparison concerns the conservative coefficient-box pipeline. Earlier
+CPU sphere/progression width measurements used a different enumeration method.
+No speedup ratio combines those separate experiments. Every width covers the
+same requested domain, with independently checked geometry for its own grid;
+certificate and packet bytes are expected to differ between widths.
+
+Full trial outputs remain on ADA under `${{WIDTH_RUN_DIR}}/trials`.
+The report retains every trial filename/hash and per-sample stage timing.
+Production and pinned lattice sources were preserved. See [live overnight status](../overnight-20261105/STATUS.md).
+''')
+    current=ROOT/'overnight-current.json';status=dict(phase='preparing',updated_utc=datetime.now(timezone.utc).isoformat(),
+        safe_to_log_out=False,stop_local='2026-11-06T09:00:00-06:00',selection=result['selection'],
+        reported_prior_bound=10**11,independently_checked_local_prior_bound=70_000_000)
+    if current.exists():
+        active=json.loads(current.read_text());run=Path(active['run']);status.update(config=active['config'],run=str(run))
+        if (run/'checkpoint.json').exists():
+            state=json.loads((run/'checkpoint.json').read_text());status.update(phase=state['status'],checkpoint=state)
+        if (ROOT/'overnight-detached.json').exists():
+            status.update(detached_service=json.loads((ROOT/'overnight-detached.json').read_text()))
+            status['safe_to_log_out']=status['detached_service'].get('systemd_verified',False)
+        if (run/'extended-range-validation.json').exists():
+            status['extended_range_validation']=json.loads((run/'extended-range-validation.json').read_text())
+            write(CHECKOUT/STATUS_PATH/'extended-range-validation.json',json.dumps(public(status['extended_range_validation']),indent=2)+'\n')
+    for name in ('overnight_search.py','overnight_service.py','github_status.py'):
+        write(CHECKOUT/STATUS_PATH/'source'/(name+'.txt'),public((ROOT/name).read_text()))
+    phase=status['phase'];config=status.get('config',{});checkpoint=status.get('checkpoint',{})
+    write(CHECKOUT/STATUS_PATH/'status.json',json.dumps(public(status),indent=2)+'\n')
+    write(CHECKOUT/STATUS_PATH/'STATUS.md',f'''# ADA lattice overnight status
+
+Last GitHub snapshot: **{status['updated_utc']}**
+
+State: **{phase}**. Stop deadline: **9:00 a.m. Central, November 6, 2026**.
+Configuration: width **8**, optimized packing, persistent CUDA, **16 physical CPU workers**.
+
+Reported prior near-miss bound: **10^11** (Healy). The separately verified local
+signed-box bound is **70,000,000**. Benchmark and selected-patch coverage do not
+extend a full-box bound. The present job's exact region and completed patch
+cursor are recorded below; a partial region must not be described as a full
+search through its upper denominator bound.
+
+Configured denominator start: **{config.get('start_bound','not launched')}**.
+Configured upper arithmetic/search limit: **{config.get('max_bound','not launched')}**.
+Last completed shell bound: **{checkpoint.get('completed_bound','not launched')}**.
+Current shell lower bound: **{checkpoint.get('shell_lo','not launched')}**.
+Next grid patch: **{checkpoint.get('next_patch','not launched')}**.
+Completed chunks: **{checkpoint.get('chunks',0)}**.
+Completed patches: **{checkpoint.get('patches',0)}**.
+Last checkpoint: **{checkpoint.get('updated_utc','not launched')}**.
+Stop/failure reason: **{checkpoint.get('stop_reason','none recorded')}**.
+
+Check [status.json](status.json) for machine-readable state and verified counters.
+The service aims to publish every 15 minutes and once on exit. The timestamp
+above is the freshness indicator; a stale page does not prove the job is active.
+The runner logs and checks checkpoints on ADA. [Width comparison](../lattice-width-20261105/README.md).
+''')
+    git('add','--',REPORT_PATH,STATUS_PATH,cwd=CHECKOUT)
+    if git('diff','--cached','--quiet',cwd=CHECKOUT,check=False).returncode:
+        git('-c','user.name=ADA lattice runner','-c','user.email=ada-lattice@users.noreply.github.com',
+            'commit','-m','Record lattice width results and overnight search status',cwd=CHECKOUT)
+    git('push','origin','HEAD:refs/heads/'+BRANCH,cwd=CHECKOUT)
+    sha=git('rev-parse','HEAD',cwd=CHECKOUT).stdout.strip()
+    receipt=dict(status='published',commit=sha,utc=status['updated_utc'],phase=phase,
+        url=f'https://github.com/paulnord/fifth42/blob/{BRANCH}/{STATUS_PATH}/STATUS.md')
+    write(ROOT/'github-status-last-push.json',json.dumps(receipt,indent=2)+'\n');print(json.dumps(receipt));lock.close()
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--check-only',action='store_true');args=parser.parse_args()
+    if args.check_only:
+        result=git('ls-remote',REMOTE,'refs/heads/'+BRANCH,cwd=ROOT);print(result.stdout.strip());return 0
+    try:publish();return 0
+    except (RuntimeError,subprocess.SubprocessError,OSError) as error:
+        message=error.stderr if isinstance(error,subprocess.CalledProcessError) else str(error)
+        write(ROOT/'github-status-last-error.json',json.dumps(dict(utc=datetime.now(timezone.utc).isoformat(),error=message),indent=2)+'\n')
+        print(message,file=__import__('sys').stderr);return 2
+
+if __name__=='__main__':raise SystemExit(main())
