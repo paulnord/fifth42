@@ -1,11 +1,11 @@
 # ADA adaptive-precision weekend search
 
-Last GitHub snapshot: **2026-11-08T22:52:03.484109+00:00**.
-Search state: **running**. Worker status refreshed: **2026-11-08T22:51:58.045907+00:00**.
+Last GitHub snapshot: **2026-11-08T23:05:35.629225+00:00**.
+Search state: **stopped**. Worker status refreshed: **2026-11-08T23:04:57.769728+00:00**.
 
 The original weekend search started Friday, November 6, 2026 at 5:19:57 p.m. Central.
 This fresh adaptive-precision continuation starts at verified cursor **3,917,103,232**.
-Current service active since: **Sat 2026-11-07 16:01:06 CST**.
+Current service active since: ****.
 Stop deadline: **Monday, November 9 at 9:00 a.m. Central**.
 The independent cleanup timer is **active/waiting**;
 next firing: **Mon 2026-11-09 08:59:50 CST**.
@@ -14,15 +14,15 @@ Automatic restart/resume of the search is disabled.
 
 | Measurement | Saved value |
 |---|---:|
-| New committed patches in this continuation | 407,543,296 |
-| New committed chunks in this continuation | 1,591,966 |
-| Next patch cursor | 4,324,646,528 |
-| Cumulative selected patches including prior runs | 574,646,528 |
-| Coefficient points in this continuation | 1,126,966,563,644 |
-| Average search throughput at worker status timestamp | 4,556.1 patches/s |
-| Search elapsed at worker status timestamp | 24.85 hours |
+| New committed patches in this continuation | 411,044,864 |
+| New committed chunks in this continuation | 1,605,644 |
+| Next patch cursor | 4,328,148,096 |
+| Cumulative selected patches including prior runs | 578,148,096 |
+| Coefficient points in this continuation | 1,137,920,400,676 |
+| Average search throughput at worker status timestamp | 4,555.8 patches/s |
+| Search elapsed at worker status timestamp | 25.06 hours |
 | Recorded hits | 0 |
-| Periodic independent GMP audits at worker status timestamp | 12,437 |
+| Periodic independent GMP audits at worker status timestamp | 12,545 |
 | Preparation pacing | 0.0 seconds |
 
 Configuration: 16 workers pinned to physical CPUs 0–15, optimized packed/prefetched
@@ -42,12 +42,12 @@ Coverage is **selected partial patch coverage**. No completed full-box bound is
 claimed: `completed_bound` is null and `independent_oracle_verified_through` is 0.
 Periodic GMP audits do not constitute an exhaustive oracle of the whole domain.
 
-Alerts: **None reported**.
-Worker reason: **None**. Worker error: **None**.
-Supervisor error: **None**.
+Alerts: **supervisor: RuntimeError: Another active fifth service: fifth42-journal-archive-20261108.service                   loaded active running [systemd-run] /usr/bin/python3 -B -u /home/pnord/journal-storage-20261108/archive_journals.py**.
+Worker reason: **Stop requested**. Worker error: **None**.
+Supervisor error: **RuntimeError: Another active fifth service: fifth42-journal-archive-20261108.service                   loaded active running [systemd-run] /usr/bin/python3 -B -u /home/pnord/journal-storage-20261108/archive_journals.py**.
 Worker/service stderr sizes: **0 / 0 bytes**.
-Free disk: **85.4 GiB**;
-available memory: **117.0 GiB**.
+Free disk: **84.2 GiB**;
+available memory: **118.3 GiB**.
 
 This separate publisher aims to update every 15 minutes and after the search
 stops. The timestamp is the freshness indicator. It reads saved JSON and service
