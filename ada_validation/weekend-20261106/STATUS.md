@@ -1,7 +1,7 @@
 # ADA adaptive-precision weekend search
 
-Last GitHub snapshot: **2026-11-08T02:03:02.623801+00:00**.
-Search state: **running**. Worker status refreshed: **2026-11-08T02:02:56.905919+00:00**.
+Last GitHub snapshot: **2026-11-08T02:18:04.839605+00:00**.
+Search state: **running**. Worker status refreshed: **2026-11-08T02:18:00.745929+00:00**.
 
 The original weekend search started Friday, November 6, 2026 at 5:19:57 p.m. Central.
 This fresh adaptive-precision continuation starts at verified cursor **3,917,103,232**.
@@ -14,15 +14,15 @@ Automatic restart/resume of the search is disabled.
 
 | Measurement | Saved value |
 |---|---:|
-| New committed patches in this continuation | 63,025,152 |
-| New committed chunks in this continuation | 246,192 |
-| Next patch cursor | 3,980,128,384 |
-| Cumulative selected patches including prior runs | 230,128,384 |
-| Coefficient points in this continuation | 156,034,675,742 |
+| New committed patches in this continuation | 66,944,000 |
+| New committed chunks in this continuation | 261,500 |
+| Next patch cursor | 3,984,047,232 |
+| Cumulative selected patches including prior runs | 234,047,232 |
+| Coefficient points in this continuation | 165,945,125,072 |
 | Average search throughput at worker status timestamp | 4,343.9 patches/s |
-| Search elapsed at worker status timestamp | 4.03 hours |
+| Search elapsed at worker status timestamp | 4.28 hours |
 | Recorded hits | 0 |
-| Periodic independent GMP audits at worker status timestamp | 1,923 |
+| Periodic independent GMP audits at worker status timestamp | 2,043 |
 | Preparation pacing | 0.0 seconds |
 
 Configuration: 16 workers pinned to physical CPUs 0–15, optimized packed/prefetched
@@ -46,7 +46,7 @@ Alerts: **None reported**.
 Worker reason: **None**. Worker error: **None**.
 Supervisor error: **None**.
 Worker/service stderr sizes: **0 / 0 bytes**.
-Free disk: **159.1 GiB**;
+Free disk: **158.1 GiB**;
 available memory: **118.0 GiB**.
 
 This separate publisher aims to update every 15 minutes and after the search
