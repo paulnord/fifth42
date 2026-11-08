@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/pnord/scratch/saved-root-readiness-Ija5nMHk/nfs_variant.py", line 83, in <module>
+    journal.commit(record);checkpoint=dict(journal.state)
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pnord/scratch/saved-root-readiness-Ija5nMHk/review-bundle/baseline/source/lattice_gpu/coordinator_pipeline.py", line 338, in commit
+    self._validate(record, self.state['next_patch'])
+  File "/home/pnord/scratch/saved-root-readiness-Ija5nMHk/review-bundle/baseline/source/lattice_gpu/coordinator_pipeline.py", line 329, in _validate
+    raise ValueError('Executed batch has stale trial/range/sequence identity')
+ValueError: Executed batch has stale trial/range/sequence identity
+Traceback (most recent call last):
+  File "/home/pnord/scratch/saved-root-readiness-Ija5nMHk/nfs_acceptance.py", line 14, in <module>
+    subprocess.run([sys.executable,str(root/'nfs_variant.py'),variant],check=True,timeout=90,env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1'))
+  File "/home/pnord/.local/share/uv/python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python', '/home/pnord/scratch/saved-root-readiness-Ija5nMHk/nfs_variant.py', 'baseline']' returned non-zero exit status 1.

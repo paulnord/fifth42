@@ -25,3 +25,5 @@ job with `python3 scripts/export_results.py` (baseline summaries only).
 ## Cabbage saved-root test
 
 The [2026-11-08 Cabbage report](cabbage-exact-root-reuse-20261108/README.md) records the pinned CPU reproduction, all 30 bounded CPU timing trials, and baseline CUDA controls. The [follow-up](cabbage-exact-root-reuse-20261108/followup/README.md) corrected the scratch range setup and passed baseline/candidate CUDA correctness plus 10 timing pairs, then stopped on an unrelated CPU resource conflict; the higher-cost timing window remains incomplete. This adds no production coverage and does not deploy the patch.
+
+The [Cabbage admission preparation](cabbage-exact-root-reuse-20261108/readiness/README.md) completes the missing timing pairs and records actual NFS and 16-worker stop/cleanup checks. Production admission remains pending after an unrelated CPU conflict interrupted the coordinated cross-host probe.

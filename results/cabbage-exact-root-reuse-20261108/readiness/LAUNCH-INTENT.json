@@ -1,0 +1,79 @@
+{
+  "status": "REVIEW_ONLY_NOT_AUTHORIZED_TO_LAUNCH",
+  "host": "cabbage",
+  "runtime_path": "/home/pnord/scratch/saved-root-readiness-Ija5nMHk/cabbage-runtime",
+  "manifest_sha256": "a0000b2ed70ea7566baa2c6c0a00bd8cdcbc726f53bdf1247b7b9587eb5d6932",
+  "job_id_proposal": "cabbage-saved-root-20261108",
+  "interval": [
+    2250000000,
+    3000000000
+  ],
+  "ledger_root": "/mnt/nfs_share/fifth42-shared-20261107",
+  "production_claim_sha256": null,
+  "production_claim_created": false,
+  "production_launched": false,
+  "workers": 16,
+  "physical_cpus": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "backend": "gpu",
+  "nice": 19,
+  "journal_cap_bytes": 2147483648,
+  "minimum_shared_free_bytes": 8589934592,
+  "stop_local": "2026-11-09T09:00:00-06:00",
+  "stop_epoch": 1794236400,
+  "cleanup_timer_epoch": 1794236390,
+  "automatic_restart": false,
+  "automatic_resume": false,
+  "publication_directory": "cabbage_validation/production-20261108",
+  "publication_interval_seconds": 900,
+  "admission_gates": {
+    "local_compute": "passed",
+    "actual_nfs": "passed",
+    "runtime_stops_and_cleanup": "passed",
+    "cross_host_protocol": "interrupted on CPU conflict; fresh versioned probe required",
+    "current_disjoint_ledger_and_disk_refresh": "pending final admission",
+    "ada_hosted_publisher": "pending Ada owner",
+    "owner_launch_authorization": "not granted",
+    "console_independent_user_services": "Cabbage Linger=no; enable and verify at authorized admission"
+  },
+  "artifact": {
+    "path": "/home/pnord/scratch/saved-root-readiness-Ija5nMHk/cabbage-candidate-review-20261108.tar.gz",
+    "sha256": "e77c60eaff23ce103a1c5ef47930d802d2440c3e7bd19793163cbcd8a31f5b4e",
+    "bytes": 608401
+  },
+  "launch_design": {
+    "service": "New systemd user service; Type=exec, Restart=no, KillMode=control-group, Nice=19, CPUAffinity=0-15, TimeoutStopSec=8s; RuntimeMaxSec computed from the fixed deadline with cleanup margin.",
+    "worker_command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python",
+      "-B",
+      "/home/pnord/scratch/saved-root-readiness-Ija5nMHk/cabbage-runtime/cabbage_supervisor.py",
+      "--config",
+      "FINAL_AUTHORIZED_CONFIG.json"
+    ],
+    "timer": "Independent one-shot user timer to stop the new service at 2026-11-09 14:59:50 UTC. No existing service is stopped or changed.",
+    "prelaunch": "Reverify manifest and physical topology, idle CPU/GPU, actual adapter/mount/private ownership, both cross-host PASS files, refreshed disjoint common-ledger claim and aggregate disk headroom. Then freeze a fresh config and collector identity.",
+    "rollback": "On failure stop only the new Cabbage service and its owned processes; preserve its journal and source identity. Do not resume an old journal with changed code or erase durable reservation history. No automatic restart.",
+    "user_linger": "Required before launch: authorized loginctl enable-linger pnord; no setting was changed by preparation."
+  },
+  "limitations": [
+    "The snapshot range proposal is not a current production allocation or storage reservation.",
+    "The staged source identity is tested; the final production config and its claim/collector fingerprint are not yet created.",
+    "Cross-host protocol and Ada publisher require the Ada-side owner; no remote Ada commands were run."
+  ]
+}

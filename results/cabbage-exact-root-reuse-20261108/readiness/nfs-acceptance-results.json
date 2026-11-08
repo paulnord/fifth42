@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "TEST_ONLY": true,
+  "production_coverage": false,
+  "namespace": "/mnt/nfs_share/TEST_ONLY_cabbage_saved_root_20261108_Ija5nMHk_v2",
+  "filesystem": {
+    "target": "/mnt/nfs_share",
+    "source": "ada:/mnt/nfs_share",
+    "fstype": "nfs4",
+    "options": "rw,relatime,vers=4.2,rsize=1048576,wsize=1048576,namlen=255,hard,fatal_neterrors=none,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.3.161.246,local_lock=none,addr=10.3.161.80"
+  },
+  "manifest_sha256": "ea266fc804d6ddde4928b84f3a1113af35cb40ed53503ccae663a2ca0d95ed40",
+  "baseline_candidate_exact_equal": true,
+  "reservation_overlap_rejected": true,
+  "reservation_identity_immutable": true,
+  "posix_lock_exclusion": true,
+  "lock_holder_death_releases_lock": true,
+  "stable_inode_preserved": true,
+  "local_fallback_rejected": true,
+  "storage_adapter_sha256": "1c48bff8991c4861f517dfddeb419829d5ab9ec08b3824b7ea583c36fea3e3b3",
+  "actual_cabbage_host_verified": true,
+  "guard_substitution": false,
+  "limitations": [
+    "Single NFS client host; no cross-host failover/reboot tests.",
+    "Production shared ledger was never inspected or changed."
+  ]
+}
