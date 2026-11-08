@@ -1,17 +1,17 @@
 # Boole adaptive-precision search
 
-Updated: 2026-11-08T23:47:21.614704+00:00
+Updated: 2026-11-08T23:55:44.725560+00:00
 
-State: **running**. Continuation **boole-continuation-20261108**, GPU with 16 preparation workers.
-Current cursor: **3,271,918,592**.
-Combined committed patches: **271,918,592** across the sealed parent and this continuation.
-New committed patches: **28,440,832** in 111,097 chunks.
+State: **stopped**. Continuation **boole-continuation-20261108**, GPU with 16 preparation workers.
+Current cursor: **3,273,258,240**.
+Combined committed patches: **273,258,240** across the sealed parent and this continuation.
+New committed patches: **29,780,480** in 116,330 chunks.
 
 Parent committed interval: `[3000000000, 3243477760]`.
-Continuation interval: `[3243477760, 3750000000]`; committed: `[3243477760, 3271918592]`.
+Continuation interval: `[3243477760, 3750000000]`; committed: `[3243477760, 3273258240]`.
 The continuation starts exactly at the independently sealed parent cursor under the original reservation.
 
-Observed worker rate: **3,546 patches/s**; new independent GMP audits: 868.
+Observed worker rate: **3,500 patches/s**; new independent GMP audits: 909.
 Deadline: **2026-11-09T09:00:00-06:00**. Console-independent worker and deadline timer on Boole; reporter on Ada.
 GitHub updates every **15 minutes**, plus a terminal snapshot.
 Alerts: None reported.
