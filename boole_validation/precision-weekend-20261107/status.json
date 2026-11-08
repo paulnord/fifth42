@@ -1,14 +1,14 @@
 {
-  "snapshot_utc": "2026-11-08T16:13:51.178461+00:00",
+  "snapshot_utc": "2026-11-08T16:26:10.021377+00:00",
   "host": "boole",
   "TEST_ONLY": false,
   "run_id": "boole-precision-20261107T222232Z",
-  "phase": "running",
+  "phase": "stopped",
   "alerts": [],
   "service": {
-    "ActiveState": "active",
-    "SubState": "running",
-    "MainPID": "49002",
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "MainPID": "0",
     "NRestarts": "0"
   },
   "deadline_timer": {
@@ -30,21 +30,21 @@
   ],
   "committed_interval": [
     3000000000,
-    3240813824
+    3243477760
   ],
   "checkpoint": {
-    "chunks": 940679,
+    "chunks": 951085,
     "completed_bound": null,
     "hits": [],
     "identity": {
       "source_identity": "5e4f271e8f35f904338443b2c1ca81342d4c9e56e14de358057ba9c1c344ec91",
       "trial": "boole-precision-20261107T222232Z"
     },
-    "journal_offset": 33983806252,
-    "journal_sha256": "1d100297016e6600125e9cda85acfb99ed9c933dfa9507727f1a04e8598c458c",
-    "next_patch": 3240813824,
-    "patches": 240813824,
-    "points": 333007483898,
+    "journal_offset": 34359760546,
+    "journal_sha256": "ce8d9f85a1630fad67f2b6ebf9b007c48dd57520f8685e6da3b32d5b05d9155d",
+    "next_patch": 3243477760,
+    "patches": 243477760,
+    "points": 337046007938,
     "window": {
       "bits": 222,
       "cap": 42,
@@ -57,34 +57,37 @@
     }
   },
   "worker_metrics": {
-    "updated_utc": "2026-11-08T16:13:41.141114+00:00",
-    "patches_per_second": 3746.4679227575084,
-    "gmp_audited_chunks": 7348,
-    "search_seconds": 64267.79061350698,
+    "updated_utc": "2026-11-08T16:26:05.094650+00:00",
+    "patches_per_second": 3745.1350243119878,
+    "gmp_audited_chunks": 7431,
+    "search_seconds": 65011.74414792398,
     "error": null,
-    "reason": null
+    "reason": "Journal budget reached"
   },
   "supervisor": {
-    "status": "running",
+    "status": "finished",
     "error": null,
     "config_sha256": "c3e4adb7ef8720cd1975f2d7a934a0ab7fdc48f4d8282cae4f6bc2726a24dd1c",
     "TEST_ONLY": false,
-    "leases_released": false,
+    "leases_released": true,
     "worker_pid": 49012,
-    "updated_utc": "2026-11-08T16:13:47.664096+00:00",
+    "worker_exit_code": 0,
+    "all_owned_processes_exited_utc": "2026-11-08T16:26:05.478158+00:00",
+    "wall_seconds": 65012.95073809798,
+    "updated_utc": "2026-11-08T16:26:05.478182+00:00",
     "load_average": [
-      8.22314453125,
-      7.287109375,
-      6.8984375
+      8.38134765625,
+      7.4541015625,
+      7.0703125
     ]
   },
   "journal_limit_bytes": 34359738368,
   "minimum_free_disk_bytes": 8589934592,
-  "free_disk_bytes": 110646788096,
+  "free_disk_bytes": 109782761472,
   "load_average": [
-    7.64453125,
-    7.1826171875,
-    6.86669921875
+    7.7099609375,
+    7.330078125,
+    7.0322265625
   ],
   "completed_bound": null,
   "coverage_scope": "Boole selected early interval only; Ada coverage is separate; no full-box bound.",
