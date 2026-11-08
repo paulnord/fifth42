@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/home/pnord/scratch/saved-root-pAjTHBhR/cpu/gpu_probe.py", line 178, in <module>
+    if args.operation=='validate':validate(args.output)
+                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pnord/scratch/saved-root-pAjTHBhR/cpu/gpu_probe.py", line 99, in validate
+    record=pipeline.execute_chunk(chunk,pipeline.OwnedEngine(session),trial='validation',coordinator=0)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pnord/scratch/saved-root-pAjTHBhR/cpu/baseline/source/lattice_gpu/coordinator_pipeline.py", line 242, in execute_chunk
+    validate_response_types(response)
+  File "/home/pnord/scratch/saved-root-pAjTHBhR/cpu/baseline/source/lattice_gpu/coordinator_pipeline.py", line 218, in validate_response_types
+    raise ValueError('Invalid native point count type')
+ValueError: Invalid native point count type

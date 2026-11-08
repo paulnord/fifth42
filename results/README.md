@@ -21,3 +21,7 @@ large archives and profiler captures remain local and are ignored by Git. This
 keeps the repository small. The summaries do not replace raw checkpoints for
 resuming a run. On the original machine, refresh them without touching a running
 job with `python3 scripts/export_results.py` (baseline summaries only).
+
+## Cabbage saved-root test
+
+The [2026-11-08 Cabbage report](cabbage-exact-root-reuse-20261108/README.md) records the pinned CPU reproduction, all 30 bounded CPU timing trials, and baseline CUDA controls. GPU testing stopped at the supplied engine's base-range guard before candidate comparison or paired GPU timing. This adds no production coverage and does not deploy the patch.

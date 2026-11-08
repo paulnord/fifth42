@@ -1,0 +1,1992 @@
+{
+  "status": "passed",
+  "elapsed_seconds": 60.63808458001586,
+  "summary": [
+    {
+      "case": "boole",
+      "first": 3000000000,
+      "patches": 4096,
+      "medians": {
+        "baseline": 1.7688024470116943,
+        "candidate": 1.7007982690120116
+      },
+      "samples": {
+        "baseline": [
+          1.7866029680008069,
+          1.7688024470116943,
+          1.7729674929869361,
+          1.7570011710049585,
+          1.7590110779856332
+        ],
+        "candidate": [
+          1.687064610014204,
+          1.7037232599686831,
+          1.7007982690120116,
+          1.7010743860155344,
+          1.6885372710530646
+        ]
+      },
+      "throughput_ratio": 1.039983682508794,
+      "paired_ratios": [
+        1.0590009163820733,
+        1.0381982147993962,
+        1.042432559633805,
+        1.0328773306148138,
+        1.0417366013417146
+      ],
+      "worker_cpu_medians": {
+        "baseline": 5.075899667999996,
+        "candidate": 4.799711356000003
+      },
+      "signature": "32201ca43888239ae81ed5e58c47061ef9248655101121547c6cda2e510439cd",
+      "points": 5157278
+    },
+    {
+      "case": "ada",
+      "first": 3917103232,
+      "patches": 4096,
+      "medians": {
+        "baseline": 1.7776968170073815,
+        "candidate": 1.704351228021551
+      },
+      "samples": {
+        "baseline": [
+          1.79502737702569,
+          1.7635735279764049,
+          1.7584622189751826,
+          1.7776968170073815,
+          1.7884241720312275
+        ],
+        "candidate": [
+          1.7317660569678992,
+          1.704351228021551,
+          1.697733806038741,
+          1.7088850449654274,
+          1.7021132729714736
+        ]
+      },
+      "throughput_ratio": 1.0430343158029531,
+      "paired_ratios": [
+        1.0365299457182764,
+        1.0347477086771608,
+        1.0357702796047497,
+        1.0402670573100756,
+        1.0507080817888672
+      ],
+      "worker_cpu_medians": {
+        "baseline": 5.071451474000004,
+        "candidate": 4.79398222
+      },
+      "signature": "6064112da6f7fbb9aaf37514b5a79732246b53de37aabe3d83e632bdafcfb388",
+      "points": 9933600
+    },
+    {
+      "case": "higher_cost",
+      "first": 10625000000,
+      "patches": 1024,
+      "medians": {
+        "baseline": 1.510098612983711,
+        "candidate": 1.5059335069963709
+      },
+      "samples": {
+        "baseline": [
+          1.5066710190149024,
+          1.5045236349687912,
+          1.510098612983711,
+          1.8622693169745617,
+          1.7615293969865888
+        ],
+        "candidate": [
+          1.5358751509920694,
+          1.5059335069963709,
+          1.5202805250301026,
+          1.4872982819797471,
+          1.4976902980124578
+        ]
+      },
+      "throughput_ratio": 1.002765796742014,
+      "paired_ratios": [
+        0.9809853476968469,
+        0.9990637886593069,
+        0.9933026096968585,
+        1.2521155571400846,
+        1.1761639901949452
+      ],
+      "worker_cpu_medians": {
+        "baseline": 1.169436831,
+        "candidate": 1.104415752000001
+      },
+      "signature": "0cdfb52ec9292b976007dacd7bc4be44489e4fcbed7828843fac4be511022a02",
+      "points": 95551440
+    }
+  ],
+  "rows": [
+    {
+      "status": "passed",
+      "variant": "baseline",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3000000000,
+        "last": 3000004096,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.20570600003702566,
+      "steady_seconds": 1.7866029680008069,
+      "shutdown_seconds": 0.023457863018848002,
+      "total_seconds": 2.029797066003084,
+      "patches_per_second": 2292.619050433678,
+      "points": 5157278,
+      "signatures_sha256": "32201ca43888239ae81ed5e58c47061ef9248655101121547c6cda2e510439cd",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.022550371999386698,
+      "durable_commit_seconds": 0.12736165191745386,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 576937,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "boole",
+      "repeat": 0
+    },
+    {
+      "status": "passed",
+      "variant": "candidate",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3000000000,
+        "last": 3000004096,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.2008543570409529,
+      "steady_seconds": 1.687064610014204,
+      "shutdown_seconds": 0.022321463038679212,
+      "total_seconds": 1.9240407239994965,
+      "patches_per_second": 2427.885675324263,
+      "points": 5157278,
+      "signatures_sha256": "32201ca43888239ae81ed5e58c47061ef9248655101121547c6cda2e510439cd",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.020091123005840927,
+      "durable_commit_seconds": 0.11678563000168651,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 576974,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "boole",
+      "repeat": 0
+    },
+    {
+      "status": "passed",
+      "variant": "candidate",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3000000000,
+        "last": 3000004096,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.21600127400597557,
+      "steady_seconds": 1.7037232599686831,
+      "shutdown_seconds": 0.02361566899344325,
+      "total_seconds": 1.9565026520285755,
+      "patches_per_second": 2404.1463166237986,
+      "points": 5157278,
+      "signatures_sha256": "32201ca43888239ae81ed5e58c47061ef9248655101121547c6cda2e510439cd",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.01918274100171402,
+      "durable_commit_seconds": 0.1258842929964885,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 576971,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "boole",
+      "repeat": 1
+    },
+    {
+      "status": "passed",
+      "variant": "baseline",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3000000000,
+        "last": 3000004096,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.2174450300517492,
+      "steady_seconds": 1.7688024470116943,
+      "shutdown_seconds": 0.02496031898772344,
+      "total_seconds": 2.0249458239995874,
+      "patches_per_second": 2315.691052395361,
+      "points": 5157278,
+      "signatures_sha256": "32201ca43888239ae81ed5e58c47061ef9248655101121547c6cda2e510439cd",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.01962769398232922,
+      "durable_commit_seconds": 0.13555254001403227,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 576945,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "boole",
+      "repeat": 1
+    },
+    {
+      "status": "passed",
+      "variant": "baseline",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3000000000,
+        "last": 3000004096,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.20944668998708948,
+      "steady_seconds": 1.7729674929869361,
+      "shutdown_seconds": 0.023078613041434437,
+      "total_seconds": 2.019490088976454,
+      "patches_per_second": 2310.2510430687184,
+      "points": 5157278,
+      "signatures_sha256": "32201ca43888239ae81ed5e58c47061ef9248655101121547c6cda2e510439cd",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.020337354973889887,
+      "durable_commit_seconds": 0.1404077050392516,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 576938,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "boole",
+      "repeat": 2
+    },
+    {
+      "status": "passed",
+      "variant": "candidate",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3000000000,
+        "last": 3000004096,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.20616695401258767,
+      "steady_seconds": 1.7007982690120116,
+      "shutdown_seconds": 0.023760679992847145,
+      "total_seconds": 1.9444535810034722,
+      "patches_per_second": 2408.2809082227923,
+      "points": 5157278,
+      "signatures_sha256": "32201ca43888239ae81ed5e58c47061ef9248655101121547c6cda2e510439cd",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.022279956028796732,
+      "durable_commit_seconds": 0.12032001203624532,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 576966,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "boole",
+      "repeat": 2
+    },
+    {
+      "status": "passed",
+      "variant": "candidate",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3000000000,
+        "last": 3000004096,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.21596466604387388,
+      "steady_seconds": 1.7010743860155344,
+      "shutdown_seconds": 0.022824645973742008,
+      "total_seconds": 1.953228767029941,
+      "patches_per_second": 2407.8899980348037,
+      "points": 5157278,
+      "signatures_sha256": "32201ca43888239ae81ed5e58c47061ef9248655101121547c6cda2e510439cd",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.018415122001897544,
+      "durable_commit_seconds": 0.11322030710289255,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 576961,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "boole",
+      "repeat": 3
+    },
+    {
+      "status": "passed",
+      "variant": "baseline",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3000000000,
+        "last": 3000004096,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.21450962900416926,
+      "steady_seconds": 1.7570011710049585,
+      "shutdown_seconds": 0.02399870695080608,
+      "total_seconds": 2.009447908960283,
+      "patches_per_second": 2331.244889072667,
+      "points": 5157278,
+      "signatures_sha256": "32201ca43888239ae81ed5e58c47061ef9248655101121547c6cda2e510439cd",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.01831642701290548,
+      "durable_commit_seconds": 0.12099561089416966,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 576944,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "boole",
+      "repeat": 3
+    },
+    {
+      "status": "passed",
+      "variant": "baseline",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3000000000,
+        "last": 3000004096,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.20902246597688645,
+      "steady_seconds": 1.7590110779856332,
+      "shutdown_seconds": 0.023008020012639463,
+      "total_seconds": 2.004632734984625,
+      "patches_per_second": 2328.58112792025,
+      "points": 5157278,
+      "signatures_sha256": "32201ca43888239ae81ed5e58c47061ef9248655101121547c6cda2e510439cd",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.019571208977140486,
+      "durable_commit_seconds": 0.13184839917812496,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 576928,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "boole",
+      "repeat": 4
+    },
+    {
+      "status": "passed",
+      "variant": "candidate",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3000000000,
+        "last": 3000004096,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.2151476750150323,
+      "steady_seconds": 1.6885372710530646,
+      "shutdown_seconds": 0.02329226303845644,
+      "total_seconds": 1.9406563849770464,
+      "patches_per_second": 2425.7681901480973,
+      "points": 5157278,
+      "signatures_sha256": "32201ca43888239ae81ed5e58c47061ef9248655101121547c6cda2e510439cd",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.0191352020483464,
+      "durable_commit_seconds": 0.11026340711396188,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 576975,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "boole",
+      "repeat": 4
+    },
+    {
+      "status": "passed",
+      "variant": "baseline",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3917103232,
+        "last": 3917107328,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.22203193698078394,
+      "steady_seconds": 1.79502737702569,
+      "shutdown_seconds": 0.024518791993614286,
+      "total_seconds": 2.055157053982839,
+      "patches_per_second": 2281.8593478986136,
+      "points": 9933600,
+      "signatures_sha256": "6064112da6f7fbb9aaf37514b5a79732246b53de37aabe3d83e632bdafcfb388",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.032630544039420784,
+      "durable_commit_seconds": 0.1306309790816158,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 577122,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "ada",
+      "repeat": 0
+    },
+    {
+      "status": "passed",
+      "variant": "candidate",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3917103232,
+        "last": 3917107328,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.21143917500739917,
+      "steady_seconds": 1.7317660569678992,
+      "shutdown_seconds": 0.022899245959706604,
+      "total_seconds": 1.9802483550156467,
+      "patches_per_second": 2365.2155460140916,
+      "points": 9933600,
+      "signatures_sha256": "6064112da6f7fbb9aaf37514b5a79732246b53de37aabe3d83e632bdafcfb388",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.0322998040355742,
+      "durable_commit_seconds": 0.1309411289403215,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 577110,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "ada",
+      "repeat": 0
+    },
+    {
+      "status": "passed",
+      "variant": "candidate",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3917103232,
+        "last": 3917107328,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.19692714797565714,
+      "steady_seconds": 1.704351228021551,
+      "shutdown_seconds": 0.022757531027309597,
+      "total_seconds": 1.9378094989806414,
+      "patches_per_second": 2403.2605091350383,
+      "points": 9933600,
+      "signatures_sha256": "6064112da6f7fbb9aaf37514b5a79732246b53de37aabe3d83e632bdafcfb388",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.03220005700131878,
+      "durable_commit_seconds": 0.11342935089487582,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 577153,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "ada",
+      "repeat": 1
+    },
+    {
+      "status": "passed",
+      "variant": "baseline",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3917103232,
+        "last": 3917107328,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.24638109997613356,
+      "steady_seconds": 1.7635735279764049,
+      "shutdown_seconds": 0.02341044502099976,
+      "total_seconds": 2.0488727359916084,
+      "patches_per_second": 2322.5569759486666,
+      "points": 9933600,
+      "signatures_sha256": "6064112da6f7fbb9aaf37514b5a79732246b53de37aabe3d83e632bdafcfb388",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.03212304302724078,
+      "durable_commit_seconds": 0.1237235629814677,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 577118,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "ada",
+      "repeat": 1
+    },
+    {
+      "status": "passed",
+      "variant": "baseline",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3917103232,
+        "last": 3917107328,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.22577303898287937,
+      "steady_seconds": 1.7584622189751826,
+      "shutdown_seconds": 0.022710351971909404,
+      "total_seconds": 2.0211894539534114,
+      "patches_per_second": 2329.3079349678123,
+      "points": 9933600,
+      "signatures_sha256": "6064112da6f7fbb9aaf37514b5a79732246b53de37aabe3d83e632bdafcfb388",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.03483296203194186,
+      "durable_commit_seconds": 0.11940321704605594,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 577096,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "ada",
+      "repeat": 2
+    },
+    {
+      "status": "passed",
+      "variant": "candidate",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3917103232,
+        "last": 3917107328,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.1988635659799911,
+      "steady_seconds": 1.697733806038741,
+      "shutdown_seconds": 0.02260983403539285,
+      "total_seconds": 1.9330507399863563,
+      "patches_per_second": 2412.6279310871732,
+      "points": 9933600,
+      "signatures_sha256": "6064112da6f7fbb9aaf37514b5a79732246b53de37aabe3d83e632bdafcfb388",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.03025043400702998,
+      "durable_commit_seconds": 0.12679647305049002,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 577138,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "ada",
+      "repeat": 2
+    },
+    {
+      "status": "passed",
+      "variant": "candidate",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3917103232,
+        "last": 3917107328,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.20863968902267516,
+      "steady_seconds": 1.7088850449654274,
+      "shutdown_seconds": 0.024450433033052832,
+      "total_seconds": 1.955235869041644,
+      "patches_per_second": 2396.8844551991892,
+      "points": 9933600,
+      "signatures_sha256": "6064112da6f7fbb9aaf37514b5a79732246b53de37aabe3d83e632bdafcfb388",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.03224599297391251,
+      "durable_commit_seconds": 0.11485216702567413,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 577125,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "ada",
+      "repeat": 3
+    },
+    {
+      "status": "passed",
+      "variant": "baseline",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3917103232,
+        "last": 3917107328,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.20876450202194974,
+      "steady_seconds": 1.7776968170073815,
+      "shutdown_seconds": 0.023449166037607938,
+      "total_seconds": 2.0240453369915485,
+      "patches_per_second": 2304.1049299369884,
+      "points": 9933600,
+      "signatures_sha256": "6064112da6f7fbb9aaf37514b5a79732246b53de37aabe3d83e632bdafcfb388",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.03283491701586172,
+      "durable_commit_seconds": 0.1333658670191653,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 577102,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "ada",
+      "repeat": 3
+    },
+    {
+      "status": "passed",
+      "variant": "baseline",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3917103232,
+        "last": 3917107328,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.2597128260531463,
+      "steady_seconds": 1.7884241720312275,
+      "shutdown_seconds": 0.024040515010710806,
+      "total_seconds": 2.0857481250423007,
+      "patches_per_second": 2290.2844101843643,
+      "points": 9933600,
+      "signatures_sha256": "6064112da6f7fbb9aaf37514b5a79732246b53de37aabe3d83e632bdafcfb388",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.027657973987516016,
+      "durable_commit_seconds": 0.1350310839479789,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 577126,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "ada",
+      "repeat": 4
+    },
+    {
+      "status": "passed",
+      "variant": "candidate",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 3917103232,
+        "last": 3917107328,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.20932579401414841,
+      "steady_seconds": 1.7021132729714736,
+      "shutdown_seconds": 0.023426594969350845,
+      "total_seconds": 1.9481668500229716,
+      "patches_per_second": 2406.4203393757602,
+      "points": 9933600,
+      "signatures_sha256": "6064112da6f7fbb9aaf37514b5a79732246b53de37aabe3d83e632bdafcfb388",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.03098992898594588,
+      "durable_commit_seconds": 0.11924354796065018,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 2,
+        "peak_reserved_bytes": 16777216,
+        "peak_reserved_points": 500000000
+      },
+      "journal_bytes": 577143,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "ada",
+      "repeat": 4
+    },
+    {
+      "status": "passed",
+      "variant": "baseline",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 10625000000,
+        "last": 10625001024,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.2100751280086115,
+      "steady_seconds": 1.5066710190149024,
+      "shutdown_seconds": 0.023158160969614983,
+      "total_seconds": 1.7437911630258895,
+      "patches_per_second": 679.6440543931851,
+      "points": 95551440,
+      "signatures_sha256": "0cdfb52ec9292b976007dacd7bc4be44489e4fcbed7828843fac4be511022a02",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.5065320170251653,
+      "durable_commit_seconds": 0.027878969092853367,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "journal_bytes": 151804,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "higher_cost",
+      "repeat": 0
+    },
+    {
+      "status": "passed",
+      "variant": "candidate",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 10625000000,
+        "last": 10625001024,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.20718397002201527,
+      "steady_seconds": 1.5358751509920694,
+      "shutdown_seconds": 0.024476182006765157,
+      "total_seconds": 1.771619688021019,
+      "patches_per_second": 666.7208590089934,
+      "points": 95551440,
+      "signatures_sha256": "0cdfb52ec9292b976007dacd7bc4be44489e4fcbed7828843fac4be511022a02",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.5091663849889301,
+      "durable_commit_seconds": 0.031103662040550262,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "journal_bytes": 151799,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "higher_cost",
+      "repeat": 0
+    },
+    {
+      "status": "passed",
+      "variant": "candidate",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 10625000000,
+        "last": 10625001024,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.19897527596913278,
+      "steady_seconds": 1.5059335069963709,
+      "shutdown_seconds": 0.02457728097215295,
+      "total_seconds": 1.7335197440115735,
+      "patches_per_second": 679.9769015315944,
+      "points": 95551440,
+      "signatures_sha256": "0cdfb52ec9292b976007dacd7bc4be44489e4fcbed7828843fac4be511022a02",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.5076508749625646,
+      "durable_commit_seconds": 0.031224490026943386,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "journal_bytes": 151810,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "higher_cost",
+      "repeat": 1
+    },
+    {
+      "status": "passed",
+      "variant": "baseline",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 10625000000,
+        "last": 10625001024,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.20747348200529814,
+      "steady_seconds": 1.5045236349687912,
+      "shutdown_seconds": 0.0225714219850488,
+      "total_seconds": 1.7385481069795787,
+      "patches_per_second": 680.61410017081,
+      "points": 95551440,
+      "signatures_sha256": "0cdfb52ec9292b976007dacd7bc4be44489e4fcbed7828843fac4be511022a02",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.5105121770175174,
+      "durable_commit_seconds": 0.024780870997346938,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "journal_bytes": 151795,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "higher_cost",
+      "repeat": 1
+    },
+    {
+      "status": "passed",
+      "variant": "baseline",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 10625000000,
+        "last": 10625001024,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.21084236598107964,
+      "steady_seconds": 1.510098612983711,
+      "shutdown_seconds": 0.023578679014462978,
+      "total_seconds": 1.7484366889693774,
+      "patches_per_second": 678.1014108586864,
+      "points": 95551440,
+      "signatures_sha256": "0cdfb52ec9292b976007dacd7bc4be44489e4fcbed7828843fac4be511022a02",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.5084808290121146,
+      "durable_commit_seconds": 0.02915474900510162,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "journal_bytes": 151806,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "higher_cost",
+      "repeat": 2
+    },
+    {
+      "status": "passed",
+      "variant": "candidate",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 10625000000,
+        "last": 10625001024,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.20085038000252098,
+      "steady_seconds": 1.5202805250301026,
+      "shutdown_seconds": 0.023561496986076236,
+      "total_seconds": 1.7486046939739026,
+      "patches_per_second": 673.5599010450549,
+      "points": 95551440,
+      "signatures_sha256": "0cdfb52ec9292b976007dacd7bc4be44489e4fcbed7828843fac4be511022a02",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.527787002036348,
+      "durable_commit_seconds": 0.029028594959527254,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "journal_bytes": 151809,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "higher_cost",
+      "repeat": 2
+    },
+    {
+      "status": "passed",
+      "variant": "candidate",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 10625000000,
+        "last": 10625001024,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.20028833602555096,
+      "steady_seconds": 1.4872982819797471,
+      "shutdown_seconds": 0.022947084973566234,
+      "total_seconds": 1.714446387020871,
+      "patches_per_second": 688.496727527279,
+      "points": 95551440,
+      "signatures_sha256": "0cdfb52ec9292b976007dacd7bc4be44489e4fcbed7828843fac4be511022a02",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.5004244109732099,
+      "durable_commit_seconds": 0.029298850044142455,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "journal_bytes": 151812,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "higher_cost",
+      "repeat": 3
+    },
+    {
+      "status": "passed",
+      "variant": "baseline",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 10625000000,
+        "last": 10625001024,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.22447199997259304,
+      "steady_seconds": 1.8622693169745617,
+      "shutdown_seconds": 0.03840359300374985,
+      "total_seconds": 2.129272334976122,
+      "patches_per_second": 549.8667623776286,
+      "points": 95551440,
+      "signatures_sha256": "0cdfb52ec9292b976007dacd7bc4be44489e4fcbed7828843fac4be511022a02",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.7250650670030154,
+      "durable_commit_seconds": 0.03136805695248768,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "journal_bytes": 151798,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "higher_cost",
+      "repeat": 3
+    },
+    {
+      "status": "passed",
+      "variant": "baseline",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 10625000000,
+        "last": 10625001024,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.3041074570501223,
+      "steady_seconds": 1.7615293969865888,
+      "shutdown_seconds": 0.02281728299567476,
+      "total_seconds": 2.09244081802899,
+      "patches_per_second": 581.3130349977328,
+      "points": 95551440,
+      "signatures_sha256": "0cdfb52ec9292b976007dacd7bc4be44489e4fcbed7828843fac4be511022a02",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.5452523849671707,
+      "durable_commit_seconds": 0.02570206904783845,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "journal_bytes": 151790,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "higher_cost",
+      "repeat": 4
+    },
+    {
+      "status": "passed",
+      "variant": "candidate",
+      "window": {
+        "lo": 100000000001,
+        "hi": 200000000000,
+        "first": 10625000000,
+        "last": 10625001024,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "geometry_policy": "adaptive"
+      },
+      "workers": 4,
+      "cpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "startup_seconds": 0.2166199139901437,
+      "steady_seconds": 1.4976902980124578,
+      "shutdown_seconds": 0.023767204023897648,
+      "total_seconds": 1.7419815720058978,
+      "patches_per_second": 683.7194587952671,
+      "points": 95551440,
+      "signatures_sha256": "0cdfb52ec9292b976007dacd7bc4be44489e4fcbed7828843fac4be511022a02",
+      "exact_hits": [],
+      "independent_gmp_audits": 1,
+      "audit_seconds": 0.5059335459955037,
+      "durable_commit_seconds": 0.029592731967568398,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "journal_bytes": 151800,
+      "recovery_passed": true,
+      "production_coverage": false,
+      "environment": {
+        "python": "3.12.16",
+        "machine": "x86_64",
+        "pins": {
+          "gmpy2": "2.2.2",
+          "fpylll": "0.6.4",
+          "cysignals": "1.12.5",
+          "numpy": "2.3.5",
+          "sympy": "1.14.0"
+        }
+      },
+      "limitations": [
+        "Local native CPU engine, not CUDA.",
+        "Local filesystem journal, not NFS/shared ledger.",
+        "Four allowed cloud CPUs; not Ada topology or hardware.",
+        "Services, supervisors, publishers, and storage limits are not launched."
+      ],
+      "case": "higher_cost",
+      "repeat": 4
+    }
+  ],
+  "limitations": [
+    "Cloud CPU emulation, not Ada/Boole GPU performance.",
+    "Local filesystem durable journal/checkpoint, not NFS/shared ledger.",
+    "Short bounded selected windows; shared cloud scheduling can vary.",
+    "Actual immutable task/certificate/packet/hit identities match each pair.",
+    "Fresh preparation on every trial. Includes native CPU, exact decode, first-chunk GMP audit and durable commit. Startup/shutdown reported separately."
+  ]
+}

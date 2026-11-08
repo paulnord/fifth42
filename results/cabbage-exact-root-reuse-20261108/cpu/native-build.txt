@@ -1,0 +1,6 @@
+make: Entering directory '/home/pnord/scratch/saved-root-pAjTHBhR/cpu/candidate/source/lattice_gpu'
+mkdir -p bin
+g++ -std=c++17 -O3 -Wall -Wextra -Werror -pthread src/scaling_cpu.cpp -o bin/scaling_cpu
+g++ -std=c++17 -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -pthread src/scaling_cpu.cpp -o bin/scaling_cpu_sanitize
+g++ -std=c++17 -O3 -Wall -Wextra -Werror scaling_oracle.cpp -o bin/scaling_oracle
+make: Leaving directory '/home/pnord/scratch/saved-root-pAjTHBhR/cpu/candidate/source/lattice_gpu'
