@@ -1,151 +1,61 @@
 {
-  "snapshot_utc": "2026-11-08T23:05:35.629225+00:00",
-  "run_id": "20261107T213849Z-precision",
-  "phase": "stopped",
-  "search_service": {
-    "LoadState": "not-found",
-    "ActiveState": "inactive",
-    "SubState": "dead",
-    "ActiveEnterTimestamp": "",
-    "MainPID": "0",
-    "NRestarts": "0"
-  },
-  "stop_timer": {
-    "LoadState": "loaded",
-    "ActiveState": "active",
-    "SubState": "waiting",
-    "ActiveEnterTimestamp": "Sat 2026-11-07 16:01:06 CST",
-    "NextElapseUSecRealtime": "Mon 2026-11-09 08:59:50 CST"
-  },
-  "alerts": [
-    "supervisor: RuntimeError: Another active fifth service: fifth42-journal-archive-20261108.service                   loaded active running [systemd-run] /usr/bin/python3 -B -u /home/pnord/journal-storage-20261108/archive_journals.py"
+  "snapshot_utc": "2026-11-08T23:46:13.146811+00:00",
+  "host": "ada",
+  "TEST_ONLY": false,
+  "run_id": "ada-bulk-20261108",
+  "manifest_sha256": "29937ee257063af1012c3c3370b98d755e9964ab6d0329a2446c8fa122babf2d",
+  "config_sha256": "0dcacf80b7beee7e5eb0931299786d3aa5b2e55ad36b25f97dcac393934ec32e",
+  "source_identity": "63dce90deca2a48b9ed6047248ca0a342944ab496034e708caab9be3e03910fd",
+  "ledger_claim_sha256": "7d6b55c80d480208b324d6748fcc3660e12a0b70a7f2a21ad8c28bf0b0a16b33",
+  "reserved_interval": [
+    4328148096,
+    11250000001
   ],
-  "resources": {
-    "load_average": [
-      5.8759765625,
-      8.521484375,
-      9.1484375
-    ],
-    "free_disk_bytes": 90417364992,
-    "available_memory_bytes": 126978125824
-  },
-  "error_log_bytes": {
-    "worker.stderr.log": 0,
-    "service.stderr.log": 0
-  },
+  "committed_interval": [
+    4328148096,
+    4329292928
+  ],
+  "workers": 16,
+  "backend": "gpu",
+  "geometry_policy": "adaptive",
   "stop_local": "2026-11-09T09:00:00-06:00",
   "stop_epoch": 1794236400.0,
-  "workers": 16,
-  "initial_patch": 3917103232,
-  "geometry_policy": "adaptive",
-  "ledger_root": "/mnt/nfs_share/fifth42-shared-20261107",
-  "ledger_claim_sha256": "7d6b55c80d480208b324d6748fcc3660e12a0b70a7f2a21ad8c28bf0b0a16b33",
-  "coverage_sha256": "e19f86245f1c4607680c5e3266f9436209881889270abe55f007ecc8174f1f49",
-  "gpu_validation": {
-    "status": "passed",
-    "trials": [
-      {
-        "geometry_policy": "baseline",
-        "repeat": 0,
-        "patches": 8192,
-        "search_seconds": 6.498926248023054,
-        "patches_per_second": 1260.5159202248176,
-        "process_wall_seconds": 7.233495624997886,
-        "points": 19808396,
-        "exact_hits": [],
-        "independent_audits": 1
-      },
-      {
-        "geometry_policy": "adaptive",
-        "repeat": 0,
-        "patches": 8192,
-        "search_seconds": 1.9491346279974096,
-        "patches_per_second": 4202.890802066694,
-        "process_wall_seconds": 2.5597107780049555,
-        "points": 19808396,
-        "exact_hits": [],
-        "independent_audits": 1
-      },
-      {
-        "geometry_policy": "adaptive",
-        "repeat": 1,
-        "patches": 8192,
-        "search_seconds": 1.980906437995145,
-        "patches_per_second": 4135.480526930408,
-        "process_wall_seconds": 2.5810220079729334,
-        "points": 19808396,
-        "exact_hits": [],
-        "independent_audits": 1
-      },
-      {
-        "geometry_policy": "baseline",
-        "repeat": 1,
-        "patches": 8192,
-        "search_seconds": 6.467916846013395,
-        "patches_per_second": 1266.5592639845504,
-        "process_wall_seconds": 7.103265871992335,
-        "points": 19808396,
-        "exact_hits": [],
-        "independent_audits": 1
-      },
-      {
-        "geometry_policy": "baseline",
-        "repeat": 2,
-        "patches": 8192,
-        "search_seconds": 6.537157477985602,
-        "patches_per_second": 1253.1440503899764,
-        "process_wall_seconds": 7.143985664006323,
-        "points": 19808396,
-        "exact_hits": [],
-        "independent_audits": 1
-      },
-      {
-        "geometry_policy": "adaptive",
-        "repeat": 2,
-        "patches": 8192,
-        "search_seconds": 1.9892695299931802,
-        "patches_per_second": 4118.094545000186,
-        "process_wall_seconds": 2.624750054004835,
-        "points": 19808396,
-        "exact_hits": [],
-        "independent_audits": 1
-      }
-    ],
-    "median_patches_per_second": {
-      "baseline": 1260.5159202248176,
-      "adaptive": 4135.480526930408
-    },
-    "speedup": 3.2807840508613566,
-    "supported_nonempty_controls_every_trial": true,
-    "exact_hit_sets_equal": true,
-    "signal_stop_passed": true,
-    "absolute_deadline_stop_passed": true,
-    "production_coverage": false,
-    "workers": 16,
-    "limitations": [
-      "Short matched tests at the verified final cursor; no full-domain bound or constant-rate forecast.",
-      "Timings include the pipeline, durable journal/checkpoint and periodic GMP audit overhead."
-    ]
+  "service": {
+    "ActiveState": "active",
+    "SubState": "running",
+    "MainPID": "1273263",
+    "NRestarts": "0"
   },
-  "parent_selected_patches": 167103232,
-  "combined_selected_patches": 578148096,
+  "deadline_timer": {
+    "ActiveState": "active",
+    "SubState": "waiting"
+  },
+  "completed_bound": null,
+  "journal_limit_bytes": 137438953472,
+  "minimum_free_disk_bytes": 8589934592,
+  "report_interval_seconds": 900,
+  "coverage_scope": "Verified selected interval and parent lineage only; no full-box bound.",
+  "production_launched": true,
+  "mathematical_coverage_claim": false,
+  "phase": "running",
+  "alerts": [],
   "checkpoint": {
-    "chunks": 1605644,
+    "chunks": 4472,
     "completed_bound": null,
     "hits": [],
     "identity": {
-      "source_identity": "e19b6d92def97ca37adf6c2b9361ce78fe53ddea79856a94d88498cb3228f62f",
-      "trial": "20261107T213849Z-precision"
+      "source_identity": "63dce90deca2a48b9ed6047248ca0a342944ab496034e708caab9be3e03910fd",
+      "trial": "ada-bulk-20261108"
     },
-    "journal_offset": 58000325929,
-    "journal_sha256": "00196fb9e38384e6478c0bb0c8ff489367ab1bbbddaee5d6172b3098d514f35d",
-    "next_patch": 4328148096,
-    "patches": 411044864,
-    "points": 1137920400676,
+    "journal_offset": 161489660,
+    "journal_sha256": "645800199b0d4de0f784cdf8a1080c3500d6b0a9c1715cc8fa7db261d495f28d",
+    "next_patch": 4329292928,
+    "patches": 1144832,
+    "points": 3586929862,
     "window": {
       "bits": 222,
       "cap": 42,
-      "first": 3917103232,
+      "first": 4328148096,
       "geometry_policy": "adaptive",
       "hi": 200000000000,
       "last": 11250000001,
@@ -154,32 +64,66 @@
     }
   },
   "worker_metrics": {
-    "status": "stopped",
-    "updated_utc": "2026-11-08T23:04:57.769728+00:00",
-    "patches": 411044864,
-    "chunks": 1605644,
-    "patches_per_second": 4555.829972559547,
-    "search_seconds": 90223.92549234396,
-    "gmp_audited_chunks": 12545,
-    "preparation_pacing_seconds": 0.024307510000653565,
-    "independent_oracle_verified_through": 0,
-    "reason": "Stop requested",
+    "updated_utc": "2026-11-08T23:46:05.963210+00:00",
+    "patches_per_second": 1772.5800600319726,
+    "gmp_audited_chunks": 35,
+    "search_seconds": 638.4907658160082,
     "error": null,
-    "source_identity": "e19b6d92def97ca37adf6c2b9361ce78fe53ddea79856a94d88498cb3228f62f"
+    "reason": null
   },
   "supervisor": {
-    "status": "guard_stopped",
-    "updated_utc": "2026-11-08T23:04:57.846757+00:00",
-    "error": "RuntimeError: Another active fifth service: fifth42-journal-archive-20261108.service                   loaded active running [systemd-run] /usr/bin/python3 -B -u /home/pnord/journal-storage-20261108/archive_journals.py",
-    "worker_exit_code": null
+    "automatic_resume": false,
+    "config": "/home/pnord/ada-bulk-continuation-20261108/config.json",
+    "config_sha256": "0dcacf80b7beee7e5eb0931299786d3aa5b2e55ad36b25f97dcac393934ec32e",
+    "error": null,
+    "held_leases": [
+      "/home/pnord/fifth-lattice-optimizations-ada-20261105/cpu-benchmark.lock",
+      "/home/pnord/fifth-lattice-gpu/validation.lock",
+      "/home/pnord/fifth42/runs/cpu-B10000/.lock",
+      "/home/pnord/fifth42/runs/cpu-B100000/.lock",
+      "/home/pnord/fifth42/runs/gpu-B10000000/.lock",
+      "/home/pnord/fifth42/runs/gpu-B1000000/.lock",
+      "/home/pnord/fifth42/runs/gpu-B35000000/.lock",
+      "/home/pnord/fifth42/runs/gpu-B100000/.lock",
+      "/home/pnord/fifth42/runs/initial/cpu-B10000/.lock",
+      "/home/pnord/fifth42/runs/initial/cpu-B100000/.lock",
+      "/home/pnord/fifth42/extended/runs/startup-B70000000.lock",
+      "/home/pnord/fifth42/extended/runs/.gpu-job.lock",
+      "/home/pnord/fifth42/extended/runs/gpu-B70000000/coverage/.lock",
+      "/home/pnord/four133-eight-hour/jobs/.resource.lock",
+      "/home/pnord/four133-eight-hour/jobs/.launch.lock",
+      "/home/pnord/four133-eight-hour/jobs/B10800000-20261104T184003Z/coordinator.lock",
+      "/home/pnord/fifth42/filtered/runs/benchmark.lock",
+      "/home/pnord/ada-bulk-continuation-20261108/coordinator.lock"
+    ],
+    "idle_load_limit": 2,
+    "load_average": [
+      6.79931640625,
+      5.365234375,
+      4.55419921875
+    ],
+    "minimum_free_memory_gib": 4,
+    "parent_cursor": 4328148096,
+    "pid": 1273263,
+    "publication": false,
+    "resource_helper_sha256": "a73715d1473fd52c2a86670f05cfe747800d3ccca688b6e0a9e7593d25e5aed9",
+    "running_load_limit": 20.0,
+    "service": "ada-bulk-search-20261108.service",
+    "status": "running",
+    "stop_epoch": 1794236400.0,
+    "stop_local": "2026-11-09T09:00:00-06:00",
+    "updated_utc": "2026-11-08T23:46:12.979234+00:00",
+    "worker_pid": 1273286
   },
-  "config_sha256": "30ebd4dabba29e083ff8bbabffe4e1244ccd7217661b014111fc079d3d6394f4",
-  "reporting": {
-    "service": "weekend-precision-report-20261107T213849Z-precision.service",
-    "interval_seconds": 900,
-    "publication": "separate read-only publisher",
-    "terminal_snapshot": "published after the search service stops"
-  },
-  "coverage_scope": "Selected patch coverage only; no completed full-box bound.",
-  "completed_bound": null
+  "parent_committed_interval": [
+    3750000000,
+    4328148096
+  ],
+  "combined_committed_interval": [
+    3750000000,
+    4329292928
+  ],
+  "combined_selected_patches": 579292928,
+  "parent_audit_sha256": "8c6f75d3a40abcc161dc479144c27662b453b62390f799732b2dcf13aa7cb665",
+  "journal_storage": "separate large disk on Ada"
 }

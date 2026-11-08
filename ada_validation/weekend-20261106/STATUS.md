@@ -1,65 +1,21 @@
-# ADA adaptive-precision weekend search
+# Ada search on large storage
 
-Last GitHub snapshot: **2026-11-08T23:05:35.629225+00:00**.
-Search state: **stopped**. Worker status refreshed: **2026-11-08T23:04:57.769728+00:00**.
+Updated: 2026-11-08T23:46:13.146811+00:00
 
-The original weekend search started Friday, November 6, 2026 at 5:19:57 p.m. Central.
-This fresh adaptive-precision continuation starts at verified cursor **3,917,103,232**.
-Current service active since: ****.
-Stop deadline: **Monday, November 9 at 9:00 a.m. Central**.
-The independent cleanup timer is **active/waiting**;
-next firing: **Mon 2026-11-09 08:59:50 CST**.
-The search runs as a systemd user service with login linger enabled.
-Automatic restart/resume of the search is disabled.
+State: **running**. Run **ada-bulk-20261108**; gpu with 16 preparation workers.
+Current cursor: **4,329,292,928**.
+New committed patches: **1,144,832** in 4,472 chunks.
+Combined verified selected patches, including parents: **579,292,928**.
+Fresh interval: `[4328148096, 11250000001]`; committed: `[4328148096, 4329292928]`.
 
-| Measurement | Saved value |
-|---|---:|
-| New committed patches in this continuation | 411,044,864 |
-| New committed chunks in this continuation | 1,605,644 |
-| Next patch cursor | 4,328,148,096 |
-| Cumulative selected patches including prior runs | 578,148,096 |
-| Coefficient points in this continuation | 1,137,920,400,676 |
-| Average search throughput at worker status timestamp | 4,555.8 patches/s |
-| Search elapsed at worker status timestamp | 25.06 hours |
-| Recorded hits | 0 |
-| Periodic independent GMP audits at worker status timestamp | 12,545 |
-| Preparation pacing | 0.0 seconds |
+Journal storage: **separate large disk on Ada**. New journal cap: **128 GiB**;
+free-space reserve: 8 GiB.
+Observed rate: **1,773 patches/s**; new independent GMP audits: 35.
+Deadline: **2026-11-09T09:00:00-06:00**. Independent worker/deadline services on Ada; separate publisher on Ada.
+GitHub updates every **15 minutes**, plus startup/terminal transitions. Alerts: None reported.
 
-Configuration: 16 workers pinned to physical CPUs 0–15, optimized packed/prefetched
-preparation, one CUDA owner and journal writer, width 8, adaptive geometry, cap 42,
-denominators in [100000000001, 200000000000]. Geometry uses the validated adaptive
-precision policy with 222-bit fallback; actual per-patch precision is recorded in
-the journal. Exact certificates, native bounds and residual checks are retained.
-First and every 128th chunk receive independent GMP checks. The range reservation
-and fresh journal use Ada's shared export. The original journal is preserved.
-
-Matched short Ada tests measured **1,260.5 patches/s baseline** and
-**4,135.5 adaptive**, a **3.28x** ratio,
-including pipeline, journal and checkpoint costs. These selected trials do not
-guarantee constant weekend throughput. Cube pruning is not enabled.
-
-Coverage is **selected partial patch coverage**. No completed full-box bound is
-claimed: `completed_bound` is null and `independent_oracle_verified_through` is 0.
-Periodic GMP audits do not constitute an exhaustive oracle of the whole domain.
-
-Alerts: **supervisor: RuntimeError: Another active fifth service: fifth42-journal-archive-20261108.service                   loaded active running [systemd-run] /usr/bin/python3 -B -u /home/pnord/journal-storage-20261108/archive_journals.py**.
-Worker reason: **Stop requested**. Worker error: **None**.
-Supervisor error: **RuntimeError: Another active fifth service: fifth42-journal-archive-20261108.service                   loaded active running [systemd-run] /usr/bin/python3 -B -u /home/pnord/journal-storage-20261108/archive_journals.py**.
-Worker/service stderr sizes: **0 / 0 bytes**.
-Free disk: **84.2 GiB**;
-available memory: **118.3 GiB**.
-
-This separate publisher aims to update every 15 minutes and after the search
-stops. The timestamp is the freshness indicator. It reads saved JSON and service
-state; it does not audit the full coverage journal or certify new mathematics.
-Checkpoint totals and the worker's ten-second status counters can differ slightly.
-The frozen search's internal publication setting remains disabled; this separate
-reporting service performs publication without changing the running search.
-See [status.json](status.json) for the captured checkpoint, digest, service state,
-audit timestamps, provenance and resource measurements.
-The [verified handoff](precision/final-coverage.json),
-[GPU validation](precision/gpu-validation-report.json), and
-[frozen source manifest](precision/release-manifest.json) describe this continuation.
-The [original run's final snapshot](precision/pre-precision-final.json) is preserved.
-
-[Previous overnight run](../overnight-20261105/STATUS.md).
+The fresh trial starts at the exact final parent cursor under the unchanged original reservation.
+[Configuration](evidence/configuration.json), [parent audit](evidence/parent-audit.json),
+[verified archive](evidence/parent-archive-receipt.json), [source manifest](evidence/source-manifest.json).
+Archived receipt integrity was verified; historical coefficients were not recomputed.
+Selected interval only. Other hosts' coverage is separate. No completed full-box bound.
