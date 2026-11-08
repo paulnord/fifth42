@@ -1,11 +1,11 @@
 # Boole adaptive-precision search
 
-Updated: 2026-11-08T10:58:07.290723+00:00
+Updated: 2026-11-08T11:12:56.322759+00:00
 
 State: **running**. GPU with 16 preparation workers.
-Committed patches: **171,641,344** in 670,474 chunks.
-Current cursor: **3171641344**. Reserved interval: [3000000000, 3750000000].
-Observed worker rate: **3786 patches/s**; independent GMP audits: 5238.
+Committed patches: **174,893,056** in 683,176 chunks.
+Current cursor: **3174893056**. Reserved interval: [3000000000, 3750000000].
+Observed worker rate: **3784 patches/s**; independent GMP audits: 5337.
 Deadline: **2026-11-09T09:00:00-06:00**. Console-independent worker and deadline timer on Boole; reporter on Ada.
 Alerts: None reported.
 
