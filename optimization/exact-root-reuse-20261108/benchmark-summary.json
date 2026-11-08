@@ -1,0 +1,130 @@
+{
+  "status": "passed",
+  "elapsed_seconds": 101.26021947399977,
+  "summary": [
+    {
+      "case": "boole",
+      "first": 3000000000,
+      "patches": 4096,
+      "medians": {
+        "baseline": 3.0283874870001455,
+        "candidate": 2.824244262999855
+      },
+      "samples": {
+        "baseline": [
+          3.01880716200003,
+          3.0283874870001455,
+          2.943387437999718,
+          4.6724695580001026,
+          3.3067265559998305
+        ],
+        "candidate": [
+          2.891302753000218,
+          2.824244262999855,
+          2.8235695479997958,
+          2.8750428309999734,
+          2.8192065289999846
+        ]
+      },
+      "throughput_ratio": 1.072282424956917,
+      "paired_ratios": [
+        1.0440992936030322,
+        1.072282424956917,
+        1.0424348994997485,
+        1.6251825912363758,
+        1.1729280994439157
+      ],
+      "worker_cpu_medians": {
+        "baseline": 9.123497626999995,
+        "candidate": 8.479423647000004
+      },
+      "signature": "32201ca43888239ae81ed5e58c47061ef9248655101121547c6cda2e510439cd",
+      "points": 5157278
+    },
+    {
+      "case": "ada",
+      "first": 3917103232,
+      "patches": 4096,
+      "medians": {
+        "baseline": 3.0068767289999414,
+        "candidate": 2.838119405999805
+      },
+      "samples": {
+        "baseline": [
+          2.9420369599997684,
+          2.972098753999944,
+          3.0186373329997878,
+          3.007424173000345,
+          3.0068767289999414
+        ],
+        "candidate": [
+          2.7925508460002675,
+          2.8425396330003423,
+          2.8391879780001545,
+          2.830114108000089,
+          2.838119405999805
+        ]
+      },
+      "throughput_ratio": 1.0594609665271242,
+      "paired_ratios": [
+        1.0535303105451448,
+        1.0455786506880997,
+        1.0632044642306608,
+        1.0626512070658356,
+        1.0594609665271242
+      ],
+      "worker_cpu_medians": {
+        "baseline": 8.84894250299999,
+        "candidate": 8.354700797
+      },
+      "signature": "6064112da6f7fbb9aaf37514b5a79732246b53de37aabe3d83e632bdafcfb388",
+      "points": 9933600
+    },
+    {
+      "case": "higher_cost",
+      "first": 10625000000,
+      "patches": 1024,
+      "medians": {
+        "baseline": 2.437011947999963,
+        "candidate": 2.4149926819995926
+      },
+      "samples": {
+        "baseline": [
+          2.437011947999963,
+          2.414444612999887,
+          2.4125373769998077,
+          2.4417731799999274,
+          2.4749785029998748
+        ],
+        "candidate": [
+          2.3950044499997603,
+          2.41822427399984,
+          2.4088150709999354,
+          2.4149926819995926,
+          2.4675187820002975
+        ]
+      },
+      "throughput_ratio": 1.0091177361175847,
+      "paired_ratios": [
+        1.0175396325464894,
+        0.9984370097345432,
+        1.0015452850842248,
+        1.0110892667294382,
+        1.0030231668565173
+      ],
+      "worker_cpu_medians": {
+        "baseline": 2.016271182000002,
+        "candidate": 1.9429283720000023
+      },
+      "signature": "0cdfb52ec9292b976007dacd7bc4be44489e4fcbed7828843fac4be511022a02",
+      "points": 95551440
+    }
+  ],
+  "limitations": [
+    "Cloud CPU emulation, not Ada/Boole GPU performance.",
+    "Local filesystem durable journal/checkpoint, not NFS/shared ledger.",
+    "Short bounded selected windows; shared cloud scheduling can vary.",
+    "Actual immutable task/certificate/packet/hit identities match each pair.",
+    "Fresh preparation on every trial. Includes native CPU, exact decode, first-chunk GMP audit and durable commit. Startup/shutdown reported separately."
+  ]
+}

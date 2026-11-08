@@ -1,0 +1,38 @@
+--- a/source/lattice_prototype/lattice5.py
++++ b/source/lattice_prototype/lattice5.py
+@@ -270,7 +270,15 @@
+     p, h = (left+right)/2, (right-left)/2
+     qlo, qhi = root_bracket(1-p**5, bits)
+     vlo, _ = root_bracket(1-right**5, bits)
+-    vmin, _ = root_bracket(1-right**5-eta, bits)
++    adjusted = 1-right**5-eta
++    # vlo is the dyadic floor fifth root of 1-right**5. If its fifth power
++    # also bounds adjusted from below, monotonicity proves that adjusted has
++    # exactly the same dyadic floor root. Otherwise compute the original root.
++    # This reuse is local to one patch; certification still rebuilds it afresh.
++    if vlo**5 <= adjusted:
++        vmin = vlo
++    else:
++        vmin, _ = root_bracket(adjusted, bits)
+     if min(qlo, vlo, vmin) <= 0:
+         raise ValueError("root precision too low; increase bits")
+     q = (qlo+qhi)/2
+--- a/source/lattice_prototype/compiled_experiment/lattice5_snapshot.py
++++ b/source/lattice_prototype/compiled_experiment/lattice5_snapshot.py
+@@ -270,7 +270,15 @@
+     p, h = (left+right)/2, (right-left)/2
+     qlo, qhi = root_bracket(1-p**5, bits)
+     vlo, _ = root_bracket(1-right**5, bits)
+-    vmin, _ = root_bracket(1-right**5-eta, bits)
++    adjusted = 1-right**5-eta
++    # vlo is the dyadic floor fifth root of 1-right**5. If its fifth power
++    # also bounds adjusted from below, monotonicity proves that adjusted has
++    # exactly the same dyadic floor root. Otherwise compute the original root.
++    # This reuse is local to one patch; certification still rebuilds it afresh.
++    if vlo**5 <= adjusted:
++        vmin = vlo
++    else:
++        vmin, _ = root_bracket(adjusted, bits)
+     if min(qlo, vlo, vmin) <= 0:
+         raise ValueError("root precision too low; increase bits")
+     q = (qlo+qhi)/2
