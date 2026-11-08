@@ -1,0 +1,291 @@
+{
+  "status": "passed",
+  "arithmetic": [
+    {
+      "test": "signed_arithmetic",
+      "binary": "emulated",
+      "cases": 708,
+      "seconds": 0.007907581981271505
+    },
+    {
+      "test": "signed_arithmetic",
+      "binary": "emulated_ubsan",
+      "cases": 708,
+      "seconds": 0.008512075990438461
+    },
+    {
+      "test": "signed_arithmetic",
+      "binary": "cuda",
+      "cases": 708,
+      "seconds": 0.28544849099125713
+    }
+  ],
+  "enumeration": {
+    "scaling_cpu": [
+      {
+        "label": "old_limit_plus_one",
+        "response": {
+          "request_id": 1,
+          "backend": "emulated",
+          "box_complete": true,
+          "points_visited": 3,
+          "engine_seconds": 0.000126136,
+          "kernel_seconds": 0,
+          "counts": [
+            {
+              "id": 0,
+              "expected": 3,
+              "visited": 3
+            }
+          ],
+          "hits": []
+        },
+        "wall_seconds": 0.00019105803221464157
+      },
+      {
+        "label": "new_limit",
+        "response": {
+          "request_id": 2,
+          "backend": "emulated",
+          "box_complete": true,
+          "points_visited": 3,
+          "engine_seconds": 5.5744e-05,
+          "kernel_seconds": 0,
+          "counts": [
+            {
+              "id": 0,
+              "expected": 3,
+              "visited": 3
+            }
+          ],
+          "hits": []
+        },
+        "wall_seconds": 0.00010982598178088665
+      },
+      {
+        "label": "large_nonempty_healy",
+        "response": {
+          "request_id": 3,
+          "backend": "emulated",
+          "box_complete": true,
+          "points_visited": 3,
+          "engine_seconds": 4.7348e-05,
+          "kernel_seconds": 0,
+          "counts": [
+            {
+              "id": 0,
+              "expected": 3,
+              "visited": 3
+            }
+          ],
+          "hits": [
+            {
+              "task": 0,
+              "linear": 2,
+              "a": 21137517920,
+              "b": 21483066250,
+              "c": 24482314857
+            }
+          ]
+        },
+        "wall_seconds": 8.613202953711152e-05
+      },
+      {
+        "label": "above_limit",
+        "response": {
+          "request_id": 4,
+          "box_complete": false,
+          "error": "invalid base range"
+        },
+        "wall_seconds": 9.306403808295727e-05
+      },
+      {
+        "label": "transform_overflow",
+        "response": {
+          "request_id": 5,
+          "box_complete": false,
+          "error": "transform may overflow"
+        },
+        "wall_seconds": 2.8965005185455084e-05
+      }
+    ],
+    "scaling_cpu_ubsan": [
+      {
+        "label": "old_limit_plus_one",
+        "response": {
+          "request_id": 1,
+          "backend": "emulated",
+          "box_complete": true,
+          "points_visited": 3,
+          "engine_seconds": 0.000129052,
+          "kernel_seconds": 0,
+          "counts": [
+            {
+              "id": 0,
+              "expected": 3,
+              "visited": 3
+            }
+          ],
+          "hits": []
+        },
+        "wall_seconds": 0.00033062900183722377
+      },
+      {
+        "label": "new_limit",
+        "response": {
+          "request_id": 2,
+          "backend": "emulated",
+          "box_complete": true,
+          "points_visited": 3,
+          "engine_seconds": 5.2208e-05,
+          "kernel_seconds": 0,
+          "counts": [
+            {
+              "id": 0,
+              "expected": 3,
+              "visited": 3
+            }
+          ],
+          "hits": []
+        },
+        "wall_seconds": 0.00011376297334209085
+      },
+      {
+        "label": "large_nonempty_healy",
+        "response": {
+          "request_id": 3,
+          "backend": "emulated",
+          "box_complete": true,
+          "points_visited": 3,
+          "engine_seconds": 5.9512e-05,
+          "kernel_seconds": 0,
+          "counts": [
+            {
+              "id": 0,
+              "expected": 3,
+              "visited": 3
+            }
+          ],
+          "hits": [
+            {
+              "task": 0,
+              "linear": 2,
+              "a": 21137517920,
+              "b": 21483066250,
+              "c": 24482314857
+            }
+          ]
+        },
+        "wall_seconds": 0.00010574801126495004
+      },
+      {
+        "label": "above_limit",
+        "response": {
+          "request_id": 4,
+          "box_complete": false,
+          "error": "invalid base range"
+        },
+        "wall_seconds": 0.00010021805064752698
+      },
+      {
+        "label": "transform_overflow",
+        "response": {
+          "request_id": 5,
+          "box_complete": false,
+          "error": "transform may overflow"
+        },
+        "wall_seconds": 3.465503687039018e-05
+      }
+    ],
+    "scaling_gpu": [
+      {
+        "label": "old_limit_plus_one",
+        "response": {
+          "request_id": 1,
+          "backend": "gpu",
+          "box_complete": true,
+          "points_visited": 3,
+          "engine_seconds": 0.000165911,
+          "kernel_seconds": 9.5232e-05,
+          "counts": [
+            {
+              "id": 0,
+              "expected": 3,
+              "visited": 3
+            }
+          ],
+          "hits": []
+        },
+        "wall_seconds": 0.00024039001436904073
+      },
+      {
+        "label": "new_limit",
+        "response": {
+          "request_id": 2,
+          "backend": "gpu",
+          "box_complete": true,
+          "points_visited": 3,
+          "engine_seconds": 9.7152e-05,
+          "kernel_seconds": 1.9456e-05,
+          "counts": [
+            {
+              "id": 0,
+              "expected": 3,
+              "visited": 3
+            }
+          ],
+          "hits": []
+        },
+        "wall_seconds": 0.0001529669971205294
+      },
+      {
+        "label": "large_nonempty_healy",
+        "response": {
+          "request_id": 3,
+          "backend": "gpu",
+          "box_complete": true,
+          "points_visited": 3,
+          "engine_seconds": 5.7498e-05,
+          "kernel_seconds": 1.1072e-05,
+          "counts": [
+            {
+              "id": 0,
+              "expected": 3,
+              "visited": 3
+            }
+          ],
+          "hits": [
+            {
+              "task": 0,
+              "linear": 2,
+              "a": 21137517920,
+              "b": 21483066250,
+              "c": 24482314857
+            }
+          ]
+        },
+        "wall_seconds": 0.00011090794578194618
+      },
+      {
+        "label": "above_limit",
+        "response": {
+          "request_id": 4,
+          "box_complete": false,
+          "error": "invalid base range"
+        },
+        "wall_seconds": 9.097001748159528e-05
+      },
+      {
+        "label": "transform_overflow",
+        "response": {
+          "request_id": 5,
+          "box_complete": false,
+          "error": "transform may overflow"
+        },
+        "wall_seconds": 2.9754999559372663e-05
+      }
+    ]
+  },
+  "range_guard_retained": true,
+  "production_coverage": false
+}
