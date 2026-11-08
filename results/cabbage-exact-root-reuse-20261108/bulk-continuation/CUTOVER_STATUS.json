@@ -1,0 +1,97 @@
+{
+  "status": "RUNNING_AND_LOCALLY_VERIFIED",
+  "checked_utc": "2026-11-08T23:49:56.467882+00:00",
+  "run_id": "cabbage-bulk-20261108T234202Z",
+  "manifest_sha256": "8d54cb2f5d455e54c8c0ba423be59ec548bb46a4ef824e98c1717ae793d0d8ff",
+  "config_sha256": "d9a162f6268a0bfcd710a9fc324ff1bdd45e7ead3873d12723d5ceec01c8e503",
+  "source_identity": "29bdaa4b76da552c43af80c74ebefcaa78784d751426d6be950612e847222fb8",
+  "original_claim_unchanged": "364221db0023ea69fa18b47eb512e9e83362f6d598fc19c101e74b72f4f3d1c8",
+  "original_reservation_manifest": "a0000b2ed70ea7566baa2c6c0a00bd8cdcbc726f53bdf1247b7b9587eb5d6932",
+  "original_deadline": "2026-11-09T09:00:00-06:00",
+  "cap_bytes": 137438953472,
+  "parent_verified_interval": [
+    2250000000,
+    2263483008
+  ],
+  "initial_verified_continuation": {
+    "status": "PASS",
+    "read_only": true,
+    "run_id": "cabbage-bulk-20261108T234202Z",
+    "manifest_sha256": "8d54cb2f5d455e54c8c0ba423be59ec548bb46a4ef824e98c1717ae793d0d8ff",
+    "config_sha256": "d9a162f6268a0bfcd710a9fc324ff1bdd45e7ead3873d12723d5ceec01c8e503",
+    "committed_interval": [
+      2263483008,
+      2263483264
+    ],
+    "patches": 256,
+    "points": 166276,
+    "chunks": 1,
+    "gmp_audited_chunks": 1,
+    "journal_sha256": "9ee60f3de32f084df789a9424cd13dc87f143a17cae0886270a72ef59692d331",
+    "journal_offset": 35357,
+    "controls_passed": true,
+    "physical_affinities_passed": true,
+    "checkpoint": {
+      "chunks": 1,
+      "completed_bound": null,
+      "hits": [],
+      "identity": {
+        "source_identity": "29bdaa4b76da552c43af80c74ebefcaa78784d751426d6be950612e847222fb8",
+        "trial": "cabbage-bulk-20261108T234202Z"
+      },
+      "journal_offset": 35357,
+      "journal_sha256": "9ee60f3de32f084df789a9424cd13dc87f143a17cae0886270a72ef59692d331",
+      "next_patch": 2263483264,
+      "patches": 256,
+      "points": 166276,
+      "window": {
+        "bits": 222,
+        "cap": 42,
+        "first": 2263483008,
+        "geometry_policy": "adaptive",
+        "hi": 200000000000,
+        "last": 3000000000,
+        "lo": 100000000001,
+        "width": 8
+      }
+    },
+    "checked_epoch": 1794181730.436189,
+    "coverage_scope": "Actual committed Cabbage prefix only; no full-shell or full-box result."
+  },
+  "parent_archive": "/mnt/fifth42-storage/archives/CABBAGE-FINAL-20261108T233823Z",
+  "parent_raw_sha256": "a6f7145e5868960137f4a7418132b7e9e0ec04b5cbe58fcfe2af9ce3b432e8d5",
+  "old_bytes_retained": true,
+  "shutdown_incident": "Original service stop timed out under KillMode=control-group. Original metadata preserved; full durable-prefix and archive audit plus independent quiescence receipt accepted for fresh continuation. New KillMode=mixed passed actual finite/signal/deadline systemd tests.",
+  "bootstrap_retry": "No journal was created by the first startup; missing output-parent directory was created through the mount guard, then the unchanged frozen config started.",
+  "units": {
+    "fifth-cabbage-bulk-20261108T234202Z.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "Restart": "no",
+      "MainPID": "442762",
+      "NRestarts": "0",
+      "KillMode": "mixed"
+    },
+    "fifth-cabbage-bulk-20261108T234202Z-collector.service": {
+      "ActiveState": "active",
+      "SubState": "running",
+      "Restart": "no",
+      "MainPID": "440522",
+      "NRestarts": "0",
+      "KillMode": "mixed"
+    },
+    "fifth-cabbage-bulk-20261108T234202Z-deadline.timer": {
+      "ActiveState": "active",
+      "SubState": "waiting",
+      "NextElapseUSecRealtime": "Mon 2026-11-09 08:59:50 CST"
+    }
+  },
+  "collector_health": {
+    "status": "ok",
+    "updated_utc": "2026-11-08T23:49:54.098036+00:00",
+    "config_sha256": "d9a162f6268a0bfcd710a9fc324ff1bdd45e7ead3873d12723d5ceec01c8e503"
+  },
+  "logout_independent": true,
+  "publisher": "Ada first push/readback for new identity pending",
+  "coverage_scope": "Verified archived parent plus fresh continuation prefix only; no full-shell or full-box claim."
+}

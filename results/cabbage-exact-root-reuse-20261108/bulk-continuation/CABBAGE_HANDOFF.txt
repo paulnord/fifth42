@@ -1,0 +1,56 @@
+Tell Cabbage: the new large-storage export is mounted and the actual Ada/Cabbage
+protocol test PASSED on both hosts, including both lock directions, recovery,
+durability and matching checkpoint hashes. The new data root is ready.
+
+Please prepare and execute a separately frozen fresh-journal continuation in
+your own Cabbage session; do not alter the current running release in place.
+
+Keep the coordinator at /mnt/nfs_share/fifth42-shared-20261107 and inherit the
+unchanged claim for cabbage-saved-root-20261108T222040Z:
+claim SHA256 364221db0023ea69fa18b47eb512e9e83362f6d598fc19c101e74b72f4f3d1c8
+reserved [2250000000,3000000000), original manifest
+a0000b2ed70ea7566baa2c6c0a00bd8cdcbc726f53bdf1247b7b9587eb5d6932.
+Use a NEW run ID and this output pattern:
+/mnt/fifth42-storage/runs/cabbage-saved-root-20261108T222040Z/NEW-RUN-ID/run
+The new first patch must equal the exact final stopped parent cursor.
+
+Use /mnt/nfs_share/journal-storage-20261108/bulk_data_store.py as the static
+bulk-filesystem guard. Keep the tested original ada_export_store.py for the
+small coordinator claim and exclusive original job-owner POSIX lock. Keep all
+arithmetic, transform, certificate, exact-count, native and GMP guards unchanged.
+Use a 128 GiB per-run journal cap and at least an 8 GiB free-space reserve on
+the new disk. Keep the ORIGINAL Monday 2026-11-09 09:00 America/Chicago deadline,
+independent deadline timer/cleanup margin and console-independent services.
+
+1. Stage current policy, worker, supervisor, launcher, collector and configuration
+   under /mnt/nfs_share/cabbage-storage-handoff-20261108 for Ada's review.
+2. Validate the derivative with actual finite new-disk chunks and GMP controls;
+   ensure an existing output cannot silently be reused.
+3. Stop your OWN current service gracefully; verify process/GPU quiescence and
+   released leases. Capture checkpoint/status/config/manifest exactly and audit
+   the final committed prefix; no gaps, duplicates or uncommitted tail.
+4. Archive the final parent to /mnt/fifth42-storage/archives/CABBAGE-FINAL-ID.
+   Preserve checkpoint.json, status.json, configuration.json, source-manifest.json,
+   coverage.jsonl, controls and all GMP audit receipts. Verify SHA256 readback.
+   Keep the original NFS parent bytes until Ada confirms the new run and archive.
+5. Freeze the fresh configuration/source identity, explicit inherited claim,
+   parent checkpoint/journal/raw hashes, parent audit and archive receipt.
+   Suggested provenance keys: reservation_manifest_sha256,
+   reservation_initial_patch, parent_checkpoint_sha256, parent_journal_sha256,
+   parent_journal_offset, parent_journal_raw_sha256, parent_audit_sha256,
+   parent_archive_receipt_sha256, parent_run, parent_selected_patches.
+6. Stage the new identity-pinned collector at
+   /mnt/nfs_share/cabbage-bulk-publishing-20261108 using the same status/spec
+   contract as the existing collector. Evidence should include configuration.json,
+   source-manifest.json, parent-audit.json, parent-archive-receipt.json and the
+   original claim/provenance. Report the config/manifest hashes to the user/Ada.
+7. Ada will own the separate Ada publisher and first GitHub push/readback for
+   the new identity. Verify advancing chunks, one GPU owner, deadline timer,
+   ownership exclusion and publisher readback after your launch.
+
+If the current 2 GiB cap is reached before preparation completes, preserve the
+clean terminal artifacts and use that final cursor. Do not extend frozen limits,
+restart an existing output, or create an overlapping production claim.
+
+The 6.8 TiB disk can accommodate these larger per-run budgets while retaining
+the original deadline. No current parent bytes have been removed by Ada.
