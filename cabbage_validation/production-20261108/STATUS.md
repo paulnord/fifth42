@@ -1,14 +1,21 @@
-# Cabbage production search
+# Cabbage search on large storage
 
-Updated: 2026-11-08T23:35:21.904500+00:00
+Updated: 2026-11-08T23:58:57.085339+00:00
 
-State: **stopped**. Run **cabbage-saved-root-20261108T222040Z**; gpu with 16 preparation workers.
-Committed patches: **13,483,008** in 52,668 chunks. Current cursor: **2,263,483,008**.
-Reserved interval: `[2250000000, 3000000000]`; committed interval: `[2250000000, 2263483008]`.
-Observed rate: **3,601 patches/s**; independent GMP audits: 411.
+State: **running**. Run **cabbage-bulk-20261108T234202Z**; gpu with 16 preparation workers.
+Current cursor: **2,263,987,840**.
+New committed patches: **504,832** in 1,972 chunks.
+Combined verified selected patches, including parents: **13,987,840**.
+Fresh interval: `[2263483008, 3000000000]`; committed: `[2263483008, 2263987840]`.
+
+Journal storage: **separate large disk on Ada**. New journal cap: **128 GiB**;
+free-space reserve: 8 GiB.
+Observed rate: **830 patches/s**; new independent GMP audits: 16.
 Deadline: **2026-11-09T09:00:00-06:00**. Independent worker/deadline services on Cabbage; separate publisher on Ada.
-GitHub reporting every **15 minutes**, plus a terminal snapshot. Alerts: None reported.
-Journal cap: 2 GiB; free-space reserve: 8 GiB.
+GitHub updates every **15 minutes**, plus startup/terminal transitions. Alerts: None reported.
 
-[Frozen configuration](evidence/configuration.json), [source manifest](evidence/source-manifest.json).
-Selected interval only. Ada and Boole coverage is separate. No completed full-box bound.
+The fresh trial starts at the exact final parent cursor under the unchanged original reservation.
+[Configuration](evidence/configuration.json), [parent audit](evidence/parent-audit.json),
+[verified archive](evidence/parent-archive-receipt.json), [source manifest](evidence/source-manifest.json).
+Archived receipt integrity was verified; historical coefficients were not recomputed.
+Selected interval only. Other hosts' coverage is separate. No completed full-box bound.

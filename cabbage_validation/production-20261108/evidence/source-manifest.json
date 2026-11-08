@@ -1,12 +1,12 @@
 {
-  "status": "STAGED_CABBAGE_ADMISSION_CANDIDATE",
-  "production_launched": false,
+  "status": "FROZEN_BULK_CONTINUATION",
   "files": {
     "ada_export_store.py": "8bc5556a99ee12ffbd7a5bcce9569b22b2af479706b26f5a2b3067fe9a9a61e9",
     "admission-plan.json": "e2257f621f5b0c3f4cbc9bc334f4aad02efa6e0ab7bc89f33c55ad15d1b371e3",
     "bin/gmp_reference": "8d514a59a5488de9a16a2f7ab0ecd351fdc13816298ddb777a18d9aa94158eb6",
     "bin/scaling_gpu": "0f093659f716f905c0caba717edd716b89013e3002624022026e14fb454e89c8",
-    "cabbage_supervisor.py": "709d405d31d06abb97306d6f7ececc4e989aa7bd0837eb20b18c37a692e47bf7",
+    "bulk_data_store.py": "83c383b56a8489c7b451158f001c7713c0a430d6ad1afb9bcd263b5a1af4afcf",
+    "cabbage_supervisor.py": "8e31d8fc557eea7d20d2c9ffd9648efe5cdce87ebe8cc7422b593e6b19cd3d1e",
     "gpu_validation.py": "f661609da6d0fc4b8617bc9c3f96ee8dbebe3f93ddb4be20bb7065e42386a407",
     "independent/gmp_reference.cpp": "3d9bbe87413c52cde6f2d4f631c6da06148d85be0e39b3b09fe140753097ce3c",
     "native-baseline/src/emulated.cpp": "a38d47aaa628c8ff7062cebeab05e50bcce2d08cc2ff4f22f6827afdbe436cfb",
@@ -17,8 +17,10 @@
     "native-baseline/src/scaling_gpu.cu": "5b6d7e3270ac0b9c43f42fa56af2fe1ef98c1b20b37ed147fcfd91e37bdc6977",
     "native-baseline/src/stream_io.hpp": "ba26ad17dd5533d537ea97d61529005c508c93035842cba5af389465a2bdc3b6",
     "native-baseline/vendor/exact.hpp": "9679861f05d33d22e31fd352a9120b6fc65b59fced65560faec0d7a7c89b8245",
-    "packed_worker.py": "32165b5e99779ee070c633a4b42df92c7f95f8ed4caf426ab7a99f3ae9759480",
-    "policy.py": "a7b7cbdd65f928f0b4bfb008be839e39d198f24562d5cdfc6a0474fe59ffe918",
+    "packed_worker.py": "b27b4195dc440c022cb92edb75c8330344c81ddbbfa7822ca46205300bcdf55f",
+    "policy.py": "81aa02cc0c5a5cee1ae32e0b0bee683e19d09e5eb91854354fc491bceb64cf10",
+    "recovery-acceptance.json": "fe7b912b8429f63042c70fea53bc68baa219a7b238269cadcf617840ded89416",
+    "reservation-metadata.json": "e2257f621f5b0c3f4cbc9bc334f4aad02efa6e0ab7bc89f33c55ad15d1b371e3",
     "source/ada_validation/host-ideas-20261106/README.md": "a709d8f8dfe54c75a2199f56fd36365dc49d5570b93fc965778c30e9ea2cfb5d",
     "source/ada_validation/host-ideas-20261106/all-tests.txt": "f6f43c56c09cbdf107073200d47bac713b0d252e98ffd988a69cdb993aa90ee1",
     "source/ada_validation/host-ideas-20261106/cross-version-audit.json": "117e23f9e16a2d1dab259b5c73418775fc6e37c598520680cf76d097c6266acb",
@@ -152,19 +154,11 @@
     "source/lattice_prototype/vendor/search_emulated.cpp": "fb1b5609fae8e9c446c58651743a9cf767512f994b9af87cfc3a0dcecf3885d0",
     "source/lattice_prototype/vendor/tuning_options.hpp": "715d3b6d82f9c55609362877415e9d37bc5e93d968552a59f56e6fffb2397c96"
   },
-  "source_commit": "be5fcb6d5818d70035a9f2a8f31812f5f1f8b53f",
-  "portable_source_manifest": "a7aea624ca71a44aeff905976f944573b036e2f7a6b614dc79fdc4aed587dffe",
-  "candidate_adapter_sha256": "8bc5556a99ee12ffbd7a5bcce9569b22b2af479706b26f5a2b3067fe9a9a61e9",
-  "actual_gpu_binary": "bin/scaling_gpu",
-  "actual_kernel": "native-baseline/src/kernel.hpp",
-  "actual_native_source": "native-baseline/src/scaling_gpu.cu",
-  "python": "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python",
-  "compiler": "g++-13 13.4.0",
-  "cuda": "13.2.78 sm_86",
-  "notes": [
-    "Saved-root two-file patch is unchanged from tested candidate.",
-    "Policy/supervisor are Cabbage derivatives of the published Boole runtime, with fresh allocation metadata, Cabbage test namespace and 2 GiB cap.",
-    "Store adapter is byte-identical to Ada admission package.",
-    "No production claim or production config has been created."
-  ]
+  "original_manifest_sha256": "a0000b2ed70ea7566baa2c6c0a00bd8cdcbc726f53bdf1247b7b9587eb5d6932",
+  "original_claim_sha256": "364221db0023ea69fa18b47eb512e9e83362f6d598fc19c101e74b72f4f3d1c8",
+  "mathematical_sources_unchanged": true,
+  "native_binaries_unchanged": true,
+  "storage_guard_sha256": "83c383b56a8489c7b451158f001c7713c0a430d6ad1afb9bcd263b5a1af4afcf",
+  "original_deadline": 1794236400,
+  "shutdown_recovery": "Independently quiescent parent; full durable-prefix/archive audit; original stale terminal metadata preserved. New unit uses tested KillMode=mixed."
 }
