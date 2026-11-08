@@ -1,5 +1,5 @@
 {
-  "snapshot_utc": "2026-11-08T22:30:26.382858+00:00",
+  "snapshot_utc": "2026-11-08T22:34:27.758972+00:00",
   "host": "cabbage",
   "TEST_ONLY": false,
   "run_id": "cabbage-saved-root-20261108T222040Z",
@@ -18,29 +18,77 @@
   "stop_local": "2026-11-09T09:00:00-06:00",
   "stop_epoch": 1794236400,
   "service": {
-    "ActiveState": "inactive",
-    "SubState": "dead",
-    "MainPID": "0",
+    "ActiveState": "active",
+    "SubState": "running",
+    "MainPID": "357835",
     "NRestarts": "0"
   },
   "deadline_timer": {
-    "ActiveState": "inactive",
-    "SubState": "dead"
+    "ActiveState": "active",
+    "SubState": "waiting"
   },
   "completed_bound": null,
   "journal_limit_bytes": 2147483648,
   "minimum_free_disk_bytes": 8589934592,
   "report_interval_seconds": 900,
   "coverage_scope": "Cabbage selected interval only; no full-box bound or inherited coverage.",
-  "production_launched": false,
+  "production_launched": true,
   "mathematical_coverage_claim": false,
-  "phase": "admitted_not_started",
+  "phase": "running",
   "alerts": [],
   "committed_interval": [
     2250000000,
-    2250000000
+    2250375296
   ],
-  "checkpoint": null,
-  "worker_metrics": {},
-  "supervisor": null
+  "checkpoint": {
+    "chunks": 1466,
+    "completed_bound": null,
+    "hits": [],
+    "identity": {
+      "source_identity": "1447da0f79576051a0361ade79a0206b3d29cc85d1829e6436eabae628747751",
+      "trial": "cabbage-saved-root-20261108T222040Z"
+    },
+    "journal_offset": 51850649,
+    "journal_sha256": "db6623fd8fcf5e356589daefe1d5b5f9bd7bbb70cdd4a1bdb5dffcd945ee6245",
+    "next_patch": 2250375296,
+    "patches": 375296,
+    "points": 241576996,
+    "window": {
+      "bits": 222,
+      "cap": 42,
+      "first": 2250000000,
+      "geometry_policy": "adaptive",
+      "hi": 200000000000,
+      "last": 3000000000,
+      "lo": 100000000001,
+      "width": 8
+    }
+  },
+  "supervisor": {
+    "status": "running",
+    "error": null,
+    "config_sha256": "b5a5c0925333007544d193183b70fc4389614e23a7fb456a991dc459b56de808",
+    "TEST_ONLY": false,
+    "leases_released": false,
+    "worker_pid": 357845,
+    "updated_utc": "2026-11-08T22:34:27.018329+00:00",
+    "load_average": [
+      6.61328125,
+      2.41162109375,
+      1.15283203125
+    ]
+  },
+  "worker_metrics": {
+    "updated_utc": "2026-11-08T22:34:21.466941+00:00",
+    "patches_per_second": 3504.6759771512648,
+    "gmp_audited_chunks": 11,
+    "search_seconds": 100.58333560597384,
+    "error": null,
+    "reason": null
+  },
+  "load_average": [
+    6.884765625,
+    2.5380859375,
+    1.20068359375
+  ]
 }
