@@ -1,7 +1,7 @@
 # ADA adaptive-precision weekend search
 
-Last GitHub snapshot: **2026-11-08T18:21:23.326244+00:00**.
-Search state: **running**. Worker status refreshed: **2026-11-08T18:21:21.916237+00:00**.
+Last GitHub snapshot: **2026-11-08T18:36:25.524122+00:00**.
+Search state: **running**. Worker status refreshed: **2026-11-08T18:36:25.446169+00:00**.
 
 The original weekend search started Friday, November 6, 2026 at 5:19:57 p.m. Central.
 This fresh adaptive-precision continuation starts at verified cursor **3,917,103,232**.
@@ -14,15 +14,15 @@ Automatic restart/resume of the search is disabled.
 
 | Measurement | Saved value |
 |---|---:|
-| New committed patches in this continuation | 331,865,600 |
-| New committed chunks in this continuation | 1,296,350 |
-| Next patch cursor | 4,248,968,832 |
-| Cumulative selected patches including prior runs | 498,968,832 |
-| Coefficient points in this continuation | 895,761,352,996 |
-| Average search throughput at worker status timestamp | 4,533.1 patches/s |
-| Search elapsed at worker status timestamp | 20.34 hours |
+| New committed patches in this continuation | 336,100,096 |
+| New committed chunks in this continuation | 1,312,891 |
+| Next patch cursor | 4,253,203,328 |
+| Cumulative selected patches including prior runs | 503,203,328 |
+| Coefficient points in this continuation | 908,423,109,412 |
+| Average search throughput at worker status timestamp | 4,535.1 patches/s |
+| Search elapsed at worker status timestamp | 20.59 hours |
 | Recorded hits | 0 |
-| Periodic independent GMP audits at worker status timestamp | 10,128 |
+| Periodic independent GMP audits at worker status timestamp | 10,257 |
 | Preparation pacing | 0.0 seconds |
 
 Configuration: 16 workers pinned to physical CPUs 0–15, optimized packed/prefetched
@@ -46,8 +46,8 @@ Alerts: **None reported**.
 Worker reason: **None**. Worker error: **None**.
 Supervisor error: **None**.
 Worker/service stderr sizes: **0 / 0 bytes**.
-Free disk: **97.5 GiB**;
-available memory: **117.9 GiB**.
+Free disk: **97.0 GiB**;
+available memory: **117.8 GiB**.
 
 This separate publisher aims to update every 15 minutes and after the search
 stops. The timestamp is the freshness indicator. It reads saved JSON and service
