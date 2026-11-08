@@ -1,7 +1,7 @@
 # ADA adaptive-precision weekend search
 
-Last GitHub snapshot: **2026-11-08T09:34:09.033902+00:00**.
-Search state: **running**. Worker status refreshed: **2026-11-08T09:34:01.241948+00:00**.
+Last GitHub snapshot: **2026-11-08T09:49:11.243888+00:00**.
+Search state: **running**. Worker status refreshed: **2026-11-08T09:49:05.014699+00:00**.
 
 The original weekend search started Friday, November 6, 2026 at 5:19:57 p.m. Central.
 This fresh adaptive-precision continuation starts at verified cursor **3,917,103,232**.
@@ -14,15 +14,15 @@ Automatic restart/resume of the search is disabled.
 
 | Measurement | Saved value |
 |---|---:|
-| New committed patches in this continuation | 186,616,576 |
-| New committed chunks in this continuation | 728,971 |
-| Next patch cursor | 4,103,719,808 |
-| Cumulative selected patches including prior runs | 353,719,808 |
-| Coefficient points in this continuation | 480,772,476,724 |
-| Average search throughput at worker status timestamp | 4,488.6 patches/s |
-| Search elapsed at worker status timestamp | 11.55 hours |
+| New committed patches in this continuation | 190,819,328 |
+| New committed chunks in this continuation | 745,388 |
+| Next patch cursor | 4,107,922,560 |
+| Cumulative selected patches including prior runs | 357,922,560 |
+| Coefficient points in this continuation | 492,265,187,984 |
+| Average search throughput at worker status timestamp | 4,492.2 patches/s |
+| Search elapsed at worker status timestamp | 11.80 hours |
 | Recorded hits | 0 |
-| Periodic independent GMP audits at worker status timestamp | 5,694 |
+| Periodic independent GMP audits at worker status timestamp | 5,823 |
 | Preparation pacing | 0.0 seconds |
 
 Configuration: 16 workers pinned to physical CPUs 0–15, optimized packed/prefetched
@@ -46,7 +46,7 @@ Alerts: **None reported**.
 Worker reason: **None**. Worker error: **None**.
 Supervisor error: **None**.
 Worker/service stderr sizes: **0 / 0 bytes**.
-Free disk: **129.2 GiB**;
+Free disk: **128.2 GiB**;
 available memory: **118.0 GiB**.
 
 This separate publisher aims to update every 15 minutes and after the search
