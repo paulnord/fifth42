@@ -1,16 +1,29 @@
 # Boole adaptive-precision search
 
-Updated: 2026-11-08T16:26:10.021377+00:00
+Updated: 2026-11-08T21:46:45.732082+00:00
 
-State: **stopped**. GPU with 16 preparation workers.
-Committed patches: **243,477,760** in 951,085 chunks.
-Current cursor: **3243477760**. Reserved interval: [3000000000, 3750000000].
-Observed worker rate: **3745 patches/s**; independent GMP audits: 7431.
+State: **running**. Continuation **boole-continuation-20261108**, GPU with 16 preparation workers.
+Current cursor: **3,246,315,776**.
+Combined committed patches: **246,315,776** across the sealed parent and this continuation.
+New committed patches: **2,838,016** in 11,086 chunks.
+
+Parent committed interval: `[3000000000, 3243477760]`.
+Continuation interval: `[3243477760, 3750000000]`; committed: `[3243477760, 3246315776]`.
+The continuation starts exactly at the independently sealed parent cursor under the original reservation.
+
+Observed worker rate: **3,616 patches/s**; new independent GMP audits: 86.
 Deadline: **2026-11-09T09:00:00-06:00**. Console-independent worker and deadline timer on Boole; reporter on Ada.
+GitHub updates every **15 minutes**, plus a terminal snapshot.
 Alerts: None reported.
 
-Source manifest: `5053fb4c9709d037b6119e2e5b639dcd6f1caa382f40749c8dcd995b0fcc882b`.
+This continuation has a 32 GiB journal budget;
+the parent and continuation together have a 64 GiB allowance.
+Storage limits may stop the run before the deadline.
+
+Source manifest: `dc2c91a39e6e72a25199665edc81d057c61da8509b664c62f59740045f6f8a9a`.
+[Configuration](evidence/continuation-configuration.json), [parent audit](evidence/parent-audit.json),
+[launch evidence](evidence/continuation-launch.json), [storage limits](evidence/continuation-limits.json).
+The parent raw journal hash matches Ada's separately captured baseline. Receipts are verified; historical coefficients were not recomputed.
 Selected early-interval coverage only. Ada's coverage is separate. No completed full-box bound.
-Journal budget: 32 GiB; storage limits may stop the run before Monday.
 
 [Ada's separate search](../../ada_validation/weekend-20261106/STATUS.md).

@@ -1,0 +1,149 @@
+{
+  "status": "running",
+  "verified_utc": "2026-11-08T21:33:41.786267+00:00",
+  "run_id": "boole-continuation-20261108",
+  "config_sha256": "26f2438ebd44a6048e8edb508e3a4c160b2e6b3e622619231eb8a6aa512f63ab",
+  "manifest_sha256": "dc2c91a39e6e72a25199665edc81d057c61da8509b664c62f59740045f6f8a9a",
+  "parent_audit_sha256": "fb446d7a67ffd4cc08fe41e210f50f46c6935949ead02e0d1b18fa53d8d4467c",
+  "limits": {
+    "evaluated_utc": "2026-11-08T21:33:40.147955+00:00",
+    "shared_free_bytes": 97727283200,
+    "ada_journal_cap_bytes": 103079215104,
+    "ada_remaining_journal_bytes": 48610730306,
+    "successor_journal_cap_bytes": 34359738368,
+    "total_boole_journal_allowance_bytes": 68719476736,
+    "minimum_free_disk_bytes": 8589934592,
+    "spare_after_both_journal_caps_bytes": 14756814526,
+    "stop_local": "2026-11-09T09:00:00-06:00",
+    "remaining_wall_seconds": 62769,
+    "workers": 16,
+    "physical_cpus": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "gpus": 1,
+    "nice": 19,
+    "prep_load_ceiling": 17,
+    "running_load_limit": 20,
+    "prior_selected_interval": [
+      3000000000,
+      3243477760
+    ],
+    "successor_interval": [
+      3243477760,
+      3750000000
+    ],
+    "ada_observed_cursor": 4303118720,
+    "completed_bound": null
+  },
+  "commands": [
+    {
+      "command": [
+        "systemd-run",
+        "--user",
+        "--collect",
+        "--unit=boole-continuation-20261108-deadline",
+        "--service-type=oneshot",
+        "--on-calendar=2026-11-09 14:59:50 UTC",
+        "--timer-property=AccuracySec=1s",
+        "--timer-property=RandomizedDelaySec=0",
+        "--timer-property=Persistent=no",
+        "/usr/bin/systemctl",
+        "--user",
+        "stop",
+        "boole-continuation-20261108.service"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Running timer as unit: boole-continuation-20261108-deadline.timer\nWill run service as unit: boole-continuation-20261108-deadline.service\n"
+    },
+    {
+      "command": [
+        "systemd-run",
+        "--user",
+        "--collect",
+        "--unit=boole-continuation-20261108",
+        "--service-type=exec",
+        "--property=KillMode=mixed",
+        "--property=TimeoutStopSec=8",
+        "--property=RuntimeMaxSec=62769",
+        "--property=CPUAffinity=0-15",
+        "--property=StandardOutput=append:/home/pnord/boole-continuation-20261108/production.stdout",
+        "--property=StandardError=append:/home/pnord/boole-continuation-20261108/production.stderr",
+        "--property=Restart=no",
+        "--property=Nice=19",
+        "--property=UMask=0077",
+        "--setenv=OPENBLAS_NUM_THREADS=1",
+        "--setenv=OMP_NUM_THREADS=1",
+        "--setenv=MKL_NUM_THREADS=1",
+        "--setenv=NUMEXPR_NUM_THREADS=1",
+        "--setenv=BLIS_NUM_THREADS=1",
+        "/home/pnord/boole-results-20261107/venv312/bin/python",
+        "-B",
+        "-u",
+        "/home/pnord/boole-continuation-20261108/worker/boole_supervisor.py",
+        "--config",
+        "/home/pnord/boole-continuation-20261108/worker/production-config.json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Running as unit: boole-continuation-20261108.service; invocation ID: 3033e6b0ae01474296814f2be73378af\n"
+    },
+    {
+      "command": [
+        "systemd-run",
+        "--user",
+        "--collect",
+        "--unit=boole-continuation-20261108-progress",
+        "--property=RuntimeMaxSec=64569",
+        "--property=StandardOutput=append:/home/pnord/boole-continuation-20261108/collector.stdout",
+        "--property=StandardError=append:/home/pnord/boole-continuation-20261108/collector.stderr",
+        "--property=Restart=no",
+        "--property=Nice=19",
+        "--property=UMask=0077",
+        "/home/pnord/boole-results-20261107/venv312/bin/python",
+        "-B",
+        "-u",
+        "/home/pnord/boole-continuation-20261108/boole_progress.py"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Running as unit: boole-continuation-20261108-progress.service; invocation ID: f9115fe442c444e89bcc72db1d923b77\n"
+    }
+  ],
+  "service": {
+    "ActiveState": "active",
+    "SubState": "running",
+    "Restart": "no",
+    "RuntimeMaxUSec": "17h 26min 9s",
+    "MainPID": "172630",
+    "KillMode": "mixed"
+  },
+  "timer": {
+    "ActiveState": "active",
+    "SubState": "waiting",
+    "NextElapseUSecRealtime": "Mon 2026-11-09 08:59:50 CST"
+  },
+  "collector": {
+    "ActiveState": "active",
+    "SubState": "running",
+    "Restart": "no",
+    "RuntimeMaxUSec": "17h 56min 9s",
+    "MainPID": "172706",
+    "KillMode": "control-group"
+  }
+}
