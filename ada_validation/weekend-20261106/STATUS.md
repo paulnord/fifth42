@@ -1,7 +1,7 @@
 # ADA adaptive-precision weekend search
 
-Last GitHub snapshot: **2026-11-08T18:36:25.524122+00:00**.
-Search state: **running**. Worker status refreshed: **2026-11-08T18:36:25.446169+00:00**.
+Last GitHub snapshot: **2026-11-08T18:51:27.724167+00:00**.
+Search state: **running**. Worker status refreshed: **2026-11-08T18:51:19.102501+00:00**.
 
 The original weekend search started Friday, November 6, 2026 at 5:19:57 p.m. Central.
 This fresh adaptive-precision continuation starts at verified cursor **3,917,103,232**.
@@ -14,15 +14,15 @@ Automatic restart/resume of the search is disabled.
 
 | Measurement | Saved value |
 |---|---:|
-| New committed patches in this continuation | 336,100,096 |
-| New committed chunks in this continuation | 1,312,891 |
-| Next patch cursor | 4,253,203,328 |
-| Cumulative selected patches including prior runs | 503,203,328 |
-| Coefficient points in this continuation | 908,423,109,412 |
-| Average search throughput at worker status timestamp | 4,535.1 patches/s |
-| Search elapsed at worker status timestamp | 20.59 hours |
+| New committed patches in this continuation | 340,342,272 |
+| New committed chunks in this continuation | 1,329,462 |
+| Next patch cursor | 4,257,445,504 |
+| Cumulative selected patches including prior runs | 507,445,504 |
+| Coefficient points in this continuation | 921,137,314,336 |
+| Average search throughput at worker status timestamp | 4,537.0 patches/s |
+| Search elapsed at worker status timestamp | 20.83 hours |
 | Recorded hits | 0 |
-| Periodic independent GMP audits at worker status timestamp | 10,257 |
+| Periodic independent GMP audits at worker status timestamp | 10,386 |
 | Preparation pacing | 0.0 seconds |
 
 Configuration: 16 workers pinned to physical CPUs 0–15, optimized packed/prefetched
@@ -46,7 +46,7 @@ Alerts: **None reported**.
 Worker reason: **None**. Worker error: **None**.
 Supervisor error: **None**.
 Worker/service stderr sizes: **0 / 0 bytes**.
-Free disk: **97.0 GiB**;
+Free disk: **96.4 GiB**;
 available memory: **117.8 GiB**.
 
 This separate publisher aims to update every 15 minutes and after the search
