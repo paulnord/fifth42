@@ -1,5 +1,5 @@
 {
-  "snapshot_utc": "2026-11-09T20:50:10.562044+00:00",
+  "snapshot_utc": "2026-11-09T21:05:12.354050+00:00",
   "host": "cabbage",
   "TEST_ONLY": false,
   "run_id": "cabbage-buffered-20261109",
@@ -13,7 +13,7 @@
   ],
   "committed_interval": [
     2367341696,
-    2393391744
+    2413495680
   ],
   "workers": 16,
   "backend": "gpu",
@@ -40,7 +40,7 @@
   "phase": "running",
   "alerts": [],
   "checkpoint": {
-    "chunks": 101758,
+    "chunks": 180289,
     "completed_bound": null,
     "coverage_schema": "logical-width8-physical-groups-v1",
     "hits": [],
@@ -48,12 +48,12 @@
       "source_identity": "a1f29fb383524def674611a1de7195a18a9a515a36848d453873725a55580fcb",
       "trial": "cabbage-buffered-20261109"
     },
-    "journal_offset": 1854057042,
-    "journal_sha256": "a7d33fa26fffbbae45eeccd6f29d2c53dfd665c0c0abfecdc5c9dcb0bf0cf8f9",
-    "next_patch": 2393391744,
-    "patches": 26050048,
-    "physical_tasks": 6512512,
-    "points": 166268227110,
+    "journal_offset": 3285002153,
+    "journal_sha256": "f93235b8ebcbf401433ad1c46c5d202dab315defcb36f908a4ff56a5f057dbcd",
+    "next_patch": 2413495680,
+    "patches": 46153984,
+    "physical_tasks": 11538496,
+    "points": 298054084084,
     "window": {
       "bits": 222,
       "cap": 42,
@@ -66,43 +66,43 @@
     }
   },
   "worker_metrics": {
-    "updated_utc": "2026-11-09T20:50:04.808897+00:00",
-    "patches_per_second": 23107.674476049968,
-    "gmp_audited_chunks": 806,
-    "search_seconds": 1141.7796294190339,
+    "updated_utc": "2026-11-09T21:05:07.526090+00:00",
+    "patches_per_second": 23122.051091414916,
+    "gmp_audited_chunks": 1443,
+    "search_seconds": 2044.496823102003,
     "error": null,
     "reason": null,
     "prefetch": {
       "active": 0,
-      "consumer_wait_empty_seconds": 365.9311226555146,
-      "elapsed_seconds": 1138.6038874899969,
+      "consumer_wait_empty_seconds": 650.7924784750794,
+      "elapsed_seconds": 2041.3210780459922,
       "inflight": 1,
       "max_outstanding": 5,
       "maximum_prepared_payload_bytes": 482045,
-      "mean_ready_depth": 0.3018978100242621,
-      "outstanding": 2,
+      "mean_ready_depth": 0.30226050491021555,
+      "outstanding": 1,
       "peak_outstanding": 5,
       "peak_ready": 3,
       "peak_reserved_bytes": 41943040,
-      "preparation_batches": 103066,
-      "prepare_wall_seconds": 1138.2392714977032,
-      "producer_wait_capacity_seconds": 0.06494135985849425,
-      "producer_wait_full_seconds": 34.30433323129546,
-      "ready": 1,
+      "preparation_batches": 184665,
+      "prepare_wall_seconds": 2040.6670969492407,
+      "producer_wait_capacity_seconds": 0.11635471176123247,
+      "producer_wait_full_seconds": 61.544269926671404,
+      "ready": 0,
       "ready_depth_seconds": {
-        "0": 915.0797303554718,
-        "1": 153.35960405191872,
-        "2": 20.111239725432824,
-        "3": 50.05331220518565
+        "0": 1640.584475943062,
+        "1": 274.53058862895705,
+        "2": 36.13788664073218,
+        "3": 90.06812594120856
       },
       "ready_limit": 3,
-      "reserved_bytes": 16777216
+      "reserved_bytes": 8388608
     },
     "journal_buffer": {
-      "flush_count": 12889,
-      "flush_seconds": 71.9888337320881,
-      "pending_bytes": 54664,
-      "pending_chunks": 3
+      "flush_count": 23095,
+      "flush_seconds": 130.92173747497145,
+      "pending_bytes": 91111,
+      "pending_chunks": 5
     },
     "dispatch_chunksize": 4
   },
@@ -112,30 +112,30 @@
     "error": null,
     "leases_released": false,
     "load_average": [
-      8.40283203125,
-      7.583984375,
-      6.80712890625
+      10.728515625,
+      8.34814453125,
+      7.75927734375
     ],
     "status": "running",
-    "updated_utc": "2026-11-09T20:50:05.962172+00:00",
+    "updated_utc": "2026-11-09T21:05:10.113342+00:00",
     "worker_pid": 1970265
   },
-  "local_next_patch": 2393866880,
+  "local_next_patch": 2414729344,
   "replica": {
-    "captured_epoch": 1794257389.8026693,
-    "checkpoint_sha256": "bc4c446948c32e5a80060e2a7c32f1bdc193cec1369be7b2ea0de80c28f37cfc",
-    "chunks": 101758,
-    "committed_bytes": 1854057042,
+    "captured_epoch": 1794258259.5637794,
+    "checkpoint_sha256": "199b331bd31098b00511062c506620d91a0da0b791c9ec560e4b97eaf91f6f25",
+    "chunks": 180289,
+    "committed_bytes": 3285002153,
     "identity": {
       "source_identity": "a1f29fb383524def674611a1de7195a18a9a515a36848d453873725a55580fcb",
       "trial": "cabbage-buffered-20261109"
     },
-    "journal_sha256": "a7d33fa26fffbbae45eeccd6f29d2c53dfd665c0c0abfecdc5c9dcb0bf0cf8f9",
+    "journal_sha256": "f93235b8ebcbf401433ad1c46c5d202dab315defcb36f908a4ff56a5f057dbcd",
     "method": "append, fsync, byte readback, audit copies, checkpoint, receipt",
-    "next_patch": 2393391744,
-    "raw_sha256": "f33bb2f3d92053f9a1e27b973c4811d36293e6f39424e20a690b61f61a489964",
+    "next_patch": 2413495680,
+    "raw_sha256": "ca9e4536d31b95f74e396f2a299ca03adaa3c480e8949a9b697917e8fa89ab79",
     "status": "verified",
-    "synced_epoch": 1794257396.0812762
+    "synced_epoch": 1794258266.2701168
   },
   "group_limit": 4,
   "journal_storage": "local durable journal; verified bulk replica every 60 seconds",
@@ -145,8 +145,8 @@
   ],
   "combined_committed_interval": [
     2250000000,
-    2393391744
+    2413495680
   ],
-  "combined_selected_patches": 143391744,
+  "combined_selected_patches": 163495680,
   "parent_audit_sha256": "47da99d9eee5a759a239bfef1c99bd14d0a5d10e7448b2524b033a1888f4d734"
 }
