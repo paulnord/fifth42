@@ -1,0 +1,103 @@
+{
+  "status": "selected",
+  "same_exact_tasks_certificates_native_packets_counts_candidates": true,
+  "measurement_scope": "Five-repeat end-to-end trials on Ada; representative ratios for all three nodes, not measurements of peer hardware.",
+  "selected": {
+    "canonical_task_cache": true,
+    "journal_buffer_records": 8,
+    "journal_buffer_bytes": 8388608,
+    "journal_buffer_max_age_seconds": 0.25,
+    "workers": 16,
+    "preparation_windows": 1,
+    "ready_queue_limit": 3,
+    "gpu_windows_per_request": 1
+  },
+  "per_node": {
+    "ada": {
+      "group_limit": 2,
+      "dispatch_chunksize": 8,
+      "measured_throughput_ratio": 1.2543151620164972
+    },
+    "boole": {
+      "group_limit": 4,
+      "dispatch_chunksize": 4,
+      "measured_throughput_ratio": 1.2936375981191373
+    },
+    "cabbage": {
+      "group_limit": 4,
+      "dispatch_chunksize": 4,
+      "measured_throughput_ratio": 1.3201462214876916
+    }
+  },
+  "declined": {
+    "raw_ram_journal": "No material gain beyond the selected durable pipeline; volatile upper-bound test only.",
+    "worker_encoded_wire_transport": "Correctness passed; no improvement beyond simpler in-process cache.",
+    "asynchronous_writer": "Correctness passed; no reliable extra improvement beyond synchronous buffering.",
+    "larger_buffers": "No reliable improvement beyond eight-record buffer.",
+    "multiple_preparation_windows": "No reliable improvement beyond dispatch tuning; higher buffering and complexity.",
+    "fewer_workers": "Eight-worker configurations were slower in both tested regions.",
+    "gpu_request_aggregation": "Cached requests tested with identical tasks and GMP; small share of full pipeline, so no deployment protocol change."
+  },
+  "holdout": [
+    {
+      "region": "ada",
+      "median_seconds": {
+        "baseline-w16-m8-p1": 3.1627305319998413,
+        "cache-w16-m8-p1": 2.5941664980491623,
+        "cache_buffer8-w16-m4-p1": 2.7424841729807667,
+        "cache_buffer8-w16-m8-p1": 2.5214799499954097
+      },
+      "throughput_vs_baseline": {
+        "baseline-w16-m8-p1": 1.0,
+        "cache-w16-m8-p1": 1.2191702168608856,
+        "cache_buffer8-w16-m4-p1": 1.1532356551623468,
+        "cache_buffer8-w16-m8-p1": 1.2543151620164972
+      }
+    },
+    {
+      "region": "boole",
+      "median_seconds": {
+        "baseline-w16-m8-p1": 3.2013459489680827,
+        "cache-w16-m8-p1": 2.5660470129805617,
+        "cache_buffer8-w16-m4-p1": 2.748684288992081,
+        "cache_buffer8-w16-m8-p1": 2.5167199579882436
+      },
+      "throughput_vs_baseline": {
+        "baseline-w16-m8-p1": 1.0,
+        "cache-w16-m8-p1": 1.2475788373220789,
+        "cache_buffer8-w16-m4-p1": 1.1646830310009846,
+        "cache_buffer8-w16-m8-p1": 1.2720310572524325
+      }
+    },
+    {
+      "region": "cabbage",
+      "median_seconds": {
+        "baseline-w16-m8-p1": 1.8507274250150658,
+        "cache-w16-m8-p1": 1.746829148964025,
+        "cache_buffer8-w16-m4-p1": 1.4019109359942377,
+        "cache_buffer8-w16-m8-p1": 1.7110319320345297
+      },
+      "throughput_vs_baseline": {
+        "baseline-w16-m8-p1": 1.0,
+        "cache-w16-m8-p1": 1.0594782129166203,
+        "cache_buffer8-w16-m4-p1": 1.3201462214876916,
+        "cache_buffer8-w16-m8-p1": 1.0816440011230117
+      }
+    }
+  ],
+  "boole_group4_holdout": [
+    {
+      "region": "boole",
+      "median_seconds": {
+        "baseline-w16-m8-p1": 1.89261100103613,
+        "cache_buffer8-w16-m4-p1": 1.4630148379947059,
+        "cache_buffer8-w16-m8-p1": 1.7505245549837127
+      },
+      "throughput_vs_baseline": {
+        "baseline-w16-m8-p1": 1.0,
+        "cache_buffer8-w16-m4-p1": 1.2936375981191373,
+        "cache_buffer8-w16-m8-p1": 1.0811679251501498
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "manifest_sha256": "03d3e8ca8eda798161f64ceeab7116cf180ea45de369e9dd463273fbc3a563ff",
+  "manifest_sha256": "c2634246fee34b3a8f6b189da1af148186f669157e80309be6fe085250459824",
   "actual_gpu": true,
   "actual_ledger": true,
   "actual_bulk_storage": true,
@@ -13,7 +13,7 @@
       "new_chunks": 8,
       "new_patches": 2048,
       "new_gmp_audited_chunks": 8,
-      "next_patch": 4385555584,
+      "next_patch": 4398845312,
       "case": "finite",
       "status": "passed",
       "actual_systemd": true,
@@ -22,8 +22,8 @@
       "original_parent_unchanged": true,
       "leases_released": true,
       "existing_output_rejected": true,
-      "hard_deadline": "2026-11-09T12:47:43.379451-06:00",
-      "finished_utc": "2026-11-09T18:46:18.095253+00:00",
+      "hard_deadline": "2026-11-09T14:04:15.816349-06:00",
+      "finished_utc": "2026-11-09T20:02:49.466635+00:00",
       "service": {
         "ActiveState": "inactive",
         "SubState": "dead",
@@ -35,27 +35,27 @@
           "command": [
             "systemd-run",
             "--user",
-            "--unit=ada-combined-r3-test-finite-20261109-deadline",
+            "--unit=ada-buffered-test-finite-20261109-deadline",
             "--collect",
             "--service-type=oneshot",
-            "--on-calendar=2026-11-09 18:47:33 UTC",
+            "--on-calendar=2026-11-09 20:04:05 UTC",
             "--timer-property=AccuracySec=1s",
             "--timer-property=RandomizedDelaySec=0",
             "--timer-property=Persistent=no",
             "/usr/bin/systemctl",
             "--user",
             "stop",
-            "ada-combined-r3-test-finite-20261109.service"
+            "ada-buffered-test-finite-20261109.service"
           ],
           "exit_code": 0,
           "stdout": "",
-          "stderr": "Running timer as unit: ada-combined-r3-test-finite-20261109-deadline.timer\nWill run service as unit: ada-combined-r3-test-finite-20261109-deadline.service\n"
+          "stderr": "Running timer as unit: ada-buffered-test-finite-20261109-deadline.timer\nWill run service as unit: ada-buffered-test-finite-20261109-deadline.service\n"
         },
         {
           "command": [
             "systemd-run",
             "--user",
-            "--unit=ada-combined-r3-test-finite-20261109",
+            "--unit=ada-buffered-test-finite-20261109",
             "--collect",
             "--service-type=exec",
             "--description=Sixteen-worker fifth-power weekend continuation",
@@ -66,44 +66,44 @@
             "--property=Nice=19",
             "--property=CPUAffinity=0-15",
             "--property=UMask=0077",
-            "--working-directory=/home/pnord/ada-full-integration-20261109/worker",
-            "--property=StandardOutput=append:/home/pnord/ada-full-integration-20261109/worker/service.stdout.log",
-            "--property=StandardError=append:/home/pnord/ada-full-integration-20261109/worker/service.stderr.log",
+            "--working-directory=/home/pnord/ada-buffered-release-20261109/worker",
+            "--property=StandardOutput=append:/home/pnord/ada-buffered-release-20261109/worker/service.stdout.log",
+            "--property=StandardError=append:/home/pnord/ada-buffered-release-20261109/worker/service.stderr.log",
             "--setenv=PYTHONDONTWRITEBYTECODE=1",
             "--setenv=PYTHONUNBUFFERED=1",
             "--setenv=CUDA_VISIBLE_DEVICES=0",
             "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
             "-B",
             "-u",
-            "/home/pnord/ada-full-integration-20261109/worker/search_supervisor.py",
+            "/home/pnord/ada-buffered-release-20261109/worker/search_supervisor.py",
             "--config",
-            "/home/pnord/ada-full-integration-20261109/runtime-r3/finite/configuration.json"
+            "/home/pnord/ada-buffered-release-20261109/runtime/finite/configuration.json"
           ],
           "exit_code": 0,
           "stdout": "",
-          "stderr": "Running as unit: ada-combined-r3-test-finite-20261109.service; invocation ID: 25f249c974834a2f9ec72bfe421b2d43\n"
+          "stderr": "Running as unit: ada-buffered-test-finite-20261109.service; invocation ID: 1f979f95b8cf4bb5910e67c0f442c067\n"
         },
         {
           "command": [
             "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
             "-B",
-            "/home/pnord/ada-full-integration-20261109/worker/finalize_replica.py",
+            "/home/pnord/ada-buffered-release-20261109/worker/finalize_replica.py",
             "--config",
-            "/home/pnord/ada-full-integration-20261109/runtime-r3/finite/configuration.json",
+            "/home/pnord/ada-buffered-release-20261109/runtime/finite/configuration.json",
             "--config-sha256",
-            "10ab44ee5795e628199bcc8d6a4610f94e0d3eee49c4f628a8b28395d8b6e6ee"
+            "dcc20e62dea386f0528a75f1667f49f7b618c388d85515ea307235b2a22e76a1"
           ],
           "exit_code": 0,
-          "stdout": "{\"status\": \"verified\", \"run_id\": \"ada-combined-r3-test-finite-20261109\", \"next_patch\": 4385555584, \"committed_bytes\": 278106}\n",
+          "stdout": "{\"status\": \"verified\", \"run_id\": \"ada-buffered-test-finite-20261109\", \"next_patch\": 4398845312, \"committed_bytes\": 278086}\n",
           "stderr": ""
         }
       ]
     },
     {
-      "new_chunks": 8,
-      "new_patches": 2048,
-      "new_gmp_audited_chunks": 8,
-      "next_patch": 4385555584,
+      "new_chunks": 9,
+      "new_patches": 2304,
+      "new_gmp_audited_chunks": 9,
+      "next_patch": 4398845568,
       "case": "signal",
       "status": "passed",
       "actual_systemd": true,
@@ -112,8 +112,8 @@
       "original_parent_unchanged": true,
       "leases_released": true,
       "existing_output_rejected": null,
-      "hard_deadline": "2026-11-09T12:47:48.131392-06:00",
-      "finished_utc": "2026-11-09T18:46:22.687953+00:00",
+      "hard_deadline": "2026-11-09T14:04:19.499282-06:00",
+      "finished_utc": "2026-11-09T20:02:53.466086+00:00",
       "service": {
         "ActiveState": "inactive",
         "SubState": "dead",
@@ -125,27 +125,27 @@
           "command": [
             "systemd-run",
             "--user",
-            "--unit=ada-combined-r3-test-signal-20261109-deadline",
+            "--unit=ada-buffered-test-signal-20261109-deadline",
             "--collect",
             "--service-type=oneshot",
-            "--on-calendar=2026-11-09 18:47:38 UTC",
+            "--on-calendar=2026-11-09 20:04:09 UTC",
             "--timer-property=AccuracySec=1s",
             "--timer-property=RandomizedDelaySec=0",
             "--timer-property=Persistent=no",
             "/usr/bin/systemctl",
             "--user",
             "stop",
-            "ada-combined-r3-test-signal-20261109.service"
+            "ada-buffered-test-signal-20261109.service"
           ],
           "exit_code": 0,
           "stdout": "",
-          "stderr": "Running timer as unit: ada-combined-r3-test-signal-20261109-deadline.timer\nWill run service as unit: ada-combined-r3-test-signal-20261109-deadline.service\n"
+          "stderr": "Running timer as unit: ada-buffered-test-signal-20261109-deadline.timer\nWill run service as unit: ada-buffered-test-signal-20261109-deadline.service\n"
         },
         {
           "command": [
             "systemd-run",
             "--user",
-            "--unit=ada-combined-r3-test-signal-20261109",
+            "--unit=ada-buffered-test-signal-20261109",
             "--collect",
             "--service-type=exec",
             "--description=Sixteen-worker fifth-power weekend continuation",
@@ -156,29 +156,29 @@
             "--property=Nice=19",
             "--property=CPUAffinity=0-15",
             "--property=UMask=0077",
-            "--working-directory=/home/pnord/ada-full-integration-20261109/worker",
-            "--property=StandardOutput=append:/home/pnord/ada-full-integration-20261109/worker/service.stdout.log",
-            "--property=StandardError=append:/home/pnord/ada-full-integration-20261109/worker/service.stderr.log",
+            "--working-directory=/home/pnord/ada-buffered-release-20261109/worker",
+            "--property=StandardOutput=append:/home/pnord/ada-buffered-release-20261109/worker/service.stdout.log",
+            "--property=StandardError=append:/home/pnord/ada-buffered-release-20261109/worker/service.stderr.log",
             "--setenv=PYTHONDONTWRITEBYTECODE=1",
             "--setenv=PYTHONUNBUFFERED=1",
             "--setenv=CUDA_VISIBLE_DEVICES=0",
             "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
             "-B",
             "-u",
-            "/home/pnord/ada-full-integration-20261109/worker/search_supervisor.py",
+            "/home/pnord/ada-buffered-release-20261109/worker/search_supervisor.py",
             "--config",
-            "/home/pnord/ada-full-integration-20261109/runtime-r3/signal/configuration.json"
+            "/home/pnord/ada-buffered-release-20261109/runtime/signal/configuration.json"
           ],
           "exit_code": 0,
           "stdout": "",
-          "stderr": "Running as unit: ada-combined-r3-test-signal-20261109.service; invocation ID: 1d7c0835b08f4f8f8c90dcef247b4a42\n"
+          "stderr": "Running as unit: ada-buffered-test-signal-20261109.service; invocation ID: 34b9425045ff492c95730fc5c0db47ab\n"
         },
         {
           "command": [
             "systemctl",
             "--user",
             "stop",
-            "ada-combined-r3-test-signal-20261109.service"
+            "ada-buffered-test-signal-20261109.service"
           ],
           "exit_code": 0,
           "stdout": "",
@@ -188,23 +188,23 @@
           "command": [
             "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
             "-B",
-            "/home/pnord/ada-full-integration-20261109/worker/finalize_replica.py",
+            "/home/pnord/ada-buffered-release-20261109/worker/finalize_replica.py",
             "--config",
-            "/home/pnord/ada-full-integration-20261109/runtime-r3/signal/configuration.json",
+            "/home/pnord/ada-buffered-release-20261109/runtime/signal/configuration.json",
             "--config-sha256",
-            "51b708cbc9ff190e6750cc072c39900d32a328563262ddadbfec05eaf249cd60"
+            "bbd64d293cd37ba3070cc11909f79134a7363c772730c3b79015fd845ec9a6fb"
           ],
           "exit_code": 0,
-          "stdout": "{\"status\": \"verified\", \"run_id\": \"ada-combined-r3-test-signal-20261109\", \"next_patch\": 4385555584, \"committed_bytes\": 278102}\n",
+          "stdout": "{\"status\": \"verified\", \"run_id\": \"ada-buffered-test-signal-20261109\", \"next_patch\": 4398845568, \"committed_bytes\": 312845}\n",
           "stderr": ""
         }
       ]
     },
     {
-      "new_chunks": 3045,
-      "new_patches": 779520,
-      "new_gmp_audited_chunks": 24,
-      "next_patch": 4386333056,
+      "new_chunks": 3782,
+      "new_patches": 968192,
+      "new_gmp_audited_chunks": 30,
+      "next_patch": 4399811456,
       "case": "deadline",
       "status": "passed",
       "actual_systemd": true,
@@ -213,8 +213,8 @@
       "original_parent_unchanged": true,
       "leases_released": true,
       "existing_output_rejected": null,
-      "hard_deadline": "2026-11-09T12:47:52.721495-06:00",
-      "finished_utc": "2026-11-09T18:47:51.332900+00:00",
+      "hard_deadline": "2026-11-09T14:04:23.499983-06:00",
+      "finished_utc": "2026-11-09T20:04:22.954991+00:00",
       "service": {
         "ActiveState": "inactive",
         "SubState": "dead",
@@ -226,27 +226,27 @@
           "command": [
             "systemd-run",
             "--user",
-            "--unit=ada-combined-r3-test-deadline-20261109-deadline",
+            "--unit=ada-buffered-test-deadline-20261109-deadline",
             "--collect",
             "--service-type=oneshot",
-            "--on-calendar=2026-11-09 18:47:42 UTC",
+            "--on-calendar=2026-11-09 20:04:13 UTC",
             "--timer-property=AccuracySec=1s",
             "--timer-property=RandomizedDelaySec=0",
             "--timer-property=Persistent=no",
             "/usr/bin/systemctl",
             "--user",
             "stop",
-            "ada-combined-r3-test-deadline-20261109.service"
+            "ada-buffered-test-deadline-20261109.service"
           ],
           "exit_code": 0,
           "stdout": "",
-          "stderr": "Running timer as unit: ada-combined-r3-test-deadline-20261109-deadline.timer\nWill run service as unit: ada-combined-r3-test-deadline-20261109-deadline.service\n"
+          "stderr": "Running timer as unit: ada-buffered-test-deadline-20261109-deadline.timer\nWill run service as unit: ada-buffered-test-deadline-20261109-deadline.service\n"
         },
         {
           "command": [
             "systemd-run",
             "--user",
-            "--unit=ada-combined-r3-test-deadline-20261109",
+            "--unit=ada-buffered-test-deadline-20261109",
             "--collect",
             "--service-type=exec",
             "--description=Sixteen-worker fifth-power weekend continuation",
@@ -257,35 +257,35 @@
             "--property=Nice=19",
             "--property=CPUAffinity=0-15",
             "--property=UMask=0077",
-            "--working-directory=/home/pnord/ada-full-integration-20261109/worker",
-            "--property=StandardOutput=append:/home/pnord/ada-full-integration-20261109/worker/service.stdout.log",
-            "--property=StandardError=append:/home/pnord/ada-full-integration-20261109/worker/service.stderr.log",
+            "--working-directory=/home/pnord/ada-buffered-release-20261109/worker",
+            "--property=StandardOutput=append:/home/pnord/ada-buffered-release-20261109/worker/service.stdout.log",
+            "--property=StandardError=append:/home/pnord/ada-buffered-release-20261109/worker/service.stderr.log",
             "--setenv=PYTHONDONTWRITEBYTECODE=1",
             "--setenv=PYTHONUNBUFFERED=1",
             "--setenv=CUDA_VISIBLE_DEVICES=0",
             "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
             "-B",
             "-u",
-            "/home/pnord/ada-full-integration-20261109/worker/search_supervisor.py",
+            "/home/pnord/ada-buffered-release-20261109/worker/search_supervisor.py",
             "--config",
-            "/home/pnord/ada-full-integration-20261109/runtime-r3/deadline/configuration.json"
+            "/home/pnord/ada-buffered-release-20261109/runtime/deadline/configuration.json"
           ],
           "exit_code": 0,
           "stdout": "",
-          "stderr": "Running as unit: ada-combined-r3-test-deadline-20261109.service; invocation ID: a0ba8e2f835e4bb3800aa9dbc4507e59\n"
+          "stderr": "Running as unit: ada-buffered-test-deadline-20261109.service; invocation ID: dc1cb384315f49efb4e57d67d8b868ec\n"
         },
         {
           "command": [
             "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
             "-B",
-            "/home/pnord/ada-full-integration-20261109/worker/finalize_replica.py",
+            "/home/pnord/ada-buffered-release-20261109/worker/finalize_replica.py",
             "--config",
-            "/home/pnord/ada-full-integration-20261109/runtime-r3/deadline/configuration.json",
+            "/home/pnord/ada-buffered-release-20261109/runtime/deadline/configuration.json",
             "--config-sha256",
-            "c982074dbfec078de29e68e784bdbb2fc73e1163290ceb6561eeb8214cc0a061"
+            "941db3b5a3f8278c8f723feb770bed3fc053b3ad62568f90cafc52ec67b7a59c"
           ],
           "exit_code": 0,
-          "stdout": "{\"status\": \"verified\", \"run_id\": \"ada-combined-r3-test-deadline-20261109\", \"next_patch\": 4386333056, \"committed_bytes\": 105870815}\n",
+          "stdout": "{\"status\": \"verified\", \"run_id\": \"ada-buffered-test-deadline-20261109\", \"next_patch\": 4399811456, \"committed_bytes\": 131487171}\n",
           "stderr": ""
         }
       ]

@@ -1,19 +1,19 @@
 {
-  "snapshot_utc": "2026-11-09T19:15:34.149790+00:00",
+  "snapshot_utc": "2026-11-09T20:09:15.920188+00:00",
   "host": "ada",
   "TEST_ONLY": false,
-  "run_id": "ada-combined-local-20261109",
-  "manifest_sha256": "03d3e8ca8eda798161f64ceeab7116cf180ea45de369e9dd463273fbc3a563ff",
-  "config_sha256": "23c6e1377a4563782edfac0c1ecd9f8ff6e92f458809658b73f5e7890822db78",
-  "source_identity": "a562943949cbd4adbbbb593e792b1fda6d0ebd7a0ba6f5c90c2d0236bb550d9f",
+  "run_id": "ada-buffered-20261109",
+  "manifest_sha256": "c2634246fee34b3a8f6b189da1af148186f669157e80309be6fe085250459824",
+  "config_sha256": "16e44eee8207f68e5fc8a367435b133e4678822a0e95d5cfe53acc0ec0d3bef7",
+  "source_identity": "c1ac6b0c50322752b6f4ec97699ea086219b813302780d186890bd26ad5cb4bd",
   "ledger_claim_sha256": "7d6b55c80d480208b324d6748fcc3660e12a0b70a7f2a21ad8c28bf0b0a16b33",
   "reserved_interval": [
-    4385553536,
+    4398843264,
     11250000001
   ],
   "committed_interval": [
-    4385553536,
-    4398843264
+    4398843264,
+    4399596928
   ],
   "workers": 16,
   "backend": "gpu",
@@ -21,9 +21,9 @@
   "stop_local": "2026-11-09T17:00:00-06:00",
   "stop_epoch": 1794265200.0,
   "service": {
-    "ActiveState": "inactive",
-    "SubState": "dead",
-    "MainPID": "0",
+    "ActiveState": "active",
+    "SubState": "running",
+    "MainPID": "1774512",
     "NRestarts": "0"
   },
   "deadline_timer": {
@@ -37,27 +37,27 @@
   "coverage_scope": "Verified selected interval and parent lineage only; no full-box bound.",
   "production_launched": true,
   "mathematical_coverage_claim": false,
-  "phase": "stopped",
+  "phase": "running",
   "alerts": [],
   "checkpoint": {
-    "chunks": 51913,
+    "chunks": 2944,
     "completed_bound": null,
     "coverage_schema": "logical-width8-physical-groups-v1",
     "hits": [],
     "identity": {
-      "source_identity": "a562943949cbd4adbbbb593e792b1fda6d0ebd7a0ba6f5c90c2d0236bb550d9f",
-      "trial": "ada-combined-local-20261109"
+      "source_identity": "c1ac6b0c50322752b6f4ec97699ea086219b813302780d186890bd26ad5cb4bd",
+      "trial": "ada-buffered-20261109"
     },
-    "journal_offset": 1804443109,
-    "journal_sha256": "1bdecf1aa73103370a9b787fe21608da34daf66d9807be1c5190ab097c10595d",
-    "next_patch": 4398843264,
-    "patches": 13289728,
-    "physical_tasks": 6644864,
-    "points": 136925347228,
+    "journal_offset": 102311161,
+    "journal_sha256": "246bf8c5a372940ad2e22eb31f52c9e287707d3151f6f3c6a74d985c4c29f177",
+    "next_patch": 4399596928,
+    "patches": 753664,
+    "physical_tasks": 376832,
+    "points": 7799484390,
     "window": {
       "bits": 222,
       "cap": 42,
-      "first": 4385553536,
+      "first": 4398843264,
       "geometry_policy": "adaptive",
       "hi": 200000000000,
       "last": 11250000001,
@@ -66,17 +66,50 @@
     }
   },
   "worker_metrics": {
-    "updated_utc": "2026-11-09T19:15:18.791811+00:00",
-    "patches_per_second": 8761.110758119412,
-    "gmp_audited_chunks": 406,
-    "search_seconds": 1516.8998962470214,
+    "updated_utc": "2026-11-09T20:09:13.390833+00:00",
+    "patches_per_second": 8784.696449977104,
+    "gmp_audited_chunks": 35,
+    "search_seconds": 127.05732137197629,
     "error": null,
-    "reason": "Stop requested"
+    "reason": null,
+    "prefetch": {
+      "active": 0,
+      "consumer_wait_empty_seconds": 60.44397107028635,
+      "elapsed_seconds": 90.22413269605022,
+      "inflight": 1,
+      "max_outstanding": 5,
+      "maximum_prepared_payload_bytes": 962825,
+      "mean_ready_depth": 0.08622838203811849,
+      "outstanding": 1,
+      "peak_outstanding": 5,
+      "peak_ready": 3,
+      "peak_reserved_bytes": 41943040,
+      "preparation_batches": 4367,
+      "prepare_wall_seconds": 90.2029550690786,
+      "producer_wait_capacity_seconds": 0.0025487717939540744,
+      "producer_wait_full_seconds": 0.08718683442566544,
+      "ready": 0,
+      "ready_depth_seconds": {
+        "0": 85.44478948478354,
+        "1": 2.7548828263534233,
+        "2": 1.0483795718173496,
+        "3": 0.9760796710615978
+      },
+      "ready_limit": 3,
+      "reserved_bytes": 8388608
+    },
+    "journal_buffer": {
+      "flush_count": 545,
+      "flush_seconds": 2.8758759889169596,
+      "pending_bytes": 243261,
+      "pending_chunks": 7
+    },
+    "dispatch_chunksize": 8
   },
   "supervisor": {
     "automatic_resume": false,
-    "config": "/home/pnord/ada-full-integration-20261109/worker/config.json",
-    "config_sha256": "23c6e1377a4563782edfac0c1ecd9f8ff6e92f458809658b73f5e7890822db78",
+    "config": "/home/pnord/ada-buffered-release-20261109/worker/config.json",
+    "config_sha256": "16e44eee8207f68e5fc8a367435b133e4678822a0e95d5cfe53acc0ec0d3bef7",
     "error": null,
     "held_leases": [
       "/home/pnord/fifth-lattice-optimizations-ada-20261105/cpu-benchmark.lock",
@@ -96,56 +129,54 @@
       "/home/pnord/four133-eight-hour/jobs/.launch.lock",
       "/home/pnord/four133-eight-hour/jobs/B10800000-20261104T184003Z/coordinator.lock",
       "/home/pnord/fifth42/filtered/runs/benchmark.lock",
-      "/home/pnord/ada-full-integration-20261109/worker/coordinator.lock"
+      "/home/pnord/ada-buffered-release-20261109/worker/coordinator.lock"
     ],
     "idle_load_limit": 2,
-    "leases_released": true,
     "load_average": [
-      6.33349609375,
-      6.2353515625,
-      5.126953125
+      6.73681640625,
+      3.42333984375,
+      2.65869140625
     ],
     "minimum_free_memory_gib": 4,
-    "parent_cursor": 4385553536,
-    "pid": 1748981,
+    "parent_cursor": 4398843264,
+    "pid": 1774512,
     "publication": false,
     "resource_helper_sha256": "a73715d1473fd52c2a86670f05cfe747800d3ccca688b6e0a9e7593d25e5aed9",
     "running_load_limit": 20.0,
-    "service": "ada-combined-local-20261109.service",
-    "status": "finished",
+    "service": "ada-buffered-20261109.service",
+    "status": "running",
     "stop_epoch": 1794265200.0,
     "stop_local": "2026-11-09T17:00:00-06:00",
-    "updated_utc": "2026-11-09T19:15:21.183084+00:00",
-    "worker_exit_code": 0,
-    "worker_pid": 1749004
+    "updated_utc": "2026-11-09T20:09:15.014659+00:00",
+    "worker_pid": 1774539
   },
-  "local_next_patch": 4398843264,
+  "local_next_patch": 4399990144,
   "replica": {
-    "captured_epoch": 1794251724.5023499,
-    "checkpoint_sha256": "3381613d3e534cf6de9e102c111f0ef07a79c1e0db184fb9ed829a715c2d9ab4",
-    "chunks": 51913,
-    "committed_bytes": 1804443109,
+    "captured_epoch": 1794254923.86183,
+    "checkpoint_sha256": "ef3f2807fe72391c7d114d05f735a69f9c617fc19bcb3c1d3b7554318fac9b67",
+    "chunks": 2944,
+    "committed_bytes": 102311161,
     "identity": {
-      "source_identity": "a562943949cbd4adbbbb593e792b1fda6d0ebd7a0ba6f5c90c2d0236bb550d9f",
-      "trial": "ada-combined-local-20261109"
+      "source_identity": "c1ac6b0c50322752b6f4ec97699ea086219b813302780d186890bd26ad5cb4bd",
+      "trial": "ada-buffered-20261109"
     },
-    "journal_sha256": "1bdecf1aa73103370a9b787fe21608da34daf66d9807be1c5190ab097c10595d",
+    "journal_sha256": "246bf8c5a372940ad2e22eb31f52c9e287707d3151f6f3c6a74d985c4c29f177",
     "method": "append, fsync, byte readback, audit copies, checkpoint, receipt",
-    "next_patch": 4398843264,
-    "raw_sha256": "7a0ea40858fa0ea4212deb8d67619e7b0dd5f0ef30efef334aa18e1288aa42ed",
+    "next_patch": 4399596928,
+    "raw_sha256": "c8af2eba780e21e7126491591446adc078cb6a1b59341f796d6b70d2404ac93a",
     "status": "verified",
-    "synced_epoch": 1794251725.057981
+    "synced_epoch": 1794254927.2713203
   },
   "group_limit": 2,
   "journal_storage": "local durable journal; verified bulk replica every 60 seconds",
   "parent_committed_interval": [
     3750000000,
-    4385553536
+    4398843264
   ],
   "combined_committed_interval": [
     3750000000,
-    4398843264
+    4399596928
   ],
-  "combined_selected_patches": 648843264,
-  "parent_audit_sha256": "b5d274716b3850a41c0c6dcc8cd1d673d3c8534e58c44c4dc1aeac20d25e62f3"
+  "combined_selected_patches": 649596928,
+  "parent_audit_sha256": "03bd70f8d368ff7aca5687f05c8acabb29d0eb4e768858234dc95c8e6e20f41a"
 }
