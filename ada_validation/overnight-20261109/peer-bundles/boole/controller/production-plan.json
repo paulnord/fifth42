@@ -1,0 +1,48 @@
+{
+  "TEST_ONLY": false,
+  "automatic_resume": false,
+  "authorization": "User: continue production until tomorrow at 5 pm; Continue in unclaimed ranges",
+  "stop_epoch": 1794351600,
+  "stop_local": "2026-11-10T17:00:00-06:00",
+  "stages": [
+    {
+      "root": "/home/pnord/boole-overnight-20261109",
+      "config": "/home/pnord/boole-overnight-20261109/worker/production-config.json",
+      "config_sha256": "746c6500f4c0998fb6b2af17e8c3e322f38d84a84db1cf0d1f4afde8a8d20b97",
+      "manifest_sha256": "aa0494442c596a3418f4ad34d32f4cd25c38bf8c7bb2ff6ac5fa7f00abc5e9a4",
+      "first": 3470403072,
+      "last": 3750000000,
+      "service": "boole-overnight-20261109.service",
+      "ledger_job": "boole-precision-20261107T222232Z",
+      "claim_sha256": "5ca9cd96357e7f0261e320ca42ded98a1affe2efc9cba379dec8bd0cea2e3342"
+    },
+    {
+      "claim_sha256": "c8146de62b4164c9d56a26953414f9f47aa2e8ddf68ba94e4666b990eebdb29b",
+      "config": "/home/pnord/boole-extra-20261109-a/worker/production-config.json",
+      "config_sha256": "6857e42f0443ac8b12b321188b7b08239232e3203ae528d7bd6df5fb0728ba75",
+      "first": 100000000,
+      "last": 300000000,
+      "ledger_job": "boole-extended-20261109-a",
+      "manifest_sha256": "b9105037ced48079d2aec7a48508b3376d9be8b090d2e47f08b691e6a6b5694e",
+      "root": "/home/pnord/boole-extra-20261109-a",
+      "service": "boole-extra-20261109-a.service"
+    },
+    {
+      "claim_sha256": "9d11f206e5b84e1f64f9eaaf4ac9ce7e1d5f93e0cd4fbb6dc63ecb90e4ab8d5b",
+      "config": "/home/pnord/boole-extra-20261109-b/worker/production-config.json",
+      "config_sha256": "6a9b8efa9014eb451db669e1f95b676ef8c9616ef0ebe6585b8a590aca8cf58e",
+      "first": 300000000,
+      "last": 500000000,
+      "ledger_job": "boole-extended-20261109-b",
+      "manifest_sha256": "4b5da65fe1219caf4e2d4ef971a2075f7e824e671f3458b8210efb8c146faf3c",
+      "root": "/home/pnord/boole-extra-20261109-b",
+      "service": "boole-extra-20261109-b.service"
+    }
+  ],
+  "status_file": "/home/pnord/boole-overnight-controller-20261109/PRODUCTION_STATUS.json",
+  "shared_status_file": "/mnt/nfs_share/fifth42-integration-20261109/extend-20261110/boole/PRODUCTION_STATUS.json",
+  "controller_sha256": "48d4ddaf9fbee037c7b0945028a5b480583d1d176ede2237e6b4c952e46150eb",
+  "allocation_request_sha256": "ccf59d275aedf4f26af6601163c74f5f2a82b3d065d0d59412c289c0be0cd27d",
+  "coverage_policy": "Only completed recorded intervals; disjoint intervals never joined across an unsearched gap.",
+  "all_assigned_work_complete_policy": "Stop safely and report completion; another owner reservation is never used without a coordinated assignment."
+}

@@ -1,0 +1,26 @@
+{
+  "command": [
+    "systemd-run",
+    "--user",
+    "--unit=boole-overnight-queue-20261109",
+    "--collect",
+    "--service-type=exec",
+    "--property=Restart=no",
+    "--property=Nice=19",
+    "--property=UMask=0077",
+    "--property=RuntimeMaxSec=86866",
+    "--property=StandardOutput=append:/home/pnord/boole-overnight-controller-20261109/production.stdout",
+    "--property=StandardError=append:/home/pnord/boole-overnight-controller-20261109/production.stderr",
+    "/home/pnord/boole-results-20261107/venv312/bin/python",
+    "-B",
+    "-u",
+    "/home/pnord/boole-overnight-controller-20261109/controller.py",
+    "--plan",
+    "/home/pnord/boole-overnight-controller-20261109/production-plan.json",
+    "--plan-sha256",
+    "6bde685ff661c5a99394179eddf571e4bf0661db77c24461ef93293c41ddb9ba",
+    "--adopt-first"
+  ],
+  "stdout": "",
+  "stderr": "Running as unit: boole-overnight-queue-20261109.service; invocation ID: c27375f75233451faedf52e56f7f964e\n"
+}

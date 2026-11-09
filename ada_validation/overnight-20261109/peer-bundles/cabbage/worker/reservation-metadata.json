@@ -1,0 +1,40 @@
+{
+  "status": "staged_not_admitted",
+  "prepared_utc": "2026-11-08T22:01:42.776697+00:00",
+  "host": "cabbage",
+  "proposed_interval": [
+    2250000000,
+    3000000000
+  ],
+  "production_claim_created": false,
+  "production_launch_performed": false,
+  "ledger_root": "/mnt/nfs_share/fifth42-shared-20261107",
+  "candidate_adapter_sha256": "8bc5556a99ee12ffbd7a5bcce9569b22b2af479706b26f5a2b3067fe9a9a61e9",
+  "base_adapter_sha256": "84689b01562c5828d3bc0339795a830cacf0f6eb85528ca66b19e41555646a3c",
+  "store_class_unchanged": true,
+  "shared_test_root": "/mnt/nfs_share/TEST_ONLY_cabbage_admission_20261108",
+  "stop_local": "2026-11-09T09:00:00-06:00",
+  "stop_epoch": 1794236400,
+  "publication_interval_seconds": 900,
+  "proposed_publication_path": "cabbage_validation/production-20261108",
+  "shared_storage": {
+    "observed_free_bytes": 95768883200,
+    "ada_remaining_journal_allowance_bytes": 47520123109,
+    "boole_remaining_journal_allowance_bytes": 33506063950,
+    "minimum_free_reserve_bytes": 8589934592,
+    "unallocated_after_existing_caps_and_reserve_bytes": 6152761549,
+    "proposed_initial_cabbage_journal_cap_bytes": 2147483648,
+    "spare_after_proposed_cap_bytes": 4005277901,
+    "scope": "Applies if Cabbage journals on the same Ada export. Refresh at admission; this is not a reservation of bytes."
+  },
+  "pending": [
+    "Actual Cabbage NFS mount, UID/GID and server-coherent POSIX lock validation",
+    "Two actual hosts execute the isolated protocol probe; both result files must PASS",
+    "Freeze and test Cabbage-native worker/source identity and hardware allocation",
+    "Real start/middle/end chunk and independent GMP controls on the proposed interval",
+    "Signal/deadline cleanup, one GPU owner, resource and disk limits",
+    "Atomic disjoint production claim with the final source manifest",
+    "Fresh console-independent worker, deadline timer and collector",
+    "Ada-hosted Cabbage publisher first push and readback verification"
+  ]
+}

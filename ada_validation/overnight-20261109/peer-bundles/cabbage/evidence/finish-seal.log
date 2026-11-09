@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/pnord/scratch/cabbage-extended-20261109/finish_seal.py", line 16, in <module>
+    for name,p in names.items():shutil.copy2(p,archive/name);assert sha(archive/name)==sha(p)
+                                ~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/shutil.py", line 529, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/shutil.py", line 315, in copyfile
+    with open(dst, 'wb') as fdst:
+         ~~~~^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/mnt/fifth42-storage/archives/CABBAGE-EXTENDED-PARENT-20261109T230922Z/checkpoint.json'

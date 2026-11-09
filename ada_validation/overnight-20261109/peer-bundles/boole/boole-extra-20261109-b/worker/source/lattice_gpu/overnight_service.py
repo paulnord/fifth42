@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+"""Supervise the detached search and independent 15-minute GitHub snapshots."""
+from datetime import datetime
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+import sys
+import time
+
+ROOT=Path(__file__).resolve().parent
+STOP='2026-11-06T09:00:00-06:00'
+PYTHON='/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python'
+REPORT=ROOT/'width-runs/20261105T225458Z-20i6opud/report.json'
+
+def publish():
+    with (ROOT/'overnight-publisher.log').open('a') as log:
+        try:return subprocess.run(['/usr/bin/python3',str(ROOT/'github_status.py')],stdout=log,stderr=log,timeout=180).returncode
+        except subprocess.TimeoutExpired:log.write('Publisher exceeded its wall allowance\n');return 2
+
+def main():
+    process=None;stopping=False
+    def stop(signum,frame):
+        nonlocal stopping
+        stopping=True
+    signal.signal(signal.SIGTERM,stop);signal.signal(signal.SIGINT,stop)
+    command=[PYTHON,str(ROOT/'overnight_search.py'),'--selection-report',str(REPORT),'--until',STOP,
+        '--start-bound','100000000001','--max-bound','200000000000']
+    with (ROOT/'overnight-service.log').open('a') as log:
+        process=subprocess.Popen(command,stdout=log,stderr=log,env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1'))
+        (ROOT/'overnight-detached.json').write_text(json.dumps(dict(service='fifth-lattice-overnight-20261105.service',
+            service_pid=os.getpid(),coordinator_pid=process.pid,stop_local=STOP,update_interval_seconds=900,
+            independently_authenticated_git=True,logout_persistence='loginctl linger + systemd user service',
+            search_scope='selected patches for 100000000001 <= c <= 200000000000; partial coverage only'),indent=2)+'\n')
+        next_update=time.monotonic()+30
+        try:
+            while process.poll() is None:
+                if stopping or time.time()>=datetime.fromisoformat(STOP).timestamp():
+                    process.terminate();break
+                if time.monotonic()>=next_update:publish();next_update=time.monotonic()+900
+                time.sleep(1)
+        finally:
+            if process.poll() is None:
+                process.terminate()
+                try:process.wait(timeout=12)
+                except subprocess.TimeoutExpired:process.kill();process.wait()
+            publish()
+    return process.returncode
+
+if __name__=='__main__':raise SystemExit(main())
