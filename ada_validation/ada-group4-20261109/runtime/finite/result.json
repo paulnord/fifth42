@@ -1,0 +1,90 @@
+{
+  "new_chunks": 8,
+  "new_patches": 2048,
+  "new_gmp_audited_chunks": 8,
+  "next_patch": 4434275712,
+  "case": "finite",
+  "status": "passed",
+  "actual_systemd": true,
+  "TEST_ONLY": true,
+  "controls": "passed",
+  "original_parent_unchanged": true,
+  "leases_released": true,
+  "existing_output_rejected": true,
+  "hard_deadline": "2026-11-09T15:06:24.885316-06:00",
+  "finished_utc": "2026-11-09T21:05:00.084075+00:00",
+  "service": {
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "MainPID": "0",
+    "Result": "success"
+  },
+  "commands": [
+    {
+      "command": [
+        "systemd-run",
+        "--user",
+        "--unit=ada-group4-test-finite-20261109-deadline",
+        "--collect",
+        "--service-type=oneshot",
+        "--on-calendar=2026-11-09 21:06:14 UTC",
+        "--timer-property=AccuracySec=1s",
+        "--timer-property=RandomizedDelaySec=0",
+        "--timer-property=Persistent=no",
+        "/usr/bin/systemctl",
+        "--user",
+        "stop",
+        "ada-group4-test-finite-20261109.service"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Running timer as unit: ada-group4-test-finite-20261109-deadline.timer\nWill run service as unit: ada-group4-test-finite-20261109-deadline.service\n"
+    },
+    {
+      "command": [
+        "systemd-run",
+        "--user",
+        "--unit=ada-group4-test-finite-20261109",
+        "--collect",
+        "--service-type=exec",
+        "--description=Sixteen-worker fifth-power weekend continuation",
+        "--property=RuntimeMaxSec=79",
+        "--property=TimeoutStopSec=8s",
+        "--property=KillMode=mixed",
+        "--property=Restart=no",
+        "--property=Nice=19",
+        "--property=CPUAffinity=0-15",
+        "--property=UMask=0077",
+        "--working-directory=/home/pnord/ada-group4-20261109/worker",
+        "--property=StandardOutput=append:/home/pnord/ada-group4-20261109/worker/service.stdout.log",
+        "--property=StandardError=append:/home/pnord/ada-group4-20261109/worker/service.stderr.log",
+        "--setenv=PYTHONDONTWRITEBYTECODE=1",
+        "--setenv=PYTHONUNBUFFERED=1",
+        "--setenv=CUDA_VISIBLE_DEVICES=0",
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "-u",
+        "/home/pnord/ada-group4-20261109/worker/search_supervisor.py",
+        "--config",
+        "/home/pnord/ada-group4-20261109/runtime/finite/configuration.json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Running as unit: ada-group4-test-finite-20261109.service; invocation ID: 1cd57be1a3744af0ac10eac164a0e540\n"
+    },
+    {
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-group4-20261109/worker/finalize_replica.py",
+        "--config",
+        "/home/pnord/ada-group4-20261109/runtime/finite/configuration.json",
+        "--config-sha256",
+        "da2e34fdcd9393f7bdd4685f187ea7a35023fd1bed29cdf32b790ec823d72771"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"status\": \"verified\", \"run_id\": \"ada-group4-test-finite-20261109\", \"next_patch\": 4434275712, \"committed_bytes\": 147313}\n",
+      "stderr": ""
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "new_chunks": 6151,
+  "new_patches": 1574656,
+  "new_gmp_audited_chunks": 49,
+  "next_patch": 4435848320,
+  "case": "deadline-timer",
+  "status": "passed",
+  "actual_systemd": true,
+  "TEST_ONLY": true,
+  "controls": "passed",
+  "original_parent_unchanged": true,
+  "leases_released": true,
+  "hard_deadline": "2026-11-09T15:08:28.286204-06:00",
+  "worker_finished_epoch": 1794258498.043379,
+  "runtime_max_stop_passed": true,
+  "independent_deadline_timer_passed": true,
+  "timer_evidence": {
+    "command": [
+      "journalctl",
+      "--user",
+      "-u",
+      "ada-group4-test-deadline-timer-20261109.service",
+      "-u",
+      "ada-group4-test-deadline-timer-20261109-deadline.service",
+      "-u",
+      "ada-group4-test-deadline-timer-20261109-deadline.timer",
+      "--since",
+      "@1794258388",
+      "--no-pager",
+      "-o",
+      "short-iso"
+    ],
+    "stdout": "2026-11-09T15:06:58-06:00 ada systemd[4589]: Started ada-group4-test-deadline-timer-20261109-deadline.timer - [systemd-run] /usr/bin/systemctl --user stop ada-group4-test-deadline-timer-20261109.service.\n2026-11-09T15:06:58-06:00 ada systemd[4589]: Starting ada-group4-test-deadline-timer-20261109.service - Sixteen-worker fifth-power weekend continuation...\n2026-11-09T15:06:58-06:00 ada systemd[4589]: Started ada-group4-test-deadline-timer-20261109.service - Sixteen-worker fifth-power weekend continuation.\n2026-11-09T15:08:17-06:00 ada systemd[4589]: ada-group4-test-deadline-timer-20261109.service: Service reached runtime time limit. Stopping.\n2026-11-09T15:08:18-06:00 ada systemd[4589]: Starting ada-group4-test-deadline-timer-20261109-deadline.service - [systemd-run] /usr/bin/systemctl --user stop ada-group4-test-deadline-timer-20261109.service...\n2026-11-09T15:08:19-06:00 ada systemd[4589]: ada-group4-test-deadline-timer-20261109.service: Failed with result 'timeout'.\n2026-11-09T15:08:19-06:00 ada systemd[4589]: Stopped ada-group4-test-deadline-timer-20261109.service - Sixteen-worker fifth-power weekend continuation.\n2026-11-09T15:08:19-06:00 ada systemd[4589]: ada-group4-test-deadline-timer-20261109.service: Consumed 7min 36.333s CPU time over 1min 21.507s wall clock time, 676.9M memory peak.\n2026-11-09T15:08:19-06:00 ada systemd[4589]: Finished ada-group4-test-deadline-timer-20261109-deadline.service - [systemd-run] /usr/bin/systemctl --user stop ada-group4-test-deadline-timer-20261109.service.\n"
+  },
+  "completion_method": "Read-only completion of the already stopped trial after --collect unloaded its transient timer; no recomputation.",
+  "finished_utc": "2026-11-09T21:09:44.925174+00:00",
+  "final_replication": {
+    "command": [
+      "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+      "-B",
+      "/home/pnord/ada-group4-20261109/worker/finalize_replica.py",
+      "--config",
+      "/home/pnord/ada-group4-20261109/runtime/deadline-timer/configuration.json",
+      "--config-sha256",
+      "9d53d5442ba0a622b24299bd220c271cf3554dfbfbdfbc43e1e02b71a633bf79"
+    ],
+    "stdout": "{\"status\": \"verified\", \"run_id\": \"ada-group4-test-deadline-timer-20261109\", \"next_patch\": 4435848320, \"committed_bytes\": 113330465}\n"
+  }
+}

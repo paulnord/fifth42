@@ -1,0 +1,90 @@
+{
+  "new_chunks": 3907,
+  "new_patches": 1000000,
+  "new_gmp_audited_chunks": 31,
+  "next_patch": 4435273664,
+  "case": "deadline",
+  "status": "passed",
+  "actual_systemd": true,
+  "TEST_ONLY": true,
+  "controls": "passed",
+  "original_parent_unchanged": true,
+  "leases_released": true,
+  "existing_output_rejected": null,
+  "hard_deadline": "2026-11-09T15:06:34.760166-06:00",
+  "finished_utc": "2026-11-09T21:06:03.965691+00:00",
+  "service": {
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "MainPID": "0",
+    "Result": "success"
+  },
+  "commands": [
+    {
+      "command": [
+        "systemd-run",
+        "--user",
+        "--unit=ada-group4-test-deadline-20261109-deadline",
+        "--collect",
+        "--service-type=oneshot",
+        "--on-calendar=2026-11-09 21:06:24 UTC",
+        "--timer-property=AccuracySec=1s",
+        "--timer-property=RandomizedDelaySec=0",
+        "--timer-property=Persistent=no",
+        "/usr/bin/systemctl",
+        "--user",
+        "stop",
+        "ada-group4-test-deadline-20261109.service"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Running timer as unit: ada-group4-test-deadline-20261109-deadline.timer\nWill run service as unit: ada-group4-test-deadline-20261109-deadline.service\n"
+    },
+    {
+      "command": [
+        "systemd-run",
+        "--user",
+        "--unit=ada-group4-test-deadline-20261109",
+        "--collect",
+        "--service-type=exec",
+        "--description=Sixteen-worker fifth-power weekend continuation",
+        "--property=RuntimeMaxSec=79",
+        "--property=TimeoutStopSec=8s",
+        "--property=KillMode=mixed",
+        "--property=Restart=no",
+        "--property=Nice=19",
+        "--property=CPUAffinity=0-15",
+        "--property=UMask=0077",
+        "--working-directory=/home/pnord/ada-group4-20261109/worker",
+        "--property=StandardOutput=append:/home/pnord/ada-group4-20261109/worker/service.stdout.log",
+        "--property=StandardError=append:/home/pnord/ada-group4-20261109/worker/service.stderr.log",
+        "--setenv=PYTHONDONTWRITEBYTECODE=1",
+        "--setenv=PYTHONUNBUFFERED=1",
+        "--setenv=CUDA_VISIBLE_DEVICES=0",
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "-u",
+        "/home/pnord/ada-group4-20261109/worker/search_supervisor.py",
+        "--config",
+        "/home/pnord/ada-group4-20261109/runtime/deadline/configuration.json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Running as unit: ada-group4-test-deadline-20261109.service; invocation ID: 5f67feb706c747c8a815ae4f3a0dbd06\n"
+    },
+    {
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-group4-20261109/worker/finalize_replica.py",
+        "--config",
+        "/home/pnord/ada-group4-20261109/runtime/deadline/configuration.json",
+        "--config-sha256",
+        "31cf71b9b400fce7698fa6cebde6eb19f1f946f85872139e5acc17d31e4405a3"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"status\": \"verified\", \"run_id\": \"ada-group4-test-deadline-20261109\", \"next_patch\": 4435273664, \"committed_bytes\": 71948785}\n",
+      "stderr": ""
+    }
+  ]
+}
