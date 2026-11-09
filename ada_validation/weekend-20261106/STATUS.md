@@ -1,16 +1,16 @@
 # Ada search on large storage
 
-Updated: 2026-11-09T05:47:07.592360+00:00
+Updated: 2026-11-09T06:02:11.208731+00:00
 
 State: **running**. Run **ada-bulk-20261108**; gpu with 16 preparation workers.
-Current cursor: **4,351,550,080**.
-New committed patches: **23,401,984** in 91,414 chunks.
-Combined verified selected patches, including parents: **601,550,080**.
-Fresh interval: `[4328148096, 11250000001]`; committed: `[4328148096, 4351550080]`.
+Current cursor: **4,352,476,544**.
+New committed patches: **24,328,448** in 95,033 chunks.
+Combined verified selected patches, including parents: **602,476,544**.
+Fresh interval: `[4328148096, 11250000001]`; committed: `[4328148096, 4352476544]`.
 
 Journal storage: **separate large disk on Ada**. New journal cap: **128 GiB**;
 free-space reserve: 8 GiB.
-Observed rate: **1,049 patches/s**; new independent GMP audits: 715.
+Observed rate: **1,048 patches/s**; new independent GMP audits: 743.
 Deadline: **2026-11-09T09:00:00-06:00**. Independent worker/deadline services on Ada; separate publisher on Ada.
 GitHub updates every **15 minutes**, plus startup/terminal transitions. Alerts: None reported.
 
