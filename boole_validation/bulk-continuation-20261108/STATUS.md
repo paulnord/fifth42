@@ -1,16 +1,16 @@
 # Boole search on large storage
 
-Updated: 2026-11-09T13:09:42.884867+00:00
+Updated: 2026-11-09T13:24:45.250080+00:00
 
 State: **running**. Run **boole-bulk-20261108**; gpu with 16 preparation workers.
-Current cursor: **3,304,352,000**.
-New committed patches: **31,093,760** in 121,460 chunks.
-Combined verified selected patches, including parents: **304,352,000**.
-Fresh interval: `[3273258240, 3750000000]`; committed: `[3273258240, 3304352000]`.
+Current cursor: **3,304,960,000**.
+New committed patches: **31,701,760** in 123,835 chunks.
+Combined verified selected patches, including parents: **304,960,000**.
+Fresh interval: `[3273258240, 3750000000]`; committed: `[3273258240, 3304960000]`.
 
 Journal storage: **separate large disk on Ada**. New journal cap: **128 GiB**;
 free-space reserve: 8 GiB.
-Observed rate: **675 patches/s**; new independent GMP audits: 949.
+Observed rate: **675 patches/s**; new independent GMP audits: 968.
 Deadline: **2026-11-09T09:00:00-06:00**. Independent worker/deadline services on Boole; separate publisher on Ada.
 GitHub updates every **15 minutes**, plus startup/terminal transitions. Alerts: None reported.
 
