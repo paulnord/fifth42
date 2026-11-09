@@ -1,0 +1,862 @@
+{
+  "status": "passed",
+  "TEST_ONLY": true,
+  "production_coverage": false,
+  "manifest_sha256": "9d98f32376016dec11337bcbbb0ad1677f26821e7a0aead64b03da021337db67",
+  "cases": [
+    {
+      "case": "finite-v2",
+      "status": "passed",
+      "TEST_ONLY": true,
+      "production_coverage": false,
+      "config": {
+        "TEST_ONLY": true,
+        "run_id": "boole-bulk-test-finite-v2",
+        "parent_run": "TEST_ONLY no production coverage",
+        "parent_selected_patches": 0,
+        "initial_patch": 3273258240,
+        "range_end": 3274258240,
+        "shell_lo": 100000000001,
+        "shell_hi": 200000000000,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "workers": 16,
+        "physical_cpus": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "chunk_patches": 256,
+        "backend": "gpu",
+        "gmp_audit_period": 128,
+        "stop_epoch": 1794182461.396445,
+        "automatic_resume": false,
+        "publication": false,
+        "manifest_sha256": "9d98f32376016dec11337bcbbb0ad1677f26821e7a0aead64b03da021337db67",
+        "geometry_policy": "adaptive",
+        "prep_load_ceiling": 17.0,
+        "running_load_limit": 20.0,
+        "minimum_free_disk_bytes": 8589934592,
+        "journal_limit_bytes": 137438953472,
+        "test_chunk_limit": 32,
+        "ledger_root": "/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/boole-validation/bulk-20261108/finite-v2",
+        "ledger_job": "test-finite-v2",
+        "ledger_device": 92,
+        "coverage_file": "/home/pnord/boole-bulk-20261108/worker/boole-final-coverage.json",
+        "coverage_sha256": "e19f86245f1c4607680c5e3266f9436209881889270abe55f007ecc8174f1f49",
+        "output": "/mnt/fifth42-storage/TEST_ONLY_boole_bulk_20261108/finite-v2/run",
+        "output_device": 83,
+        "stop_local": "2026-11-09T00:01:01.396445+00:00",
+        "ledger_claim_sha256": "50ccfcc2f62267d614b4839eeccbd9335b5f016b059d66b54313bde18688b008"
+      },
+      "checkpoint": {
+        "chunks": 32,
+        "completed_bound": null,
+        "hits": [],
+        "identity": {
+          "source_identity": "dfa7b310db9a7b97c1593f65cc60ba57b2a2ef46470ee42c76f5299ecbaa6599",
+          "trial": "boole-bulk-test-finite-v2"
+        },
+        "journal_offset": 1155746,
+        "journal_sha256": "46970ff88b96d30f70484e2358f31fceecf84a96956d6908e1a6c0822b3dcfbe",
+        "next_patch": 3273266432,
+        "patches": 8192,
+        "points": 12687088,
+        "window": {
+          "bits": 222,
+          "cap": 42,
+          "first": 3273258240,
+          "geometry_policy": "adaptive",
+          "hi": 200000000000,
+          "last": 3273266432,
+          "lo": 100000000001,
+          "width": 8
+        }
+      },
+      "independent_audits": 1,
+      "controls": {
+        "cases": [
+          {
+            "bound": 34,
+            "cap": 42,
+            "full_oracle_equal": true,
+            "hits": [
+              [
+                1,
+                1,
+                2,
+                -30
+              ],
+              [
+                13,
+                16,
+                17,
+                12
+              ]
+            ]
+          },
+          {
+            "bound": 100,
+            "cap": 2951,
+            "full_oracle_equal": true,
+            "hits": [
+              [
+                1,
+                1,
+                2,
+                -30
+              ],
+              [
+                1,
+                1,
+                3,
+                -241
+              ],
+              [
+                1,
+                1,
+                4,
+                -1022
+              ],
+              [
+                1,
+                2,
+                3,
+                -210
+              ],
+              [
+                1,
+                2,
+                4,
+                -991
+              ],
+              [
+                1,
+                3,
+                4,
+                -780
+              ],
+              [
+                1,
+                3,
+                5,
+                -2881
+              ],
+              [
+                1,
+                4,
+                5,
+                -2100
+              ],
+              [
+                2,
+                2,
+                3,
+                -179
+              ],
+              [
+                2,
+                2,
+                4,
+                -960
+              ],
+              [
+                2,
+                3,
+                4,
+                -749
+              ],
+              [
+                2,
+                3,
+                5,
+                -2850
+              ],
+              [
+                2,
+                4,
+                5,
+                -2069
+              ],
+              [
+                3,
+                3,
+                4,
+                -538
+              ],
+              [
+                3,
+                3,
+                5,
+                -2639
+              ],
+              [
+                3,
+                4,
+                5,
+                -1858
+              ],
+              [
+                4,
+                4,
+                5,
+                -1077
+              ],
+              [
+                5,
+                5,
+                6,
+                -1526
+              ],
+              [
+                6,
+                6,
+                7,
+                -1255
+              ],
+              [
+                7,
+                7,
+                8,
+                846
+              ],
+              [
+                9,
+                10,
+                11,
+                -2002
+              ],
+              [
+                13,
+                16,
+                17,
+                12
+              ],
+              [
+                26,
+                32,
+                34,
+                384
+              ],
+              [
+                39,
+                48,
+                51,
+                2916
+              ],
+              [
+                42,
+                71,
+                72,
+                2951
+              ]
+            ]
+          }
+        ],
+        "status": "passed"
+      },
+      "supervisor": {
+        "status": "finished",
+        "error": null,
+        "config_sha256": "8ad66069cad643c7712c5c64b2e0a883ca07d19be91ed42f711d237314726448",
+        "TEST_ONLY": true,
+        "leases_released": true,
+        "worker_pid": 189209,
+        "worker_exit_code": 0,
+        "all_owned_processes_exited_utc": "2026-11-09T00:00:02.057631+00:00",
+        "wall_seconds": 29.639504513004795,
+        "updated_utc": "2026-11-09T00:00:02.057657+00:00",
+        "load_average": [
+          2.06396484375,
+          4.17822265625,
+          6.07470703125
+        ]
+      },
+      "reason": "Bounded integration chunks completed"
+    },
+    {
+      "case": "signal-v2",
+      "status": "passed",
+      "TEST_ONLY": true,
+      "production_coverage": false,
+      "config": {
+        "TEST_ONLY": true,
+        "run_id": "boole-bulk-test-signal-v2",
+        "parent_run": "TEST_ONLY no production coverage",
+        "parent_selected_patches": 0,
+        "initial_patch": 3273258240,
+        "range_end": 3274258240,
+        "shell_lo": 100000000001,
+        "shell_hi": 200000000000,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "workers": 16,
+        "physical_cpus": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "chunk_patches": 256,
+        "backend": "gpu",
+        "gmp_audit_period": 128,
+        "stop_epoch": 1794182493.3194382,
+        "automatic_resume": false,
+        "publication": false,
+        "manifest_sha256": "9d98f32376016dec11337bcbbb0ad1677f26821e7a0aead64b03da021337db67",
+        "geometry_policy": "adaptive",
+        "prep_load_ceiling": 17.0,
+        "running_load_limit": 20.0,
+        "minimum_free_disk_bytes": 8589934592,
+        "journal_limit_bytes": 137438953472,
+        "test_chunk_limit": null,
+        "ledger_root": "/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/boole-validation/bulk-20261108/signal-v2",
+        "ledger_job": "test-signal-v2",
+        "ledger_device": 92,
+        "coverage_file": "/home/pnord/boole-bulk-20261108/worker/boole-final-coverage.json",
+        "coverage_sha256": "e19f86245f1c4607680c5e3266f9436209881889270abe55f007ecc8174f1f49",
+        "output": "/mnt/fifth42-storage/TEST_ONLY_boole_bulk_20261108/signal-v2/run",
+        "output_device": 83,
+        "stop_local": "2026-11-09T00:01:33.319438+00:00",
+        "ledger_claim_sha256": "36e582ad7c51a4cd848ab28946f25c9272807a6e71efe4da7689808d35a8d3e3"
+      },
+      "checkpoint": {
+        "chunks": 2,
+        "completed_bound": null,
+        "hits": [],
+        "identity": {
+          "source_identity": "5d45061141b6a241b847aefde030c1d5e6f71cf765e2b33836dd87bbbff30212",
+          "trial": "boole-bulk-test-signal-v2"
+        },
+        "journal_offset": 72214,
+        "journal_sha256": "d6d7687e074f431a66883fc33cdcd000d6d5d8b5521be191fe2a51006dedb800",
+        "next_patch": 3273258752,
+        "patches": 512,
+        "points": 786552,
+        "window": {
+          "bits": 222,
+          "cap": 42,
+          "first": 3273258240,
+          "geometry_policy": "adaptive",
+          "hi": 200000000000,
+          "last": 3274258240,
+          "lo": 100000000001,
+          "width": 8
+        }
+      },
+      "independent_audits": 1,
+      "controls": {
+        "cases": [
+          {
+            "bound": 34,
+            "cap": 42,
+            "full_oracle_equal": true,
+            "hits": [
+              [
+                1,
+                1,
+                2,
+                -30
+              ],
+              [
+                13,
+                16,
+                17,
+                12
+              ]
+            ]
+          },
+          {
+            "bound": 100,
+            "cap": 2951,
+            "full_oracle_equal": true,
+            "hits": [
+              [
+                1,
+                1,
+                2,
+                -30
+              ],
+              [
+                1,
+                1,
+                3,
+                -241
+              ],
+              [
+                1,
+                1,
+                4,
+                -1022
+              ],
+              [
+                1,
+                2,
+                3,
+                -210
+              ],
+              [
+                1,
+                2,
+                4,
+                -991
+              ],
+              [
+                1,
+                3,
+                4,
+                -780
+              ],
+              [
+                1,
+                3,
+                5,
+                -2881
+              ],
+              [
+                1,
+                4,
+                5,
+                -2100
+              ],
+              [
+                2,
+                2,
+                3,
+                -179
+              ],
+              [
+                2,
+                2,
+                4,
+                -960
+              ],
+              [
+                2,
+                3,
+                4,
+                -749
+              ],
+              [
+                2,
+                3,
+                5,
+                -2850
+              ],
+              [
+                2,
+                4,
+                5,
+                -2069
+              ],
+              [
+                3,
+                3,
+                4,
+                -538
+              ],
+              [
+                3,
+                3,
+                5,
+                -2639
+              ],
+              [
+                3,
+                4,
+                5,
+                -1858
+              ],
+              [
+                4,
+                4,
+                5,
+                -1077
+              ],
+              [
+                5,
+                5,
+                6,
+                -1526
+              ],
+              [
+                6,
+                6,
+                7,
+                -1255
+              ],
+              [
+                7,
+                7,
+                8,
+                846
+              ],
+              [
+                9,
+                10,
+                11,
+                -2002
+              ],
+              [
+                13,
+                16,
+                17,
+                12
+              ],
+              [
+                26,
+                32,
+                34,
+                384
+              ],
+              [
+                39,
+                48,
+                51,
+                2916
+              ],
+              [
+                42,
+                71,
+                72,
+                2951
+              ]
+            ]
+          }
+        ],
+        "status": "passed"
+      },
+      "supervisor": {
+        "status": "finished",
+        "error": null,
+        "config_sha256": "537f00e7d7cabded73deefeaf8d63497f62d1c2f91a1202f263c4aef699e0c89",
+        "TEST_ONLY": true,
+        "leases_released": true,
+        "worker_pid": 189397,
+        "stop_trigger": "signal",
+        "worker_exit_code": 0,
+        "all_owned_processes_exited_utc": "2026-11-09T00:00:11.211939+00:00",
+        "wall_seconds": 6.970788394974079,
+        "updated_utc": "2026-11-09T00:00:11.211964+00:00",
+        "load_average": [
+          2.0537109375,
+          4.10595703125,
+          6.03076171875
+        ]
+      },
+      "reason": "Stop requested"
+    },
+    {
+      "case": "deadline-v2",
+      "status": "passed",
+      "TEST_ONLY": true,
+      "production_coverage": false,
+      "config": {
+        "TEST_ONLY": true,
+        "run_id": "boole-bulk-test-deadline-v2",
+        "parent_run": "TEST_ONLY no production coverage",
+        "parent_selected_patches": 0,
+        "initial_patch": 3273258240,
+        "range_end": 3274258240,
+        "shell_lo": 100000000001,
+        "shell_hi": 200000000000,
+        "width": 8,
+        "bits": 222,
+        "cap": 42,
+        "workers": 16,
+        "physical_cpus": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "chunk_patches": 256,
+        "backend": "gpu",
+        "gmp_audit_period": 128,
+        "stop_epoch": 1794182502.4088855,
+        "automatic_resume": false,
+        "publication": false,
+        "manifest_sha256": "9d98f32376016dec11337bcbbb0ad1677f26821e7a0aead64b03da021337db67",
+        "geometry_policy": "adaptive",
+        "prep_load_ceiling": 17.0,
+        "running_load_limit": 20.0,
+        "minimum_free_disk_bytes": 8589934592,
+        "journal_limit_bytes": 137438953472,
+        "test_chunk_limit": null,
+        "ledger_root": "/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/boole-validation/bulk-20261108/deadline-v2",
+        "ledger_job": "test-deadline-v2",
+        "ledger_device": 92,
+        "coverage_file": "/home/pnord/boole-bulk-20261108/worker/boole-final-coverage.json",
+        "coverage_sha256": "e19f86245f1c4607680c5e3266f9436209881889270abe55f007ecc8174f1f49",
+        "output": "/mnt/fifth42-storage/TEST_ONLY_boole_bulk_20261108/deadline-v2/run",
+        "output_device": 83,
+        "stop_local": "2026-11-09T00:01:42.408885+00:00",
+        "ledger_claim_sha256": "b4fca24363fa975829f32272d419c2c0d8bfe5ce58ab23d25095773644af2697"
+      },
+      "checkpoint": {
+        "chunks": 96,
+        "completed_bound": null,
+        "hits": [],
+        "identity": {
+          "source_identity": "d2b1e6a89caf3cc3d1b436159fc5731872d6e14da475d04645ab8b38e557bf39",
+          "trial": "boole-bulk-test-deadline-v2"
+        },
+        "journal_offset": 3467488,
+        "journal_sha256": "b23ec305244128388cc56602e783036beb1c34ea024ed89a0c1eeeb879ca5a79",
+        "next_patch": 3273282816,
+        "patches": 24576,
+        "points": 38153460,
+        "window": {
+          "bits": 222,
+          "cap": 42,
+          "first": 3273258240,
+          "geometry_policy": "adaptive",
+          "hi": 200000000000,
+          "last": 3274258240,
+          "lo": 100000000001,
+          "width": 8
+        }
+      },
+      "independent_audits": 1,
+      "controls": {
+        "cases": [
+          {
+            "bound": 34,
+            "cap": 42,
+            "full_oracle_equal": true,
+            "hits": [
+              [
+                1,
+                1,
+                2,
+                -30
+              ],
+              [
+                13,
+                16,
+                17,
+                12
+              ]
+            ]
+          },
+          {
+            "bound": 100,
+            "cap": 2951,
+            "full_oracle_equal": true,
+            "hits": [
+              [
+                1,
+                1,
+                2,
+                -30
+              ],
+              [
+                1,
+                1,
+                3,
+                -241
+              ],
+              [
+                1,
+                1,
+                4,
+                -1022
+              ],
+              [
+                1,
+                2,
+                3,
+                -210
+              ],
+              [
+                1,
+                2,
+                4,
+                -991
+              ],
+              [
+                1,
+                3,
+                4,
+                -780
+              ],
+              [
+                1,
+                3,
+                5,
+                -2881
+              ],
+              [
+                1,
+                4,
+                5,
+                -2100
+              ],
+              [
+                2,
+                2,
+                3,
+                -179
+              ],
+              [
+                2,
+                2,
+                4,
+                -960
+              ],
+              [
+                2,
+                3,
+                4,
+                -749
+              ],
+              [
+                2,
+                3,
+                5,
+                -2850
+              ],
+              [
+                2,
+                4,
+                5,
+                -2069
+              ],
+              [
+                3,
+                3,
+                4,
+                -538
+              ],
+              [
+                3,
+                3,
+                5,
+                -2639
+              ],
+              [
+                3,
+                4,
+                5,
+                -1858
+              ],
+              [
+                4,
+                4,
+                5,
+                -1077
+              ],
+              [
+                5,
+                5,
+                6,
+                -1526
+              ],
+              [
+                6,
+                6,
+                7,
+                -1255
+              ],
+              [
+                7,
+                7,
+                8,
+                846
+              ],
+              [
+                9,
+                10,
+                11,
+                -2002
+              ],
+              [
+                13,
+                16,
+                17,
+                12
+              ],
+              [
+                26,
+                32,
+                34,
+                384
+              ],
+              [
+                39,
+                48,
+                51,
+                2916
+              ],
+              [
+                42,
+                71,
+                72,
+                2951
+              ]
+            ]
+          }
+        ],
+        "status": "passed"
+      },
+      "supervisor": {
+        "status": "finished",
+        "error": null,
+        "config_sha256": "e93823a9c31b06c176a07b6449a6495d699ac8f9e699277630495ac0f2206df4",
+        "TEST_ONLY": true,
+        "leases_released": true,
+        "worker_pid": 189495,
+        "stop_trigger": "absolute_deadline",
+        "worker_exit_code": 0,
+        "all_owned_processes_exited_utc": "2026-11-09T00:01:35.303705+00:00",
+        "wall_seconds": 81.61640508903656,
+        "updated_utc": "2026-11-09T00:01:35.303731+00:00",
+        "load_average": [
+          2.21435546875,
+          3.6279296875,
+          5.6904296875
+        ]
+      },
+      "reason": "Stop requested"
+    }
+  ]
+}
