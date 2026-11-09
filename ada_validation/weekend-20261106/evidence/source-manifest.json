@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-11-09T19:55:15.491243+00:00",
+  "created_utc": "2026-11-09T21:03:45.808137+00:00",
   "files": {
     "ada_export_store.py": "84689b01562c5828d3bc0339795a830cacf0f6eb85528ca66b19e41555646a3c",
     "bin/gmp_reference": "8d514a59a5488de9a16a2f7ab0ecd351fdc13816298ddb777a18d9aa94158eb6",
@@ -20,7 +20,7 @@
     "origin-claim.json": "8c8229880ce9ea9fb51c670a4e3a43c768f7fad36570f18786aa8e14d521945a",
     "origin-config.json": "30ebd4dabba29e083ff8bbabffe4e1244ccd7217661b014111fc079d3d6394f4",
     "packed_worker.py": "f742712ff1b809f81ea918b8ac13f73c133a5406f509f97542754f1c7355b376",
-    "policy.py": "04c4b92536f9e0c05e07ac24a1f8c26a508b46277f2c6a18297c2b6dcc8fc7f9",
+    "policy.py": "88fda0e25b27aa8acb68cb620e1e55024d9d8cb765b8e756a956b890d0a765a5",
     "precision/PRECISION.md": "3b8a38d9dcd91575be5a79cdc3435807f5489d2f9d74b0a8a484ee89637194d1",
     "precision/precision_policy.py": "e0ba8905f7af276b445e12debf68bfe71ddc0d711045d4c41105c9e0b2400495",
     "precision/precision_validate.py": "ee8731faaccf50abb35e9f40b75b6b0a87d4275c6096487903c4054b1ec8524c",
@@ -200,9 +200,9 @@
     "/home/pnord/fifth-lattice-optimizations-ada-20261105/benchmark_ada.py": "a73715d1473fd52c2a86670f05cfe747800d3ccca688b6e0a9e7593d25e5aed9",
     "/home/pnord/fifth42-low64-review-20261106/handoff/bundle/fifth42-coordinator-20261105/lattice_gpu/benchmark.py": "18266c0d47f8d6945fd82b6075087d6db5e05927e6c4b42dac7acd0698e7983c"
   },
-  "continuation": "Fresh sealed-parent continuation with immutable canonical task cache, bounded ready queue, explicit dispatch and durable grouped journal commits.",
+  "continuation": "Same buffered runtime and exact width-8 coverage grid; group limit four, dispatch four, sealed-parent continuation.",
   "original_manifest_sha256": "a7aea624ca71a44aeff905976f944573b036e2f7a6b614dc79fdc4aed587dffe",
-  "parent_manifest_sha256": "03d3e8ca8eda798161f64ceeab7116cf180ea45de369e9dd463273fbc3a563ff",
+  "parent_manifest_sha256": "c2634246fee34b3a8f6b189da1af148186f669157e80309be6fe085250459824",
   "optimization": {
     "name": "exact lower fifth-root reuse",
     "patch_blob_sha": "016e80349bdc345aa00b1f280dfad2ab12ec0ccc",
@@ -219,7 +219,8 @@
     "local journal with verified periodic bulk replica",
     "Checked immutable canonical task data retained across preparation and consumption",
     "Eight-record durable journal buffer; checkpoint advances only after fsync",
-    "Actual ready queue depth and empty/full wait telemetry"
+    "Actual ready queue depth and empty/full wait telemetry",
+    "Ada group limit four with dispatch chunksize four; sixteen preparation jobs per original 256-cell commit"
   ],
-  "release_version": "ada-buffered-r1-20261109"
+  "release_version": "ada-group4-r1-20261109"
 }
