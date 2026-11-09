@@ -1,16 +1,16 @@
 # Cabbage search on large storage
 
-Updated: 2026-11-09T05:44:58.572645+00:00
+Updated: 2026-11-09T06:00:01.766995+00:00
 
 State: **running**. Run **cabbage-bulk-20261108T234202Z**; gpu with 16 preparation workers.
-Current cursor: **2,278,069,888**.
-New committed patches: **14,586,880** in 56,980 chunks.
-Combined verified selected patches, including parents: **28,069,888**.
-Fresh interval: `[2263483008, 3000000000]`; committed: `[2263483008, 2278069888]`.
+Current cursor: **2,278,684,032**.
+New committed patches: **15,201,024** in 59,379 chunks.
+Combined verified selected patches, including parents: **28,684,032**.
+Fresh interval: `[2263483008, 3000000000]`; committed: `[2263483008, 2278684032]`.
 
 Journal storage: **separate large disk on Ada**. New journal cap: **128 GiB**;
 free-space reserve: 8 GiB.
-Observed rate: **683 patches/s**; new independent GMP audits: 446.
+Observed rate: **683 patches/s**; new independent GMP audits: 464.
 Deadline: **2026-11-09T09:00:00-06:00**. Independent worker/deadline services on Cabbage; separate publisher on Ada.
 GitHub updates every **15 minutes**, plus startup/terminal transitions. Alerts: None reported.
 
