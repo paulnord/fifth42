@@ -1,0 +1,29 @@
+Cabbage buffered upgrade and restart — 9 November 2026
+
+Read UPGRADE_COMMON.txt and use the exact source commit in GITHUB_REVISION.json.
+The user authorized deployment and restart. Stop TODAY at 5 p.m. Central;
+compute shutdown begins at 16:59:50, epoch deadline 1794265200.
+
+Your earlier combined job was observed running. Stop it gracefully, finish its
+verified replica and seal its ACTUAL final checkpoint. Preserve that run and
+start a fresh continuation at its exact cursor under the original owner:
+  ledger: /mnt/nfs_share/fifth42-shared-20261107
+  job: cabbage-saved-root-20261108T222040Z
+  original interval: [2250000000,3000000000)
+  original claim SHA256: 364221db0023ea69fa18b47eb512e9e83362f6d598fc19c101e74b72f4f3d1c8
+
+New run ID: cabbage-buffered-20261109
+Keep your current group_limit=4 and 16 physical workers. Set dispatch_chunksize=4,
+ready_queue_limit=3 and an eight-record durable journal buffer. Retain the
+checked canonical Task bytes in memory. Keep one preparation window and one
+window per GPU request. The native source already matches the selected low64
+kernel, so preserve your validated compiler/binary identity.
+
+Copy the two new modules, merge the worker delta, preserve your own host guards,
+and run the actual-release correctness/crash/stop tests described in COMMON.
+Freeze the per-host manifest/configuration, START production, and run the supplied
+reporting helper. Return READY_FOR_PUBLISHER.json under:
+/mnt/nfs_share/fifth42-integration-20261109/restart-buffered/cabbage
+
+Report active service/timer, final parent/new cursor, manifest/config hashes,
+local and replicated progress, actual ready depth and pending journal records.

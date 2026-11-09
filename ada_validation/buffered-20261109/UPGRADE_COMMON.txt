@@ -1,0 +1,122 @@
+Buffered pipeline upgrade — tested 9 November 2026
+
+Use the exact GitHub commit linked with this handoff. The NFS bundle also records
+it in GITHUB_REVISION.json. Verify READY.json and SHA256SUMS before staging.
+User authorization: deploy the strongest validated strategy, resume production,
+and provide fresh Boole/Cabbage handoffs. Stop TODAY at 17:00 America/Chicago,
+2026-11-09T17:00:00-06:00, epoch 1794265200. Begin compute shutdown at 16:59:50.
+
+Selected delta
+
+Keep the existing saved-root/exact-host/low64 computation and mathematical group
+limit. Retain 16 physical preparation workers. Ada uses group_limit=2 and dispatch
+chunksize=8. Current Boole and Cabbage runs use group_limit=4; use dispatch
+chunksize=4 there. A 64-task window at chunksize 8 exposes only eight pool jobs;
+chunksize 4 exposes sixteen. Group limit changes geometry; dispatch size does not.
+
+Copy worker/buffered_pipeline.py and worker/scheduling.py unchanged. Merge the
+provided packed_worker.py delta into YOUR current worker, preserving your own
+host policy, mount/device/space checks, resource leases and ownership checks.
+Ada's policy/configuration are references; keep your per-host guards and lineage.
+The current native kernel on all three nodes already matches SHA256
+3715d7636b404e172371a3828c2b7f112de8351d0b1c7b53c0f36f75fe2a9def.
+Reuse your validated native binary when its pinned source identity matches.
+No CUDA or mathematical source change is required for this buffering upgrade.
+
+Freeze these new configuration fields:
+  dispatch_chunksize: 4 on Boole/Cabbage (8 on Ada)
+  ready_queue_limit: 3
+  journal_buffer_records: 8
+  journal_buffer_bytes: 8388608
+  journal_buffer_max_age_seconds: 0.25
+Keep preparation_windows=1 and one original window per GPU request.
+
+The cache retains canonical Task bytes already checked against exact certificates.
+A private in-process seal retains immutable field snapshots. Consumption verifies
+that the same tasks/fields, certificate digests, specifications and native packets
+still match. Canonical JSON bytes and mathematical certificates are unchanged.
+
+Use BufferedJournal for eight-record buffering. state always means DURABLE state;
+head includes accepted records still in RAM. Checkpoint replacement follows journal
+fsync, then checkpoint fsync/rename and directory fsync. A final partial buffer is
+flushed on graceful close. A failed write poisons the writer and requires explicit
+recovery. No automatic resume is enabled. The 0.25-second age check runs when a new
+record is accepted; count and byte bounds also apply.
+
+IMPORTANT integration details in packed_worker.py:
+  * Use accepted_chunks, not durable state.chunks, for GMP audit cadence and audit
+    filenames. Keep GMP period <=128 and audit sequence 1,129,257,... at period128.
+  * Use cached preparation and validate_cached for selected-window execution.
+  * Dispatch coverage.prepare_segment with the frozen dispatch chunksize.
+  * Use ReadyQueue and explicitly ack a prepared buffer after its verified record
+    has been accepted. That ack releases RAM; durable coverage is journal.state.
+  * Nudge replication after the FIRST DURABLE checkpoint (eight accepted chunks).
+  * Flush/close the journal before terminal status and final replication. A final
+    flush failure must report failure and retain the last committed prefix.
+  * Export actual ready depth, inflight count, empty/full/capacity wait times and
+    pending journal records/bytes. outstanding alone is not ready depth.
+
+Rolling upgrade and exact continuity
+
+Your earlier combined job may still be running. Stop it gracefully with its OWN
+service/stop interface. Finish and verify its final replica. Audit the COMPLETE
+committed journal using the auditor matching that parent schema, preserve its
+source/config hashes and seal a verified archive/replica. Use the ACTUAL FINAL
+checkpoint.next_patch; do not use the 9 a.m. cursor or a status snapshot.
+
+Start a FRESH run/journal at that exact cursor, under the SAME original width-8
+reservation and owner lock. Keep shell [100000000001,200000000000], bits222 with
+adaptive precision, cap42, width8, logical chunk256 and original range_end.
+Physical tasks still record exact original-cell spans. New logical receipts remain
+separate 256-cell records even when several share one durable checkpoint write.
+Do not append the new runtime to an old run, claim an overlapping range, change
+night.grid_count to a wider grid, or advance coverage for unflushed RAM records.
+
+Keep local durable journal storage and the existing verified bulk replica every
+60 seconds, with a maximum captured-prefix lag of 300 seconds. Keep the original
+NFS claim/owner locks. Start the independent final-copy cleanup service before
+compute; it may finish after compute stops and must never resume search work.
+Preserve journal caps, disk reserve and the independent 16:59:50 stop timer.
+
+Acceptance and launch
+
+Run the supplied test_buffering.py and test_scheduling.py against your ACTUAL new
+worker layout and pinned environment, under your own existing resource guard.
+They test cached-plan tampering, nonempty GPU/GMP results, checkpoint/fsync failure,
+process-crash recovery, final buffer drain, queue bounds/order and multiwindow
+identity. Keep SCALING_LATTICE_SOURCE pinned to that worker's lattice source.
+Run the actual supervisor through finite, signal-stop and short deadline cases.
+Independently audit local and replica receipts, including final partial buffers,
+GMP cadence, lease release and rejection of an existing output directory.
+Freeze the resulting per-host manifest/configuration and START production.
+The user has authorized this upgrade and restart; no new approval is needed.
+
+Reporting handoff
+
+Use the supplied collector.py and prepare_node_reporting.py with absolute paths:
+  <pinned-python> -B prepare_node_reporting.py --config <new-frozen-config>
+    --manifest <new-manifest> --supervisor <new-supervisor-report.json>
+    --runtime-validation <passed-runtime-validation.json>
+    --reporter-root <fresh-local-reporting-directory> --python <pinned-python>
+New run IDs: boole-buffered-20261109 and cabbage-buffered-20261109.
+New shares: /mnt/nfs_share/<node>-buffered-publishing-20261109.
+Return directory: /mnt/nfs_share/fifth42-integration-20261109/restart-buffered/<node>.
+READY_FOR_PUBLISHER.json is written last. Ada's admission service checks the pinned
+source, original claim, parent evidence and new replicated GMP/native receipts,
+then binds its GitHub publisher. Check ADA_ADMISSION_HEALTH.json and
+ADA_PUBLISHER_ADMISSION.json. Return active service/timer, source/config hashes,
+actual new parent cursor, and local/replica progress.
+
+Evidence
+
+All timing samples, matched-window signatures and test results are included.
+On Ada, five-repeat held-out gains versus the earlier combined local-journal
+pipeline were 1.254x for Ada group2/dispatch8, 1.294x for a current Boole-ratio
+group4/dispatch4 strip, and 1.320x for Cabbage group4/dispatch4. These are Ada
+measurements of representative inputs, not measurements of peer hardware.
+
+RAM-only journals, worker JSON transport, larger buffers, asynchronous journaling,
+multiple preparation windows and fewer workers were tested. They added no reliable
+benefit over the selected settings. GPU aggregation passed exact-count/GMP checks
+in isolated request tests; its small pipeline share did not justify a new journal
+request-mapping protocol. Those experiments are not part of this production delta.

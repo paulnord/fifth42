@@ -1,0 +1,4657 @@
+{
+  "status": "passed",
+  "summary": [
+    {
+      "region": "ada",
+      "median_seconds": {
+        "baseline-w16-m8-p1": 3.1627305319998413,
+        "cache-w16-m8-p1": 2.5941664980491623,
+        "cache_buffer8-w16-m4-p1": 2.7424841729807667,
+        "cache_buffer8-w16-m8-p1": 2.5214799499954097
+      },
+      "throughput_vs_baseline": {
+        "baseline-w16-m8-p1": 1.0,
+        "cache-w16-m8-p1": 1.2191702168608856,
+        "cache_buffer8-w16-m4-p1": 1.1532356551623468,
+        "cache_buffer8-w16-m8-p1": 1.2543151620164972
+      }
+    },
+    {
+      "region": "boole",
+      "median_seconds": {
+        "baseline-w16-m8-p1": 3.2013459489680827,
+        "cache-w16-m8-p1": 2.5660470129805617,
+        "cache_buffer8-w16-m4-p1": 2.748684288992081,
+        "cache_buffer8-w16-m8-p1": 2.5167199579882436
+      },
+      "throughput_vs_baseline": {
+        "baseline-w16-m8-p1": 1.0,
+        "cache-w16-m8-p1": 1.2475788373220789,
+        "cache_buffer8-w16-m4-p1": 1.1646830310009846,
+        "cache_buffer8-w16-m8-p1": 1.2720310572524325
+      }
+    },
+    {
+      "region": "cabbage",
+      "median_seconds": {
+        "baseline-w16-m8-p1": 1.8507274250150658,
+        "cache-w16-m8-p1": 1.746829148964025,
+        "cache_buffer8-w16-m4-p1": 1.4019109359942377,
+        "cache_buffer8-w16-m8-p1": 1.7110319320345297
+      },
+      "throughput_vs_baseline": {
+        "baseline-w16-m8-p1": 1.0,
+        "cache-w16-m8-p1": 1.0594782129166203,
+        "cache_buffer8-w16-m4-p1": 1.3201462214876916,
+        "cache_buffer8-w16-m8-p1": 1.0816440011230117
+      }
+    }
+  ],
+  "trials": [
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 3.1627305319998413,
+      "startup_seconds": 0.5059657829697244,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 10360.667678912345,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011361312000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 1.7580846450291574,
+          "thread_cpu_seconds": 1.0426667529999993
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.05916451051598415,
+          "thread_cpu_seconds": 0.014658404000001374
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009814060817006975,
+          "thread_cpu_seconds": 0.009832734999999843
+        }
+      },
+      "commit_seconds": 0.5554304395336658,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.525606386596337,
+        "producer_wait_full_seconds": 0.018261266930494457,
+        "producer_wait_capacity_seconds": 8.180318400263786e-05,
+        "ready_depth_seconds": {
+          "0": 2.865064522891771,
+          "1": 0.14103570906445384,
+          "2": 0.08429881907068193,
+          "3": 0.07233010896015912
+        },
+        "mean_ready_depth": 0.16650920479253967,
+        "elapsed_seconds": 3.1627301009721123,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 3.149519300670363,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 54244,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449675,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 0,
+      "label": "baseline-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-baseline-w16-m8-p1-0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.5941664980491623,
+      "startup_seconds": 0.44053782895207405,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 12631.41746092313,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011306176000000003,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.16925967519637197,
+          "thread_cpu_seconds": 0.13758389500000018
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.27409646805608645,
+          "thread_cpu_seconds": 0.013403572999999419
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010557683475781232,
+          "thread_cpu_seconds": 0.010574793999999943
+        }
+      },
+      "commit_seconds": 0.6776543409214355,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.2153463347349316,
+        "producer_wait_full_seconds": 0.006176434049848467,
+        "producer_wait_capacity_seconds": 8.571881335228682e-05,
+        "ready_depth_seconds": {
+          "0": 2.4015786928357556,
+          "1": 0.11011930415406823,
+          "2": 0.04552519100252539,
+          "3": 0.03694199799792841
+        },
+        "mean_ready_depth": 0.12026820710201239,
+        "elapsed_seconds": 2.594165886985138,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.5877701216959395,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 59096,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449415,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 0,
+      "label": "cache-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-cache-w16-m8-p1-0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.587544740003068,
+      "startup_seconds": 0.42736914299894124,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 12663.742386135958,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011293216000000003,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.15077164390822873,
+          "thread_cpu_seconds": 0.13656958700000024
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3379198168986477,
+          "thread_cpu_seconds": 0.013214473000000115
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010613144841045141,
+          "thread_cpu_seconds": 0.01062197900000017
+        }
+      },
+      "commit_seconds": 0.21731043921317905,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.6812660782015882,
+        "producer_wait_full_seconds": 0.00771435588831082,
+        "producer_wait_capacity_seconds": 8.765724487602711e-05,
+        "ready_depth_seconds": {
+          "0": 2.4532423788914457,
+          "1": 0.07287417905172333,
+          "2": 0.026942456024698913,
+          "3": 0.034483961993828416
+        },
+        "mean_ready_depth": 0.08896891549972362,
+        "elapsed_seconds": 2.5875439280061983,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.5767375280847773,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 57768,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278175
+      },
+      "journal_bytes": 4450438,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 0,
+      "label": "cache_buffer8-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-cache_buffer8-w16-m8-p1-0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.7737196320085786,
+      "startup_seconds": 0.45273628999711946,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 11813.739075088557,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.01136697600000001,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.4209282408701256,
+          "thread_cpu_seconds": 0.1691583570000001
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.18156093312427402,
+          "thread_cpu_seconds": 0.018225309000000467
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.011790567194111645,
+          "thread_cpu_seconds": 0.011807769000000107
+        }
+      },
+      "commit_seconds": 0.2541396377491765,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.5344102480448782,
+        "producer_wait_full_seconds": 0.003491043869871646,
+        "producer_wait_capacity_seconds": 9.325728751718998e-05,
+        "ready_depth_seconds": {
+          "0": 2.540057423640974,
+          "1": 0.17171569331549108,
+          "2": 0.03092523803934455,
+          "3": 0.031020124966744334
+        },
+        "mean_ready_depth": 0.11775760287512135,
+        "elapsed_seconds": 2.7737193719949573,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.763313127332367,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 57800,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278181
+      },
+      "journal_bytes": 4450532,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 0,
+      "label": "cache_buffer8-w16-m4-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-cache_buffer8-w16-m4-p1-0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 3.1700133240083233,
+      "startup_seconds": 0.4218263409566134,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 10336.865069881316,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011421280000000004,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 1.7407081738929264,
+          "thread_cpu_seconds": 1.0515706250000005
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.06162892025895417,
+          "thread_cpu_seconds": 0.01554868400000034
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010138095007278025,
+          "thread_cpu_seconds": 0.01014154699999939
+        }
+      },
+      "commit_seconds": 0.6217671779450029,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.49093020387226716,
+        "producer_wait_full_seconds": 0.023051297233905643,
+        "producer_wait_capacity_seconds": 8.263636846095324e-05,
+        "ready_depth_seconds": {
+          "0": 2.8515883323852904,
+          "1": 0.15757174754980952,
+          "2": 0.08289631607476622,
+          "3": 0.077955144981388
+        },
+        "mean_ready_depth": 0.1757815804394206,
+        "elapsed_seconds": 3.170012541988399,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 3.1554571726592258,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 53840,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449661,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 1,
+      "label": "baseline-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-baseline-w16-m8-p1-1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.7298534539877437,
+      "startup_seconds": 0.3987710860092193,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 12003.574753118275,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011361952000000008,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.3536060839542188,
+          "thread_cpu_seconds": 0.16124098299999998
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.21434813784435391,
+          "thread_cpu_seconds": 0.016428499999999846
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.012063803151249886,
+          "thread_cpu_seconds": 0.012074694999999885
+        }
+      },
+      "commit_seconds": 0.2569461520179175,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.579643172386568,
+        "producer_wait_full_seconds": 0.004032208758872002,
+        "producer_wait_capacity_seconds": 8.399516809731722e-05,
+        "ready_depth_seconds": {
+          "0": 2.509367507940624,
+          "1": 0.15773827605880797,
+          "2": 0.030550975003279746,
+          "3": 0.03219555300893262
+        },
+        "mean_ready_depth": 0.11554719753374972,
+        "elapsed_seconds": 2.7298531840206124,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.7196913125226274,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 58336,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278173
+      },
+      "journal_bytes": 4450518,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 1,
+      "label": "cache_buffer8-w16-m4-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-cache_buffer8-w16-m4-p1-1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.514953885052819,
+      "startup_seconds": 0.41733745898818597,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 13029.264749047998,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011303328000000007,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.14969937631394714,
+          "thread_cpu_seconds": 0.1335645410000001
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.35718651610659435,
+          "thread_cpu_seconds": 0.012911857999999693
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010625346913002431,
+          "thread_cpu_seconds": 0.010642836999999794
+        }
+      },
+      "commit_seconds": 0.22261140798218548,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.5956780291162431,
+        "producer_wait_full_seconds": 0.005735746235586703,
+        "producer_wait_capacity_seconds": 7.499282946810126e-05,
+        "ready_depth_seconds": {
+          "0": 2.3950792421237566,
+          "1": 0.0576231048326008,
+          "2": 0.02505695604486391,
+          "3": 0.03719259798526764
+        },
+        "mean_ready_depth": 0.0872043480997805,
+        "elapsed_seconds": 2.5149527019821107,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.5041901533841155,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 58592,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278161
+      },
+      "journal_bytes": 4450409,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 1,
+      "label": "cache_buffer8-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-cache_buffer8-w16-m8-p1-1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.6081216919701546,
+      "startup_seconds": 0.418087458005175,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 12563.830936603004,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011286399999999999,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.16841329587623477,
+          "thread_cpu_seconds": 0.13786380800000067
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.24690035701496527,
+          "thread_cpu_seconds": 0.013475110000000207
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.01070402527693659,
+          "thread_cpu_seconds": 0.01071781099999991
+        }
+      },
+      "commit_seconds": 0.7247086851275526,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.2170677747926675,
+        "producer_wait_full_seconds": 0.0040028023649938405,
+        "producer_wait_capacity_seconds": 9.244703687727451e-05,
+        "ready_depth_seconds": {
+          "0": 2.36532775987871,
+          "1": 0.16044044512091205,
+          "2": 0.045172967948019505,
+          "3": 0.03717854403657839
+        },
+        "mean_ready_depth": 0.13892072830716704,
+        "elapsed_seconds": 2.6081205990049057,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.601615175954066,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 58812,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449428,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 1,
+      "label": "cache-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-cache-w16-m8-p1-1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.5214799499954097,
+      "startup_seconds": 0.4615840570186265,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 12995.542558274023,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011288064000000007,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.1437598602497019,
+          "thread_cpu_seconds": 0.13391021800000008
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.35671497764997184,
+          "thread_cpu_seconds": 0.012969873999999798
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010663325141649693,
+          "thread_cpu_seconds": 0.010679673999999667
+        }
+      },
+      "commit_seconds": 0.22074171208078042,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.6092532521579415,
+        "producer_wait_full_seconds": 0.0057605457259342074,
+        "producer_wait_capacity_seconds": 7.66626326367259e-05,
+        "ready_depth_seconds": {
+          "0": 2.394763800140936,
+          "1": 0.06239416386233643,
+          "2": 0.029376849997788668,
+          "3": 0.0349434629897587
+        },
+        "mean_ready_depth": 0.08962129294193799,
+        "elapsed_seconds": 2.521479499002453,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.510871927079279,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 58276,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278168
+      },
+      "journal_bytes": 4450394,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 2,
+      "label": "cache_buffer8-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-cache_buffer8-w16-m8-p1-2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.6888170389574952,
+      "startup_seconds": 0.41803735302528366,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 12186.771924319837,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011321887999999995,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.3441063290229067,
+          "thread_cpu_seconds": 0.15923923800000034
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.18531717010773718,
+          "thread_cpu_seconds": 0.016608185999999886
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.012405317043885589,
+          "thread_cpu_seconds": 0.012412661999999686
+        }
+      },
+      "commit_seconds": 0.24443228117888793,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.5749272811808623,
+        "producer_wait_full_seconds": 0.0001297995331697166,
+        "producer_wait_capacity_seconds": 7.912889122962952e-05,
+        "ready_depth_seconds": {
+          "0": 2.488379999937024,
+          "1": 0.14130076207220554,
+          "2": 0.033059765002690256,
+          "3": 0.026075418980326504
+        },
+        "mean_ready_depth": 0.10623503035298482,
+        "elapsed_seconds": 2.6888169379672036,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.6784393469570205,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 57628,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278180
+      },
+      "journal_bytes": 4450562,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 2,
+      "label": "cache_buffer8-w16-m4-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-cache_buffer8-w16-m4-p1-2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 3.0825093520106748,
+      "startup_seconds": 0.39430712099419907,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 10630.300270987313,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011337760000000007,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 1.7440101710963063,
+          "thread_cpu_seconds": 1.0264720719999987
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.07104467722820118,
+          "thread_cpu_seconds": 0.01364035900000024
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.00944217189680785,
+          "thread_cpu_seconds": 0.00946089600000033
+        }
+      },
+      "commit_seconds": 0.584666796727106,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.4451458393596113,
+        "producer_wait_full_seconds": 0.019512356899213046,
+        "producer_wait_capacity_seconds": 8.407532004639506e-05,
+        "ready_depth_seconds": {
+          "0": 2.794483198027592,
+          "1": 0.12659453495871276,
+          "2": 0.08718562300782651,
+          "3": 0.07422506698640063
+        },
+        "mean_ready_depth": 0.16987600822892315,
+        "elapsed_seconds": 3.0824893249664456,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 3.07035674987128,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 54312,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449670,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 2,
+      "label": "baseline-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-baseline-w16-m8-p1-2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.5410907299956307,
+      "startup_seconds": 0.4228127730311826,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 12895.24990713588,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011334752000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.1845334957470186,
+          "thread_cpu_seconds": 0.13666600299999998
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.26367176277562976,
+          "thread_cpu_seconds": 0.013355644000000277
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010758366843219846,
+          "thread_cpu_seconds": 0.010773746999999945
+        }
+      },
+      "commit_seconds": 0.6782140138675459,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.1919875620515086,
+        "producer_wait_full_seconds": 0.007834674324840307,
+        "producer_wait_capacity_seconds": 8.080108091235161e-05,
+        "ready_depth_seconds": {
+          "0": 2.3528487178264186,
+          "1": 0.10713001911062747,
+          "2": 0.042016509105451405,
+          "3": 0.03909381094854325
+        },
+        "mean_ready_depth": 0.1213827543256034,
+        "elapsed_seconds": 2.541089727950748,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.5344797264551744,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 59312,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449399,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 2,
+      "label": "cache-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-cache-w16-m8-p1-2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.5324287289986387,
+      "startup_seconds": 0.40469826804473996,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 12939.357236306892,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011357376000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.1591879483894445,
+          "thread_cpu_seconds": 0.134843887
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.353770881134551,
+          "thread_cpu_seconds": 0.013265513999999562
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010944580659270287,
+          "thread_cpu_seconds": 0.010961297999999814
+        }
+      },
+      "commit_seconds": 0.22125260636676103,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.6071323445648886,
+        "producer_wait_full_seconds": 0.0078099657548591495,
+        "producer_wait_capacity_seconds": 7.826101500540972e-05,
+        "ready_depth_seconds": {
+          "0": 2.4032646641135216,
+          "1": 0.06427236896706745,
+          "2": 0.03189233399461955,
+          "3": 0.03299692797008902
+        },
+        "mean_ready_depth": 0.08965621529228102,
+        "elapsed_seconds": 2.5324270060518757,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.5221910609980114,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 58932,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278175
+      },
+      "journal_bytes": 4450425,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 3,
+      "label": "cache_buffer8-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-cache_buffer8-w16-m8-p1-3"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.6043134090141393,
+      "startup_seconds": 0.4706166230025701,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 12582.203004669971,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011346304000000001,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.16793605365091935,
+          "thread_cpu_seconds": 0.13914946999999958
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.28594820003490895,
+          "thread_cpu_seconds": 0.013696214000000179
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.01060764817520976,
+          "thread_cpu_seconds": 0.010624370000000494
+        }
+      },
+      "commit_seconds": 0.7281717610894702,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.1771084813517518,
+        "producer_wait_full_seconds": 0.008225000463426113,
+        "producer_wait_capacity_seconds": 8.496904047206044e-05,
+        "ready_depth_seconds": {
+          "0": 2.4198215098585933,
+          "1": 0.10086245613638312,
+          "2": 0.042067587084602565,
+          "3": 0.04155997192719951
+        },
+        "mean_ready_depth": 0.11890953122965807,
+        "elapsed_seconds": 2.604312226991169,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.5967704808572307,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 58168,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449412,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 3,
+      "label": "cache-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-cache-w16-m8-p1-3"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 3.2697446909733117,
+      "startup_seconds": 0.4485205480013974,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 10021.577553275538,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.01135472,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 1.8095742379664443,
+          "thread_cpu_seconds": 1.0683624979999993
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.0613576898467727,
+          "thread_cpu_seconds": 0.015630537000000416
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009996570996008813,
+          "thread_cpu_seconds": 0.0100159840000007
+        }
+      },
+      "commit_seconds": 0.5499834929360077,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.558034498069901,
+        "producer_wait_full_seconds": 0.021127583284396678,
+        "producer_wait_capacity_seconds": 9.463023161515594e-05,
+        "ready_depth_seconds": {
+          "0": 2.9780956162139773,
+          "1": 0.16026404389413074,
+          "2": 0.06132618890842423,
+          "3": 0.07005716901039705
+        },
+        "mean_ready_depth": 0.15080322894225215,
+        "elapsed_seconds": 3.2697438390459865,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 3.2565621146932244,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 54064,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449710,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 3,
+      "label": "baseline-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-baseline-w16-m8-p1-3"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.7424841729807667,
+      "startup_seconds": 0.4662858770461753,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 11948.291378609829,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011299008000000003,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.3440034633385949,
+          "thread_cpu_seconds": 0.17115719299999993
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.18947923521045595,
+          "thread_cpu_seconds": 0.01609021100000027
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.012593578197993338,
+          "thread_cpu_seconds": 0.01260693900000004
+        }
+      },
+      "commit_seconds": 0.2672551245195791,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.6067432214622386,
+        "producer_wait_full_seconds": 0.00013063364895060658,
+        "producer_wait_capacity_seconds": 8.179101860150695e-05,
+        "ready_depth_seconds": {
+          "0": 2.5113426707684994,
+          "1": 0.1738431182457134,
+          "2": 0.029918896965682507,
+          "3": 0.02737850503763184
+        },
+        "mean_ready_depth": 0.11515707563886403,
+        "elapsed_seconds": 2.742483911977615,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.7309542426955886,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 57852,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278180
+      },
+      "journal_bytes": 4450549,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 3,
+      "label": "cache_buffer8-w16-m4-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-cache_buffer8-w16-m4-p1-3"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 3.092539271048736,
+      "startup_seconds": 0.4674672859837301,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 10595.823408537599,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.01139328,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 1.780388981977012,
+          "thread_cpu_seconds": 1.0233195799999997
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.056865496502723545,
+          "thread_cpu_seconds": 0.013515854000000244
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009408447018358856,
+          "thread_cpu_seconds": 0.009414186999999352
+        }
+      },
+      "commit_seconds": 0.5355717032216489,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.4891751371906139,
+        "producer_wait_full_seconds": 0.023449525237083435,
+        "producer_wait_capacity_seconds": 8.042855188250542e-05,
+        "ready_depth_seconds": {
+          "0": 2.8240442722453736,
+          "1": 0.10551481175934896,
+          "2": 0.07920980197377503,
+          "3": 0.0837685820297338
+        },
+        "mean_ready_depth": 0.16660753626146774,
+        "elapsed_seconds": 3.0925381489796564,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 3.0803146091056988,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 54304,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449633,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 4,
+      "label": "baseline-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-baseline-w16-m8-p1-4"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.530146796023473,
+      "startup_seconds": 0.4497340369853191,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 12951.027209765105,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011319584000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.18271873600315303,
+          "thread_cpu_seconds": 0.13681390000000032
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.2691952370805666,
+          "thread_cpu_seconds": 0.01324752699999976
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010760524834040552,
+          "thread_cpu_seconds": 0.010775424999999728
+        }
+      },
+      "commit_seconds": 0.6491395273478702,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.1890893790405244,
+        "producer_wait_full_seconds": 0.009033161797560751,
+        "producer_wait_capacity_seconds": 7.986242417246103e-05,
+        "ready_depth_seconds": {
+          "0": 2.3533656738582067,
+          "1": 0.09754899918334559,
+          "2": 0.04071561701130122,
+          "3": 0.03851609496632591
+        },
+        "mean_ready_depth": 0.11640765492080454,
+        "elapsed_seconds": 2.5301473370054737,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.523797252040822,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 58384,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449405,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 4,
+      "label": "cache-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-cache-w16-m8-p1-4"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.4989217839902267,
+      "startup_seconds": 0.39325190702220425,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 13112.855396248831,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011324768000000004,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.1525009926990606,
+          "thread_cpu_seconds": 0.13463486499999963
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3350242350716144,
+          "thread_cpu_seconds": 0.013075248000000178
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010880474816076458,
+          "thread_cpu_seconds": 0.010895475999999765
+        }
+      },
+      "commit_seconds": 0.20363620476564392,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.6204723679693416,
+        "producer_wait_full_seconds": 0.004008655378129333,
+        "producer_wait_capacity_seconds": 7.3792296461761e-05,
+        "ready_depth_seconds": {
+          "0": 2.3652975442819297,
+          "1": 0.07781991170486435,
+          "2": 0.025098262063693255,
+          "3": 0.030704231932759285
+        },
+        "mean_ready_depth": 0.08808968618580107,
+        "elapsed_seconds": 2.4989206019672565,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.4887982497457415,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 57784,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278172
+      },
+      "journal_bytes": 4450421,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 4,
+      "label": "cache_buffer8-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-cache_buffer8-w16-m8-p1-4"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4399039872,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.777516317961272,
+      "startup_seconds": 0.41786341404076666,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 11797.59045450076,
+      "points": 339249612,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "96587cb78eacb93f5329e00522bd8eb4b23b3c8a9531681b6b8b4b9e6e4774a5",
+      "kernel_seconds": 0.011290208000000005,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.2786528466967866,
+          "thread_cpu_seconds": 0.15448688100000027
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.19511528790462762,
+          "thread_cpu_seconds": 0.015646590999999765
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.012343889917246997,
+          "thread_cpu_seconds": 0.012360475000000093
+        }
+      },
+      "commit_seconds": 0.2628009769250639,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.7010248058941215,
+        "producer_wait_full_seconds": 0.0001289632054977119,
+        "producer_wait_capacity_seconds": 8.655083365738392e-05,
+        "ready_depth_seconds": {
+          "0": 2.6026419428526424,
+          "1": 0.1343336571007967,
+          "2": 0.03370832500513643,
+          "3": 0.0068308699992485344
+        },
+        "mean_ready_depth": 0.08001500413888261,
+        "elapsed_seconds": 2.777515535999555,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.766629511024803,
+        "maximum_prepared_payload_bytes": 960748
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960748,
+      "parent_maxrss_kib": 56260,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278174
+      },
+      "journal_bytes": 4450555,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 4,
+      "label": "cache_buffer8-w16-m4-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/ada-cache_buffer8-w16-m4-p1-4"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 3.1128675770014524,
+      "startup_seconds": 0.4446800239966251,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 10526.62832241794,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.006065568,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 1.770901421783492,
+          "thread_cpu_seconds": 1.03842189
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.05587858165381476,
+          "thread_cpu_seconds": 0.013539366000000441
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009743680246174335,
+          "thread_cpu_seconds": 0.009763292999999923
+        }
+      },
+      "commit_seconds": 0.605007077974733,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.45314072869950905,
+        "producer_wait_full_seconds": 0.00013404578203335404,
+        "producer_wait_capacity_seconds": 8.580600842833519e-05,
+        "ready_depth_seconds": {
+          "0": 2.9095389721915126,
+          "1": 0.12334181374171749,
+          "2": 0.07049280806677416,
+          "3": 0.00949352199677378
+        },
+        "mean_ready_depth": 0.0940637382506325,
+        "elapsed_seconds": 3.1128679479588754,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 3.09933087421814,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 53728,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4410927,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 0,
+      "label": "baseline-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-baseline-w16-m8-p1-0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.5309557790169492,
+      "startup_seconds": 0.4142598549951799,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 12946.887603357278,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.006029311999999999,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.14950418227817863,
+          "thread_cpu_seconds": 0.13568415999999994
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.27505396399647,
+          "thread_cpu_seconds": 0.013421810000000589
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010656679049134254,
+          "thread_cpu_seconds": 0.010669008000000063
+        }
+      },
+      "commit_seconds": 0.6550379025284201,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.2505448439042084,
+        "producer_wait_full_seconds": 0.00012043997412547469,
+        "producer_wait_capacity_seconds": 7.951888255774975e-05,
+        "ready_depth_seconds": {
+          "0": 2.4042757013230585,
+          "1": 0.11239186063176021,
+          "2": 0.014286103018093854
+        },
+        "mean_ready_depth": 0.05569601428026517,
+        "elapsed_seconds": 2.5309542969916947,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.5242565541993827,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 55756,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4410650,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 0,
+      "label": "cache-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-cache-w16-m8-p1-0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.5424165750155225,
+      "startup_seconds": 0.423198293952737,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 12888.52516224645,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.006023936000000001,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.16941946011502296,
+          "thread_cpu_seconds": 0.13653959300000018
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3450175439938903,
+          "thread_cpu_seconds": 0.013476455000000193
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.011072404391597956,
+          "thread_cpu_seconds": 0.011089328000000453
+        }
+      },
+      "commit_seconds": 0.2157155642635189,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.6673870694357902,
+        "producer_wait_full_seconds": 0.00011856824858114123,
+        "producer_wait_capacity_seconds": 7.793476106598973e-05,
+        "ready_depth_seconds": {
+          "0": 2.473464436712675,
+          "1": 0.06261997431283817,
+          "2": 0.006330830976366997
+        },
+        "mean_ready_depth": 0.02961027376284166,
+        "elapsed_seconds": 2.542416083975695,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.5356175472261384,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 54012,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 275802
+      },
+      "journal_bytes": 4411670,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 0,
+      "label": "cache_buffer8-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-cache_buffer8-w16-m8-p1-0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.767300232022535,
+      "startup_seconds": 0.45543649699538946,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 11841.143805365446,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.006055168000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.328190628613811,
+          "thread_cpu_seconds": 0.1607349070000002
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.20390702510485426,
+          "thread_cpu_seconds": 0.015746889000000236
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.01257343403995037,
+          "thread_cpu_seconds": 0.012573336000000518
+        }
+      },
+      "commit_seconds": 0.25002280407352373,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.6794637691345997,
+        "producer_wait_full_seconds": 0.00013555941404774785,
+        "producer_wait_capacity_seconds": 8.3612569142133e-05,
+        "ready_depth_seconds": {
+          "0": 2.577072728832718,
+          "1": 0.17858047713525593,
+          "2": 0.011645584017969668
+        },
+        "mean_ready_depth": 0.07294896252296702,
+        "elapsed_seconds": 2.7672997420304455,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.757421087473631,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 55300,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 275809
+      },
+      "journal_bytes": 4411778,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 0,
+      "label": "cache_buffer8-w16-m4-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-cache_buffer8-w16-m4-p1-0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 3.212937562027946,
+      "startup_seconds": 0.4044201229698956,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 10198.766508029323,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.006060512000000003,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 1.8174769884208217,
+          "thread_cpu_seconds": 1.0626047119999993
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.054258090793155134,
+          "thread_cpu_seconds": 0.015328783999999485
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.00982472870964557,
+          "thread_cpu_seconds": 0.009837670000000492
+        }
+      },
+      "commit_seconds": 0.5874832366243936,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.5288052055402659,
+        "producer_wait_full_seconds": 0.00013117498019710183,
+        "producer_wait_capacity_seconds": 8.64202156662941e-05,
+        "ready_depth_seconds": {
+          "0": 3.023369572882075,
+          "1": 0.13785326306242496,
+          "2": 0.047112942091189325,
+          "3": 0.004600049986038357
+        },
+        "mean_ready_depth": 0.07652790269784818,
+        "elapsed_seconds": 3.212936569994781,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 3.200490494200494,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 53408,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4410933,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 1,
+      "label": "baseline-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-baseline-w16-m8-p1-1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.8149545079795644,
+      "startup_seconds": 0.40642597002442926,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 11640.685455879448,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.006001792,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.29119014990283176,
+          "thread_cpu_seconds": 0.1564712550000001
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.2484572291141376,
+          "thread_cpu_seconds": 0.015794724999999926
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.012373040604870766,
+          "thread_cpu_seconds": 0.012384835999999788
+        }
+      },
+      "commit_seconds": 0.24984734260942787,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 3,
+        "peak_ready": 1,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 25165824,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.7323103636153974,
+        "producer_wait_full_seconds": 0.00014558661496266723,
+        "producer_wait_capacity_seconds": 8.883082773536444e-05,
+        "ready_depth_seconds": {
+          "0": 2.699524230149109,
+          "1": 0.11542862484930083
+        },
+        "mean_ready_depth": 0.041005513991691514,
+        "elapsed_seconds": 2.8149537370190956,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.8035016036592424,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 54604,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 275802
+      },
+      "journal_bytes": 4411756,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 1,
+      "label": "cache_buffer8-w16-m4-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-cache_buffer8-w16-m4-p1-1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.5024969780351967,
+      "startup_seconds": 0.44112064701039344,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 13094.121706283688,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.0060046080000000016,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.14538649999303743,
+          "thread_cpu_seconds": 0.13328650400000025
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.35610926820663735,
+          "thread_cpu_seconds": 0.012944068000000114
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010712864459492266,
+          "thread_cpu_seconds": 0.010722278000000002
+        }
+      },
+      "commit_seconds": 0.21590863354504108,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.6419447351945564,
+        "producer_wait_full_seconds": 0.00011497701052576303,
+        "producer_wait_capacity_seconds": 7.39582465030253e-05,
+        "ready_depth_seconds": {
+          "0": 2.4408138341386802,
+          "1": 0.05563330085715279,
+          "2": 0.00604784901952371
+        },
+        "mean_ready_depth": 0.02706457670436595,
+        "elapsed_seconds": 2.5024961460148916,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.492293300223537,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 54900,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 275799
+      },
+      "journal_bytes": 4411659,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 1,
+      "label": "cache_buffer8-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-cache_buffer8-w16-m8-p1-1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.5660470129805617,
+      "startup_seconds": 0.42026257899124175,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 12769.836185479204,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.005978528000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.1533077984349802,
+          "thread_cpu_seconds": 0.13649044599999965
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.274079916998744,
+          "thread_cpu_seconds": 0.013738401999999705
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010744005674496293,
+          "thread_cpu_seconds": 0.010758573999999882
+        }
+      },
+      "commit_seconds": 0.7215411118231714,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.2071933441329747,
+        "producer_wait_full_seconds": 0.0001349000376649201,
+        "producer_wait_capacity_seconds": 8.613616228103638e-05,
+        "ready_depth_seconds": {
+          "0": 2.448449098621495,
+          "1": 0.10299111943459138,
+          "2": 0.014605201955419034
+        },
+        "mean_ready_depth": 0.051519541345261086,
+        "elapsed_seconds": 2.566046200983692,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.5593895631609485,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 55008,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4410692,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 1,
+      "label": "cache-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-cache-w16-m8-p1-1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.5001749240327626,
+      "startup_seconds": 0.418548428977374,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 13106.282958452151,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.006013376000000003,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.14981101657031104,
+          "thread_cpu_seconds": 0.13258311599999967
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.35428191733080894,
+          "thread_cpu_seconds": 0.013033483999999956
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010707920009735972,
+          "thread_cpu_seconds": 0.01072313800000016
+        }
+      },
+      "commit_seconds": 0.21334803861100227,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.6439405280398205,
+        "producer_wait_full_seconds": 0.00011460139648988843,
+        "producer_wait_capacity_seconds": 7.3607312515378e-05,
+        "ready_depth_seconds": {
+          "0": 2.4440720648271963,
+          "1": 0.04978063516318798,
+          "2": 0.0063208420178852975
+        },
+        "mean_ready_depth": 0.02496718693719746,
+        "elapsed_seconds": 2.5001743030152284,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.4901348641724326,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 55624,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 275800
+      },
+      "journal_bytes": 4411645,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 2,
+      "label": "cache_buffer8-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-cache_buffer8-w16-m8-p1-2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.720871457015164,
+      "startup_seconds": 0.42751854698872194,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 12043.200319337016,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.005997856000000001,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.32088966912124306,
+          "thread_cpu_seconds": 0.15863699399999956
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.2216001837514341,
+          "thread_cpu_seconds": 0.01671492399999966
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.01232261280529201,
+          "thread_cpu_seconds": 0.01233021899999967
+        }
+      },
+      "commit_seconds": 0.25280001462670043,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.628829044115264,
+        "producer_wait_full_seconds": 0.00013345252955332398,
+        "producer_wait_capacity_seconds": 8.397299097850919e-05,
+        "ready_depth_seconds": {
+          "0": 2.566052091482561,
+          "1": 0.1489377885009162,
+          "2": 0.00587871199240908
+        },
+        "mean_ready_depth": 0.05906024417304092,
+        "elapsed_seconds": 2.7208694230066612,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.7099957949249074,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 54328,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 275810
+      },
+      "journal_bytes": 4411743,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 2,
+      "label": "cache_buffer8-w16-m4-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-cache_buffer8-w16-m4-p1-2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 3.2013459489680827,
+      "startup_seconds": 0.456149144039955,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 10235.694774119114,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.00614208,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 1.7742000952130184,
+          "thread_cpu_seconds": 1.0696555559999994
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.06325540581019595,
+          "thread_cpu_seconds": 0.016553204000000238
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010170680528972298,
+          "thread_cpu_seconds": 0.010184252000000532
+        }
+      },
+      "commit_seconds": 0.5892242572735995,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.5353872929699719,
+        "producer_wait_full_seconds": 0.00012854678789153695,
+        "producer_wait_capacity_seconds": 8.52160737849772e-05,
+        "ready_depth_seconds": {
+          "0": 2.9984848228050396,
+          "1": 0.12995816324837506,
+          "2": 0.0676391669549048,
+          "3": 0.0052613019943237305
+        },
+        "mean_ready_depth": 0.08778200103920121,
+        "elapsed_seconds": 3.2013442370225675,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 3.1893734202021733,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 53652,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4410931,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 2,
+      "label": "baseline-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-baseline-w16-m8-p1-2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.619896824005991,
+      "startup_seconds": 0.4263135229703039,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 12507.362770834468,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.005998560000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.16218249691883102,
+          "thread_cpu_seconds": 0.13887415400000033
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.28884476399980485,
+          "thread_cpu_seconds": 0.01397063700000059
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010935018945019692,
+          "thread_cpu_seconds": 0.010950720999999802
+        }
+      },
+      "commit_seconds": 0.6816731098806486,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.2627486170385964,
+        "producer_wait_full_seconds": 0.00013961695367470384,
+        "producer_wait_capacity_seconds": 8.792232256382704e-05,
+        "ready_depth_seconds": {
+          "0": 2.4991853933315724,
+          "1": 0.11254727770574391,
+          "2": 0.008163232007063925
+        },
+        "mean_ready_depth": 0.049190389476655424,
+        "elapsed_seconds": 2.619896754040383,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.6127958776196465,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 55432,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4410695,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 2,
+      "label": "cache-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-cache-w16-m8-p1-2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.544522066018544,
+      "startup_seconds": 0.4195931209833361,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 12877.860419293842,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.005988800000000003,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.15935562585946172,
+          "thread_cpu_seconds": 0.13603324999999994
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3447593137389049,
+          "thread_cpu_seconds": 0.013371255999999804
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.01058074104366824,
+          "thread_cpu_seconds": 0.010596000999999744
+        }
+      },
+      "commit_seconds": 0.22488938370952383,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.657194337924011,
+        "producer_wait_full_seconds": 0.0001282250159420073,
+        "producer_wait_capacity_seconds": 8.003588300198317e-05,
+        "ready_depth_seconds": {
+          "0": 2.478497339761816,
+          "1": 0.05948465125402436,
+          "2": 0.00653863197658211
+        },
+        "mean_ready_depth": 0.02851692275997028,
+        "elapsed_seconds": 2.544521224044729,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.5336101629654877,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 55364,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 275801
+      },
+      "journal_bytes": 4411619,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 3,
+      "label": "cache_buffer8-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-cache_buffer8-w16-m8-p1-3"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.5630503869615495,
+      "startup_seconds": 0.41852834000019357,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 12784.766217119079,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.006048863999999998,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.16869843075983226,
+          "thread_cpu_seconds": 0.13860347899999945
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.26576865860261023,
+          "thread_cpu_seconds": 0.01392601500000007
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010788808751385659,
+          "thread_cpu_seconds": 0.010802568000000151
+        }
+      },
+      "commit_seconds": 0.6795769194723107,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.2492295806878246,
+        "producer_wait_full_seconds": 0.00013166439021006227,
+        "producer_wait_capacity_seconds": 8.585629984736443e-05,
+        "ready_depth_seconds": {
+          "0": 2.4287242831778713,
+          "1": 0.1261721498449333,
+          "2": 0.00815262197284028
+        },
+        "mean_ready_depth": 0.055589007071804246,
+        "elapsed_seconds": 2.563049805990886,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.5568706290214323,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 55468,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4410679,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 3,
+      "label": "cache-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-cache-w16-m8-p1-3"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 3.1935136920074,
+      "startup_seconds": 0.39714556699618697,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 10260.798343220025,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.006058304000000004,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 1.8016308574588038,
+          "thread_cpu_seconds": 1.0721876900000007
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.054583408520556986,
+          "thread_cpu_seconds": 0.015545131000000267
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.00985757983289659,
+          "thread_cpu_seconds": 0.009867784000000573
+        }
+      },
+      "commit_seconds": 0.6535884643672034,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.4477666917955503,
+        "producer_wait_full_seconds": 0.00012922397581860423,
+        "producer_wait_capacity_seconds": 8.790637366473675e-05,
+        "ready_depth_seconds": {
+          "0": 2.943740215152502,
+          "1": 0.16744698287220672,
+          "2": 0.07696780795231462,
+          "3": 0.005356652021873742
+        },
+        "mean_ready_depth": 0.10566815338421463,
+        "elapsed_seconds": 3.193512369005475,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 3.1805215710191987,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 53120,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4410877,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 3,
+      "label": "baseline-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-baseline-w16-m8-p1-3"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.748684288992081,
+      "startup_seconds": 0.4671042899717577,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 11921.340013921987,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.005985408000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.33803291828371584,
+          "thread_cpu_seconds": 0.16839674199999988
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.17842956789536402,
+          "thread_cpu_seconds": 0.017477145000000138
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.012380225234664977,
+          "thread_cpu_seconds": 0.012400564999999891
+        }
+      },
+      "commit_seconds": 0.2841477179317735,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 3,
+        "peak_ready": 1,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 25165824,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.6219330502208322,
+        "producer_wait_full_seconds": 0.00013866787776350975,
+        "producer_wait_capacity_seconds": 8.565041935071349e-05,
+        "ready_depth_seconds": {
+          "0": 2.5791772679658607,
+          "1": 0.16950589907355607
+        },
+        "mean_ready_depth": 0.06166801860516025,
+        "elapsed_seconds": 2.748684049001895,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.7385964530985802,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 54800,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 275811
+      },
+      "journal_bytes": 4411785,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 3,
+      "label": "cache_buffer8-w16-m4-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-cache_buffer8-w16-m4-p1-3"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 3.2434981840196997,
+      "startup_seconds": 0.41927802801365033,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 10102.672528519899,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.006099808,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 1.8240340439951979,
+          "thread_cpu_seconds": 1.0707703640000013
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.058806246612221,
+          "thread_cpu_seconds": 0.016177460999999393
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009927826118655503,
+          "thread_cpu_seconds": 0.009948169999999479
+        }
+      },
+      "commit_seconds": 0.562734013190493,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.5618712630821392,
+        "producer_wait_full_seconds": 0.00013534299796447158,
+        "producer_wait_capacity_seconds": 9.239913197234273e-05,
+        "ready_depth_seconds": {
+          "0": 3.0222277600551024,
+          "1": 0.17056182690430433,
+          "2": 0.04567775805480778,
+          "3": 0.005029166000895202
+        },
+        "mean_ready_depth": 0.08540313857707306,
+        "elapsed_seconds": 3.2434972019982524,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 3.230201545811724,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 52964,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4410911,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 4,
+      "label": "baseline-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-baseline-w16-m8-p1-4"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.611493923002854,
+      "startup_seconds": 0.4252673870068975,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 12547.607218752923,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.006022752000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.1556606077356264,
+          "thread_cpu_seconds": 0.13740710499999967
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.26134074572473764,
+          "thread_cpu_seconds": 0.013619200000000109
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010724047024268657,
+          "thread_cpu_seconds": 0.010741465999999533
+        }
+      },
+      "commit_seconds": 0.6761326852138154,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.2964313683332875,
+        "producer_wait_full_seconds": 0.0001429659896530211,
+        "producer_wait_capacity_seconds": 8.801976218819618e-05,
+        "ready_depth_seconds": {
+          "0": 2.477537779719569,
+          "1": 0.1242343012127094,
+          "2": 0.009720599045976996
+        },
+        "mean_ready_depth": 0.05501659486610197,
+        "elapsed_seconds": 2.611493852979038,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.604976261849515,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 55052,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4410677,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 4,
+      "label": "cache-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-cache-w16-m8-p1-4"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.5167199579882436,
+      "startup_seconds": 0.42167765501653776,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 13020.121645235933,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.005937600000000001,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.14260736579308286,
+          "thread_cpu_seconds": 0.13411164200000025
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3480039375135675,
+          "thread_cpu_seconds": 0.013347967999999572
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010653828736394644,
+          "thread_cpu_seconds": 0.010670153000000016
+        }
+      },
+      "commit_seconds": 0.2194239535019733,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.656943166803103,
+        "producer_wait_full_seconds": 0.00012286746641620994,
+        "producer_wait_capacity_seconds": 7.954705506563187e-05,
+        "ready_depth_seconds": {
+          "0": 2.444014755776152,
+          "1": 0.06755180220352486,
+          "2": 0.005151947028934956
+        },
+        "mean_ready_depth": 0.03093538737301245,
+        "elapsed_seconds": 2.516719617007766,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.506463965633884,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 55640,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 275798
+      },
+      "journal_bytes": 4411658,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 4,
+      "label": "cache_buffer8-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-cache_buffer8-w16-m8-p1-4"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 3308873472,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.6938276269938797,
+      "startup_seconds": 0.4449649539892562,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 12164.104217969863,
+      "points": 155140558,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "dc5a60eba007fd59e8a8343752198b6c20ffe2968a324fed41f8ad5b4d1cb534",
+      "kernel_seconds": 0.0059754240000000035,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.3423417873564176,
+          "thread_cpu_seconds": 0.15747442599999975
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.21240286255488172,
+          "thread_cpu_seconds": 0.01649280300000025
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.012405095563735813,
+          "thread_cpu_seconds": 0.012416175999999834
+        }
+      },
+      "commit_seconds": 0.2566203505266458,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.5985311447293498,
+        "producer_wait_full_seconds": 0.00011999363778159022,
+        "producer_wait_capacity_seconds": 7.74674117565155e-05,
+        "ready_depth_seconds": {
+          "0": 2.5268013699678704,
+          "1": 0.1577323610545136,
+          "2": 0.009291481983382255
+        },
+        "mean_ready_depth": 0.06545163578305883,
+        "elapsed_seconds": 2.693826103990432,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 2.6833144146949053,
+        "maximum_prepared_payload_bytes": 960398
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 960398,
+      "parent_maxrss_kib": 55228,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 275813
+      },
+      "journal_bytes": 4411757,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "boole",
+      "repeat": 4,
+      "label": "cache_buffer8-w16-m4-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/boole-cache_buffer8-w16-m4-p1-4"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.8578112229588442,
+      "startup_seconds": 0.42015588603680953,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 17637.95997949244,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010215232000000001,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.7283716368256137,
+          "thread_cpu_seconds": 0.5106404489999995
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.054643292096443474,
+          "thread_cpu_seconds": 0.009317568000000276
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.008676120138261467,
+          "thread_cpu_seconds": 0.008691916999999716
+        }
+      },
+      "commit_seconds": 0.48386600834783167,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.42477021127706394,
+        "producer_wait_full_seconds": 0.008644310175441206,
+        "producer_wait_capacity_seconds": 8.70214425958693e-05,
+        "ready_depth_seconds": {
+          "0": 1.707188960921485,
+          "1": 0.07814692106330767,
+          "2": 0.0323202779982239,
+          "3": 0.040154371003154665
+        },
+        "mean_ready_depth": 0.1416993132710548,
+        "elapsed_seconds": 1.8578113329713233,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.8491708409273997,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 50840,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 2333275,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 0,
+      "label": "baseline-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-baseline-w16-m8-p1-0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.7403233960503712,
+      "startup_seconds": 0.42449425399536267,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 18828.684412544422,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010213856000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.08056816802127287,
+          "thread_cpu_seconds": 0.07020564900000001
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.2689291500719264,
+          "thread_cpu_seconds": 0.008733323000000293
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.005766933085396886,
+          "thread_cpu_seconds": 0.005779308999999788
+        }
+      },
+      "commit_seconds": 0.49336405290523544,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.7801482061040588,
+        "producer_wait_full_seconds": 0.00011557509424164891,
+        "producer_wait_capacity_seconds": 7.483043009415269e-05,
+        "ready_depth_seconds": {
+          "0": 1.640680004900787,
+          "1": 0.046803309058304876,
+          "2": 0.03969419904751703,
+          "3": 0.013144559983629733
+        },
+        "mean_ready_depth": 0.09516934224109157,
+        "elapsed_seconds": 1.7403229149640538,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.734609700855799,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 52100,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 2332885,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 0,
+      "label": "cache-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-cache-w16-m8-p1-0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.723198460007552,
+      "startup_seconds": 0.41806733299745247,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 19015.801580890682,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010215104000000004,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.07813520747004077,
+          "thread_cpu_seconds": 0.07152157300000014
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.1797289754031226,
+          "thread_cpu_seconds": 0.008638802000000195
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.005706148978788406,
+          "thread_cpu_seconds": 0.005720548000000186
+        }
+      },
+      "commit_seconds": 0.15781264775432646,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.1871074968366884,
+        "producer_wait_full_seconds": 0.00013421440962702036,
+        "producer_wait_capacity_seconds": 8.39311396703124e-05,
+        "ready_depth_seconds": {
+          "0": 1.6468708671163768,
+          "1": 0.04419958690414205,
+          "2": 0.02144501096336171,
+          "3": 0.010682454041671008
+        },
+        "mean_ready_depth": 0.06913710466441936,
+        "elapsed_seconds": 1.723198730032891,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.7182157708448358,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 52248,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 145890
+      },
+      "journal_bytes": 2334007,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 0,
+      "label": "cache_buffer8-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-cache_buffer8-w16-m8-p1-0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.4287317750276998,
+      "startup_seconds": 0.4763173329993151,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 22935.025714931486,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010183072000000003,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.21416949905687943,
+          "thread_cpu_seconds": 0.09761741399999954
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.24407721735769883,
+          "thread_cpu_seconds": 0.01264892100000009
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.008073196571785957,
+          "thread_cpu_seconds": 0.008079789000000087
+        }
+      },
+      "commit_seconds": 0.15188425517408177,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.6256209305720404,
+        "producer_wait_full_seconds": 0.0033798959921114147,
+        "producer_wait_capacity_seconds": 9.012757800519466e-05,
+        "ready_depth_seconds": {
+          "0": 1.2685688970377669,
+          "1": 0.11940769793000072,
+          "2": 0.019516295928042382,
+          "3": 0.021236960077658296
+        },
+        "mean_ready_depth": 0.15548848763223644,
+        "elapsed_seconds": 1.428730662970338,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.4231102347257547,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 53196,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 145890
+      },
+      "journal_bytes": 2333949,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 0,
+      "label": "cache_buffer8-w16-m4-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-cache_buffer8-w16-m4-p1-0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.8507274250150658,
+      "startup_seconds": 0.42033081396948546,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 17705.4705933983,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010173920000000001,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.7416096190572716,
+          "thread_cpu_seconds": 0.5158213599999997
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.057759632589295506,
+          "thread_cpu_seconds": 0.009590000000000348
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.006768107821699232,
+          "thread_cpu_seconds": 0.006784575999999931
+        }
+      },
+      "commit_seconds": 0.4971946030273102,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.4024426866672002,
+        "producer_wait_full_seconds": 0.00557855679653585,
+        "producer_wait_capacity_seconds": 8.981587598100305e-05,
+        "ready_depth_seconds": {
+          "0": 1.6835371589986607,
+          "1": 0.0898852949612774,
+          "2": 0.04289364698342979,
+          "3": 0.03440967103233561
+        },
+        "mean_ready_depth": 0.15069845174362456,
+        "elapsed_seconds": 1.8507263929932378,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.8422250036383048,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 50876,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 2333290,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 1,
+      "label": "baseline-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-baseline-w16-m8-p1-1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.4019109359942377,
+      "startup_seconds": 0.42837754799984396,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 23373.810103536198,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010163968000000004,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.20494059164775535,
+          "thread_cpu_seconds": 0.09586698400000007
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.227780032902956,
+          "thread_cpu_seconds": 0.011571780999999559
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.0065762599115259945,
+          "thread_cpu_seconds": 0.006593194999999968
+        }
+      },
+      "commit_seconds": 0.1346193359931931,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.6422345560276881,
+        "producer_wait_full_seconds": 0.010546228033490479,
+        "producer_wait_capacity_seconds": 9.221321670338511e-05,
+        "ready_depth_seconds": {
+          "0": 1.2304673980688676,
+          "1": 0.12566811888245866,
+          "2": 0.01634095306508243,
+          "3": 0.02943287295056507
+        },
+        "mean_ready_depth": 0.1759375441498423,
+        "elapsed_seconds": 1.4019102349993773,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.3969695380656049,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 53276,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 145888
+      },
+      "journal_bytes": 2333961,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 1,
+      "label": "cache_buffer8-w16-m4-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-cache_buffer8-w16-m4-p1-1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.7013985810335726,
+      "startup_seconds": 0.447800739959348,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 19259.44947014941,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010188064,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.07261944492347538,
+          "thread_cpu_seconds": 0.069417173
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.19922931981272995,
+          "thread_cpu_seconds": 0.00848775200000007
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.005669770995154977,
+          "thread_cpu_seconds": 0.005683863999999789
+        }
+      },
+      "commit_seconds": 0.14087982464116067,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.177617204724811,
+        "producer_wait_full_seconds": 0.00012282683746889234,
+        "producer_wait_capacity_seconds": 7.472606375813484e-05,
+        "ready_depth_seconds": {
+          "0": 1.644158412294928,
+          "1": 0.03240670473314822,
+          "2": 0.021347866975702345,
+          "3": 0.0034847049973905087
+        },
+        "mean_ready_depth": 0.050286016842342955,
+        "elapsed_seconds": 1.7013985009980388,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.6956640566932037,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 52296,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 145890
+      },
+      "journal_bytes": 2333953,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 1,
+      "label": "cache_buffer8-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-cache_buffer8-w16-m8-p1-1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.7421492019784637,
+      "startup_seconds": 0.42381653998745605,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 18808.95158852478,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010192832000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.08314994402462617,
+          "thread_cpu_seconds": 0.06985605400000003
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.22944420319981873,
+          "thread_cpu_seconds": 0.00872223700000016
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.00577918131602928,
+          "thread_cpu_seconds": 0.00579321799999985
+        }
+      },
+      "commit_seconds": 0.4413208211190067,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.8737858943059109,
+        "producer_wait_full_seconds": 0.00011835369514301419,
+        "producer_wait_capacity_seconds": 8.120614802464843e-05,
+        "ready_depth_seconds": {
+          "0": 1.6658269588951953,
+          "1": 0.0415764000499621,
+          "2": 0.027438528020866215,
+          "3": 0.00730577198555693
+        },
+        "mean_ready_depth": 0.06794527508569134,
+        "elapsed_seconds": 1.7421486909734085,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.7372709690826014,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 52824,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 2332940,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 1,
+      "label": "cache-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-cache-w16-m8-p1-1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.7148107209941372,
+      "startup_seconds": 0.420802719949279,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 19108.814517443196,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010167424,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.07671842991840094,
+          "thread_cpu_seconds": 0.06881995800000004
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.1728967110393569,
+          "thread_cpu_seconds": 0.008602410000000033
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.008778493211138994,
+          "thread_cpu_seconds": 0.005881044000000196
+        }
+      },
+      "commit_seconds": 0.145325300632976,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.2037001850549132,
+        "producer_wait_full_seconds": 0.00011486903531476855,
+        "producer_wait_capacity_seconds": 7.311266381293535e-05,
+        "ready_depth_seconds": {
+          "0": 1.6484445079113357,
+          "1": 0.03951164410682395,
+          "2": 0.021087458007968962,
+          "3": 0.00576577999163419
+        },
+        "mean_ready_depth": 0.05772294970292455,
+        "elapsed_seconds": 1.7148101510247216,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.7097007274860516,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 52516,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 145899
+      },
+      "journal_bytes": 2334022,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 2,
+      "label": "cache_buffer8-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-cache_buffer8-w16-m8-p1-2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.3947720059659332,
+      "startup_seconds": 0.4562012479873374,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 23493.44542322306,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010219935999999997,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.19296810490777716,
+          "thread_cpu_seconds": 0.09058924599999965
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.2575753611745313,
+          "thread_cpu_seconds": 0.011836840000000431
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.008265526907052845,
+          "thread_cpu_seconds": 0.008274681000000061
+        }
+      },
+      "commit_seconds": 0.14223113609477878,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.6135647189803421,
+        "producer_wait_full_seconds": 0.007833821058738977,
+        "producer_wait_capacity_seconds": 8.715933654457331e-05,
+        "ready_depth_seconds": {
+          "0": 1.2625156950671226,
+          "1": 0.08906618686160073,
+          "2": 0.018470533075742424,
+          "3": 0.024718297994695604
+        },
+        "mean_ready_depth": 0.14350891309551544,
+        "elapsed_seconds": 1.394771534949541,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.3892572066397406,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 53572,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 145889
+      },
+      "journal_bytes": 2333959,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 2,
+      "label": "cache_buffer8-w16-m4-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-cache_buffer8-w16-m4-p1-2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.8351656420272775,
+      "startup_seconds": 0.46030240098480135,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 17855.60891593509,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010206271999999999,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.7088193799718283,
+          "thread_cpu_seconds": 0.5207030099999995
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.044759633601643145,
+          "thread_cpu_seconds": 0.009870701999999454
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.00817568285856396,
+          "thread_cpu_seconds": 0.008191671999999789
+        }
+      },
+      "commit_seconds": 0.5338408701354638,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.40044270822545514,
+        "producer_wait_full_seconds": 0.014073721133172512,
+        "producer_wait_capacity_seconds": 9.467307245358825e-05,
+        "ready_depth_seconds": {
+          "0": 1.6304409931180999,
+          "1": 0.10115807096008211,
+          "2": 0.045595982926897705,
+          "3": 0.057969633024185896
+        },
+        "mean_ready_depth": 0.19957813262327379,
+        "elapsed_seconds": 1.8351656620507129,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.8259668542305008,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 50416,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 2333327,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 2,
+      "label": "baseline-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-baseline-w16-m8-p1-2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.7509964379714802,
+      "startup_seconds": 0.42062119801994413,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 18713.915853513412,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.01024224,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.08027660509105772,
+          "thread_cpu_seconds": 0.07020179799999973
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.22459766716929153,
+          "thread_cpu_seconds": 0.008898183000000032
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.006462931458372623,
+          "thread_cpu_seconds": 0.006481700999999868
+        }
+      },
+      "commit_seconds": 0.4540671944851056,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.8828685990301892,
+        "producer_wait_full_seconds": 0.00012634258018806577,
+        "producer_wait_capacity_seconds": 7.937196642160416e-05,
+        "ready_depth_seconds": {
+          "0": 1.6565588971134275,
+          "1": 0.05151277489494532,
+          "2": 0.026221122010610998,
+          "3": 0.01670241099782288
+        },
+        "mean_ready_depth": 0.08798549936987038,
+        "elapsed_seconds": 1.7509959369781427,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.74600535427453,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 53152,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 2332957,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 2,
+      "label": "cache-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-cache-w16-m8-p1-2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.7110319320345297,
+      "startup_seconds": 0.44726909999735653,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 19151.01605440916,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010174080000000004,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.07744874281343073,
+          "thread_cpu_seconds": 0.06860840400000001
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.1855085816932842,
+          "thread_cpu_seconds": 0.008665104999999784
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.005870730965398252,
+          "thread_cpu_seconds": 0.005873210999999823
+        }
+      },
+      "commit_seconds": 0.1409601858467795,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.1941884121624753,
+        "producer_wait_full_seconds": 0.00011460087262094021,
+        "producer_wait_capacity_seconds": 7.384683704003692e-05,
+        "ready_depth_seconds": {
+          "0": 1.640851392177865,
+          "1": 0.047516901802737266,
+          "2": 0.016716587997507304,
+          "3": 0.0059447960229590535
+        },
+        "mean_ready_depth": 0.05773389986757693,
+        "elapsed_seconds": 1.711030539998319,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.7022818501573056,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 53052,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 145892
+      },
+      "journal_bytes": 2334027,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 3,
+      "label": "cache_buffer8-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-cache_buffer8-w16-m8-p1-3"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.746829148964025,
+      "startup_seconds": 0.45075380499474704,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 18758.5603431414,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010191072,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.07470276224194095,
+          "thread_cpu_seconds": 0.0683919309999999
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.27077564905630425,
+          "thread_cpu_seconds": 0.008717279999999966
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.005799878039397299,
+          "thread_cpu_seconds": 0.005813370000000179
+        }
+      },
+      "commit_seconds": 0.4444283006596379,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.8473237698781304,
+        "producer_wait_full_seconds": 0.00012334133498370647,
+        "producer_wait_capacity_seconds": 8.090591290965676e-05,
+        "ready_depth_seconds": {
+          "0": 1.6681784841348417,
+          "1": 0.04808630590559915,
+          "2": 0.024260647944174707,
+          "3": 0.00630205700872466
+        },
+        "mean_ready_depth": 0.06612770045360887,
+        "elapsed_seconds": 1.7468288179952651,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.7416597517440096,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 52776,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 2332910,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 3,
+      "label": "cache-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-cache-w16-m8-p1-3"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.826632532000076,
+      "startup_seconds": 0.41600284300511703,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 17939.02135539029,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010174303999999999,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.7102416198467836,
+          "thread_cpu_seconds": 0.5102409809999997
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.04978425119770691,
+          "thread_cpu_seconds": 0.009337278000000337
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.008210796455387026,
+          "thread_cpu_seconds": 0.008226918999999305
+        }
+      },
+      "commit_seconds": 0.4967024720972404,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.429228620196227,
+        "producer_wait_full_seconds": 0.00026087788864970207,
+        "producer_wait_capacity_seconds": 8.418905781581998e-05,
+        "ready_depth_seconds": {
+          "0": 1.6358526683761738,
+          "1": 0.11324643361149356,
+          "2": 0.03659437503665686,
+          "3": 0.04093808395555243
+        },
+        "mean_ready_depth": 0.16930030457627443,
+        "elapsed_seconds": 1.8266324819996953,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.8181096257758327,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 50856,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 2333266,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 3,
+      "label": "baseline-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-baseline-w16-m8-p1-3"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.3970637379679829,
+      "startup_seconds": 0.4540015250095166,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 23454.906966278268,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010161984000000004,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.18665147182764485,
+          "thread_cpu_seconds": 0.08742073499999994
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.2631977510172874,
+          "thread_cpu_seconds": 0.011945453999999606
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.007561353733763099,
+          "thread_cpu_seconds": 0.007571084000000061
+        }
+      },
+      "commit_seconds": 0.1448824218241498,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.6451478169183247,
+        "producer_wait_full_seconds": 0.010763920727185905,
+        "producer_wait_capacity_seconds": 8.731870912015438e-05,
+        "ready_depth_seconds": {
+          "0": 1.2435433631180786,
+          "1": 0.10904735192889348,
+          "2": 0.01695161999668926,
+          "3": 0.02752020099433139
+        },
+        "mean_ready_depth": 0.1614180191716761,
+        "elapsed_seconds": 1.3970633270218968,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.3916556479525752,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 53860,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 145887
+      },
+      "journal_bytes": 2333947,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 3,
+      "label": "cache_buffer8-w16-m4-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-cache_buffer8-w16-m4-p1-3"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.8546731289825402,
+      "startup_seconds": 0.4473235529731028,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 17667.803284547655,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010176704000000005,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.7685318308649585,
+          "thread_cpu_seconds": 0.508837906
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.04307346296263859,
+          "thread_cpu_seconds": 0.00974701699999958
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.008723111590370536,
+          "thread_cpu_seconds": 0.008740000999999747
+        }
+      },
+      "commit_seconds": 0.4904383012326434,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.4036066572298296,
+        "producer_wait_full_seconds": 0.006004324764944613,
+        "producer_wait_capacity_seconds": 8.64141620695591e-05,
+        "ready_depth_seconds": {
+          "0": 1.695011442876421,
+          "1": 0.09732442116364837,
+          "2": 0.030933091009501368,
+          "3": 0.031404184992425144
+        },
+        "mean_ready_depth": 0.1366294904053693,
+        "elapsed_seconds": 1.8546739610028453,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.8464262409834191,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 51232,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 2333263,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 4,
+      "label": "baseline-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-baseline-w16-m8-p1-4"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.7592329550534487,
+      "startup_seconds": 0.42614261800190434,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 18626.299550535903,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010243616000000007,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.08145446865819395,
+          "thread_cpu_seconds": 0.0736336520000001
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.2560854926123284,
+          "thread_cpu_seconds": 0.009072593999999545
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.006388610927388072,
+          "thread_cpu_seconds": 0.00640149000000001
+        }
+      },
+      "commit_seconds": 0.4889873411739245,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.7956775370403193,
+        "producer_wait_full_seconds": 0.00013976782793179154,
+        "producer_wait_capacity_seconds": 8.739560144022107e-05,
+        "ready_depth_seconds": {
+          "0": 1.6575617030030116,
+          "1": 0.06458835990633816,
+          "2": 0.02681990509154275,
+          "3": 0.010261493967846036
+        },
+        "mean_ready_depth": 0.08470321476370356,
+        "elapsed_seconds": 1.7592325439909473,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.7533466328168288,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 52232,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 2332918,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 4,
+      "label": "cache-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-cache-w16-m8-p1-4"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.707598470035009,
+      "startup_seconds": 0.4438493269844912,
+      "map_chunksize": 8,
+      "prep_windows": 1,
+      "patches_per_second": 19189.5229323602,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010143903999999999,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.0737415942712687,
+          "thread_cpu_seconds": 0.06908762799999985
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.2026942839147523,
+          "thread_cpu_seconds": 0.008529784000000318
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.005787238012999296,
+          "thread_cpu_seconds": 0.005804068000000051
+        }
+      },
+      "commit_seconds": 0.13646259903907776,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 1.1876806590007618,
+        "producer_wait_full_seconds": 0.00012280739611014724,
+        "producer_wait_capacity_seconds": 7.580890087410808e-05,
+        "ready_depth_seconds": {
+          "0": 1.6463391440920532,
+          "1": 0.03306870488449931,
+          "2": 0.022354278014972806,
+          "3": 0.0058341179974377155
+        },
+        "mean_ready_depth": 0.05579748659116907,
+        "elapsed_seconds": 1.7075968959834427,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.6988258300116286,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 52268,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 145888
+      },
+      "journal_bytes": 2333968,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 4,
+      "label": "cache_buffer8-w16-m8-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-cache_buffer8-w16-m8-p1-4"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2300843648,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.4240988260135055,
+      "startup_seconds": 0.421314759994857,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 23009.639079422457,
+      "points": 190574174,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "eef2b38ec94d952651b2dfcb5d879fbf5c1936ff8554fd2a31bc148659856602",
+      "kernel_seconds": 0.010202368,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.27372765803011134,
+          "thread_cpu_seconds": 0.10788855899999994
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.19963745487621054,
+          "thread_cpu_seconds": 0.01294015099999965
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.008037351362872869,
+          "thread_cpu_seconds": 0.008056369000000063
+        }
+      },
+      "commit_seconds": 0.15569090726785362,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.5649839516845532,
+        "producer_wait_full_seconds": 0.01032576389843598,
+        "producer_wait_capacity_seconds": 9.526003850623965e-05,
+        "ready_depth_seconds": {
+          "0": 1.239532500563655,
+          "1": 0.13770167046459392,
+          "2": 0.01958183996612206,
+          "3": 0.027280320005957037
+        },
+        "mean_ready_depth": 0.18166336148760132,
+        "elapsed_seconds": 1.4240973429987207,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.418739582062699,
+        "maximum_prepared_payload_bytes": 481201
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481201,
+      "parent_maxrss_kib": 53544,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 145888
+      },
+      "journal_bytes": 2333976,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 4,
+      "label": "cache_buffer8-w16-m4-p1",
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/holdout/cabbage-cache_buffer8-w16-m4-p1-4"
+    }
+  ],
+  "same_scientific_inputs": true,
+  "ready_depth_instrumented": true
+}

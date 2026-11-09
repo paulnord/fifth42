@@ -1,0 +1,2036 @@
+{
+  "status": "passed",
+  "phase": "wire-screening",
+  "checked_utc": "2026-11-09T19:36:01.320558+00:00",
+  "same_scientific_inputs": true,
+  "same_candidate_sets": true,
+  "all_durable_modes_independently_audited_and_reopened": true,
+  "includes_final_buffer_drain": true,
+  "volatile_ram_mode_is_upper_bound_only": true,
+  "production_started": false,
+  "summary": [
+    {
+      "region": "ada",
+      "median_seconds": {
+        "baseline-w16": 3.220105447981041,
+        "cache_buffer8-w16": 2.5627038699458353,
+        "wire_async8-w16": 2.6300283200107515,
+        "wire_buffer32-w16": 2.623781846021302,
+        "wire_buffer8-w16": 2.624352667015046,
+        "wire_cache-w16": 2.688593592029065,
+        "wire_ram-w16": 2.628867730963975
+      },
+      "throughput_vs_baseline": {
+        "baseline-w16": 1.0,
+        "cache_buffer8-w16": 1.2565265482855419,
+        "wire_async8-w16": 1.2243615110455834,
+        "wire_buffer32-w16": 1.22727636554998,
+        "wire_buffer8-w16": 1.2270094215818972,
+        "wire_cache-w16": 1.197691409191691,
+        "wire_ram-w16": 1.2249020405451383
+      }
+    }
+  ],
+  "trials": [
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 3.3146391549962573,
+      "startup_seconds": 0.5275386749999598,
+      "patches_per_second": 9885.842309745176,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011414816,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 1.8543844857485965,
+          "thread_cpu_seconds": 1.0622983030000002
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.059827908873558044,
+          "thread_cpu_seconds": 0.015350232999999824
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009939817828126252,
+          "thread_cpu_seconds": 0.009958811999999873
+        }
+      },
+      "commit_seconds": 0.5587446285644546,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 52840,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4448928,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 0,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-baseline-w16-0",
+      "elapsed_with_setup_and_audit_seconds": 4.442005628021434
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.6113765360205434,
+      "startup_seconds": 0.4194847070029937,
+      "patches_per_second": 12548.171260638997,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011357856000000005,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.15406437101773918,
+          "thread_cpu_seconds": 0.13799533199999958
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.34328049718169495,
+          "thread_cpu_seconds": 0.013909114999999778
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010573608917184174,
+          "thread_cpu_seconds": 0.010574301000000064
+        }
+      },
+      "commit_seconds": 0.3306643929099664,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 55500,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278120
+      },
+      "journal_bytes": 4449648,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 0,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-cache_buffer8-w16-0",
+      "elapsed_with_setup_and_audit_seconds": 3.539780820021406
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_cache",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.719573665992357,
+      "startup_seconds": 0.42613299703225493,
+      "patches_per_second": 12048.947380891463,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011451808,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.14494316739728674,
+          "thread_cpu_seconds": 0.13293874499999989
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.30418611387722194,
+          "thread_cpu_seconds": 0.013393192999999748
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009945460595190525,
+          "thread_cpu_seconds": 0.009964390000000073
+        }
+      },
+      "commit_seconds": 0.6251361471950077,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 54720,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449286,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 0,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_cache-w16-0",
+      "elapsed_with_setup_and_audit_seconds": 3.690433565992862
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_buffer8",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.745971181022469,
+      "startup_seconds": 0.4205805619712919,
+      "patches_per_second": 11933.118681820526,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011341664000000005,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.14243344613350928,
+          "thread_cpu_seconds": 0.13650560400000006
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.371117843023967,
+          "thread_cpu_seconds": 0.014050239000000075
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009926211554557085,
+          "thread_cpu_seconds": 0.00994127799999997
+        }
+      },
+      "commit_seconds": 0.2910955994739197,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 54848,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278113
+      },
+      "journal_bytes": 4449575,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 0,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_buffer8-w16-0",
+      "elapsed_with_setup_and_audit_seconds": 3.6911212299601175
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_buffer32",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.623781846021302,
+      "startup_seconds": 0.42603721300838515,
+      "patches_per_second": 12488.843174858204,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011388576,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.14000911032781005,
+          "thread_cpu_seconds": 0.13085268100000022
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.36519772693281993,
+          "thread_cpu_seconds": 0.01315561699999987
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010120649181772023,
+          "thread_cpu_seconds": 0.010142935999999741
+        }
+      },
+      "commit_seconds": 0.171791247674264,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 14,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 54896,
+      "journal": {
+        "flush_count": 10,
+        "peak_pending_bytes": 521422
+      },
+      "journal_bytes": 4449607,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 0,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_buffer32-w16-0",
+      "elapsed_with_setup_and_audit_seconds": 3.591200950962957
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_async8",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.710526929004118,
+      "startup_seconds": 0.4525749320164323,
+      "patches_per_second": 12089.162313557748,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011448832,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.14436414383817464,
+          "thread_cpu_seconds": 0.13440058000000007
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3698614033055492,
+          "thread_cpu_seconds": 0.014097686000000276
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009955401998013258,
+          "thread_cpu_seconds": 0.009971656000000134
+        }
+      },
+      "commit_seconds": 0.04459440935170278,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 8,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 56476,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278107,
+        "peak_queued_records": 2
+      },
+      "journal_bytes": 4449422,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 0,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_async8-w16-0",
+      "elapsed_with_setup_and_audit_seconds": 3.6911531750229187
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_ram",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.80152805702528,
+      "startup_seconds": 0.4769525729934685,
+      "patches_per_second": 11696.473971705904,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011371167999999996,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.14432705810759217,
+          "thread_cpu_seconds": 0.1381471559999998
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3419486289494671,
+          "thread_cpu_seconds": 0.014696601000000059
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009874124079942703,
+          "thread_cpu_seconds": 0.009891657999999998
+        }
+      },
+      "commit_seconds": 0.11362304247450083,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 58280,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449031,
+      "recovery_passed": false,
+      "durable": false,
+      "durable_journal_closed_before_timing_end": false,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 0,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_ram-w16-0",
+      "elapsed_with_setup_and_audit_seconds": 3.5903583929757588
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 3.150899192027282,
+      "startup_seconds": 0.41574173199478537,
+      "patches_per_second": 10399.571044009548,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011410047999999997,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 1.8158282939111814,
+          "thread_cpu_seconds": 1.0330806330000002
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.06711620429996401,
+          "thread_cpu_seconds": 0.012810776000001023
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009429494035430253,
+          "thread_cpu_seconds": 0.009448158999999984
+        }
+      },
+      "commit_seconds": 0.5452018298674375,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 52204,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4448918,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 1,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-baseline-w16-1",
+      "elapsed_with_setup_and_audit_seconds": 4.090489246009383
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_ram",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.628867730963975,
+      "startup_seconds": 0.39149387105135247,
+      "patches_per_second": 12464.681891007258,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011380384000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.13572950317757204,
+          "thread_cpu_seconds": 0.1317015819999998
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.36354483070317656,
+          "thread_cpu_seconds": 0.013427405999999892
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.01010431325994432,
+          "thread_cpu_seconds": 0.01012055600000003
+        }
+      },
+      "commit_seconds": 0.10651546670123935,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 58508,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449024,
+      "recovery_passed": false,
+      "durable": false,
+      "durable_journal_closed_before_timing_end": false,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 1,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_ram-w16-1",
+      "elapsed_with_setup_and_audit_seconds": 3.3404993730364367
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_async8",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.6300283200107515,
+      "startup_seconds": 0.42929258896037936,
+      "patches_per_second": 12459.181428079088,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011395584000000004,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.14007344405399635,
+          "thread_cpu_seconds": 0.13317983799999983
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.37940036231884733,
+          "thread_cpu_seconds": 0.01347877200000025
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009809644427150488,
+          "thread_cpu_seconds": 0.009823354999999923
+        }
+      },
+      "commit_seconds": 0.04454629175597802,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 8,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 55552,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278107,
+        "peak_queued_records": 2
+      },
+      "journal_bytes": 4449430,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 1,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_async8-w16-1",
+      "elapsed_with_setup_and_audit_seconds": 3.589445817982778
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_buffer32",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.631044337002095,
+      "startup_seconds": 0.42028052400564775,
+      "patches_per_second": 12454.37012944336,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011398752000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.13898311083903536,
+          "thread_cpu_seconds": 0.1315819319999996
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.36194145382614806,
+          "thread_cpu_seconds": 0.013283814000000033
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010043418034911156,
+          "thread_cpu_seconds": 0.010058104000000345
+        }
+      },
+      "commit_seconds": 0.16733535326784477,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 15,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 54700,
+      "journal": {
+        "flush_count": 9,
+        "peak_pending_bytes": 556205
+      },
+      "journal_bytes": 4449635,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 1,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_buffer32-w16-1",
+      "elapsed_with_setup_and_audit_seconds": 3.5895939900074154
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_buffer8",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.588958541979082,
+      "startup_seconds": 0.4149996199994348,
+      "patches_per_second": 12656.826854767285,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011334400000000005,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.13624240743229166,
+          "thread_cpu_seconds": 0.12906469499999995
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.351947421208024,
+          "thread_cpu_seconds": 0.013203377000000127
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010217224480584264,
+          "thread_cpu_seconds": 0.01023546000000028
+        }
+      },
+      "commit_seconds": 0.2189995640073903,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 55748,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278120
+      },
+      "journal_bytes": 4449554,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 1,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_buffer8-w16-1",
+      "elapsed_with_setup_and_audit_seconds": 3.540414321993012
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_cache",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.6759637009818107,
+      "startup_seconds": 0.42421518301125616,
+      "patches_per_second": 12245.308106375818,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011359360000000004,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.15426814928650856,
+          "thread_cpu_seconds": 0.13343445700000012
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3012748821056448,
+          "thread_cpu_seconds": 0.013712428999999249
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.00992224202491343,
+          "thread_cpu_seconds": 0.009940777999999484
+        }
+      },
+      "commit_seconds": 0.632825277862139,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 54704,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449291,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 1,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_cache-w16-1",
+      "elapsed_with_setup_and_audit_seconds": 3.64118870702805
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.5627038699458353,
+      "startup_seconds": 0.42261304100975394,
+      "patches_per_second": 12786.49491433147,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011328480000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.1430380803067237,
+          "thread_cpu_seconds": 0.13403886800000017
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3415149485808797,
+          "thread_cpu_seconds": 0.013141792999999735
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010900803201366216,
+          "thread_cpu_seconds": 0.01091749500000011
+        }
+      },
+      "commit_seconds": 0.21993339818436652,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 54772,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278122
+      },
+      "journal_bytes": 4449671,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 1,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-cache_buffer8-w16-1",
+      "elapsed_with_setup_and_audit_seconds": 3.540242307004519
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_cache",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.6953752689878456,
+      "startup_seconds": 0.4222646449925378,
+      "patches_per_second": 12157.119781062947,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011423743999999996,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.14958637725794688,
+          "thread_cpu_seconds": 0.13361778199999993
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3103726551053114,
+          "thread_cpu_seconds": 0.01380114699999982
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010156079311855137,
+          "thread_cpu_seconds": 0.010169842999999651
+        }
+      },
+      "commit_seconds": 0.6984153907396831,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 55016,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449303,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 2,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_cache-w16-2",
+      "elapsed_with_setup_and_audit_seconds": 3.6408782709622756
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_buffer8",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.6087643079808913,
+      "startup_seconds": 0.4776302860118449,
+      "patches_per_second": 12560.73609246881,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011359200000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.12843285291455686,
+          "thread_cpu_seconds": 0.12842201400000006
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3723768382333219,
+          "thread_cpu_seconds": 0.012978245000000027
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009906695398967713,
+          "thread_cpu_seconds": 0.00992031100000032
+        }
+      },
+      "commit_seconds": 0.2173050927813165,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 55136,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278108
+      },
+      "journal_bytes": 4449513,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 2,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_buffer8-w16-2",
+      "elapsed_with_setup_and_audit_seconds": 3.6405443779658526
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_buffer32",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.6201229270081967,
+      "startup_seconds": 0.4386963240103796,
+      "patches_per_second": 12506.283450378543,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011407232000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.1339283817796968,
+          "thread_cpu_seconds": 0.1303570319999998
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3665608281153254,
+          "thread_cpu_seconds": 0.013118607999999865
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.01009586948202923,
+          "thread_cpu_seconds": 0.010105910000000107
+        }
+      },
+      "commit_seconds": 0.17386767111020163,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 14,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 55160,
+      "journal": {
+        "flush_count": 10,
+        "peak_pending_bytes": 521401
+      },
+      "journal_bytes": 4449622,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 2,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_buffer32-w16-2",
+      "elapsed_with_setup_and_audit_seconds": 3.5907482730108313
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_async8",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.5887933030026034,
+      "startup_seconds": 0.42564926797058433,
+      "patches_per_second": 12657.634721935561,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011394048000000007,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.13505979790352285,
+          "thread_cpu_seconds": 0.12968123499999992
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.40922352724010125,
+          "thread_cpu_seconds": 0.012993274999999777
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010366734873969108,
+          "thread_cpu_seconds": 0.010381231000000046
+        }
+      },
+      "commit_seconds": 0.04452074412256479,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 8,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 56208,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278102,
+        "peak_queued_records": 2
+      },
+      "journal_bytes": 4449363,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 2,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_async8-w16-2",
+      "elapsed_with_setup_and_audit_seconds": 3.5407362729893066
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_ram",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.624670438992325,
+      "startup_seconds": 0.4376826149527915,
+      "patches_per_second": 12484.615025641251,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011411168,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.13241513801040128,
+          "thread_cpu_seconds": 0.13033159599999994
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3889197126845829,
+          "thread_cpu_seconds": 0.01301041199999975
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010369828611146659,
+          "thread_cpu_seconds": 0.010384848000000224
+        }
+      },
+      "commit_seconds": 0.10296250908868387,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 59500,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449019,
+      "recovery_passed": false,
+      "durable": false,
+      "durable_journal_closed_before_timing_end": false,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 2,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_ram-w16-2",
+      "elapsed_with_setup_and_audit_seconds": 3.3897113369894214
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 3.207739247009158,
+      "startup_seconds": 0.422596848977264,
+      "patches_per_second": 10215.29416100524,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011440832000000005,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 1.7717299832147546,
+          "thread_cpu_seconds": 1.0437284919999998
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.07551145175239071,
+          "thread_cpu_seconds": 0.01527555300000108
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009821285086218268,
+          "thread_cpu_seconds": 0.009839497000000252
+        }
+      },
+      "commit_seconds": 0.628999239008408,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 52560,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4448917,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 2,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-baseline-w16-2",
+      "elapsed_with_setup_and_audit_seconds": 4.241065192967653
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.579741159977857,
+      "startup_seconds": 0.4193862260435708,
+      "patches_per_second": 12702.049534411917,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011387616000000007,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.13674723403528333,
+          "thread_cpu_seconds": 0.1332975360000003
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.36917564494069666,
+          "thread_cpu_seconds": 0.013331687999999925
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010624787071719766,
+          "thread_cpu_seconds": 0.010640108000000231
+        }
+      },
+      "commit_seconds": 0.22021244780626148,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 54524,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278121
+      },
+      "journal_bytes": 4449651,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 2,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-cache_buffer8-w16-2",
+      "elapsed_with_setup_and_audit_seconds": 3.540029586991295
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_cache",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.675562902004458,
+      "startup_seconds": 0.3958235430181958,
+      "patches_per_second": 12247.142451949501,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011432288,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.15540867124218494,
+          "thread_cpu_seconds": 0.13454868199999978
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.2975339380209334,
+          "thread_cpu_seconds": 0.013567052999999774
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.01013168360805139,
+          "thread_cpu_seconds": 0.0101463050000003
+        }
+      },
+      "commit_seconds": 0.5955790549633093,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 54908,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449277,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 3,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_cache-w16-3",
+      "elapsed_with_setup_and_audit_seconds": 3.5900308370473795
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.5363379219779745,
+      "startup_seconds": 0.4465502990060486,
+      "patches_per_second": 12919.414134866433,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011361056000000003,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.14551906642736867,
+          "thread_cpu_seconds": 0.13313346300000015
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3653719858266413,
+          "thread_cpu_seconds": 0.013105842999999895
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010789910331368446,
+          "thread_cpu_seconds": 0.010806310999999902
+        }
+      },
+      "commit_seconds": 0.21394005906768143,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 53992,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278118
+      },
+      "journal_bytes": 4449638,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 3,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-cache_buffer8-w16-3",
+      "elapsed_with_setup_and_audit_seconds": 3.5393024220247753
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 3.233547298994381,
+      "startup_seconds": 0.39299669896718115,
+      "patches_per_second": 10133.762388504632,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011403456,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 1.8197286510840058,
+          "thread_cpu_seconds": 1.0599750010000009
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.061549602018203586,
+          "thread_cpu_seconds": 0.015666507999999246
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.01008471637032926,
+          "thread_cpu_seconds": 0.010097870000000675
+        }
+      },
+      "commit_seconds": 0.5884996178210713,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 52676,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4448951,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 3,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-baseline-w16-3",
+      "elapsed_with_setup_and_audit_seconds": 4.190937217033934
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_ram",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.640657967014704,
+      "startup_seconds": 0.3903374609653838,
+      "patches_per_second": 12409.028510816424,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011309216000000006,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.14266764395870268,
+          "thread_cpu_seconds": 0.1299398179999999
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3641917687491514,
+          "thread_cpu_seconds": 0.013307212999999901
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010028184042312205,
+          "thread_cpu_seconds": 0.01004282600000006
+        }
+      },
+      "commit_seconds": 0.11032252799486741,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 59100,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449002,
+      "recovery_passed": false,
+      "durable": false,
+      "durable_journal_closed_before_timing_end": false,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 3,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_ram-w16-3",
+      "elapsed_with_setup_and_audit_seconds": 3.3400290939607657
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_async8",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.7204483069945127,
+      "startup_seconds": 0.4459280840237625,
+      "patches_per_second": 12045.073569584314,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011393856000000003,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.1375492566730827,
+          "thread_cpu_seconds": 0.13642734100000017
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3887140969745815,
+          "thread_cpu_seconds": 0.014183289000000321
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009725285926833749,
+          "thread_cpu_seconds": 0.009741048999999918
+        }
+      },
+      "commit_seconds": 0.04375244083348662,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 8,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 55712,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278106,
+        "peak_queued_records": 2
+      },
+      "journal_bytes": 4449418,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 3,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_async8-w16-3",
+      "elapsed_with_setup_and_audit_seconds": 3.790104104031343
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_buffer32",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.6345183809753507,
+      "startup_seconds": 0.4224586070049554,
+      "patches_per_second": 12437.947002620129,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011420256000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.13183972518891096,
+          "thread_cpu_seconds": 0.13015971499999968
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.36483709228923544,
+          "thread_cpu_seconds": 0.01313793299999988
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010013681661803275,
+          "thread_cpu_seconds": 0.010027234000000107
+        }
+      },
+      "commit_seconds": 0.17624798300676048,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 15,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 55188,
+      "journal": {
+        "flush_count": 10,
+        "peak_pending_bytes": 556214
+      },
+      "journal_bytes": 4449673,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 3,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_buffer32-w16-3",
+      "elapsed_with_setup_and_audit_seconds": 3.639916585991159
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_buffer8",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.6381440620170906,
+      "startup_seconds": 0.4154873579973355,
+      "patches_per_second": 12420.853156497456,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011364736,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.1364417336299084,
+          "thread_cpu_seconds": 0.132641444
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.36112913611577824,
+          "thread_cpu_seconds": 0.013311762999999921
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010213993373326957,
+          "thread_cpu_seconds": 0.010229943999999935
+        }
+      },
+      "commit_seconds": 0.248242634057533,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 55332,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278110
+      },
+      "journal_bytes": 4449532,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 3,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_buffer8-w16-3",
+      "elapsed_with_setup_and_audit_seconds": 3.5907537640305236
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_buffer32",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.608459159033373,
+      "startup_seconds": 0.42189587699249387,
+      "patches_per_second": 12562.205502248678,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011405727999999995,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.1327823475585319,
+          "thread_cpu_seconds": 0.12903859499999992
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3632307442603633,
+          "thread_cpu_seconds": 0.013100582000000194
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010233029199298471,
+          "thread_cpu_seconds": 0.010248794000000117
+        }
+      },
+      "commit_seconds": 0.1658755870303139,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 15,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 55404,
+      "journal": {
+        "flush_count": 9,
+        "peak_pending_bytes": 556189
+      },
+      "journal_bytes": 4449626,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 4,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_buffer32-w16-4",
+      "elapsed_with_setup_and_audit_seconds": 3.5908967969589867
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_async8",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.6142698859912343,
+      "startup_seconds": 0.4285827979911119,
+      "patches_per_second": 12534.283539580148,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011430336000000001,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.1388088118401356,
+          "thread_cpu_seconds": 0.13005368000000006
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.37668233137810603,
+          "thread_cpu_seconds": 0.01303991499999993
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010181581950746477,
+          "thread_cpu_seconds": 0.010196272999999978
+        }
+      },
+      "commit_seconds": 0.0453498208662495,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 8,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 55580,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278106,
+        "peak_queued_records": 2
+      },
+      "journal_bytes": 4449393,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 4,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_async8-w16-4",
+      "elapsed_with_setup_and_audit_seconds": 3.5914256870164536
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_ram",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.602469815989025,
+      "startup_seconds": 0.45006949501112103,
+      "patches_per_second": 12591.11625375262,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011426816000000005,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.12998765817610547,
+          "thread_cpu_seconds": 0.12998479200000002
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3757647949969396,
+          "thread_cpu_seconds": 0.013103189999999876
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010055472899693996,
+          "thread_cpu_seconds": 0.010070012000000322
+        }
+      },
+      "commit_seconds": 0.1016547855688259,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 58840,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449004,
+      "recovery_passed": false,
+      "durable": false,
+      "durable_journal_closed_before_timing_end": false,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 4,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_ram-w16-4",
+      "elapsed_with_setup_and_audit_seconds": 3.3892268940107897
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "baseline",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 3.220105447981041,
+      "startup_seconds": 0.4226821589982137,
+      "patches_per_second": 10176.06427160485,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011424256000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 1.8098633328918368,
+          "thread_cpu_seconds": 1.0563000939999994
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.06018123193643987,
+          "thread_cpu_seconds": 0.015275251000000462
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009915323986206204,
+          "thread_cpu_seconds": 0.009933895000001025
+        }
+      },
+      "commit_seconds": 0.6030430605169386,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 52668,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4448911,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 4,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-baseline-w16-4",
+      "elapsed_with_setup_and_audit_seconds": 4.19170770799974
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.5571294290130027,
+      "startup_seconds": 0.41635742399375886,
+      "patches_per_second": 12814.368967099075,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011349215999999999,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.1441326891654171,
+          "thread_cpu_seconds": 0.13376563800000021
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3680580481304787,
+          "thread_cpu_seconds": 0.013127204999999698
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010992703610099852,
+          "thread_cpu_seconds": 0.011008667999999971
+        }
+      },
+      "commit_seconds": 0.20745463308412582,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 54124,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278119
+      },
+      "journal_bytes": 4449633,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 4,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-cache_buffer8-w16-4",
+      "elapsed_with_setup_and_audit_seconds": 3.4905407229671255
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_cache",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.688593592029065,
+      "startup_seconds": 0.42067030497128144,
+      "patches_per_second": 12187.78475748363,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011418751999999999,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.1546847959398292,
+          "thread_cpu_seconds": 0.13266914100000007
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3098778090206906,
+          "thread_cpu_seconds": 0.01360240100000018
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010088474140502512,
+          "thread_cpu_seconds": 0.010099079999999594
+        }
+      },
+      "commit_seconds": 0.6748597927507944,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 0,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 54440,
+      "journal": {
+        "flush_count": null,
+        "peak_pending_bytes": null
+      },
+      "journal_bytes": 4449293,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 4,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_cache-w16-4",
+      "elapsed_with_setup_and_audit_seconds": 3.641082614019979
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "wire_buffer8",
+      "workers": 16,
+      "first": 4398876032,
+      "patches": 32768,
+      "group_limit": 2,
+      "steady_seconds": 2.624352667015046,
+      "startup_seconds": 0.4419787870137952,
+      "patches_per_second": 12486.126735882077,
+      "points": 339633376,
+      "physical_tasks": 16384,
+      "hits": [],
+      "signatures_sha256": "2ba6c9501f2d6d4bfe70e28be08106d421deec91a9a31f783f781285f39974db",
+      "kernel_seconds": 0.011431104,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.13007099879905581,
+          "thread_cpu_seconds": 0.12987685900000004
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.3662971982266754,
+          "thread_cpu_seconds": 0.01324383400000026
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010048360854852945,
+          "thread_cpu_seconds": 0.010062573000000019
+        }
+      },
+      "commit_seconds": 0.22356200317153707,
+      "audit_count": 1,
+      "queue": {
+        "outstanding": 0,
+        "reserved_bytes": 0,
+        "reserved_points": 0,
+        "peak_outstanding": 3,
+        "peak_reserved_bytes": 25165824,
+        "peak_reserved_points": 750000000
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 961352,
+      "parent_maxrss_kib": 55452,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 278116
+      },
+      "journal_bytes": 4449522,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 4,
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_buffering_20261109/wire-screening/ada-wire_buffer8-w16-4",
+      "elapsed_with_setup_and_audit_seconds": 3.5907927360385656
+    }
+  ]
+}
