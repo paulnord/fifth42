@@ -1,0 +1,22 @@
+--- a/width_coverage.py
++++ b/width_coverage.py
+@@ -60,7 +60,7 @@
+ 
+ 
+ def prepare_chunk(pool,window,group_limit):
+-    require(window.width==8 and group_limit in (1,2,4),'Unsupported reservation/grouping policy')
++    require(window.width==8 and group_limit in (1,2,4,8,16),'Unsupported reservation/grouping policy')
+     args=[(window.lo,window.hi,first,min(first+group_limit,window.last),window.bits,window.cap,window.geometry_policy)
+           for first in range(window.first,window.last,group_limit)]
+     rows=[row for part in pool.map(prepare_segment,args,8) for row in part]
+--- a/buffered_pipeline.py
++++ b/buffered_pipeline.py
+@@ -69,7 +69,7 @@
+ 
+ 
+ def prepare_cached(pool,window,group_limit):
+-    require(window.width==8 and group_limit in (1,2,4),'Unsupported grouping')
++    require(window.width==8 and group_limit in (1,2,4,8,16),'Unsupported grouping')
+     args=[(window.lo,window.hi,first,min(first+group_limit,window.last),window.bits,window.cap,window.geometry_policy)
+           for first in range(window.first,window.last,group_limit)]
+     rows=[row for part in pool.map(coverage.prepare_segment,args,8) for row in part]

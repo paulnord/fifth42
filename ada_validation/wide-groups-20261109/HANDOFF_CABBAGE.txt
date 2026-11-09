@@ -1,0 +1,60 @@
+Cabbage: short group 4/8/16 host comparison
+==========================================
+
+Question: Does requested group 8 improve verified end-to-end throughput over
+current group 4 on Cabbage's own hardware? Ada replay of your current region
+measured medians 23,880 / 35,095 / 30,244 cells/sec for groups 4 / 8 / 16.
+That is a 47.0% gain for 8 on Ada, not yet a Cabbage-host measurement.
+
+Production remains stopped at its original 5 p.m. Central deadline. This is
+an isolated TEST_ONLY benchmark, with no production continuation, reservations,
+coverage credit, source edits, journal edits, or service/deadline changes.
+
+Use your frozen current worker as baseline:
+  /home/pnord/scratch/cabbage-buffered-20261109/worker
+  manifest 0082b77c0da24b7c260485af3473ad28eb382f4d2973a349a120a3fd5a618988
+Verify the manifest/config binding and every source/native binary checksum.
+Copy the manifest-listed files to a FRESH local experiment directory. Apply
+wider-groups.patch only in that copy. It extends two allowed grouping lists;
+retain all native range, packet-point, patch-point and exact certificate guards.
+Use your existing validated GPU/GMP binaries and pinned Python environment.
+Record CPU model, physical/logical cores, RAM, GPU/VRAM and CUDA/driver identity.
+
+The provided trial_wide_groups.py uses relative worker paths. Copy it to the
+experiment root and supply experiment-manifest.json identifying your local
+source/native hashes. Adapt only local paths and the resource-lease wrapper;
+do not change the arithmetic, timing boundary, checks or audit cadence.
+Acquire your existing CPU/GPU benchmark/production leases and establish the GPU
+is idle before testing. Give the complete experiment a hard 120-second limit;
+if setup needs debugging, leave production stopped and report the blocker.
+
+Use the exact original width-8 interval [2572492928,2572525696), shell
+[100000000001,200000000000], cap 42, adaptive geometry/max bits 222.
+Three balanced repeats, each on fresh local TEST_ONLY output directories:
+  requested group 4:  workers 16, dispatch chunksize 4
+  requested group 8:  workers 16, dispatch chunksize 2
+  requested group 16: workers 16, dispatch chunksize 1
+Rotate the order across repeats. Preserve 256 ORIGINAL-cell commits, ready
+queue 3 and durable journal buffering 8, and GMP audit period 128. Include the
+first GMP audit and final journal flush in end-to-end timing as Ada did.
+
+Per-trial invocation, using your pinned Python (substitute GROUP/DISPATCH/OUT):
+  python -B trial_wide_groups.py --variant cache_buffer8 --workers 16
+    --first 2572492928 --patches 32768 --group-limit GROUP
+    --map-chunksize DISPATCH --prep-windows 1 --output OUT
+
+Before timing, repeat the nonempty control in run_comparison.py: shell
+[136,153], cap 708588, original fine cells [0,16), all requested groups.
+Match the full candidate set against brute force and GMP; it includes
+(117,144,153,708588). Preserve recursive fallback when a wider task is guarded.
+Audit exact fine-cell coverage, native visits, candidate sets, durable hashes
+and recovery for every trial. Do not require equal coefficient counts or
+certificates BETWEEN groups; compare those within repeated identical groups.
+
+Return raw samples and commands, median cells/sec by grouping, kernel/RPC/
+commit timings, independent GMP and coverage results, actual span/fallback
+histograms, source/native hashes and hardware details. Keep startup separate.
+Write READY.json last under a fresh directory such as:
+  /mnt/nfs_share/fifth42-integration-20261109/wide-groups/cabbage/
+A measured winner is a recommendation for the next authorized production
+window, not authorization to restart the completed job.

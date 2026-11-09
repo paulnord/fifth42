@@ -1,0 +1,2932 @@
+{
+  "status": "passed",
+  "TEST_ONLY": true,
+  "production_coverage": false,
+  "production_restarted": false,
+  "production_unchanged": true,
+  "budget_seconds": 180,
+  "total_seconds": 98.12352063902654,
+  "repeats": 3,
+  "identical_candidate_sets": true,
+  "exact_original_cell_coverage": true,
+  "unmodified_native_guards": true,
+  "independent_gmp_and_recovery_every_trial": true,
+  "summary": [
+    {
+      "region": "ada",
+      "first": 4564955776,
+      "cells": 32768,
+      "median_seconds": {
+        "4": 1.5967805529944599,
+        "8": 1.6364868599921465,
+        "16": 3.730890578997787
+      },
+      "cells_per_second": {
+        "4": 20521.29200756473,
+        "8": 20023.381061646443,
+        "16": 8782.889582573158
+      },
+      "throughput_vs_group4": {
+        "4": 1.0,
+        "8": 0.975736861707599,
+        "16": 0.4279891139083999
+      }
+    },
+    {
+      "region": "cabbage",
+      "first": 2572492928,
+      "cells": 32768,
+      "median_seconds": {
+        "4": 1.3721866959822364,
+        "8": 0.9336968659772538,
+        "16": 1.083459633984603
+      },
+      "cells_per_second": {
+        "4": 23880.132416343,
+        "8": 35094.90199016934,
+        "16": 30243.858628576894
+      },
+      "throughput_vs_group4": {
+        "4": 1.0,
+        "8": 1.469627612540005,
+        "16": 1.2664862196441888
+      }
+    },
+    {
+      "region": "dense",
+      "first": 9562500096,
+      "cells": 32768,
+      "median_seconds": {
+        "4": 4.875439833034761,
+        "8": 4.88773856399348,
+        "16": 4.9407703980105
+      },
+      "cells_per_second": {
+        "4": 6721.034639371863,
+        "8": 6704.122892617894,
+        "16": 6632.164087850489
+      },
+      "throughput_vs_group4": {
+        "4": 1.0,
+        "8": 0.9974837584298555,
+        "16": 0.9867772513772255
+      }
+    }
+  ],
+  "trials": [
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4564955776,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.6012433629948646,
+      "startup_seconds": 0.483258718973957,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 20464.0973116746,
+      "points": 1333806924,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "bf1f7af5ac2544dc6195b2a9e1291257d34896c56acb56946a6c4a81316fa8dd",
+      "kernel_seconds": 0.035274144,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.22280256502563134,
+          "thread_cpu_seconds": 0.09728719500000022
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.24252741568489,
+          "thread_cpu_seconds": 0.012442465999999819
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.008268771693110466,
+          "thread_cpu_seconds": 0.008277071999999663
+        }
+      },
+      "commit_seconds": 0.13614613702520728,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.6047045765444636,
+        "producer_wait_full_seconds": 0.20187297987286001,
+        "producer_wait_capacity_seconds": 9.259069338440895e-05,
+        "ready_depth_seconds": {
+          "0": 1.2442515970906243,
+          "1": 0.11413577490020543,
+          "2": 0.02171069395262748,
+          "3": 0.22114439506549388
+        },
+        "mean_ready_depth": 0.5127205666427082,
+        "elapsed_seconds": 1.6012432529823855,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.5958128837519325,
+        "maximum_prepared_payload_bytes": 480954
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 480954,
+      "parent_maxrss_kib": 53128,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 147264
+      },
+      "journal_bytes": 2355819,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 0,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "4564955776",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "4",
+        "--map-chunksize",
+        "4",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g4-r0"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g4-r0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4564955776,
+      "patches": 32768,
+      "group_limit": 8,
+      "steady_seconds": 1.6364868599921465,
+      "startup_seconds": 0.4462540030363016,
+      "map_chunksize": 2,
+      "prep_windows": 1,
+      "patches_per_second": 20023.381061646443,
+      "points": 5012005588,
+      "physical_tasks": 4096,
+      "hits": [],
+      "signatures_sha256": "083bf7d5aac2d52fac1a7d34f4b104df859498e84ac97e0b8aa5d1bb64f3e750",
+      "kernel_seconds": 0.09518217600000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.15011116716777906,
+          "thread_cpu_seconds": 0.0559768219999999
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.16098864987725392,
+          "thread_cpu_seconds": 0.00904188799999986
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.004118839220609516,
+          "thread_cpu_seconds": 0.004133089999999923
+        }
+      },
+      "commit_seconds": 0.15101731504546478,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.2533493547816761,
+        "producer_wait_full_seconds": 0.8235872481018305,
+        "producer_wait_capacity_seconds": 8.84511973708868e-05,
+        "ready_depth_seconds": {
+          "0": 0.6684787631966174,
+          "1": 0.11607017583446577,
+          "2": 0.017996744019910693,
+          "3": 0.8339402349665761
+        },
+        "mean_ready_depth": 1.6216961359532382,
+        "elapsed_seconds": 1.6364868300152011,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.6307745318626985,
+        "maximum_prepared_payload_bytes": 240725
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 240725,
+      "parent_maxrss_kib": 51344,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 81106
+      },
+      "journal_bytes": 1297467,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 0,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "4564955776",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "8",
+        "--map-chunksize",
+        "2",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g8-r0"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g8-r0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4564955776,
+      "patches": 32768,
+      "group_limit": 16,
+      "steady_seconds": 3.729309492977336,
+      "startup_seconds": 0.4212674939772114,
+      "map_chunksize": 1,
+      "prep_windows": 1,
+      "patches_per_second": 8786.613195205555,
+      "points": 17103061745,
+      "physical_tasks": 2337,
+      "hits": [],
+      "signatures_sha256": "fa6729f62db45e91e7963a6d8cf328c78de8c5b0fa6ed78be788465404c19df5",
+      "kernel_seconds": 0.29660332800000017,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.10852623987011611,
+          "thread_cpu_seconds": 0.038224754
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.4304089717916213,
+          "thread_cpu_seconds": 0.02302316100000007
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.004966276930645108,
+          "thread_cpu_seconds": 0.005015129999999729
+        }
+      },
+      "commit_seconds": 0.0915416229981929,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.003387565549928695,
+        "producer_wait_full_seconds": 3.0773851271369494,
+        "producer_wait_capacity_seconds": 9.418278932571411e-05,
+        "ready_depth_seconds": {
+          "0": 0.016681931971106678,
+          "1": 0.04457095806719735,
+          "2": 0.22179802297614515,
+          "3": 3.4462571169715375
+        },
+        "mean_ready_depth": 2.9032024165117436,
+        "elapsed_seconds": 3.729308812005911,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 3.7145753497607075,
+        "maximum_prepared_payload_bytes": 159159
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 159159,
+      "parent_maxrss_kib": 51036,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 63922
+      },
+      "journal_bytes": 993933,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 0,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "4564955776",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "16",
+        "--map-chunksize",
+        "1",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g16-r0"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g16-r0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2572492928,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.355203210026957,
+      "startup_seconds": 0.4153730669640936,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 24179.399633615238,
+      "points": 259662008,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "9756ff310d6aad7ad508720212f8fd23715cb07b8129f6b264fd938bd7b87789",
+      "kernel_seconds": 0.011916608000000004,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.1960533644305542,
+          "thread_cpu_seconds": 0.08422244100000026
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.2627900473307818,
+          "thread_cpu_seconds": 0.012049191999999959
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.007764729729387909,
+          "thread_cpu_seconds": 0.007764902000000462
+        }
+      },
+      "commit_seconds": 0.12593951605958864,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.5997337641310878,
+        "producer_wait_full_seconds": 0.018316084111575037,
+        "producer_wait_capacity_seconds": 7.843150524422526e-05,
+        "ready_depth_seconds": {
+          "0": 1.2296804395737126,
+          "1": 0.0730337334680371,
+          "2": 0.016844597936142236,
+          "3": 0.0356422450277023
+        },
+        "mean_ready_depth": 0.15765156425907265,
+        "elapsed_seconds": 1.3552016780013219,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.3498911894275807,
+        "maximum_prepared_payload_bytes": 480901
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 480901,
+      "parent_maxrss_kib": 53084,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 145736
+      },
+      "journal_bytes": 2331432,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 0,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "2572492928",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "4",
+        "--map-chunksize",
+        "4",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g4-r0"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g4-r0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2572492928,
+      "patches": 32768,
+      "group_limit": 8,
+      "steady_seconds": 0.8879647689755075,
+      "startup_seconds": 0.42324900900712237,
+      "map_chunksize": 2,
+      "prep_windows": 1,
+      "patches_per_second": 36902.36498662689,
+      "points": 931475754,
+      "physical_tasks": 4096,
+      "hits": [],
+      "signatures_sha256": "9a45848b09596a6b3499aedc6cd81140dce93efe6cbd23c37e17c0ddd94e07f9",
+      "kernel_seconds": 0.02719164799999999,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.12381894298596308,
+          "thread_cpu_seconds": 0.05044253900000009
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.13135079166386276,
+          "thread_cpu_seconds": 0.00928713500000003
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.004021229222416878,
+          "thread_cpu_seconds": 0.004025510000000232
+        }
+      },
+      "commit_seconds": 0.12615799176273867,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.2579794987104833,
+        "producer_wait_full_seconds": 0.1413072085706517,
+        "producer_wait_capacity_seconds": 7.687258766964078e-05,
+        "ready_depth_seconds": {
+          "0": 0.6218448246945627,
+          "1": 0.10404713737079874,
+          "2": 0.012357303989119828,
+          "3": 0.14971495198551565
+        },
+        "mean_ready_depth": 0.6508213152721546,
+        "elapsed_seconds": 0.8879650800372474,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 0.8830383939784952,
+        "maximum_prepared_payload_bytes": 240484
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 240484,
+      "parent_maxrss_kib": 51336,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 80362
+      },
+      "journal_bytes": 1285474,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 0,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "2572492928",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "8",
+        "--map-chunksize",
+        "2",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g8-r0"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g8-r0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2572492928,
+      "patches": 32768,
+      "group_limit": 16,
+      "steady_seconds": 1.061633701028768,
+      "startup_seconds": 0.39730791497277096,
+      "map_chunksize": 1,
+      "prep_windows": 1,
+      "patches_per_second": 30865.6365827935,
+      "points": 3527909354,
+      "physical_tasks": 2048,
+      "hits": [],
+      "signatures_sha256": "da2f4ca2a2dae0cb048450c9b7d2cad8e7b0dacde78c6240ea125b7a8f23d8cc",
+      "kernel_seconds": 0.07070396800000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.09706045797793195,
+          "thread_cpu_seconds": 0.031116800000000056
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.1154147099587135,
+          "thread_cpu_seconds": 0.007825942999999863
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.0030078612035140395,
+          "thread_cpu_seconds": 0.00302191599999993
+        }
+      },
+      "commit_seconds": 0.09399976814165711,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.10327628254890442,
+        "producer_wait_full_seconds": 0.6130224738153629,
+        "producer_wait_capacity_seconds": 8.114211959764361e-05,
+        "ready_depth_seconds": {
+          "0": 0.31318357010604814,
+          "1": 0.1143690159660764,
+          "2": 0.01537693984573707,
+          "3": 0.6187023411039263
+        },
+        "mean_ready_depth": 1.8850486424123494,
+        "elapsed_seconds": 1.0616330390330404,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.05726722284453,
+        "maximum_prepared_payload_bytes": 120619
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 120619,
+      "parent_maxrss_kib": 50588,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 47309
+      },
+      "journal_bytes": 756802,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 0,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "2572492928",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "16",
+        "--map-chunksize",
+        "1",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g16-r0"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g16-r0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 9562500096,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 4.7689908720203675,
+      "startup_seconds": 0.45736086898250505,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 6871.055298564232,
+      "points": 19422406046,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "681459e137d814b63cfed6fe0f6ade7fc5aad80fb6385a372957653c7a73dc5f",
+      "kernel_seconds": 0.3695201599999998,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.31715686002280563,
+          "thread_cpu_seconds": 0.10674704699999982
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.7402269605081528,
+          "thread_cpu_seconds": 0.03259623699999989
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010435491218231618,
+          "thread_cpu_seconds": 0.0104814670000008
+        }
+      },
+      "commit_seconds": 0.15851340850349516,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.10798916581552476,
+        "producer_wait_full_seconds": 3.2991928719566204,
+        "producer_wait_capacity_seconds": 8.288660319522023e-05,
+        "ready_depth_seconds": {
+          "0": 0.7241253081592731,
+          "1": 0.39547105581732467,
+          "2": 0.1979094230919145,
+          "3": 3.451484613935463
+        },
+        "mean_ready_depth": 2.3371281631274345,
+        "elapsed_seconds": 4.768991243035998,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 4.7608551770681515,
+        "maximum_prepared_payload_bytes": 481032
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481032,
+      "parent_maxrss_kib": 53580,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 163014
+      },
+      "journal_bytes": 2607972,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "dense",
+      "repeat": 0,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "9562500096",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "4",
+        "--map-chunksize",
+        "4",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g4-r0"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g4-r0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 9562500096,
+      "patches": 32768,
+      "group_limit": 8,
+      "steady_seconds": 4.852250153024215,
+      "startup_seconds": 0.4236144459573552,
+      "map_chunksize": 2,
+      "prep_windows": 1,
+      "patches_per_second": 6753.155539513355,
+      "points": 19422406046,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "681459e137d814b63cfed6fe0f6ade7fc5aad80fb6385a372957653c7a73dc5f",
+      "kernel_seconds": 0.36954364799999995,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.13013014616444707,
+          "thread_cpu_seconds": 0.07599412600000008
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.7033110882621258,
+          "thread_cpu_seconds": 0.03060412999999998
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009719286055769771,
+          "thread_cpu_seconds": 0.00975636199999913
+        }
+      },
+      "commit_seconds": 0.14016611350234598,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.4106149590224959,
+        "producer_wait_full_seconds": 3.2880729969474487,
+        "producer_wait_capacity_seconds": 8.61838343553245e-05,
+        "ready_depth_seconds": {
+          "0": 1.3253133329562843,
+          "1": 0.12230814911890775,
+          "2": 0.0785238979733549,
+          "3": 3.326103309984319
+        },
+        "mean_ready_depth": 2.114001843644537,
+        "elapsed_seconds": 4.852250203024596,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 4.843713862937875,
+        "maximum_prepared_payload_bytes": 481032
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481032,
+      "parent_maxrss_kib": 53872,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 163030
+      },
+      "journal_bytes": 2608066,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "dense",
+      "repeat": 0,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "9562500096",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "8",
+        "--map-chunksize",
+        "2",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g8-r0"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g8-r0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 9562500096,
+      "patches": 32768,
+      "group_limit": 16,
+      "steady_seconds": 4.937201603956055,
+      "startup_seconds": 0.44586287904530764,
+      "map_chunksize": 1,
+      "prep_windows": 1,
+      "patches_per_second": 6636.958064208646,
+      "points": 19422406046,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "681459e137d814b63cfed6fe0f6ade7fc5aad80fb6385a372957653c7a73dc5f",
+      "kernel_seconds": 0.36958483000000003,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.11925496481126174,
+          "thread_cpu_seconds": 0.07746545300000021
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.7419669528026134,
+          "thread_cpu_seconds": 0.028935538999999927
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009997365938033909,
+          "thread_cpu_seconds": 0.010051464000001425
+        }
+      },
+      "commit_seconds": 0.16464793926570565,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.4413029706920497,
+        "producer_wait_full_seconds": 3.295919763855636,
+        "producer_wait_capacity_seconds": 8.213624823838472e-05,
+        "ready_depth_seconds": {
+          "0": 1.3956325688050129,
+          "1": 0.17737099720397964,
+          "2": 0.038327201968058944,
+          "3": 3.325868932006415
+        },
+        "mean_ready_depth": 2.07235499811823,
+        "elapsed_seconds": 4.937200531014241,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 4.928254478436429,
+        "maximum_prepared_payload_bytes": 481032
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481032,
+      "parent_maxrss_kib": 53472,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 163057
+      },
+      "journal_bytes": 2608704,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "dense",
+      "repeat": 0,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "9562500096",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "16",
+        "--map-chunksize",
+        "1",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g16-r0"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g16-r0"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4564955776,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.5967805529944599,
+      "startup_seconds": 0.4226916719926521,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 20521.29200756473,
+      "points": 1333806924,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "bf1f7af5ac2544dc6195b2a9e1291257d34896c56acb56946a6c4a81316fa8dd",
+      "kernel_seconds": 0.035384384000000005,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.23540447314735502,
+          "thread_cpu_seconds": 0.100333904
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.2251222052727826,
+          "thread_cpu_seconds": 0.012675332999999789
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.007993916107807308,
+          "thread_cpu_seconds": 0.008011216000000043
+        }
+      },
+      "commit_seconds": 0.1427749979775399,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.5848943935707211,
+        "producer_wait_full_seconds": 0.20035678369458765,
+        "producer_wait_capacity_seconds": 9.19291633181274e-05,
+        "ready_depth_seconds": {
+          "0": 1.2451301201363094,
+          "1": 0.11691546381916851,
+          "2": 0.01659353607101366,
+          "3": 0.21814011997776106
+        },
+        "mean_ready_depth": 0.5038407888916593,
+        "elapsed_seconds": 1.5967800020007417,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.5913702109246515,
+        "maximum_prepared_payload_bytes": 480954
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 480954,
+      "parent_maxrss_kib": 53732,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 147252
+      },
+      "journal_bytes": 2355821,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 1,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "4564955776",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "4",
+        "--map-chunksize",
+        "4",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g4-r1"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g4-r1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4564955776,
+      "patches": 32768,
+      "group_limit": 16,
+      "steady_seconds": 3.730890578997787,
+      "startup_seconds": 0.4435765329981223,
+      "map_chunksize": 1,
+      "prep_windows": 1,
+      "patches_per_second": 8782.889582573158,
+      "points": 17103061745,
+      "physical_tasks": 2337,
+      "hits": [],
+      "signatures_sha256": "fa6729f62db45e91e7963a6d8cf328c78de8c5b0fa6ed78be788465404c19df5",
+      "kernel_seconds": 0.29698316799999996,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.11462757090339437,
+          "thread_cpu_seconds": 0.03841003600000001
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.40469540329650044,
+          "thread_cpu_seconds": 0.021170284000000344
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.006255876622162759,
+          "thread_cpu_seconds": 0.006304203000000452
+        }
+      },
+      "commit_seconds": 0.09411542129237205,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.004641499021090567,
+        "producer_wait_full_seconds": 3.10051466524601,
+        "producer_wait_capacity_seconds": 8.897599764168262e-05,
+        "ready_depth_seconds": {
+          "0": 0.015492055972572416,
+          "1": 0.03035111993085593,
+          "2": 0.196365961804986,
+          "3": 3.4886801392422058
+        },
+        "mean_ready_depth": 2.9186395665487823,
+        "elapsed_seconds": 3.7308900989592075,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 3.715094879793469,
+        "maximum_prepared_payload_bytes": 159159
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 159159,
+      "parent_maxrss_kib": 50356,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 63932
+      },
+      "journal_bytes": 993955,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 1,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "4564955776",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "16",
+        "--map-chunksize",
+        "1",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g16-r1"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g16-r1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4564955776,
+      "patches": 32768,
+      "group_limit": 8,
+      "steady_seconds": 1.5990522439824417,
+      "startup_seconds": 0.45301193598425016,
+      "map_chunksize": 2,
+      "prep_windows": 1,
+      "patches_per_second": 20492.138467215587,
+      "points": 5012005588,
+      "physical_tasks": 4096,
+      "hits": [],
+      "signatures_sha256": "083bf7d5aac2d52fac1a7d34f4b104df859498e84ac97e0b8aa5d1bb64f3e750",
+      "kernel_seconds": 0.095023072,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.0922740570968017,
+          "thread_cpu_seconds": 0.04477818200000036
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.14272372581763193,
+          "thread_cpu_seconds": 0.007699597999999946
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.0037251051398925483,
+          "thread_cpu_seconds": 0.0037413919999998158
+        }
+      },
+      "commit_seconds": 0.13120969757437706,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.32960594567703083,
+        "producer_wait_full_seconds": 0.8280708483071066,
+        "producer_wait_capacity_seconds": 7.99020635895431e-05,
+        "ready_depth_seconds": {
+          "0": 0.6926988788763992,
+          "1": 0.05514579307055101,
+          "2": 0.014794965041801333,
+          "3": 0.836410732998047
+        },
+        "mean_ready_depth": 1.6221919091098442,
+        "elapsed_seconds": 1.5990512020071037,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.5939671351225115,
+        "maximum_prepared_payload_bytes": 240725
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 240725,
+      "parent_maxrss_kib": 51144,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 81113
+      },
+      "journal_bytes": 1297569,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 1,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "4564955776",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "8",
+        "--map-chunksize",
+        "2",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g8-r1"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g8-r1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2572492928,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.3721866959822364,
+      "startup_seconds": 0.4213025420322083,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 23880.132416343,
+      "points": 259662008,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "9756ff310d6aad7ad508720212f8fd23715cb07b8129f6b264fd938bd7b87789",
+      "kernel_seconds": 0.012951103999999995,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.20841483975527808,
+          "thread_cpu_seconds": 0.09278539499999996
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.24371467623859644,
+          "thread_cpu_seconds": 0.012390686000000095
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.007772532000672072,
+          "thread_cpu_seconds": 0.007764725999999972
+        }
+      },
+      "commit_seconds": 0.14413400419289246,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.5790459602721967,
+        "producer_wait_full_seconds": 0.023491388361435384,
+        "producer_wait_capacity_seconds": 8.549506310373545e-05,
+        "ready_depth_seconds": {
+          "0": 1.2038287371397018,
+          "1": 0.10586092190351337,
+          "2": 0.019702177960425615,
+          "3": 0.042793436034116894
+        },
+        "mean_ready_depth": 0.19942308039698553,
+        "elapsed_seconds": 1.3721861350350082,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.3664741766406223,
+        "maximum_prepared_payload_bytes": 480901
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 480901,
+      "parent_maxrss_kib": 53320,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 145729
+      },
+      "journal_bytes": 2331470,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 1,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "2572492928",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "4",
+        "--map-chunksize",
+        "4",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g4-r1"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g4-r1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2572492928,
+      "patches": 32768,
+      "group_limit": 16,
+      "steady_seconds": 1.083459633984603,
+      "startup_seconds": 0.44787562399869785,
+      "map_chunksize": 1,
+      "prep_windows": 1,
+      "patches_per_second": 30243.858628576894,
+      "points": 3527909354,
+      "physical_tasks": 2048,
+      "hits": [],
+      "signatures_sha256": "da2f4ca2a2dae0cb048450c9b7d2cad8e7b0dacde78c6240ea125b7a8f23d8cc",
+      "kernel_seconds": 0.07074323200000003,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.08841020410181955,
+          "thread_cpu_seconds": 0.03152744100000007
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.12018191796960309,
+          "thread_cpu_seconds": 0.008188959000000245
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.002721523283980787,
+          "thread_cpu_seconds": 0.002723810000000132
+        }
+      },
+      "commit_seconds": 0.09651400585426018,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.1206867583678104,
+        "producer_wait_full_seconds": 0.6172908681910485,
+        "producer_wait_capacity_seconds": 8.76334379427135e-05,
+        "ready_depth_seconds": {
+          "0": 0.3356683118036017,
+          "1": 0.09956043213605881,
+          "2": 0.026629738102201372,
+          "3": 0.6215997099643573
+        },
+        "mean_ready_depth": 1.8622018626321837,
+        "elapsed_seconds": 1.0834588229772635,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.0790325371781364,
+        "maximum_prepared_payload_bytes": 120619
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 120619,
+      "parent_maxrss_kib": 50156,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 47312
+      },
+      "journal_bytes": 756799,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 1,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "2572492928",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "16",
+        "--map-chunksize",
+        "1",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g16-r1"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g16-r1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2572492928,
+      "patches": 32768,
+      "group_limit": 8,
+      "steady_seconds": 0.9545419579953887,
+      "startup_seconds": 0.4204151650192216,
+      "map_chunksize": 2,
+      "prep_windows": 1,
+      "patches_per_second": 34328.50669950152,
+      "points": 931475754,
+      "physical_tasks": 4096,
+      "hits": [],
+      "signatures_sha256": "9a45848b09596a6b3499aedc6cd81140dce93efe6cbd23c37e17c0ddd94e07f9",
+      "kernel_seconds": 0.027243872000000002,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.18105489201843739,
+          "thread_cpu_seconds": 0.05920140099999979
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.113945365708787,
+          "thread_cpu_seconds": 0.009347273000000073
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.003884475096128881,
+          "thread_cpu_seconds": 0.0039008259999999684
+        }
+      },
+      "commit_seconds": 0.12679875642061234,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.2803717469214462,
+        "producer_wait_full_seconds": 0.14501160010695457,
+        "producer_wait_capacity_seconds": 9.380036499351263e-05,
+        "ready_depth_seconds": {
+          "0": 0.66074880794622,
+          "1": 0.12800368602620438,
+          "2": 0.011432758066803217,
+          "3": 0.15435558400349692
+        },
+        "mean_ready_depth": 0.6431734633626813,
+        "elapsed_seconds": 0.9545417980407365,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 0.9498202151735313,
+        "maximum_prepared_payload_bytes": 240484
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 240484,
+      "parent_maxrss_kib": 51180,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 80353
+      },
+      "journal_bytes": 1285465,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 1,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "2572492928",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "8",
+        "--map-chunksize",
+        "2",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g8-r1"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g8-r1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 9562500096,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 4.875439833034761,
+      "startup_seconds": 0.4328125139581971,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 6721.034639371863,
+      "points": 19422406046,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "681459e137d814b63cfed6fe0f6ade7fc5aad80fb6385a372957653c7a73dc5f",
+      "kernel_seconds": 0.36951167599999996,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.3362014678423293,
+          "thread_cpu_seconds": 0.11496281299999969
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.7160372643265873,
+          "thread_cpu_seconds": 0.035298650000000736
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.010265590972267091,
+          "thread_cpu_seconds": 0.010324987000001007
+        }
+      },
+      "commit_seconds": 0.17348067701095715,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.11605468887137249,
+        "producer_wait_full_seconds": 3.3550053701619618,
+        "producer_wait_capacity_seconds": 9.034003596752882e-05,
+        "ready_depth_seconds": {
+          "0": 0.8286646879278123,
+          "1": 0.5249385731876828,
+          "2": 0.1366885619936511,
+          "3": 3.3851455249241553
+        },
+        "mean_ready_depth": 2.24672160530206,
+        "elapsed_seconds": 4.875438170041889,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 4.866494588961359,
+        "maximum_prepared_payload_bytes": 481032
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481032,
+      "parent_maxrss_kib": 53268,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 163018
+      },
+      "journal_bytes": 2607942,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "dense",
+      "repeat": 1,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "9562500096",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "4",
+        "--map-chunksize",
+        "4",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g4-r1"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g4-r1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 9562500096,
+      "patches": 32768,
+      "group_limit": 16,
+      "steady_seconds": 4.9407703980105,
+      "startup_seconds": 0.4182772060157731,
+      "map_chunksize": 1,
+      "prep_windows": 1,
+      "patches_per_second": 6632.164087850489,
+      "points": 19422406046,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "681459e137d814b63cfed6fe0f6ade7fc5aad80fb6385a372957653c7a73dc5f",
+      "kernel_seconds": 0.36959129400000007,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.12012080627027899,
+          "thread_cpu_seconds": 0.07514377999999985
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.7487836372456513,
+          "thread_cpu_seconds": 0.026557062000000298
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.01027764705941081,
+          "thread_cpu_seconds": 0.010317372999999713
+        }
+      },
+      "commit_seconds": 0.14187117398250848,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.4546323492540978,
+        "producer_wait_full_seconds": 3.322279925865587,
+        "producer_wait_capacity_seconds": 7.98791297711432e-05,
+        "ready_depth_seconds": {
+          "0": 1.3887926809838973,
+          "1": 0.1258823680691421,
+          "2": 0.07808127591852099,
+          "3": 3.3480126510257833
+        },
+        "mean_ready_depth": 2.0899745058083155,
+        "elapsed_seconds": 4.9407697769929655,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 4.932851350749843,
+        "maximum_prepared_payload_bytes": 481032
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481032,
+      "parent_maxrss_kib": 53172,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 163060
+      },
+      "journal_bytes": 2608729,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "dense",
+      "repeat": 1,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "9562500096",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "16",
+        "--map-chunksize",
+        "1",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g16-r1"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g16-r1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 9562500096,
+      "patches": 32768,
+      "group_limit": 8,
+      "steady_seconds": 4.88773856399348,
+      "startup_seconds": 0.42458404996432364,
+      "map_chunksize": 2,
+      "prep_windows": 1,
+      "patches_per_second": 6704.122892617894,
+      "points": 19422406046,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "681459e137d814b63cfed6fe0f6ade7fc5aad80fb6385a372957653c7a73dc5f",
+      "kernel_seconds": 0.36955987199999996,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.10214767121942714,
+          "thread_cpu_seconds": 0.07393121799999966
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.7216960474615917,
+          "thread_cpu_seconds": 0.029628787999999934
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009550853923428804,
+          "thread_cpu_seconds": 0.009609162999999948
+        }
+      },
+      "commit_seconds": 0.14690703200176358,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.45367494778474793,
+        "producer_wait_full_seconds": 3.3042326814611442,
+        "producer_wait_capacity_seconds": 8.439127122983336e-05,
+        "ready_depth_seconds": {
+          "0": 1.4237337299855426,
+          "1": 0.09269564703572541,
+          "2": 0.037502453953493387,
+          "3": 3.3338050700258464
+        },
+        "mean_ready_depth": 2.0805362589513705,
+        "elapsed_seconds": 4.887737823009957,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 4.875168553902768,
+        "maximum_prepared_payload_bytes": 481032
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481032,
+      "parent_maxrss_kib": 53440,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 163011
+      },
+      "journal_bytes": 2608056,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "dense",
+      "repeat": 1,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "9562500096",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "8",
+        "--map-chunksize",
+        "2",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g8-r1"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g8-r1"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4564955776,
+      "patches": 32768,
+      "group_limit": 16,
+      "steady_seconds": 3.891660413995851,
+      "startup_seconds": 0.4195697060204111,
+      "map_chunksize": 1,
+      "prep_windows": 1,
+      "patches_per_second": 8420.056354905517,
+      "points": 17103061745,
+      "physical_tasks": 2337,
+      "hits": [],
+      "signatures_sha256": "fa6729f62db45e91e7963a6d8cf328c78de8c5b0fa6ed78be788465404c19df5",
+      "kernel_seconds": 0.3001951680000001,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.11637234810041264,
+          "thread_cpu_seconds": 0.04020966299999998
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.41323612176347524,
+          "thread_cpu_seconds": 0.02205290099999993
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.005005198181606829,
+          "thread_cpu_seconds": 0.005047612999999868
+        }
+      },
+      "commit_seconds": 0.09469519194681197,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.004707146203145385,
+        "producer_wait_full_seconds": 3.239697642973624,
+        "producer_wait_capacity_seconds": 9.03369509615004e-05,
+        "ready_depth_seconds": {
+          "0": 0.016886815952602774,
+          "1": 0.04399205307709053,
+          "2": 0.2164176651276648,
+          "3": 3.6143620258080773
+        },
+        "mean_ready_depth": 2.9087627107924723,
+        "elapsed_seconds": 3.8916593019966967,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 3.875400584831368,
+        "maximum_prepared_payload_bytes": 159159
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 159159,
+      "parent_maxrss_kib": 50020,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 63926
+      },
+      "journal_bytes": 993921,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 2,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "4564955776",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "16",
+        "--map-chunksize",
+        "1",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g16-r2"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g16-r2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4564955776,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.5852686949656345,
+      "startup_seconds": 0.416463099012617,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 20670.312928061918,
+      "points": 1333806924,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "bf1f7af5ac2544dc6195b2a9e1291257d34896c56acb56946a6c4a81316fa8dd",
+      "kernel_seconds": 0.03339804799999999,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.22153478022664785,
+          "thread_cpu_seconds": 0.0952765119999997
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.24099949572701007,
+          "thread_cpu_seconds": 0.012469172999999723
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.007133271603379399,
+          "thread_cpu_seconds": 0.007132057000000386
+        }
+      },
+      "commit_seconds": 0.1433027220191434,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.5810523135005496,
+        "producer_wait_full_seconds": 0.2044336247490719,
+        "producer_wait_capacity_seconds": 8.829659782350063e-05,
+        "ready_depth_seconds": {
+          "0": 1.2312015585484914,
+          "1": 0.11214977945201099,
+          "2": 0.02225148893194273,
+          "3": 0.21966459607938305
+        },
+        "mean_ready_depth": 0.5145164127280178,
+        "elapsed_seconds": 1.5852682740078308,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.5799377003568225,
+        "maximum_prepared_payload_bytes": 480954
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 480954,
+      "parent_maxrss_kib": 53868,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 147261
+      },
+      "journal_bytes": 2355832,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 2,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "4564955776",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "4",
+        "--map-chunksize",
+        "4",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g4-r2"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g4-r2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 4564955776,
+      "patches": 32768,
+      "group_limit": 8,
+      "steady_seconds": 1.6494821989908814,
+      "startup_seconds": 0.44949383597122505,
+      "map_chunksize": 2,
+      "prep_windows": 1,
+      "patches_per_second": 19865.62814684922,
+      "points": 5012005588,
+      "physical_tasks": 4096,
+      "hits": [],
+      "signatures_sha256": "083bf7d5aac2d52fac1a7d34f4b104df859498e84ac97e0b8aa5d1bb64f3e750",
+      "kernel_seconds": 0.096486052,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.10606386821018532,
+          "thread_cpu_seconds": 0.050227129999999925
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.15515965700615197,
+          "thread_cpu_seconds": 0.008660889999999644
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.003850833687465638,
+          "thread_cpu_seconds": 0.0038614510000002933
+        }
+      },
+      "commit_seconds": 0.122331973107066,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.3259222457418218,
+        "producer_wait_full_seconds": 0.8275341642438434,
+        "producer_wait_capacity_seconds": 9.22753824852407e-05,
+        "ready_depth_seconds": {
+          "0": 0.7300867623416707,
+          "1": 0.06785375368781388,
+          "2": 0.012285978009458631,
+          "3": 0.8392544319503941
+        },
+        "mean_ready_depth": 1.5824298744522771,
+        "elapsed_seconds": 1.6494816280319355,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.6443251876626164,
+        "maximum_prepared_payload_bytes": 240725
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 240725,
+      "parent_maxrss_kib": 51596,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 81115
+      },
+      "journal_bytes": 1297505,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "ada",
+      "repeat": 2,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "4564955776",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "8",
+        "--map-chunksize",
+        "2",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g8-r2"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/ada-g8-r2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2572492928,
+      "patches": 32768,
+      "group_limit": 16,
+      "steady_seconds": 1.0891013920190744,
+      "startup_seconds": 0.42116706899832934,
+      "map_chunksize": 1,
+      "prep_windows": 1,
+      "patches_per_second": 30087.189530858763,
+      "points": 3527909354,
+      "physical_tasks": 2048,
+      "hits": [],
+      "signatures_sha256": "da2f4ca2a2dae0cb048450c9b7d2cad8e7b0dacde78c6240ea125b7a8f23d8cc",
+      "kernel_seconds": 0.070630688,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.0965059328591451,
+          "thread_cpu_seconds": 0.03390081899999997
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.12292210943996906,
+          "thread_cpu_seconds": 0.008475902999999951
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.0034593872260302305,
+          "thread_cpu_seconds": 0.003471582000000001
+        }
+      },
+      "commit_seconds": 0.10152616410050541,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.11120013566687703,
+        "producer_wait_full_seconds": 0.6134076033486053,
+        "producer_wait_capacity_seconds": 8.797133341431618e-05,
+        "ready_depth_seconds": {
+          "0": 0.3119055078132078,
+          "1": 0.1232832653913647,
+          "2": 0.03408573870547116,
+          "3": 0.6198247460997663
+        },
+        "mean_ready_depth": 1.8831406068600232,
+        "elapsed_seconds": 1.089100290031638,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.0840699775726534,
+        "maximum_prepared_payload_bytes": 120619
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 120619,
+      "parent_maxrss_kib": 50020,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 47312
+      },
+      "journal_bytes": 756767,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 2,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "2572492928",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "16",
+        "--map-chunksize",
+        "1",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g16-r2"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g16-r2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2572492928,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 1.429453248041682,
+      "startup_seconds": 0.41651116899447516,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 22923.449958850633,
+      "points": 259662008,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "9756ff310d6aad7ad508720212f8fd23715cb07b8129f6b264fd938bd7b87789",
+      "kernel_seconds": 0.012949855999999997,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.2665310957818292,
+          "thread_cpu_seconds": 0.10510667999999992
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.20650463522179052,
+          "thread_cpu_seconds": 0.012653684000000082
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.0069349067634902894,
+          "thread_cpu_seconds": 0.006934944999999776
+        }
+      },
+      "commit_seconds": 0.1429762895568274,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.5824083019397222,
+        "producer_wait_full_seconds": 0.024962173134554178,
+        "producer_wait_capacity_seconds": 9.530200622975826e-05,
+        "ready_depth_seconds": {
+          "0": 1.2247380539774895,
+          "1": 0.14041056903079152,
+          "2": 0.020399860048200935,
+          "3": 0.04390358197269961
+        },
+        "mean_ready_depth": 0.21890966495181602,
+        "elapsed_seconds": 1.4294528070022352,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 1.4241394249838777,
+        "maximum_prepared_payload_bytes": 480901
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 480901,
+      "parent_maxrss_kib": 53464,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 145730
+      },
+      "journal_bytes": 2331488,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 2,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "2572492928",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "4",
+        "--map-chunksize",
+        "4",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g4-r2"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g4-r2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 2572492928,
+      "patches": 32768,
+      "group_limit": 8,
+      "steady_seconds": 0.9336968659772538,
+      "startup_seconds": 0.42372979602077976,
+      "map_chunksize": 2,
+      "prep_windows": 1,
+      "patches_per_second": 35094.90199016934,
+      "points": 931475754,
+      "physical_tasks": 4096,
+      "hits": [],
+      "signatures_sha256": "9a45848b09596a6b3499aedc6cd81140dce93efe6cbd23c37e17c0ddd94e07f9",
+      "kernel_seconds": 0.027236832000000013,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.16219964605988935,
+          "thread_cpu_seconds": 0.05817562800000006
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.1340106666320935,
+          "thread_cpu_seconds": 0.009590338000000309
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.003940554452128708,
+          "thread_cpu_seconds": 0.003938826000000062
+        }
+      },
+      "commit_seconds": 0.13190831552492455,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.25172516755992547,
+        "producer_wait_full_seconds": 0.14433044841280207,
+        "producer_wait_capacity_seconds": 9.107665391638875e-05,
+        "ready_depth_seconds": {
+          "0": 0.652479354350362,
+          "1": 0.11851162265520543,
+          "2": 0.009703365969471633,
+          "3": 0.15300066903000697
+        },
+        "mean_ready_depth": 0.6393089795904674,
+        "elapsed_seconds": 0.9336961950175464,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 0.9287110880832188,
+        "maximum_prepared_payload_bytes": 240484
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 240484,
+      "parent_maxrss_kib": 51668,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 80362
+      },
+      "journal_bytes": 1285451,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "cabbage",
+      "repeat": 2,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "2572492928",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "8",
+        "--map-chunksize",
+        "2",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g8-r2"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/cabbage-g8-r2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 9562500096,
+      "patches": 32768,
+      "group_limit": 16,
+      "steady_seconds": 5.167624011985026,
+      "startup_seconds": 0.4465249970089644,
+      "map_chunksize": 1,
+      "prep_windows": 1,
+      "patches_per_second": 6341.018604295267,
+      "points": 19422406046,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "681459e137d814b63cfed6fe0f6ade7fc5aad80fb6385a372957653c7a73dc5f",
+      "kernel_seconds": 0.369517344,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.12904138868907467,
+          "thread_cpu_seconds": 0.0784562919999999
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.7177885509445332,
+          "thread_cpu_seconds": 0.02983042300000044
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009406069060787559,
+          "thread_cpu_seconds": 0.009454492000000064
+        }
+      },
+      "commit_seconds": 0.169619984109886,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.45039194799028337,
+        "producer_wait_full_seconds": 3.5047801781911403,
+        "producer_wait_capacity_seconds": 8.861016249284148e-05,
+        "ready_depth_seconds": {
+          "0": 1.4149308678461239,
+          "1": 0.1314036682015285,
+          "2": 0.070365974039305,
+          "3": 3.550922329945024
+        },
+        "mean_ready_depth": 2.114105722615829,
+        "elapsed_seconds": 5.167623591027223,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 5.159716026391834,
+        "maximum_prepared_payload_bytes": 481032
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481032,
+      "parent_maxrss_kib": 53740,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 163057
+      },
+      "journal_bytes": 2608706,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "dense",
+      "repeat": 2,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "9562500096",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "16",
+        "--map-chunksize",
+        "1",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g16-r2"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g16-r2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 9562500096,
+      "patches": 32768,
+      "group_limit": 4,
+      "steady_seconds": 4.938714573974721,
+      "startup_seconds": 0.48039075400447473,
+      "map_chunksize": 4,
+      "prep_windows": 1,
+      "patches_per_second": 6634.924839081767,
+      "points": 19422406046,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "681459e137d814b63cfed6fe0f6ade7fc5aad80fb6385a372957653c7a73dc5f",
+      "kernel_seconds": 0.36953856400000024,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.30799355026101694,
+          "thread_cpu_seconds": 0.10247643800000009
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.7318789588171057,
+          "thread_cpu_seconds": 0.028994956000000183
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009861831204034388,
+          "thread_cpu_seconds": 0.009884370000000059
+        }
+      },
+      "commit_seconds": 0.13730550959007815,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.0978668627794832,
+        "producer_wait_full_seconds": 3.506684796884656,
+        "producer_wait_capacity_seconds": 7.647788152098656e-05,
+        "ready_depth_seconds": {
+          "0": 0.5456321898382157,
+          "1": 0.41870314721018076,
+          "2": 0.28689299983670935,
+          "3": 3.6874851551256143
+        },
+        "mean_ready_depth": 2.440907509526376,
+        "elapsed_seconds": 4.938714213960338,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 4.930053784977645,
+        "maximum_prepared_payload_bytes": 481032
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481032,
+      "parent_maxrss_kib": 53572,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 163014
+      },
+      "journal_bytes": 2607980,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "dense",
+      "repeat": 2,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "9562500096",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "4",
+        "--map-chunksize",
+        "4",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g4-r2"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g4-r2"
+    },
+    {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "variant": "cache_buffer8",
+      "workers": 16,
+      "first": 9562500096,
+      "patches": 32768,
+      "group_limit": 8,
+      "steady_seconds": 4.922016054042615,
+      "startup_seconds": 0.44995964295230806,
+      "map_chunksize": 2,
+      "prep_windows": 1,
+      "patches_per_second": 6657.434604075815,
+      "points": 19422406046,
+      "physical_tasks": 8192,
+      "hits": [],
+      "signatures_sha256": "681459e137d814b63cfed6fe0f6ade7fc5aad80fb6385a372957653c7a73dc5f",
+      "kernel_seconds": 0.36951488,
+      "stages": {
+        "prepared_plan_consistency": {
+          "wall_seconds": 0.1358797837747261,
+          "thread_cpu_seconds": 0.07761425999999974
+        },
+        "engine_rpc": {
+          "wall_seconds": 0.723856148426421,
+          "thread_cpu_seconds": 0.028800860999999345
+        },
+        "exact_output_verification": {
+          "wall_seconds": 0.009285239910241216,
+          "thread_cpu_seconds": 0.009328447999999906
+        }
+      },
+      "commit_seconds": 0.1529369781492278,
+      "audit_count": 1,
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 5,
+        "peak_ready": 3,
+        "ready_limit": 3,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 41943040,
+        "max_outstanding": 5,
+        "consumer_wait_empty_seconds": 0.4260057218489237,
+        "producer_wait_full_seconds": 3.3341401689103805,
+        "producer_wait_capacity_seconds": 8.29759519547224e-05,
+        "ready_depth_seconds": {
+          "0": 1.3069181708269753,
+          "1": 0.18690383614739403,
+          "2": 0.06511030800174922,
+          "3": 3.363082497031428
+        },
+        "mean_ready_depth": 2.1142501219933525,
+        "elapsed_seconds": 4.922015534015372,
+        "preparation_batches": 128,
+        "prepare_wall_seconds": 4.913681729056407,
+        "maximum_prepared_payload_bytes": 481032
+      },
+      "maximum_uncommitted_chunks": 7,
+      "peak_prepared_payload_bytes": 481032,
+      "parent_maxrss_kib": 53640,
+      "journal": {
+        "flush_count": 16,
+        "peak_pending_bytes": 163019
+      },
+      "journal_bytes": 2608087,
+      "recovery_passed": true,
+      "durable": true,
+      "durable_journal_closed_before_timing_end": true,
+      "production_coverage": false,
+      "region": "dense",
+      "repeat": 2,
+      "command": [
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "/home/pnord/ada-wide-group-tests-20261109/trial_wide_groups.py",
+        "--variant",
+        "cache_buffer8",
+        "--workers",
+        "16",
+        "--first",
+        "9562500096",
+        "--patches",
+        "32768",
+        "--group-limit",
+        "8",
+        "--map-chunksize",
+        "2",
+        "--prep-windows",
+        "1",
+        "--output",
+        "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g8-r2"
+      ],
+      "output": "/home/pnord/fifth42-local-benchmarks/TEST_ONLY_ada_wide_groups_20261109/dense-g8-r2"
+    }
+  ],
+  "preflight": [
+    {
+      "region": "ada",
+      "requested_group": 4,
+      "physical_tasks": 64,
+      "points": 10508386,
+      "batches": 1,
+      "actual_span_histogram": {
+        "4": 64
+      }
+    },
+    {
+      "region": "ada",
+      "requested_group": 8,
+      "physical_tasks": 32,
+      "points": 38876314,
+      "batches": 1,
+      "actual_span_histogram": {
+        "8": 32
+      }
+    },
+    {
+      "region": "ada",
+      "requested_group": 16,
+      "physical_tasks": 17,
+      "points": 140180561,
+      "batches": 3,
+      "actual_span_histogram": {
+        "16": 15,
+        "8": 2
+      }
+    },
+    {
+      "region": "cabbage",
+      "requested_group": 4,
+      "physical_tasks": 64,
+      "points": 2010036,
+      "batches": 1,
+      "actual_span_histogram": {
+        "4": 64
+      }
+    },
+    {
+      "region": "cabbage",
+      "requested_group": 8,
+      "physical_tasks": 32,
+      "points": 7180822,
+      "batches": 1,
+      "actual_span_histogram": {
+        "8": 32
+      }
+    },
+    {
+      "region": "cabbage",
+      "requested_group": 16,
+      "physical_tasks": 16,
+      "points": 28326848,
+      "batches": 1,
+      "actual_span_histogram": {
+        "16": 16
+      }
+    },
+    {
+      "region": "dense",
+      "requested_group": 4,
+      "physical_tasks": 64,
+      "points": 153348070,
+      "batches": 4,
+      "actual_span_histogram": {
+        "4": 64
+      }
+    },
+    {
+      "region": "dense",
+      "requested_group": 8,
+      "physical_tasks": 64,
+      "points": 153348070,
+      "batches": 4,
+      "actual_span_histogram": {
+        "4": 64
+      }
+    },
+    {
+      "region": "dense",
+      "requested_group": 16,
+      "physical_tasks": 64,
+      "points": 153348070,
+      "batches": 4,
+      "actual_span_histogram": {
+        "4": 64
+      }
+    }
+  ],
+  "controls": [
+    {
+      "requested_group": 4,
+      "nonempty_candidates": [
+        [
+          84,
+          142,
+          144,
+          94432
+        ],
+        [
+          104,
+          128,
+          136,
+          393216
+        ],
+        [
+          104,
+          133,
+          140,
+          -75083
+        ],
+        [
+          117,
+          144,
+          153,
+          708588
+        ]
+      ],
+      "logical_spans": [
+        [
+          0,
+          4
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          12,
+          16
+        ]
+      ],
+      "points": 2159436,
+      "full_oracle_equal": true
+    },
+    {
+      "requested_group": 8,
+      "nonempty_candidates": [
+        [
+          84,
+          142,
+          144,
+          94432
+        ],
+        [
+          104,
+          128,
+          136,
+          393216
+        ],
+        [
+          104,
+          133,
+          140,
+          -75083
+        ],
+        [
+          117,
+          144,
+          153,
+          708588
+        ]
+      ],
+      "logical_spans": [
+        [
+          0,
+          8
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          12,
+          16
+        ]
+      ],
+      "points": 2433639,
+      "full_oracle_equal": true
+    },
+    {
+      "requested_group": 16,
+      "nonempty_candidates": [
+        [
+          84,
+          142,
+          144,
+          94432
+        ],
+        [
+          104,
+          128,
+          136,
+          393216
+        ],
+        [
+          104,
+          133,
+          140,
+          -75083
+        ],
+        [
+          117,
+          144,
+          153,
+          708588
+        ]
+      ],
+      "logical_spans": [
+        [
+          0,
+          8
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          12,
+          16
+        ]
+      ],
+      "points": 2433639,
+      "full_oracle_equal": true
+    }
+  ],
+  "baseline_manifest_sha256": "fb76f545da6946f0d57ab065b6b3b146117353d35e6068d081bb3a74c1baa89a"
+}
