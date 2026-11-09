@@ -84,7 +84,7 @@ def launch(host,ready,cfg,spec,audit):
     atomic(folder/'publication-spec.json',private)
     bridge=(Path('/home/pnord/ada-buffered-reporting-20261109')/'bridge_base.py').read_text()
     (folder/'bridge_base.py').write_text(bridge)
-    shutil.copy2(ROOT/'publish_combined.py',folder/'publish_bulk_worker.py')
+    shutil.copy2(ROOT/'publish_buffered.py',folder/'publish_bulk_worker.py')
     unit=host+'-buffered-publisher-20261109'
     settings.update(host=host,share=str(share),service_name=unit+'.service',bridge_base_sha256=sha(folder/'bridge_base.py'))
     atomic(folder/'publisher-settings.json',settings);atomic(folder/'binding.json',dict(status='verified',ready=ready))
