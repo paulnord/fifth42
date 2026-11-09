@@ -1,0 +1,87 @@
+[
+  {
+    "command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/validate.py",
+      "native"
+    ],
+    "exit_code": 0,
+    "stdout": "baseline GPU validation passed 51 packets\nlow64 GPU validation passed 51 packets\nrows GPU validation passed 51 packets\nwheel GPU validation passed 51 packets\ndifferences GPU validation passed 51 packets\nwheel_differences GPU validation passed 51 packets\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/validate_candidate.py"
+    ],
+    "exit_code": 0,
+    "stdout": "recommended host validation passed 8\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/validate_widths.py"
+    ],
+    "exit_code": 0,
+    "stdout": "All five nested partitions preserve nonempty exact hits\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/audit_differences.py"
+    ],
+    "exit_code": 0,
+    "stdout": "[{\"binary\": \"audit\", \"cases\": 512, \"steps\": 21741, \"exact_bigint_match\": true, \"stderr\": \"\"}, {\"binary\": \"audit_ubsan\", \"cases\": 512, \"steps\": 21741, \"exact_bigint_match\": true, \"stderr\": \"\"}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/source/lattice_gpu/tests",
+      "-p",
+      "test_exact_host_opt.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_all_modes_match_nonempty_oracle_under_cpu_and_sanitizers (test_exact_host_opt.ExactHostArithmetic.test_all_modes_match_nonempty_oracle_under_cpu_and_sanitizers) ... ok\ntest_inverse_exact_check_rejects_wrong_reduced_basis_or_transform (test_exact_host_opt.ExactHostArithmetic.test_inverse_exact_check_rejects_wrong_reduced_basis_or_transform) ... ok\ntest_inverse_matches_original_bounds_task_and_certificate (test_exact_host_opt.ExactHostArithmetic.test_inverse_matches_original_bounds_task_and_certificate) ... ok\ntest_inverse_supports_both_unimodular_determinant_signs (test_exact_host_opt.ExactHostArithmetic.test_inverse_supports_both_unimodular_determinant_signs) ... ok\ntest_original_certificate_guards_are_retained (test_exact_host_opt.ExactHostArithmetic.test_original_certificate_guards_are_retained) ... ok\ntest_sampled_high_shell_patches_match_including_guard_outcomes (test_exact_host_opt.ExactHostArithmetic.test_sampled_high_shell_patches_match_including_guard_outcomes) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.956s\n\nOK\n"
+  },
+  {
+    "command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/source/lattice_gpu/tests",
+      "-p",
+      "test_exact_root_opt.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_boundaries_and_seeded_random_integer_inputs (test_exact_root_opt.ExactRootTests.test_boundaries_and_seeded_random_integer_inputs) ... ok\ntest_independence_and_refusal_to_patch_shared_module (test_exact_root_opt.ExactRootTests.test_independence_and_refusal_to_patch_shared_module) ... ok\ntest_invalid_inputs_and_large_degrees (test_exact_root_opt.ExactRootTests.test_invalid_inputs_and_large_degrees) ... ok\ntest_outward_rational_enclosures (test_exact_root_opt.ExactRootTests.test_outward_rational_enclosures) ... ok\ntest_spawn_initializer_does_not_mutate_shared_snapshot (test_exact_root_opt.ExactRootTests.test_spawn_initializer_does_not_mutate_shared_snapshot) ... ok\ntest_tasks_certificates_payloads_packets_low_and_high (test_exact_root_opt.ExactRootTests.test_tasks_certificates_payloads_packets_low_and_high) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.216s\n\nOK\n"
+  },
+  {
+    "command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/source/lattice_gpu/tests",
+      "-p",
+      "test_coordinator_pipeline.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_closed_journal_cannot_bypass_a_new_writer_lock (test_coordinator_pipeline.PipelineTests.test_closed_journal_cannot_bypass_a_new_writer_lock) ... ok\ntest_engine_owner_rejects_other_thread (test_coordinator_pipeline.PipelineTests.test_engine_owner_rejects_other_thread) ... ok\ntest_fused_matches_baseline_every_task_packet_geometry_certificate (test_coordinator_pipeline.PipelineTests.test_fused_matches_baseline_every_task_packet_geometry_certificate) ... ok\ntest_guarded_patch_fails_before_counting_coverage (test_coordinator_pipeline.PipelineTests.test_guarded_patch_fails_before_counting_coverage) ... ok\ntest_journal_rejects_stale_gap_manifest_changed_source_and_other_writer (test_coordinator_pipeline.PipelineTests.test_journal_rejects_stale_gap_manifest_changed_source_and_other_writer) ... ok\ntest_journal_resume_replays_uncommitted_suffix_without_advancing (test_coordinator_pipeline.PipelineTests.test_journal_resume_replays_uncommitted_suffix_without_advancing) ... ok\ntest_malformed_count_types_and_incomplete_outputs_rejected (test_coordinator_pipeline.PipelineTests.test_malformed_count_types_and_incomplete_outputs_rejected) ... ok\ntest_nonempty_oracle_matches_complete_selected_shell (test_coordinator_pipeline.PipelineTests.test_nonempty_oracle_matches_complete_selected_shell) ... ok\ntest_partition_union_and_global_audits_ignore_coordinator_split (test_coordinator_pipeline.PipelineTests.test_partition_union_and_global_audits_ignore_coordinator_split) ... ok\ntest_reopen_reconciles_checkpoint_replaced_before_fsync_failure (test_coordinator_pipeline.PipelineTests.test_reopen_reconciles_checkpoint_replaced_before_fsync_failure) ... ok\ntest_stale_native_reply_rejected_by_persistent_session (test_coordinator_pipeline.PipelineTests.test_stale_native_reply_rejected_by_persistent_session) ... ok\ntest_truncated_plan_or_tampered_packet_rejected_before_engine (test_coordinator_pipeline.PipelineTests.test_truncated_plan_or_tampered_packet_rejected_before_engine) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.178s\n\nOK\n"
+  }
+]

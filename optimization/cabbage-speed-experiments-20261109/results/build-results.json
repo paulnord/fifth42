@@ -1,0 +1,116 @@
+[
+  {
+    "mode": 0,
+    "name": "baseline",
+    "command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/cuda-13.2/nvidia/cu13/bin/nvcc",
+      "-std=c++17",
+      "-O3",
+      "-arch=sm_86",
+      "-ccbin",
+      "g++-13",
+      "-DEXPERIMENT=0",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/fast_gpu.cu",
+      "-o",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/bin/baseline"
+    ],
+    "seconds": 2.04725765803596,
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "mode": 1,
+    "name": "low64",
+    "command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/cuda-13.2/nvidia/cu13/bin/nvcc",
+      "-std=c++17",
+      "-O3",
+      "-arch=sm_86",
+      "-ccbin",
+      "g++-13",
+      "-DEXPERIMENT=1",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/fast_gpu.cu",
+      "-o",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/bin/low64"
+    ],
+    "seconds": 2.051659838994965,
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "mode": 2,
+    "name": "rows",
+    "command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/cuda-13.2/nvidia/cu13/bin/nvcc",
+      "-std=c++17",
+      "-O3",
+      "-arch=sm_86",
+      "-ccbin",
+      "g++-13",
+      "-DEXPERIMENT=2",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/fast_gpu.cu",
+      "-o",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/bin/rows"
+    ],
+    "seconds": 2.086386627983302,
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "mode": 3,
+    "name": "wheel",
+    "command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/cuda-13.2/nvidia/cu13/bin/nvcc",
+      "-std=c++17",
+      "-O3",
+      "-arch=sm_86",
+      "-ccbin",
+      "g++-13",
+      "-DEXPERIMENT=3",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/fast_gpu.cu",
+      "-o",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/bin/wheel"
+    ],
+    "seconds": 2.113674083026126,
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "mode": 4,
+    "name": "differences",
+    "command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/cuda-13.2/nvidia/cu13/bin/nvcc",
+      "-std=c++17",
+      "-O3",
+      "-arch=sm_86",
+      "-ccbin",
+      "g++-13",
+      "-DEXPERIMENT=4",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/fast_gpu.cu",
+      "-o",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/bin/differences"
+    ],
+    "seconds": 2.1547573760035448,
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "mode": 5,
+    "name": "wheel_differences",
+    "command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/cuda-13.2/nvidia/cu13/bin/nvcc",
+      "-std=c++17",
+      "-O3",
+      "-arch=sm_86",
+      "-ccbin",
+      "g++-13",
+      "-DEXPERIMENT=5",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/fast_gpu.cu",
+      "-o",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/bin/wheel_differences"
+    ],
+    "seconds": 2.1760266610071994,
+    "exit_code": 0,
+    "output": ""
+  }
+]

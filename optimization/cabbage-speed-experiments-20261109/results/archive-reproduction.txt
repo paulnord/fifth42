@@ -1,0 +1,77 @@
+All bundled source and executable hashes verified
+baseline built 2.1
+low64 built 2.07
+rows built 2.08
+wheel built 2.11
+differences built 2.17
+wheel_differences built 2.18
+audit built
+audit_ubsan built
+scaling_cpu built
+scaling_cpu_sanitize built
+gmp_reference-rebuilt built
+scaling_gpu-rebuilt built
+reference host validation passed 8
+roots 0 roots host validation passed 8 
+inverse 0 inverse host validation passed 8 
+combined 0 combined host validation passed 8 
+serializer 0 serializer host validation passed 8 
+warm 0 warm host validation passed 8 
+native 0 baseline GPU validation passed 51 packets
+low64 GPU validation passed 51 packets
+rows GPU validation passed 51 packets
+wheel GPU validation passed 51 packets
+differences GPU validation passed 51 packets
+wheel_differences GPU validation passed 51 packets 
+/home/pnord/scratch/speed-archive-reproduction-20261109-x3mtuna/tested-source/validate.py native 0 baseline GPU validation passed 51 packets
+low64 GPU validation passed 51 packets
+rows GPU validation passed 51 packets
+wheel GPU validation passed 51 packets
+differences GPU validation passed 51 packets
+wheel_differences GPU validation passed 51 packets
+ 
+/home/pnord/scratch/speed-archive-reproduction-20261109-x3mtuna/tested-source/validate_candidate.py 0 recommended host validation passed 8
+ 
+/home/pnord/scratch/speed-archive-reproduction-20261109-x3mtuna/tested-source/validate_widths.py 0 All five nested partitions preserve nonempty exact hits
+ 
+/home/pnord/scratch/speed-archive-reproduction-20261109-x3mtuna/tested-source/audit_differences.py 0 [{"binary": "audit", "cases": 512, "steps": 21741, "exact_bigint_match": true, "stderr": ""}, {"binary": "audit_ubsan", "cases": 512, "steps": 21741, "exact_bigint_match": true, "stderr": ""}]
+ 
+-m unittest discover -s /home/pnord/scratch/speed-archive-reproduction-20261109-x3mtuna/tested-source/source/lattice_gpu/tests -p test_exact_host_opt.py -v 0  ithmetic.test_all_modes_match_nonempty_oracle_under_cpu_and_sanitizers) ... ok
+test_inverse_exact_check_rejects_wrong_reduced_basis_or_transform (test_exact_host_opt.ExactHostArithmetic.test_inverse_exact_check_rejects_wrong_reduced_basis_or_transform) ... ok
+test_inverse_matches_original_bounds_task_and_certificate (test_exact_host_opt.ExactHostArithmetic.test_inverse_matches_original_bounds_task_and_certificate) ... ok
+test_inverse_supports_both_unimodular_determinant_signs (test_exact_host_opt.ExactHostArithmetic.test_inverse_supports_both_unimodular_determinant_signs) ... ok
+test_original_certificate_guards_are_retained (test_exact_host_opt.ExactHostArithmetic.test_original_certificate_guards_are_retained) ... ok
+test_sampled_high_shell_patches_match_including_guard_outcomes (test_exact_host_opt.ExactHostArithmetic.test_sampled_high_shell_patches_match_including_guard_outcomes) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.973s
+
+OK
+
+-m unittest discover -s /home/pnord/scratch/speed-archive-reproduction-20261109-x3mtuna/tested-source/source/lattice_gpu/tests -p test_exact_root_opt.py -v 0  test_boundaries_and_seeded_random_integer_inputs (test_exact_root_opt.ExactRootTests.test_boundaries_and_seeded_random_integer_inputs) ... ok
+test_independence_and_refusal_to_patch_shared_module (test_exact_root_opt.ExactRootTests.test_independence_and_refusal_to_patch_shared_module) ... ok
+test_invalid_inputs_and_large_degrees (test_exact_root_opt.ExactRootTests.test_invalid_inputs_and_large_degrees) ... ok
+test_outward_rational_enclosures (test_exact_root_opt.ExactRootTests.test_outward_rational_enclosures) ... ok
+test_spawn_initializer_does_not_mutate_shared_snapshot (test_exact_root_opt.ExactRootTests.test_spawn_initializer_does_not_mutate_shared_snapshot) ... ok
+test_tasks_certificates_payloads_packets_low_and_high (test_exact_root_opt.ExactRootTests.test_tasks_certificates_payloads_packets_low_and_high) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.220s
+
+OK
+
+-m unittest discover -s /home/pnord/scratch/speed-archive-reproduction-20261109-x3mtuna/tested-source/source/lattice_gpu/tests -p test_coordinator_pipeline.py -v 0  lformed_count_types_and_incomplete_outputs_rejected) ... ok
+test_nonempty_oracle_matches_complete_selected_shell (test_coordinator_pipeline.PipelineTests.test_nonempty_oracle_matches_complete_selected_shell) ... ok
+test_partition_union_and_global_audits_ignore_coordinator_split (test_coordinator_pipeline.PipelineTests.test_partition_union_and_global_audits_ignore_coordinator_split) ... ok
+test_reopen_reconciles_checkpoint_replaced_before_fsync_failure (test_coordinator_pipeline.PipelineTests.test_reopen_reconciles_checkpoint_replaced_before_fsync_failure) ... ok
+test_stale_native_reply_rejected_by_persistent_session (test_coordinator_pipeline.PipelineTests.test_stale_native_reply_rejected_by_persistent_session) ... ok
+test_truncated_plan_or_tampered_packet_rejected_before_engine (test_coordinator_pipeline.PipelineTests.test_truncated_plan_or_tampered_packet_rejected_before_engine) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.167s
+
+OK
+
+Rebuilt baseline and GMP binaries match all packets
+Large Healy near-miss survives all seven GPU paths
+Finite reproduction checks passed

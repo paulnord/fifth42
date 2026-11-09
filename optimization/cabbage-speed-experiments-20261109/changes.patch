@@ -1,0 +1,1056 @@
+--- /dev/null
++++ b/audit_differences.py
+@@ -0,0 +1,20 @@
++import json,random,subprocess
++from pathlib import Path
++r=Path(__file__).resolve().parent;rng=random.Random(20261109);cases=[]
++for i in range(512):
++    limits=[0,1,2**31,200000000000,2**63-1]
++    values=[rng.randint(-limits[i%len(limits)],limits[i%len(limits)]) for _ in range(6)]
++    cases.append((*values,rng.choice([1,32,251,2**32+1]),rng.randrange(1,80),rng.choice([0,1,42,125,2**63-1])))
++text=''.join(' '.join(map(str,x))+'\n' for x in cases)
++rows=[]
++for binary in ['audit','audit_ubsan']:
++    p=subprocess.run([str(r/'bin'/binary)],input=text,text=True,capture_output=True,check=True,timeout=20)
++    got=[tuple(map(int,line.split())) for line in p.stdout.splitlines()];expected=[]
++    for c,a,b,uc,ua,ub,stride,steps,cap in cases:
++        for k in range(steps):
++            value=(pow(a+k*stride*ua,5)+pow(b+k*stride*ub,5)-pow(c+k*stride*uc,5))%(2**64)
++            expected.append((value,int((value+cap)%(2**64)<=2*cap)))
++    assert got==expected,(binary,'Big-integer recurrence mismatch')
++    rows.append(dict(binary=binary,cases=len(cases),steps=len(got),exact_bigint_match=True,stderr=p.stderr))
++(r/'results/difference-audit.json').write_text(json.dumps(rows,indent=2)+'\n')
++print(json.dumps(rows),flush=True)
+--- /dev/null
++++ b/build.py
+@@ -0,0 +1,14 @@
++import json,os,subprocess,time
++from pathlib import Path
++ROOT=Path(__file__).resolve().parent
++os.sched_setaffinity(0,set(sorted(os.sched_getaffinity(0))[:4]));os.nice(10)
++nvcc=os.environ.get('NVCC','/home/pnord/scratch/saved-root-pAjTHBhR/cuda-13.2/nvidia/cu13/bin/nvcc')
++compiler=os.environ.get('CXX','g++-13');architecture=os.environ.get('CUDA_ARCH','sm_86')
++rows=[]
++for mode,name in enumerate(['baseline','low64','rows','wheel','differences','wheel_differences']):
++    command=[nvcc,'-std=c++17','-O3',f'-arch={architecture}','-ccbin',compiler,f'-DEXPERIMENT={mode}',str(ROOT/'fast_gpu.cu'),'-o',str(ROOT/'bin'/name)]
++    start=time.monotonic();p=subprocess.run(command,capture_output=True,text=True)
++    rows.append(dict(mode=mode,name=name,command=command,seconds=time.monotonic()-start,exit_code=p.returncode,output=p.stdout+p.stderr))
++    (ROOT/'build-results.json').write_text(json.dumps(rows,indent=2)+'\n')
++    if p.returncode:raise RuntimeError(rows[-1])
++    print(name,'built',round(rows[-1]['seconds'],2),flush=True)
+--- /dev/null
++++ b/build_extra.py
+@@ -0,0 +1,18 @@
++import hashlib,json,os,shutil,subprocess
++from pathlib import Path
++r=Path(__file__).resolve().parent;out=r/'source/lattice_gpu/bin';out.mkdir(exist_ok=True)
++os.sched_setaffinity(0,set(sorted(os.sched_getaffinity(0))[:4]));os.nice(10)
++commands=[
++ ['g++-13','-std=c++17','-O3','-Wall','-Wextra','-Werror',str(r/'native_audit.cpp'),'-o',str(r/'bin/audit')],
++ ['g++-13','-std=c++17','-O1','-g','-fsanitize=undefined','-fno-sanitize-recover=all',str(r/'native_audit.cpp'),'-o',str(r/'bin/audit_ubsan')],
++ ['g++-13','-std=c++17','-O3','-Wall','-Wextra','-Werror','-pthread',str(r/'source/lattice_gpu/src/scaling_cpu.cpp'),'-o',str(out/'scaling_cpu')],
++ ['g++-13','-std=c++17','-O1','-g','-fsanitize=address,undefined','-fno-sanitize-recover=all','-pthread',str(r/'source/lattice_gpu/src/scaling_cpu.cpp'),'-o',str(out/'scaling_cpu_sanitize')],
++ ['g++-13','-std=c++17','-O3','-Wall','-Wextra','-Werror',str(r/'independent/gmp_reference.cpp'),'-lgmpxx','-lgmp','-o',str(r/'bin/gmp_reference-rebuilt')],
++ ['/home/pnord/scratch/saved-root-pAjTHBhR/cuda-13.2/nvidia/cu13/bin/nvcc','-std=c++17','-O3','-arch=sm_86','-ccbin','g++-13',str(r/'source/lattice_gpu/src/scaling_gpu.cu'),'-o',str(r/'bin/scaling_gpu-rebuilt')]]
++commands=[[os.environ.get('CXX','g++-13') if x=='g++-13' else os.environ.get('NVCC',x) if x.endswith('/nvcc') else '-arch='+os.environ.get('CUDA_ARCH','sm_86') if x=='-arch=sm_86' else x for x in command] for command in commands]
++rows=[]
++for command in commands:
++ p=subprocess.run(command,capture_output=True,text=True);rows.append(dict(command=command,exit_code=p.returncode,stdout=p.stdout,stderr=p.stderr))
++ (r/'build-extra-results.json').write_text(json.dumps(rows,indent=2)+'\n')
++ if p.returncode:raise RuntimeError(rows[-1])
++ print(Path(command[-1]).name,'built',flush=True)
+--- /dev/null
++++ b/candidate_matrix.py
+@@ -0,0 +1,47 @@
++"""Holdout test of the reusable initializer on the actual 16-core allocation."""
++import json,statistics,subprocess,sys,time
++from fractions import Fraction
++from pathlib import Path
++r=Path(__file__).resolve().parent;out=r/'results/candidate-matrix';out.mkdir(exist_ok=True)
++selection=json.loads((r/'results/width-matrix/frozen-selection.json').read_text())['selection']
++rows=[];hits={};signatures={}
++for window,num,den in [('low',6,25),('middle',7,20),('high',17,20)]:
++    left=Fraction(num,den)+Fraction(2,100000)
++    cases=[('reference',8),('recommended',8)]
++    if selection[window]!=8:cases.append(('recommended',selection[window]))
++    for repeat in range(5):
++        order=cases[repeat%len(cases):]+cases[:repeat%len(cases)]
++        if repeat%2:order=list(reversed(order))
++        for variant,width in order:
++            dest=out/f'{window}-{repeat}-{variant}-w{width}'
++            matches=sorted(out.glob(dest.name+'-retry-*/result.json'))
++            if matches and not (dest/'result.json').exists():dest=matches[-1].parent
++            if not (dest/'result.json').exists():
++                if dest.exists():dest=out/(dest.name+'-retry-'+str(time.time_ns()))
++                command=[sys.executable,str(r/'candidate_probe.py'),'--variant',variant,'--width',str(width),'--workers','16',
++                    '--ratio-num',str(left.numerator),'--ratio-den',str(left.denominator),'--output',str(dest)]
++                began=time.time();p=subprocess.run(command,capture_output=True,text=True,timeout=180)
++                log=dict(command=command,started_epoch=began,finished_epoch=time.time(),exit_code=p.returncode,stdout=p.stdout,stderr=p.stderr)
++                (out/(dest.name+'.log.json')).write_text(json.dumps(log,indent=2)+'\n')
++                if p.returncode:raise RuntimeError(log)
++            x=json.loads((dest/'result.json').read_text());x.update(window_name=window,repeat=repeat)
++            if window not in hits:hits[window]=x['hits']
++            assert x['hits']==hits[window],(window,variant,width,'different exact hit sets')
++            if width==8:
++                if window not in signatures:signatures[window]=x['signatures_sha256']
++                assert x['signatures_sha256']==signatures[window],'Changed baseline geometry/certificates/packets'
++            rows.append({k:v for k,v in x.items() if k not in ['stages','records']})
++            (out/'progress.json').write_text(json.dumps(rows,indent=2)+'\n')
++            print(window,repeat,variant,width,round(x['steady_seconds'],6),flush=True)
++summary={}
++for window in ['low','middle','high']:
++    group=[x for x in rows if x['window_name']==window]
++    baseline=statistics.median(x['steady_seconds'] for x in group if x['variant']=='reference')
++    med={}
++    for variant,width in sorted(set((x['variant'],x['width']) for x in group)):
++        samples=[x['steady_seconds'] for x in group if x['variant']==variant and x['width']==width]
++        value=statistics.median(samples);med[f'{variant}-w{width}']=dict(median_seconds=value,throughput_ratio=baseline/value,samples=samples)
++    summary[window]=med
++(out/'summary.json').write_text(json.dumps(dict(status='passed',workers=16,summary=summary,rows=rows,selection=selection,
++    timing='Fresh adaptive saved-root preparation and exact certification; bounded prefetch; original CUDA engine; exact checks; first-chunk full GMP audit; local durable commits. Startup/recovery separate.',
++    geometry='Original width-8 geometry/certificate/packet identities preserved by reusable initializer. Width choices frozen on training region, tested on a second disjoint holdout with identical exact region per case.'),indent=2)+'\n')
+--- /dev/null
++++ b/candidate_probe.py
+@@ -0,0 +1,15 @@
++import argparse
++import host_probe as h
++import speed_options
++original_initialize=h.initialize
++def initialize(source,cpus,variant):
++    if variant=='reference':return original_initialize(source,cpus,'reference')
++    if variant!='recommended':raise ValueError('Unknown recommended-path variant')
++    return speed_options.initialize(source,cpus)
++h.initialize=initialize
++if __name__=='__main__':
++    a=argparse.ArgumentParser();a.add_argument('--variant',choices=['reference','recommended'],required=True)
++    a.add_argument('--width',type=int,default=8);a.add_argument('--patches',type=int,default=2048);a.add_argument('--first',type=int,default=0)
++    a.add_argument('--ratio-num',type=int,default=3);a.add_argument('--ratio-den',type=int,default=10)
++    a.add_argument('--workers',type=int,default=16);a.add_argument('--map-chunksize',type=int,default=8);a.add_argument('--output',required=True)
++    h.trial(a.parse_args())
+--- /dev/null
++++ b/fast_gpu.cu
+@@ -0,0 +1,120 @@
++#include <cuda_runtime.h>
++#include "source/lattice_gpu/src/stream_io.hpp"
++#include "native_fast.hpp"
++#include <sstream>
++#ifndef EXPERIMENT
++#define EXPERIMENT 0
++#endif
++struct RowChunk {unsigned task,axis;U64 first,count;};
++inline void check(cudaError_t e,const char*s){if(e!=cudaSuccess)throw std::runtime_error(std::string(s)+": "+cudaGetErrorString(e));}
++template<class T>struct Buffer {
++    T*p=nullptr;std::size_t capacity=0;
++    void reserve(std::size_t n){n=std::max<std::size_t>(n,1);if(n<=capacity)return;T*q=nullptr;check(cudaMalloc(reinterpret_cast<void**>(&q),n*sizeof(T)),"allocate");if(p)cudaFree(p);p=q;capacity=n;}
++    ~Buffer(){if(p)cudaFree(p);}
++};
++__device__ inline void emit(Candidate h,Candidate*hits,U64*found,unsigned capacity){const auto i=atomicAdd(found,1ULL);if(i<capacity)hits[i]=h;}
++__global__ void flat(const Task*tasks,const Chunk*chunks,int mode,U64 cap,Candidate*hits,U64*found,unsigned capacity,U64*counts,U64*examined) {
++    const auto ch=chunks[blockIdx.x];const auto t=tasks[ch.task];U64 seen=0;
++    for(U64 j=threadIdx.x;j<ch.count;j+=blockDim.x) {
++        ++seen;const auto index=ch.first+j;Candidate hit{};bool yes;
++        if(EXPERIMENT==0)yes=evaluate(t,ch.task,index,mode,cap,hit);
++        else {
++            auto rem=index;S64 n[3];for(int i=0;i<3;++i){const auto w=2*t.J[i]+1;n[i]=static_cast<S64>(rem%w)-static_cast<S64>(t.J[i]);rem/=w;}
++            S64 v[3]={0,0,0};for(int col=0;col<3;++col)for(int i=0;i<3;++i)v[col]+=n[i]*t.U[3*i+col];
++            yes=low_hit(t,ch.task,index,v[0],v[1],v[2],mode,cap,hit);
++        }
++        if(yes)emit(hit,hits,found,capacity);
++    }
++    atomicAdd(counts+ch.task,seen);atomicAdd(examined+ch.task,seen);
++}
++__global__ void rows(const Task*tasks,const RowChunk*chunks,int mode,U64 cap,Candidate*hits,U64*found,unsigned capacity,U64*counts,U64*examined) {
++    const auto ch=chunks[blockIdx.x];const auto t=tasks[ch.task];const unsigned axis=ch.axis;
++    const unsigned o0=(axis+1)%3,o1=(axis+2)%3,lane=threadIdx.x%32,warp=threadIdx.x/32;
++    const U64 widths[3]={2*t.J[0]+1,2*t.J[1]+1,2*t.J[2]+1};
++    const U64 factors[3]={1,widths[0],widths[0]*widths[1]};U64 accounted=0,seen=0;
++    for(U64 row=ch.first+warp;row<ch.first+ch.count;row+=blockDim.x/32) {
++        S64 n[3]={0,0,0};n[o0]=static_cast<S64>(row%widths[o0])-static_cast<S64>(t.J[o0]);
++        n[o1]=static_cast<S64>(row/widths[o0])-static_cast<S64>(t.J[o1]);
++        S64 base[3];for(int col=0;col<3;++col)base[col]=n[o0]*t.U[3*o0+col]+n[o1]*t.U[3*o1+col];
++        S64 lo=-static_cast<S64>(t.J[axis]),hi=static_cast<S64>(t.J[axis]);
++        if(lane==0)accounted+=widths[axis];
++        if(!clip(t,base,axis,lo,hi))continue;
++        const bool wheel=(EXPERIMENT==3||EXPERIMENT==5)&&!mode&&cap<125;
++        const bool recurrence=(EXPERIMENT==4||EXPERIMENT==5)&&!mode;
++        const unsigned slots=wheel?8:1;
++        for(unsigned slot=0;slot<slots;++slot) {
++            S64 first;const U64 stride=wheel?251:32;
++            if(wheel) {
++                const unsigned r=lane+32*slot;if(r>=251)continue;
++                // Use a real point in the bounded row to avoid signed overflow
++                // in residue representatives outside the certified coefficient box.
++                const int lr=residue(lo);first=lo+(static_cast<int>(r)-lr+251)%251;
++            }else first=lo+lane;
++            if(first>hi)continue;
++            S64 c=coordinate(t,base,axis,first,0),a=coordinate(t,base,axis,first,1),b=coordinate(t,base,axis,first,2);
++            if(wheel&&!modular_near(c,a,b,cap))continue;
++            Differences differences{};
++            const U64 length=static_cast<U64>(hi-first)/stride+1;
++            // Long-row version is explicit: measure its setup cost as well as
++            // its benefit. An automatic crossover can be selected afterwards.
++            if(recurrence)differences.initialize(c,a,b,t.U[3*axis],t.U[3*axis+1],t.U[3*axis+2],stride);
++            for(U64 k=0;k<length;++k) {
++                ++seen;const S64 value=first+static_cast<S64>(k*stride);
++                c=coordinate(t,base,axis,value,0);a=coordinate(t,base,axis,value,1);b=coordinate(t,base,axis,value,2);
++                const U64 index=(static_cast<U64>(value+static_cast<S64>(t.J[axis]))*factors[axis])
++                    +static_cast<U64>(n[o0]+static_cast<S64>(t.J[o0]))*factors[o0]
++                    +static_cast<U64>(n[o1]+static_cast<S64>(t.J[o1]))*factors[o1];
++                Candidate hit{};bool yes=false;
++                if(recurrence) {
++                    if(near_low(differences.d[0],cap))yes=full_hit(t,ch.task,index,c,a,b,mode,cap,hit);
++                    differences.advance();
++                }else yes=low_hit(t,ch.task,index,c,a,b,mode,cap,hit);
++                if(yes)emit(hit,hits,found,capacity);
++            }
++        }
++    }
++    atomicAdd(counts+ch.task,accounted);atomicAdd(examined+ch.task,seen);
++}
++int main(int argc,char**argv) {
++ try {
++    protect_parent();const auto capacity=::capacity(argc,argv);check(cudaSetDevice(0),"device");check(cudaFree(nullptr),"context");
++    Buffer<Task>tasks;Buffer<Chunk>chunks;Buffer<RowChunk>rowchunks;Buffer<Candidate>hits;Buffer<U64>found,counts,examined;
++    hits.reserve(capacity);found.reserve(1);examined.reserve(1);cudaEvent_t begin,end;check(cudaEventCreate(&begin),"event");check(cudaEventCreate(&end),"event");
++    std::cout<<"{\"ready\":true,\"backend\":\"gpu\",\"persistent\":true,\"experiment\":"<<EXPERIMENT<<"}\n"<<std::flush;
++    U64 previous=0,request=0;std::string payload;
++    while(read_frame(request,payload,previous))try {
++        const auto start=Clock::now();const auto in=parse_frame(payload);tasks.reserve(in.tasks.size());counts.reserve(in.tasks.size());examined.reserve(in.tasks.size());
++        if(!in.tasks.empty())check(cudaMemcpy(tasks.p,in.tasks.data(),in.tasks.size()*sizeof(Task),cudaMemcpyHostToDevice),"upload");
++        check(cudaMemset(found.p,0,sizeof(U64)),"reset");
++        if(!in.tasks.empty())check(cudaMemset(examined.p,0,in.tasks.size()*sizeof(U64)),"reset");
++        if(!in.tasks.empty())check(cudaMemset(counts.p,0,in.tasks.size()*sizeof(U64)),"reset");
++        std::vector<RowChunk>rc;
++        if(EXPERIMENT>=2) {
++            for(unsigned i=0;i<in.tasks.size();++i){const auto&t=in.tasks[i];unsigned axis=0;for(unsigned j=1;j<3;++j)if(t.J[j]>t.J[axis])axis=j;
++                const auto total=t.points/(2*t.J[axis]+1);for(U64 first=0;first<total;first+=256)rc.push_back({i,axis,first,std::min<U64>(256,total-first)});}
++            rowchunks.reserve(rc.size());if(!rc.empty())check(cudaMemcpy(rowchunks.p,rc.data(),rc.size()*sizeof(RowChunk),cudaMemcpyHostToDevice),"rows upload");
++        }else {chunks.reserve(in.chunks.size());if(!in.chunks.empty())check(cudaMemcpy(chunks.p,in.chunks.data(),in.chunks.size()*sizeof(Chunk),cudaMemcpyHostToDevice),"chunks upload");}
++        check(cudaEventRecord(begin),"begin");
++        if(EXPERIMENT>=2){if(!rc.empty())rows<<<static_cast<unsigned>(rc.size()),256>>>(tasks.p,rowchunks.p,in.mode,in.cap,hits.p,found.p,capacity,counts.p,examined.p);}
++        else if(!in.chunks.empty())flat<<<static_cast<unsigned>(in.chunks.size()),256>>>(tasks.p,chunks.p,in.mode,in.cap,hits.p,found.p,capacity,counts.p,examined.p);
++        check(cudaGetLastError(),"launch");check(cudaEventRecord(end),"end");check(cudaEventSynchronize(end),"sync");float ms=0;check(cudaEventElapsedTime(&ms,begin,end),"elapsed");
++        U64 size=0;check(cudaMemcpy(&size,found.p,sizeof(U64),cudaMemcpyDeviceToHost),"found");
++        if(size>capacity)throw std::runtime_error("candidate capacity");
++        std::vector<Candidate>out(size);std::vector<U64>visited(in.tasks.size()),evaluated(in.tasks.size());
++        if(size)check(cudaMemcpy(out.data(),hits.p,size*sizeof(Candidate),cudaMemcpyDeviceToHost),"hits");
++        if(!visited.empty())check(cudaMemcpy(visited.data(),counts.p,visited.size()*sizeof(U64),cudaMemcpyDeviceToHost),"counts");
++        if(!evaluated.empty())check(cudaMemcpy(evaluated.data(),examined.p,evaluated.size()*sizeof(U64),cudaMemcpyDeviceToHost),"evaluated counts");
++        U64 seen=0;for(unsigned i=0;i<visited.size();++i){if(visited[i]!=in.tasks[i].points||evaluated[i]>visited[i])throw std::runtime_error("incomplete accounting");seen+=evaluated[i];}
++        const auto seconds=elapsed(start);
++        frame_output(request,[&](){
++            std::cout<<"{\"backend\":\"gpu\",\"box_complete\":true,\"schema\":2,\"points_accounted\":"<<in.points
++                <<",\"points_visited\":"<<seen<<",\"points_explicitly_evaluated\":"<<seen<<",\"points_exactly_excluded\":"<<in.points-seen
++                <<",\"engine_seconds\":"<<seconds<<",\"kernel_seconds\":"<<ms/1000.<<",\"counts\":[";
++            for(unsigned i=0;i<visited.size();++i){if(i)std::cout<<',';std::cout<<"{\"id\":"<<i<<",\"expected\":"<<in.tasks[i].points
++                <<",\"accounted\":"<<visited[i]<<",\"visited\":"<<evaluated[i]<<",\"exactly_excluded\":"<<visited[i]-evaluated[i]<<'}';}
++            std::cout<<"],\"hits\":[";for(unsigned i=0;i<out.size();++i){if(i)std::cout<<',';const auto&v=out[i];std::cout<<"{\"task\":"<<v.task<<",\"linear\":"<<v.linear<<",\"a\":"<<v.a<<",\"b\":"<<v.b<<",\"c\":"<<v.c<<'}';}
++            std::cout<<"],\"coverage_accounting\":\"enumerated_or_exactly_excluded\"}";});
++    }catch(const std::exception&e){frame_output(request,[&](){failure(e);});}
++    cudaEventDestroy(begin);cudaEventDestroy(end);return 0;
++ }catch(const std::exception&e){std::cerr<<e.what()<<'\n';return 2;}
++}
+--- /dev/null
++++ b/final_validation_suite.py
+@@ -0,0 +1,30 @@
++import hashlib,json,subprocess,sys,time
++from pathlib import Path
++r=Path(__file__).resolve().parent;rows=[]
++commands=[
++ [sys.executable,str(r/'validate.py'),'native'],
++ [sys.executable,str(r/'validate_candidate.py')],
++ [sys.executable,str(r/'validate_widths.py')],
++ [sys.executable,str(r/'audit_differences.py')],
++ [sys.executable,'-m','unittest','discover','-s',str(r/'source/lattice_gpu/tests'),'-p','test_exact_host_opt.py','-v'],
++ [sys.executable,'-m','unittest','discover','-s',str(r/'source/lattice_gpu/tests'),'-p','test_exact_root_opt.py','-v'],
++ [sys.executable,'-m','unittest','discover','-s',str(r/'source/lattice_gpu/tests'),'-p','test_coordinator_pipeline.py','-v']]
++for command in commands:
++ p=subprocess.run(command,capture_output=True,text=True,timeout=180);row=dict(command=command,exit_code=p.returncode,stdout=p.stdout,stderr=p.stderr);rows.append(row)
++ (r/'results/final-validation-suite.json').write_text(json.dumps(rows,indent=2)+'\n')
++ print(' '.join(command[1:]),p.returncode,p.stdout[-1000:],p.stderr[-1000:],flush=True)
++ if p.returncode:raise RuntimeError('Final validation failed')
++from validate import response,norm
++import host_probe as h
++packets=json.loads((r/'validation-packets.json').read_text());parity=[]
++for name in ['scaling_gpu-rebuilt','gmp_reference-rebuilt']:
++ if name.startswith('scaling'):
++  with h.open_session(r/'bin'/name,'gpu',time.monotonic()+120) as session:
++   for item in packets:assert norm(response(session,item['packet']))==item['expected'],(name,item['label'])
++ else:
++  for item in packets:
++   p=subprocess.run([str(r/'bin'/name)],input=item['packet'],capture_output=True,text=True,check=True,timeout=30)
++   assert norm(json.loads(p.stdout))==item['expected'],(name,item['label'])
++ parity.append(dict(binary=name,packets=len(packets),exact_match=True,sha256=hashlib.sha256((r/'bin'/name).read_bytes()).hexdigest()))
++(r/'results/rebuild-parity.json').write_text(json.dumps(parity,indent=2)+'\n')
++print('Rebuilt baseline and GMP binaries match all packets',flush=True)
+--- /dev/null
++++ b/host_matrix.py
+@@ -0,0 +1,37 @@
++import json,os,statistics,subprocess,sys,time
++from pathlib import Path
++r=Path(__file__).resolve().parent;out=r/'results/host-matrix';out.mkdir(exist_ok=True)
++variants=['reference','roots','inverse','combined','serializer','warm']
++windows=[('low',6,25),('middle',7,20),('high',17,20)]
++rows=[];signatures={};hits={};start=time.monotonic()
++for window,num,den in windows:
++    for repeat in range(5):
++        order=variants[repeat%len(variants):]+variants[:repeat%len(variants)]
++        if repeat%2:order=list(reversed(order))
++        for variant in order:
++            dest=out/f'{window}-{repeat}-{variant}'
++            command=[sys.executable,str(r/'host_probe.py'),'--variant',variant,'--patches','2048','--ratio-num',str(num),'--ratio-den',str(den),'--output',str(dest)]
++            if not (dest/'result.json').exists():
++                # Preserve interrupted attempts and use a fresh directory.
++                if dest.exists():dest=out/f'{window}-{repeat}-{variant}-retry-{time.time_ns()}';command[-1]=str(dest)
++                began=time.time();p=subprocess.run(command,capture_output=True,text=True,timeout=180)
++                log=dict(command=command,exit_code=p.returncode,stdout=p.stdout,stderr=p.stderr,started_epoch=began,finished_epoch=time.time())
++                (out/f'{window}-{repeat}-{variant}-{time.time_ns()}.log.json').write_text(json.dumps(log,indent=2)+'\n')
++                if p.returncode:raise RuntimeError(log)
++            x=json.loads((dest/'result.json').read_text());x.update(window_name=window,repeat=repeat)
++            if variant!='warm':
++                if window not in signatures:signatures[window]=x['signatures_sha256']
++                assert x['signatures_sha256']==signatures[window],(window,variant,'changed geometry')
++            if window not in hits:hits[window]=x['hits']
++            assert x['hits']==hits[window],(window,variant,'changed exact hits')
++            rows.append({k:v for k,v in x.items() if k not in ['stages','records']})
++            (out/'progress.json').write_text(json.dumps(rows,indent=2)+'\n')
++            print(window,repeat,variant,round(x['steady_seconds'],6),x['points'],flush=True)
++summary={}
++for window,_,_ in windows:
++    med={v:statistics.median(x['steady_seconds'] for x in rows if x['window_name']==window and x['variant']==v) for v in variants}
++    summary[window]={v:dict(median_seconds=med[v],throughput_ratio=med['reference']/med[v],samples=[x['steady_seconds'] for x in rows if x['window_name']==window and x['variant']==v]) for v in variants}
++(out/'summary.json').write_text(json.dumps(dict(status='passed',summary=summary,rows=rows,seconds=time.monotonic()-start,
++    timing='Fresh preparation/certification, bounded prefetch, GPU execution, full response checks, first-chunk GMP audit, durable local journal commits. Startup/recovery excluded.',
++    controls='Identical geometry/packets for arithmetic/serializer variants; warm basis independently certified and compared to GMP plus nonempty full-domain oracles.',workers=4),indent=2)+'\n')
++print(json.dumps(summary,indent=2),flush=True)
+--- /dev/null
++++ b/host_probe.py
+@@ -0,0 +1,123 @@
++"""Finite fresh-work trials against the copied adaptive saved-root pipeline."""
++import argparse,hashlib,json,multiprocessing as mp,os,statistics,sys,time
++from dataclasses import replace
++from fractions import Fraction
++from pathlib import Path
++ROOT=Path(__file__).resolve().parent
++SOURCE=ROOT/'source/lattice_prototype'
++sys.path.insert(0,str(ROOT/'source/lattice_gpu'))
++import scaling_core as core,overnight_search as night,coordinator_pipeline as pipeline
++import coordinator_packing,packing_opt,exact_host_opt,precision_policy
++from adapter_runtime import open_session,normalized_counts,normalized_hits,verify_workers
++from bounded_prefetch import BoundedPrefetch
++
++def digest(x):return hashlib.sha256(json.dumps(x,sort_keys=True,separators=(',',':')).encode()).hexdigest()
++
++def initialize(source,cpus,variant):
++    mode=variant if variant in ('roots','inverse','combined') else 'reference'
++    exact_host_opt.initialize(source,cpus,mode)
++    if mode!='reference':
++        core.prepare_task=exact_host_opt.prepare_task
++        core.certify_task=exact_host_opt.certify_task
++    if variant in ('serializer','combined_serializer'):
++        if variant=='combined_serializer':
++            exact_host_opt._MODE='combined'
++            import exact_root_opt
++            exact_root_opt.install_on_private_lattice(core.lattice()) if core.lattice() in exact_root_opt._PRIVATE else None
++        core.task_digest=packing_opt.task_digest
++    if variant=='warm':
++        lattice=core.lattice();original=lattice.reduce_basis;previous=None
++        def reduction(a,backend='reference'):
++            nonlocal previous
++            if backend!='fpylll':return original(a,backend)
++            seed=a if previous is None else lattice.matmul(previous,a)
++            b,v=original(seed,backend)
++            u=v if previous is None else lattice.matmul(v,previous)
++            if abs(lattice.det3(u))!=1 or lattice.matmul(u,a)!=b:raise ValueError('Warm transform certificate')
++            previous=u
++            return b,u
++        lattice.reduce_basis=reduction
++
++class Pool:
++    def __init__(self,p,deadline):self.p,self.deadline=p,deadline
++    def map(self,f,items,chunksize):return self.p.map_async(f,items,chunksize).get(timeout=max(.001,self.deadline-time.monotonic()))
++
++def independent(batch):
++    import subprocess
++    p=subprocess.run([str(ROOT/'bin/gmp_reference')],input=batch.packet,text=True,capture_output=True,check=True,timeout=30)
++    response=json.loads(p.stdout);pipeline.validate_response_types(response)
++    return response,core.decode_batch(batch,response,'emulated')
++
++def trial(args):
++    output=Path(args.output);output.mkdir(exist_ok=False,parents=True)
++    began=time.perf_counter();cpus=tuple(sorted(os.sched_getaffinity(0))[:args.workers]);os.sched_setaffinity(0,set(cpus))
++    initialize(SOURCE,(),args.variant)
++    deadline=time.monotonic()+180
++    pool=mp.get_context('spawn').Pool(args.workers,initializer=initialize,initargs=(SOURCE,cpus,args.variant));session=None
++    try:
++        p=Pool(pool,deadline);warmed={}
++        while len(warmed)<args.workers:warmed.update(p.map(core.worker_identity,range(args.workers*4),1))
++        verify_workers(warmed,cpus)
++        session=open_session(ROOT/'bin/scaling_gpu','gpu',deadline);engine=pipeline.OwnedEngine(session)
++        if args.width==8:
++            first=args.first;last=first+args.patches
++        else:
++            first=args.first;last=first+args.patches//(args.width//8)
++        # Every width uses a custom exact nested ratio partition. Window IDs
++        # are local; TrialJournal still binds all IDs, certificates and counts.
++        whole=pipeline.Window(100000000001,200000000000,first,last,args.width,222,42,'adaptive')
++        left=Fraction(args.ratio_num,args.ratio_den);span=Fraction(args.patches*8,whole.lo)
++        def specs(window):
++            l=core.lattice();n=last-first
++            return tuple((i,whole.lo,whole.hi,tuple((left+span*Fraction(i-first,n)).as_integer_ratio()),
++                          tuple((left+span*Fraction(i+1-first,n)).as_integer_ratio()),42,
++                          precision_policy.geometry_bits(l,whole.lo,whole.hi,
++                            l.Q(*(left+span*Fraction(i-first,n)).as_integer_ratio()),l.Q(*(left+span*Fraction(i+1-first,n)).as_integer_ratio()),42))
++                         for i in range(window.first,window.last))
++        # Patch only the isolated harness's specification provider, preserving
++        # fresh task preparation and independent exact certification.
++        pipeline.Window.specifications=specs
++        chunk_patches=max(1,256//(args.width//8))
++        work=[replace(whole,first=i,last=min(i+chunk_patches,last)) for i in range(first,last,chunk_patches)]
++        identity=dict(trial=output.name,source_identity=digest(dict(variant=args.variant,width=args.width)))
++        def prepare(w):
++            return pipeline.prepare_chunk(p,w,'packed',args.map_chunksize)
++        stream=BoundedPrefetch(work,prepare,estimate_size=lambda _:(8*1024**2,core.MAX_TOTAL_POINTS),
++            max_outstanding=3,max_item_bytes=8*1024**2,max_item_points=core.MAX_TOTAL_POINTS,
++            max_queued_bytes=24*1024**2,max_queued_points=3*core.MAX_TOTAL_POINTS,
++            actual_size=lambda c:(c.payload_bytes,c.plan.points))
++        startup=time.perf_counter()-began;start=time.perf_counter();records=[];signatures=[];durations=[];commit_seconds=0;audits=0
++        with pipeline.TrialJournal(output/'journal',identity,whole) as journal,stream:
++            for chunk in stream:
++                record=pipeline.execute_chunk(chunk,engine,trial=output.name,coordinator=0,timeout=30)
++                if not records:
++                    for batch,receipt in zip(chunk.plan.batches,record['batches']):
++                        ref,found=independent(batch)
++                        if normalized_counts(batch,ref)!=list(map(tuple,receipt['native_counts'])):raise ValueError('GMP counts')
++                        if normalized_hits(batch,ref)!=list(map(tuple,receipt['native_hit_records'])):raise ValueError('GMP hits')
++                    audits+=1
++                t=time.perf_counter();journal.commit(record);commit_seconds+=time.perf_counter()-t
++                signatures.append(dict(geometry=chunk.geometry_sha256,patches=chunk.patches,
++                                       packets=[hashlib.sha256(b.packet.encode()).hexdigest() for b in chunk.plan.batches]))
++                records.append(record);durations.append(dict(preparation=chunk.stages,workers=chunk.worker_seconds))
++            state=dict(journal.state)
++        steady=time.perf_counter()-start
++        with pipeline.TrialJournal(output/'journal',identity,whole) as recovered:
++            if recovered.state!=state:raise ValueError('Durable recovery mismatch')
++        result=dict(variant=args.variant,width=args.width,workers=args.workers,cpus=cpus,map_chunksize=args.map_chunksize,
++                    first=first,patches=last-first,ratio_left=left.as_integer_ratio(),ratio_right=(left+span).as_integer_ratio(),
++                    steady_seconds=steady,startup_seconds=startup,points=state['points'],hits=state['hits'],
++                    signatures_sha256=digest(signatures),commit_seconds=commit_seconds,independent_audits=audits,
++                    stages=durations,records=records,queue=stream.snapshot(),recovery_passed=True,production_coverage=False)
++        (output/'result.json').write_text(json.dumps(result,indent=2)+'\n')
++        print(json.dumps({k:result[k] for k in ('variant','width','steady_seconds','points','hits','signatures_sha256')}),flush=True)
++    finally:
++        if session:session.close()
++        pool.terminate();pool.join()
++
++if __name__=='__main__':
++    a=argparse.ArgumentParser();a.add_argument('--variant',default='reference',choices=['reference','roots','inverse','combined','serializer','warm'])
++    a.add_argument('--width',type=int,default=8,choices=[8,16,32,64,128]);a.add_argument('--patches',type=int,default=1024)
++    a.add_argument('--first',type=int,default=0);a.add_argument('--ratio-num',type=int,default=3);a.add_argument('--ratio-den',type=int,default=10)
++    a.add_argument('--workers',type=int,default=4);a.add_argument('--map-chunksize',type=int,default=8);a.add_argument('--output',required=True)
++    trial(a.parse_args())
+--- /dev/null
++++ b/native_audit.cpp
+@@ -0,0 +1,10 @@
++#include "native_fast.hpp"
++#include <iostream>
++int main(){
++    S64 c,a,b,uc,ua,ub;U64 stride,steps,cap;
++    while(std::cin>>c>>a>>b>>uc>>ua>>ub>>stride>>steps>>cap){
++        if(steps>1000)return 2;
++        Differences d{};d.initialize(c,a,b,uc,ua,ub,stride);
++        for(U64 k=0;k<steps;++k){std::cout<<d.d[0]<<' '<<near_low(d.d[0],cap)<<'\n';d.advance();}
++    }
++}
+--- /dev/null
++++ b/native_benchmark.py
+@@ -0,0 +1,59 @@
++import json,os,random,statistics,sys,time
++from fractions import Fraction
++from pathlib import Path
++from validate import packet,norm,response
++import host_probe as h
++r=h.ROOT;core=h.core;out=r/'results/native-benchmark';out.mkdir(exist_ok=True)
++h.initialize(h.SOURCE,(),'reference');cases=[];guards=[]
++for name,num,den in [('low',6,25),('middle',7,20),('high',17,20)]:
++    left=Fraction(num,den);lo=100000000001;hi=200000000000;span=Fraction(2048,lo)
++    for width in [8,32,64,128]:
++        specs=[];tasks=[];tokens=[];count=2048//width
++        try:
++            for i in range(count):
++                a,b=left+span*Fraction(i,count),left+span*Fraction(i+1,count)
++                bits=h.precision_policy.geometry_bits(core.lattice(),lo,hi,core.lattice().Q(*a.as_integer_ratio()),core.lattice().Q(*b.as_integer_ratio()),42)
++                s=(i,lo,hi,a.as_integer_ratio(),b.as_integer_ratio(),42,bits);t=core.prepare_task(s);token=core.certify_task(t)
++                specs.append(s);tasks.append(t);tokens.append(token)
++            plan=h.packing_opt.assemble(hi,42,specs,(),tasks,tokens)
++            cases.append(dict(name=f'{name}-w{width}',packets=[b.packet for b in plan.batches],points=plan.points,width=width,ratio=[num,den]))
++        except ValueError as e:guards.append(dict(name=f'{name}-w{width}',error=str(e),completed=False))
++for axis in range(3):
++    u=[[0,0,0] for _ in range(3)];u[axis][0]=1;u[(axis+1)%3][1]=1;u[(axis+2)%3][2]=1;j=[7,7,7];j[axis]=10000
++    cases.append(dict(name=f'long-row-axis-{axis}',packets=[packet(j,u,1,10000)],points=(20001*15*15),synthetic=True))
++(out/'cases.json').write_text(json.dumps(dict(cases=cases,guards=guards),indent=2)+'\n')
++bins=['scaling_gpu','baseline','low64','rows','wheel','differences','wheel_differences'];rows=[];expected={}
++for case in cases:
++    with h.open_session(r/'bin/scaling_gpu','gpu',time.monotonic()+180) as engine:
++        expected[case['name']]=[norm(response(engine,p)) for p in case['packets']]
++    for repeat in range(5):
++        order=bins[repeat%len(bins):]+bins[:repeat%len(bins)]
++        if repeat%2:order=list(reversed(order))
++        for binary in order:
++            saved=out/f"{case['name']}-{repeat}-{binary}.json"
++            if saved.exists():rows.append(json.loads(saved.read_text()));continue
++            with h.open_session(r/'bin'/binary,'gpu',time.monotonic()+120) as engine:
++                for p in case['packets']:response(engine,p) # Untimed warmup.
++                kernel=rpc=seconds=0.;evaluated=excluded=0;began=time.perf_counter()
++                for inner in range(10):
++                    for i,p in enumerate(case['packets']):
++                        x,wall=engine.run(p,timeout=30);assert norm(x)==expected[case['name']][i],(case['name'],binary,'record mismatch')
++                        kernel+=x['kernel_seconds'];rpc+=wall;seconds+=x['engine_seconds']
++                        evaluated+=x.get('points_explicitly_evaluated',x['points_visited']);excluded+=x.get('points_exactly_excluded',0)
++                elapsed=time.perf_counter()-began
++            row=dict(case=case['name'],binary=binary,repeat=repeat,requests=10*len(case['packets']),kernel_seconds=kernel/10,
++                     rpc_seconds=rpc/10,engine_seconds=seconds/10,wall_seconds=elapsed/10,points=case['points'],
++                     explicitly_evaluated=evaluated//10,exactly_excluded=excluded//10,full_records_match=True)
++            saved.write_text(json.dumps(row,indent=2)+'\n')
++            rows.append(row);(out/'progress.json').write_text(json.dumps(rows,indent=2)+'\n')
++        print(case['name'],repeat,'complete',flush=True)
++summary={}
++for case in cases:
++    group={b:[x for x in rows if x['case']==case['name'] and x['binary']==b] for b in bins}
++    med={b:statistics.median(x['kernel_seconds'] for x in group[b]) for b in bins}
++    summary[case['name']]={b:dict(kernel_median_seconds=med[b],kernel_speedup_vs_original=med['scaling_gpu']/med[b],
++        rpc_median_seconds=statistics.median(x['rpc_seconds'] for x in group[b]),
++        samples=group[b]) for b in bins}
++(out/'summary.json').write_text(json.dumps(dict(status='passed',summary=summary,guards=guards,rows=rows,
++    timing='Prepared packets only; kernel CUDA events and native RPC separately. Not full-pipeline speedups.',
++    accounting='Box coverage = explicitly evaluated + exactly excluded; no skipped point is labelled explicitly visited.'),indent=2)+'\n')
+--- /dev/null
++++ b/native_fast.hpp
+@@ -0,0 +1,67 @@
++#pragma once
++#include "source/lattice_gpu/src/kernel.hpp"
++
++HD inline U64 power5_low(U64 x) { const auto y=x*x;return y*y*x; }
++HD inline bool near_low(U64 residual,U64 cap) {return residual+cap<=2*cap;}
++HD inline bool canonical(const Task&t,S64 c,S64 a,S64 b) {
++    return c>=t.cmin&&c<=t.cmax&&a>=1&&a<=b&&b<c;
++}
++HD inline bool full_hit(const Task&t,unsigned task,U64 index,S64 c,S64 a,S64 b,int mode,U64 cap,Candidate&out) {
++    if(!canonical(t,c,a,b))return false;
++    const auto r=fifth64(a)+fifth64(b)+(-fifth64(c));
++    const auto limit=mode?five_square(c):I192::from_i64(static_cast<S64>(cap));
++    if(r<(-limit)||limit<r)return false;
++    out={task,index,a,b,c};return true;
++}
++HD inline bool low_hit(const Task&t,unsigned task,U64 index,S64 c,S64 a,S64 b,int mode,U64 cap,Candidate&out) {
++    if(!canonical(t,c,a,b))return false;
++    if(!mode&&!near_low(power5_low(static_cast<U64>(a))+power5_low(static_cast<U64>(b))-power5_low(static_cast<U64>(c)),cap))return false;
++    return full_hit(t,task,index,c,a,b,mode,cap,out);
++}
++struct Differences {
++    U64 d[6];
++    HD void initialize(S64 c,S64 a,S64 b,S64 uc,S64 ua,S64 ub,U64 stride) {
++        U64 v[6];
++        for(unsigned i=0;i<6;++i) {
++            const U64 k=static_cast<U64>(i)*stride;
++            v[i]=power5_low(static_cast<U64>(a)+k*static_cast<U64>(ua))
++                +power5_low(static_cast<U64>(b)+k*static_cast<U64>(ub))
++                -power5_low(static_cast<U64>(c)+k*static_cast<U64>(uc));
++        }
++        for(unsigned order=0;order<6;++order) {
++            d[order]=v[0];for(unsigned j=0;j<5-order;++j)v[j]=v[j+1]-v[j];
++        }
++    }
++    HD void advance() {for(unsigned i=0;i<5;++i)d[i]+=d[i+1];}
++};
++HD inline int residue(S64 x) {const int r=static_cast<int>(x%251);return r<0?r+251:r;}
++HD inline int pow_mod(int x) {const int y=x*x%251;return y*y%251*x%251;}
++HD inline bool modular_near(S64 c,S64 a,S64 b,U64 cap) {
++    if(cap>=125)return true;
++    int r=(pow_mod(residue(a))+pow_mod(residue(b))-pow_mod(residue(c)))%251;
++    if(r<0)r+=251;
++    return static_cast<U64>(r)<=cap||static_cast<U64>(251-r)<=cap;
++}
++
++HD inline S64 coordinate(const Task&t,const S64 base[3],unsigned axis,S64 n,unsigned col) {
++    // The unchanged packet guard bounds the sum of absolute terms by INT64_MAX.
++    return base[col]+n*t.U[3*axis+col];
++}
++HD inline bool constraint(const Task&t,const S64 base[3],unsigned axis,S64 n,unsigned which) {
++    const auto c=coordinate(t,base,axis,n,0),a=coordinate(t,base,axis,n,1),b=coordinate(t,base,axis,n,2);
++    switch(which){case 0:return c>=t.cmin;case 1:return c<=t.cmax;case 2:return a>=1;case 3:return a<=b;default:return b<c;}
++}
++HD inline bool clip(const Task&t,const S64 base[3],unsigned axis,S64&lo,S64&hi) {
++    for(unsigned which=0;which<5;++which) {
++        const bool l=constraint(t,base,axis,lo,which),h=constraint(t,base,axis,hi,which);
++        if(l&&h)continue;
++        if(!l&&!h)return false;
++        S64 left=lo,right=hi;
++        while(left<right) {
++            const S64 mid=left+(right-left)/2;
++            if(constraint(t,base,axis,mid,which)==l)left=mid+1;else right=mid;
++        }
++        if(l)hi=left-1;else lo=left;
++    }
++    return lo<=hi;
++}
+--- /dev/null
++++ b/package_handoff.py
+@@ -0,0 +1,113 @@
++"""Build a reviewable source/result package. READY is deliberately separate."""
++import difflib,gzip,hashlib,importlib.metadata,json,os,platform,shutil,subprocess,tarfile
++from datetime import datetime,timezone
++from pathlib import Path
++R=Path(__file__).resolve().parent;S=R/'handoff-stage';S.mkdir(exist_ok=False)
++BASE=Path('/home/pnord/scratch/cabbage-bulk-20261108-98XhJJdw/worker')
++RAW=Path('/mnt/fifth42-storage/experiments/integration-20261109/cabbage/rev1')
++RAW.mkdir(parents=True,exist_ok=False)
++def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
++def write(p,x):p.write_text(json.dumps(x,indent=2,sort_keys=True)+'\n')
++def load(p):return json.loads(p.read_text())
++def run(command):return subprocess.check_output(command,text=True).strip()
++# Completed raw trial directories, including partial attempts, remain available.
++shutil.copytree(R/'results',RAW/'results')
++for p in R.iterdir():
++    if p.is_file() and (p.suffix in ('.txt','.json','.jsonl')) and p.name not in ('validation-packets.json',):shutil.copy2(p,RAW/p.name)
++raw_files={str(p.relative_to(RAW)):sha(p) for p in sorted(RAW.rglob('*')) if p.is_file()}
++write(RAW/'raw-manifest.json',dict(files=raw_files))
++
++files=[]
++for p in R.rglob('*'):
++    if not p.is_file():continue
++    rel=p.relative_to(R);parts=rel.parts
++    if '__pycache__' in parts:continue
++    if parts[0]=='source' and 'bin' not in parts:files.append(p)
++    elif parts[0] in ('bin','independent'):files.append(p)
++    elif len(parts)==1 and (p.suffix in ('.py','.cpp','.hpp','.cu','.sh') or p.name in ('baseline-manifest.json','baseline-runtime-manifest.json','validation-packets.json')):files.append(p)
++files=sorted(set(files));mapping={str(p.relative_to(R)):sha(p) for p in files}
++with (S/'source.tar.gz').open('wb') as output:
++ with gzip.GzipFile(filename='',fileobj=output,mode='wb',mtime=0) as zipped:
++  with tarfile.open(fileobj=zipped,mode='w') as archive:
++   for p in files:
++    info=archive.gettarinfo(str(p),arcname='tested-source/'+str(p.relative_to(R)));info.uid=info.gid=0;info.uname=info.gname='';info.mtime=0
++    with p.open('rb') as stream:archive.addfile(info,stream)
++commands=load(R/'build-results.json')+load(R/'build-extra-results.json')
++executables=[]
++for p in sorted((R/'bin').iterdir()):
++ if p.is_file():
++  match=[x['command'] for x in commands if x['command'][-1]==str(p)]
++  executables.append(dict(path=str(p.relative_to(R)),sha256=sha(p),build_command=match[-1] if match else None,
++    origin='Frozen tested Cabbage worker executable' if p.name in ('scaling_gpu','gmp_reference') else 'Built in this experiment'))
++manifest=dict(schema=1,bundle_root='tested-source',files=mapping,source_bundle_sha256=sha(S/'source.tar.gz'),executables=executables,
++    baseline_runtime_manifest_sha256=sha(R/'baseline-runtime-manifest.json'),baseline_copy_manifest_sha256=sha(R/'baseline-manifest.json'),
++    compile=dict(cxx=run(['g++-13','--version']).splitlines()[0],nvcc=run(['/home/pnord/scratch/saved-root-pAjTHBhR/cuda-13.2/nvidia/cu13/bin/nvcc','--version']),architecture='sm_86'))
++write(S/'source-manifest.json',manifest)
++
++# A patch against the actual frozen worker, with unchanged original source omitted.
++code=[p for p in files if p.suffix in ('.py','.cpp','.hpp','.cu','.sh') and 'bin' not in p.relative_to(R).parts]
++patch=[];changed=[]
++for p in code:
++ rel=str(p.relative_to(R));old=BASE/rel
++ before=old.read_text().splitlines(keepends=True) if old.exists() else []
++ after=p.read_text().splitlines(keepends=True)
++ if before!=after:
++  patch.extend(difflib.unified_diff(before,after,fromfile='a/'+rel if old.exists() else '/dev/null',tofile='b/'+rel));changed.append(rel)
++(S/'changes.patch').write_text(''.join(patch))
++verify=R/'patch-verification';verify.mkdir();shutil.copytree(BASE/'source',verify/'source',ignore=shutil.ignore_patterns('__pycache__','bin'))
++p=subprocess.run(['patch','--batch','-p1','-i',str(S/'changes.patch')],cwd=verify,capture_output=True,text=True)
++if p.returncode:raise RuntimeError(p.stdout+p.stderr)
++assert all(sha(verify/name)==mapping[name] for name in changed),'Patch does not reconstruct tested code'
++write(S/'patch-verification.json',dict(status='passed',changed_files=changed,stdout=p.stdout))
++
++result_dir=S/'results';result_dir.mkdir()
++for name in ['host-matrix','width-matrix','native-benchmark','candidate-matrix']:
++ shutil.copy2(R/'results'/name/'summary.json',result_dir/(name+'.json'))
++for p in (R/'results').glob('*.json'):shutil.copy2(p,result_dir/p.name)
++for p in R.glob('*failure.json'):shutil.copy2(p,result_dir/p.name)
++for p in [R/'validation-suite.json',R/'build-results.json',R/'build-extra-results.json',R/'build-attempt1.json',R/'build-before-schema2.json',R/'build-pre-format-fix.json']:
++ if p.exists():shutil.copy2(p,result_dir/p.name)
++for p in R.glob('*execution.json'):shutil.copy2(p,result_dir/p.name)
++shutil.copy2(R/'reproduce.sh',S/'reproduce.sh');(S/'reproduce.sh').chmod(0o755)
++
++host=load(R/'results/host-matrix/summary.json');width=load(R/'results/width-matrix/summary.json');candidate=load(R/'results/candidate-matrix/summary.json');native=load(R/'results/native-benchmark/summary.json')
++report=['Cabbage speed experiments, 2026-11-09','',
++ 'Recommended integration: source/lattice_gpu/speed_options.py, as the initializer of a NEW process. It combines exact GMP roots, structured inverse bounds and the byte-identical direct-field serializer. It preserves existing Task/certificate/packet/coverage/journal formats.',
++ '', 'Full 16-physical-core, five-repeat second holdout; actual measured throughput ratios versus the frozen width-8 worker:']
++for name,values in candidate['summary'].items():
++ report.append(name+': '+', '.join(f"{k} {v['throughput_ratio']:.4f}x (median {v['median_seconds']:.6f}s)" for k,v in values.items()))
++report+=['','Wider-patch choices were frozen on separate training strips: low=32, middle=16, high=8. These are selected-strip choices, not a general width policy or production search coverage. Fixed exact ratio union and durable-commit cadence across widths. The initializer at width 8 preserves original geometry, certificates and packets.',
++ '', 'Four-core host-only component experiments:']
++for name,values in host['summary'].items():report.append(name+': '+', '.join(f"{k} {v['throughput_ratio']:.4f}x" for k,v in values.items()))
++report+=['','GPU prepared-packet kernel experiments (not end-to-end pipeline gains):']
++for name,values in native['summary'].items():
++ best=min(values,key=lambda k:values[k]['kernel_median_seconds']);report.append(f"{name}: best {best}, {values[best]['kernel_speedup_vs_original']:.4f}x kernel throughput")
++report+=['','Warm-basis reuse was slower in the tested windows. Modular row wheels and finite-difference prototypes passed correctness but were slower in these samples. Low64 filtering improved isolated kernels. Row clipping/walking helped the wider width-128 packets; these GPU variants are experiments and are not enabled by speed_options.',
++ '', 'Correctness: all six host variants passed three nonempty exhaustive small domains and five high-shell windows with independent GMP full-record comparisons and tamper rejection. All six experimental GPU paths passed 51 packets, invalid input/error recovery, and separate evaluated/excluded count checks. The large nonempty Healy fixture passed all seven GPU paths. Finite differences matched Python big integers for 21,741 steps in normal and UBSan builds. Twenty-four targeted existing tests passed, including sanitizer/native nonempty checks and durable-prefix recovery.',
++ '', 'GPU experiment schema 2: points_visited is explicitly evaluated points, points_exactly_excluded is mathematically excluded points, and points_accounted is their sum. Each task has expected/accounted/visited/exactly_excluded. This intentionally needs an adapter before integration into the original decoder; the recommended host initializer uses the original GPU binary and original schemas.',
++ '', 'Timing includes fresh geometry, independent exact certification, bounded prefetch, original CUDA execution, exact output checks, first-chunk GMP audit and durable local commits. Startup/shutdown/recovery are separate. Every raw sample is retained. Five counterbalanced repetitions. Unrelated recurring Java work interrupted several stages; incomplete attempts are retained and excluded. Monitoring samples approximately every 0.5s and cannot exclude shorter contention bursts. Selected tests are short and machine-specific.',
++ '', 'Baseline runtime manifest SHA256: '+manifest['baseline_runtime_manifest_sha256'],
++ 'Raw evidence: '+str(RAW),
++ 'No production worker, service, ledger or search coverage was changed. Ada owns release integration.']
++(S/'REPORT.txt').write_text('\n'.join(report)+'\n')
++handoff=dict(schema=1,host='cabbage',created_utc=datetime.now(timezone.utc).isoformat(),status='tested; pending archive reproduction and final publication',
++ baseline=dict(repository='paulnord/fifth42',reporting_main_commit='dffdff748ad1bed40a8875ecb0cb6a0551aec51d',runtime_directory=str(BASE),
++   runtime_manifest_sha256=manifest['baseline_runtime_manifest_sha256'],copy_manifest_sha256=manifest['baseline_copy_manifest_sha256'],frozen_executables=[x for x in executables if x['origin'].startswith('Frozen')]),
++ tested_source_manifest_sha256=sha(S/'source-manifest.json'),source_bundle_sha256=sha(S/'source.tar.gz'),changed_files=changed,
++ recommendation=dict(initializer='source/lattice_gpu/speed_options.py',fresh_process_required=True,baseline_width_8_identity_preserved=True,chosen_widths=candidate['selection'],width_policy_scope='Three tested ratio neighborhoods only; integrate with exact region accounting, not local benchmark patch IDs.'),
++ environment=dict(hostname=platform.node(),python=platform.python_version(),packages={x:importlib.metadata.version(x) for x in ['gmpy2','fpylll','cysignals','numpy','sympy']},
++  gpu=run(['nvidia-smi','--query-gpu=name,driver_version,memory.total','--format=csv,noheader']),compile=manifest['compile']),
++ results=dict(host_components='results/host-matrix.json',width_training_and_first_holdout='results/width-matrix.json',kernel_only='results/native-benchmark.json',
++  reusable_16core_second_holdout='results/candidate-matrix.json',correctness='results/final-validation-suite.json',large_nonempty_control='results/large-nonempty-fixture.json'),
++ tested_windows=dict(shell=[100000000001,200000000000],training_left_ratios=[[6,25],[7,20],[17,20]],ratio_span=[16384,100000000001],first_holdout_offset=[1,100000],second_holdout_offset=[2,100000],
++  local_patch_ids=True,production_ledger_ids=False,all_mathematical_hit_sets_preserved=True),
++ schema_changes=dict(recommended_host_initializer='None',experimental_gpu_output='Schema 2: visited/evaluated and exactly-excluded separated, accounted sum; per-task accounted/visited/exactly_excluded. Original decoder adaptation required.',
++  packet='Unchanged LATTICE_GPU_V1',certificate='Unchanged for host arithmetic and serializer; warm basis and widths legitimately change geometry/certificates.',journal='Original schema for timed host pipelines; GPU experiments were not journal-integrated.'),
++ raw_evidence=dict(path=str(RAW),ada_physical_path=str(RAW).replace('/mnt/fifth42-storage','/mnt/localstorage/pnord/fifth42-storage'),manifest_sha256=sha(RAW/'raw-manifest.json')),
++ limitations=report[-9:],production_used_code=False,production_coverage=False,
++ reproduction=dict(command='./reproduce.sh /absolute/new/output /absolute/pinned/python /absolute/nvcc',optional_full_benchmarks='Add --benchmarks as fourth argument',
++  commands=[x['command'] for x in commands],pinned_dependencies='Python 3.12; gmpy2 2.2.2, fpylll 0.6.4, cysignals 1.12.5, numpy 2.3.5, sympy 1.14.0; GMP C++ development libraries; g++-13; CUDA 13.2 sm_86 tested.'),
++ publication=None)
++write(S/'HANDOFF.json',handoff)
++write(R/'package-state.json',dict(stage=str(S),raw=str(RAW),source_files=len(files),archive_sha256=sha(S/'source.tar.gz')))
++print(json.dumps(dict(stage=str(S),raw=str(RAW),files=len(files),archive_bytes=(S/'source.tar.gz').stat().st_size)),flush=True)
+--- /dev/null
++++ b/range_fixture.py
+@@ -0,0 +1,13 @@
++import json,time
++from validate import packet,reference,response,norm
++import host_probe as h
++r=h.ROOT;c,a,b=24482314857,21137517920,21483066250
++p=packet([1,0,0],[[c,a,b],[0,0,0],[0,0,0]],c,c,0,1)
++expected=norm(reference(p));assert expected['hits']==[dict(task=0,linear=2,a=a,b=b,c=c)]
++rows=[]
++for binary in ['scaling_gpu','baseline','low64','rows','wheel','differences','wheel_differences']:
++ with h.open_session(r/'bin'/binary,'gpu',time.monotonic()+30) as session:
++  x=response(session,p);assert norm(x)==expected
++  rows.append(dict(binary=binary,exact_nonempty_large_hit=True,response=x))
++(r/'results/large-nonempty-fixture.json').write_text(json.dumps(dict(status='passed',rows=rows,synthetic_packet=True,production_coverage=False),indent=2)+'\n')
++print('Large Healy near-miss survives all seven GPU paths',flush=True)
+--- /dev/null
++++ b/reproduce.sh
+@@ -0,0 +1,39 @@
++#!/bin/sh
++set -eu
++if [ "$#" -lt 2 ]; then
++    echo 'Usage: reproduce.sh NEW_ABSOLUTE_OUTPUT PINNED_PYTHON [NVCC] [--benchmarks]' >&2
++    exit 2
++fi
++handoff_root=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
++experiment_output=$1
++pinned_python=$2
++case "$experiment_output" in /*) ;; *) echo 'Output must be absolute' >&2; exit 2;; esac
++test ! -e "$experiment_output"
++export NVCC=${3:-/home/pnord/scratch/saved-root-pAjTHBhR/cuda-13.2/nvidia/cu13/bin/nvcc}
++export PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
++"$pinned_python" - "$handoff_root" "$experiment_output" <<'PY'
++import hashlib,json,sys,tarfile
++from pathlib import Path
++handoff,output=map(Path,sys.argv[1:]);output.mkdir()
++with tarfile.open(handoff/'source.tar.gz','r:gz') as archive:archive.extractall(output,filter='data')
++root=output/'tested-source';manifest=json.loads((handoff/'source-manifest.json').read_text())
++for name,expected in manifest['files'].items():
++    path=root/name
++    if hashlib.sha256(path.read_bytes()).hexdigest()!=expected:raise RuntimeError('Source mismatch: '+name)
++(root/'results').mkdir(exist_ok=True)
++print('All bundled source and executable hashes verified',flush=True)
++PY
++cd "$experiment_output/tested-source"
++"$pinned_python" build.py
++"$pinned_python" build_extra.py
++"$pinned_python" validate.py reference
++"$pinned_python" validation_suite.py
++"$pinned_python" final_validation_suite.py
++"$pinned_python" range_fixture.py
++if [ "${4:-}" = '--benchmarks' ]; then
++    "$pinned_python" resource_runner.py reproduce-host "$pinned_python" host_matrix.py
++    "$pinned_python" resource_runner.py reproduce-width "$pinned_python" width_matrix.py
++    "$pinned_python" resource_runner.py reproduce-native "$pinned_python" native_benchmark.py
++    "$pinned_python" resource_runner.py reproduce-candidate "$pinned_python" candidate_matrix.py
++fi
++echo 'Finite reproduction checks passed'
+--- /dev/null
++++ b/resource_runner.py
+@@ -0,0 +1,53 @@
++"""Run finite scratch commands; abort own process group on resource conflict."""
++import json,os,signal,subprocess,sys,time
++from pathlib import Path
++root=Path(__file__).resolve().parent
++name=sys.argv[1];command=sys.argv[2:]
++log=root/(name+'-resources.jsonl')
++clock=os.sysconf('SC_CLK_TCK')
++def processes():
++ out={}
++ for p in Path('/proc').iterdir():
++  if not p.name.isdigit():continue
++  try:
++   s=(p/'stat').read_text();a=s[s.rindex(')')+2:].split()
++   out[int(p.name)]=(int(a[1]),int(a[11])+int(a[12]),s[s.index('(')+1:s.rindex(')')])
++  except (OSError,ValueError,IndexError):pass
++ return out
++def descendants(allp):
++ ids={os.getpid()};old=set()
++ while ids!=old:
++  old=set(ids);ids.update(p for p,v in allp.items() if v[0] in ids)
++ return ids
++def gpu():
++ s=subprocess.check_output(['nvidia-smi','--query-compute-apps=pid','--format=csv,noheader,nounits'],text=True,timeout=5).strip()
++ return [int(x) for x in s.splitlines() if x]
++if gpu():raise RuntimeError('GPU already has compute work')
++prior=processes();previous=time.monotonic();began=previous
++with (root/(name+'.txt')).open('w') as stream:
++ proc=subprocess.Popen(command,stdout=stream,stderr=subprocess.STDOUT,start_new_session=True)
++ try:
++  while proc.poll() is None:
++   time.sleep(.5);now=time.monotonic();current=processes();own=descendants(current)
++   foreign_gpu=[p for p in gpu() if p not in own]
++   busy=[]
++   for pid,(ppid,ticks,cmd) in current.items():
++    if pid in own or pid not in prior:continue
++    rate=(ticks-prior[pid][1])/clock/(now-previous)
++    if rate>.5:busy.append(dict(pid=pid,command=cmd,cpu_cores=rate))
++   row=dict(elapsed=now-began,foreign_gpu=foreign_gpu,foreign_busy_cpu=busy,load=os.getloadavg())
++   with log.open('a') as out:out.write(json.dumps(row)+'\n')
++   if foreign_gpu or busy:raise RuntimeError('Resource conflict: '+json.dumps(row))
++   if now-began>600:raise TimeoutError('Overall finite scratch stage budget')
++   prior=current;previous=now
++  rc=proc.wait()
++  if rc:raise RuntimeError(f'{name}: exit {rc}; see {name}.txt')
++ except BaseException as error:
++  if proc.poll() is None:
++   os.killpg(proc.pid,signal.SIGTERM)
++   try:proc.wait(timeout=3)
++   except subprocess.TimeoutExpired:os.killpg(proc.pid,signal.SIGKILL);proc.wait()
++  (root/(name+'-failure.json')).write_text(json.dumps(dict(error=str(error),command=command,seconds=time.monotonic()-began),indent=2)+'\n')
++  raise
++(root/(name+'-execution.json')).write_text(json.dumps(dict(command=command,exit_code=rc,seconds=time.monotonic()-began),indent=2)+'\n')
++print(name,'passed',round(time.monotonic()-began,3),'seconds')
+--- /dev/null
++++ b/source/lattice_gpu/speed_options.py
+@@ -0,0 +1,17 @@
++"""Opt-in initialization for a NEW process using certified exact host arithmetic.
++
++The initializer preserves Task/certificate/packet/coverage/journal formats.
++It does not alter source files, start a search, or modify an existing engine.
++"""
++import scaling_core as core
++import exact_host_opt
++import packing_opt
++
++def initialize(source, cpus=(), *, serializer=True):
++    if core._ENGINE is not None or exact_host_opt._MODE is not None:
++        raise RuntimeError('Speed options require a fresh worker process')
++    exact_host_opt.initialize(source, cpus, 'combined')
++    core.prepare_task = exact_host_opt.prepare_task
++    core.certify_task = exact_host_opt.certify_task
++    if serializer:
++        core.task_digest = packing_opt.task_digest
+--- a/source/lattice_gpu/src/kernel.hpp
++++ b/source/lattice_gpu/src/kernel.hpp
+@@ -4,7 +4,7 @@
+ 
+ using U64=unsigned long long;
+ using S64=std::int64_t;
+-constexpr std::uint64_t LATTICE_MAX_BASE=100000000000ULL;
++constexpr std::uint64_t LATTICE_MAX_BASE=200000000000ULL;
+ constexpr std::uint64_t MAX_PACKET_POINTS=50000000;
+ constexpr std::uint64_t MAX_PATCH_POINTS=10000000;
+ constexpr unsigned MAX_TASKS=4096;
+--- /dev/null
++++ b/validate.py
+@@ -0,0 +1,95 @@
++import argparse,bisect,hashlib,json,random,subprocess,sys,time
++from pathlib import Path
++from dataclasses import replace
++import host_probe as h
++ROOT=h.ROOT;core=h.core;pipeline=h.pipeline
++def stable(x):return json.dumps(x,sort_keys=True,separators=(',',':'))
++def oracle(bound,cap):
++    powers=[i**5 for i in range(bound+1)];out=set()
++    for c in range(1,bound+1):
++        for b in range(1,c):
++            target=powers[c]-powers[b]
++            for a in range(bisect.bisect_left(powers,target-cap,1,b+1),bisect.bisect_right(powers,target+cap,1,b+1)):
++                out.add((a,b,c,powers[a]+powers[b]-powers[c]))
++    return out
++def full_plan(bound,cap):
++    specs,direct=core.specs(bound,cap,8);rows=[pipeline.prepare_certified(s) for s in specs]
++    return h.packing_opt.assemble(bound,cap,specs,direct,[r[0] for r in rows],[r[1] for r in rows])
++def response(session,packet):
++    r,_=session.run(packet,timeout=30);pipeline.validate_response_types(r)
++    if r.get('box_complete') is not True:raise ValueError(r)
++    return r
++def norm(r):return dict(counts=[dict(id=x['id'],expected=x['expected'],visited=x.get('accounted',x['visited'])) for x in r['counts']],hits=sorted(r['hits'],key=lambda x:(x['task'],x['linear'])))
++def reference(packet):
++    p=subprocess.run([str(ROOT/'bin/gmp_reference')],input=packet,text=True,capture_output=True,check=True,timeout=60)
++    return json.loads(p.stdout)
++def packet(j,u,cmin,cmax,cap=42,mode=0):
++    return f'LATTICE_GPU_V1 {mode} {cap} 1\n0 {cmin} {cmax} '+ ' '.join(map(str,j))+'\n'+' '.join(str(x) for row in u for x in row)+'\n'
++def run(variant):
++    h.initialize(h.SOURCE,(),variant);packets=[];cases=[]
++    with h.open_session(ROOT/'bin/scaling_gpu','gpu',time.monotonic()+240) as baseline:
++        for bound,cap in [(34,384),(100,2951),(1000,42)]:
++            plan=full_plan(bound,cap);hits=set(plan.direct_hits);expected=oracle(bound,cap)
++            for batch in plan.batches:
++                r=response(baseline,batch.packet);g=reference(batch.packet)
++                assert norm(r)==norm(g),'Independent GMP small-domain records'
++                hits|=core.decode_batch(batch,r,'gpu');packets.append(dict(label=f'full-{bound}-{cap}',packet=batch.packet,expected=norm(g)))
++            assert hits==expected and hits,'Independent nonempty full-domain oracle'
++            cases.append(dict(bound=bound,cap=cap,hits=sorted(hits),points=plan.points,certificate=plan.certificate_sha256))
++        class Serial:
++            def map(self,f,items,chunksize):return list(map(f,items))
++        for first in [3000000000,3917103232,6250000000,10625000000,11249999996]:
++            chunk=pipeline.prepare_chunk(Serial(),pipeline.Window(100000000001,200000000000,first,first+4,8,222,42,'adaptive'),'packed')
++            for batch in chunk.plan.batches:
++                r=response(baseline,batch.packet);g=reference(batch.packet);assert norm(r)==norm(g),'High-shell GMP'
++                core.decode_batch(batch,r,'gpu');packets.append(dict(label=f'high-{first}',packet=batch.packet,expected=norm(g)))
++            cases.append(dict(first=first,points=chunk.plan.points,geometry=chunk.geometry_sha256))
++        # Certification must still reject altered points, transform and bounds.
++        task=core.prepare_task(chunk.window.specifications()[0])
++        for bad in [replace(task,points=task.points+1),replace(task,J=(task.J[0]+1,*task.J[1:])),replace(task,U=((0,0,0),*task.U[1:]))]:
++            try:core.certify_task(bad)
++            except ValueError:pass
++            else:raise AssertionError('Tampered certificate accepted')
++    if variant=='reference':
++        identity=[[1,0,0],[0,1,0],[0,0,1]]
++        synthetic=[]
++        for cap in [0,1,42,125,384,2**63-1]:synthetic.append((f'cap-{cap}',packet([10,10,10],identity,1,10,cap)))
++        synthetic.append(('variable-cap',packet([20,20,20],identity,1,20,0,1)))
++        for axis in range(3):
++            u=[[0,0,0] for _ in range(3)];u[axis][0]=1;u[(axis+1)%3][1]=1;u[(axis+2)%3][2]=1
++            j=[7,7,7];j[axis]=10000
++            synthetic.append((f'long-row-axis-{axis}',packet(j,u,1,10000)))
++        synthetic.append(('signed-extreme',packet([1,0,0],[[2**63-2,0,0],[0,1,0],[0,0,1]],1,200000000000)))
++        rng=random.Random(20261109)
++        for i in range(32):
++            u=[row[:] for row in identity]
++            for _ in range(4):
++                a,b=rng.sample(range(3),2);q=rng.choice([-2,-1,1,2]);u[a]=[x+q*y for x,y in zip(u[a],u[b])]
++            synthetic.append((f'signed-unimodular-{i}',packet([rng.randrange(1,8) for _ in range(3)],u,1,200,rng.choice([0,12,42,384]))))
++        for label,p in synthetic:packets.append(dict(label=label,packet=p,expected=norm(reference(p))))
++        (ROOT/'validation-packets.json').write_text(json.dumps(packets,indent=2)+'\n')
++    result=dict(status='passed',variant=variant,cases=cases,packets=len(packets),independent_gmp=True,tamper_rejections=3)
++    (ROOT/'results'/f'host-validation-{variant}.json').write_text(json.dumps(result,indent=2)+'\n')
++    print(variant,'host validation passed',len(cases),flush=True)
++def native():
++    packets=json.loads((ROOT/'validation-packets.json').read_text());results=[]
++    for binary in ['baseline','low64','rows','wheel','differences','wheel_differences']:
++        with h.open_session(ROOT/'bin'/binary,'gpu',time.monotonic()+240) as session:
++            counts=[]
++            for item in packets:
++                r=response(session,item['packet']);assert norm(r)==item['expected'],(binary,item['label'],'exact GMP record mismatch')
++                assert r['points_explicitly_evaluated']+r['points_exactly_excluded']==r['points_accounted']
++                assert sum(x['visited'] for x in r['counts'])==r['points_visited']==r['points_explicitly_evaluated']
++                assert all(x['visited']+x['exactly_excluded']==x['accounted']==x['expected'] for x in r['counts'])
++                counts.append(dict(label=item['label'],points=r['points_accounted'],evaluated=r['points_explicitly_evaluated'],excluded=r['points_exactly_excluded'],hits=len(r['hits'])))
++            for p in ['LATTICE_GPU_V1 0 42 1\n0 1 200000000001 1 1 1\n1 0 0 0 1 0 0 0 1\n',
++                      'LATTICE_GPU_V1 0 42 1\n0 1 10 10000000 10000000 10000000\n1 0 0 0 1 0 0 0 1\n',
++                      'LATTICE_GPU_V1 0 42 1\n0 1 10 2 1 1\n9223372036854775807 0 0 0 1 0 0 0 1\n']:
++                r,_=session.run(p,timeout=10);assert r.get('box_complete') is False,'Invalid packet accepted'
++            response(session,packets[0]['packet']) # Framed error recovery.
++        results.append(dict(binary=binary,status='passed',cases=counts,invalid_packets_rejected=3,error_recovery=True))
++        (ROOT/'results/native-validation.json').write_text(json.dumps(results,indent=2)+'\n')
++        print(binary,'GPU validation passed',len(counts),'packets',flush=True)
++if __name__=='__main__':
++    a=argparse.ArgumentParser();a.add_argument('variant');args=a.parse_args()
++    native() if args.variant=='native' else run(args.variant)
+--- /dev/null
++++ b/validate_candidate.py
+@@ -0,0 +1,3 @@
++import validate
++import candidate_probe as c
++if __name__=='__main__':validate.run('recommended')
+--- /dev/null
++++ b/validate_widths.py
+@@ -0,0 +1,21 @@
++import json,time
++from fractions import Fraction
++from validate import oracle,reference,response,norm
++import host_probe as h
++r=h.ROOT;core=h.core;h.initialize(h.SOURCE,(),'combined');rows=[];expected={x for x in oracle(34,384) if x[2]>=16 and Fraction(3,4)*x[2]<=x[0]<=Fraction(4,5)*x[2]}
++assert expected
++with h.open_session(r/'bin/scaling_gpu','gpu',time.monotonic()+180) as session:
++ for count in [1,2,4,8,16]:
++    specs=[];tasks=[];tokens=[]
++    for i in range(count):
++        left=Fraction(3,4)+Fraction(i,20*count);right=Fraction(3,4)+Fraction(i+1,20*count)
++        spec=(i,16,34,left.as_integer_ratio(),right.as_integer_ratio(),384,48)
++        task=core.prepare_task(spec);token=core.certify_task(task);specs.append(spec);tasks.append(task);tokens.append(token)
++    plan=h.packing_opt.assemble(34,384,specs,(),tasks,tokens);hits=set()
++    for batch in plan.batches:
++        x=response(session,batch.packet);g=reference(batch.packet);assert norm(x)==norm(g)
++        hits|=core.decode_batch(batch,x,'gpu')
++    assert hits==expected,(count,hits,expected)
++    rows.append(dict(partitions=count,points=plan.points,hits=sorted(hits),complete_exact_region=True,independent_gmp=True))
++(r/'results/width-validation.json').write_text(json.dumps(dict(status='passed',rows=rows),indent=2)+'\n')
++print('All five nested partitions preserve nonempty exact hits',flush=True)
+--- /dev/null
++++ b/validation_suite.py
+@@ -0,0 +1,9 @@
++import json,subprocess,sys
++from pathlib import Path
++r=Path(__file__).resolve().parent;rows=[]
++for variant in ['roots','inverse','combined','serializer','warm','native']:
++    p=subprocess.run([sys.executable,str(r/'validate.py'),variant],capture_output=True,text=True,timeout=240)
++    row=dict(variant=variant,exit_code=p.returncode,stdout=p.stdout,stderr=p.stderr);rows.append(row)
++    (r/'validation-suite.json').write_text(json.dumps(rows,indent=2)+'\n')
++    print(variant,p.returncode,p.stdout.strip(),p.stderr[-1500:],flush=True)
++    if p.returncode:raise RuntimeError(variant+' failed')
+--- /dev/null
++++ b/width_matrix.py
+@@ -0,0 +1,56 @@
++import json,statistics,subprocess,sys,time
++from fractions import Fraction
++from pathlib import Path
++r=Path(__file__).resolve().parent;out=r/'results/width-matrix';out.mkdir(exist_ok=True)
++widths=[8,16,32,64,128];windows=[('low',6,25),('middle',7,20),('high',17,20)]
++rows=[];guards=[];hits={};unions={};blocked=set()
++def call(window,num,den,width,repeat,variant='combined',label='train'):
++    dest=out/f'{label}-{window}-{repeat}-{variant}-w{width}'
++    command=[sys.executable,str(r/'host_probe.py'),'--variant',variant,'--width',str(width),'--patches','2048',
++             '--ratio-num',str(num),'--ratio-den',str(den),'--output',str(dest)]
++    existing=out/(dest.name+'.log.json')
++    if existing.exists():
++        old=json.loads(existing.read_text())
++        if old['exit_code'] and any(x in old['stderr'] for x in ['Patch point allowance mismatch','Full-domain coefficient allowance exhausted','Integer transform can overflow','needs the original sphere fallback']):
++            guards.append(dict(window=window,width=width,error=old['stderr'],complete=False));blocked.add((window,width));return None
++    if not (dest/'result.json').exists():
++        if dest.exists():dest=out/(dest.name+'-retry-'+str(time.time_ns()));command[-1]=str(dest)
++        began=time.time();p=subprocess.run(command,capture_output=True,text=True,timeout=180)
++        log=dict(command=command,started_epoch=began,finished_epoch=time.time(),exit_code=p.returncode,stdout=p.stdout,stderr=p.stderr)
++        existing.write_text(json.dumps(log,indent=2)+'\n')
++        if p.returncode:
++            if any(x in p.stderr for x in ['Patch point allowance mismatch','Full-domain coefficient allowance exhausted','Integer transform can overflow','needs the original sphere fallback']):
++                guards.append(dict(window=window,width=width,error=p.stderr,complete=False));blocked.add((window,width));return None
++            raise RuntimeError(log)
++    x=json.loads((dest/'result.json').read_text());x.update(window_name=window,repeat=repeat,label=label)
++    key=(label,window)
++    if key not in hits:hits[key]=x['hits'];unions[key]=(x['ratio_left'],x['ratio_right'])
++    assert x['hits']==hits[key] and (x['ratio_left'],x['ratio_right'])==unions[key],'Changed target hit set or exact region'
++    rows.append({k:v for k,v in x.items() if k not in ['stages','records']});(out/'progress.json').write_text(json.dumps(dict(rows=rows,guards=guards),indent=2)+'\n')
++    print(label,window,repeat,width,variant,round(x['steady_seconds'],6),x['points'],flush=True)
++    return x
++for window,num,den in windows:
++    for repeat in range(5):
++        order=widths[repeat%len(widths):]+widths[:repeat%len(widths)]
++        if repeat%2:order=list(reversed(order))
++        for width in order:
++            if (window,width) not in blocked:call(window,num,den,width,repeat)
++selection={}
++for window,_,_ in windows:
++    med={w:statistics.median(x['steady_seconds'] for x in rows if x['window_name']==window and x['width']==w) for w in widths if (window,w) not in blocked}
++    selection[window]=min(med,key=med.get)
++(out/'frozen-selection.json').write_text(json.dumps(dict(selection=selection,holdout_offset=[1,100000],selection_metric='Measured full steady seconds including audit and durable commits'),indent=2)+'\n')
++for window,num,den in windows:
++    left=Fraction(num,den)+Fraction(1,100000)
++    for repeat in range(5):
++        order=[('reference',8),('combined',selection[window])]
++        if repeat%2:order.reverse()
++        for variant,width in order:call(window,left.numerator,left.denominator,width,repeat,variant,'holdout')
++summary={}
++for window,_,_ in windows:
++    group=[x for x in rows if x['window_name']==window and x['label']=='holdout']
++    med={v:statistics.median(x['steady_seconds'] for x in group if x['variant']==v) for v in ['reference','combined']}
++    summary[window]=dict(selected_width=selection[window],medians=med,combined_throughput_ratio=med['reference']/med['combined'],samples=group)
++(out/'summary.json').write_text(json.dumps(dict(status='passed',summary=summary,training=rows,guards=guards,
++    timing='Fresh preparation, independent certificates, bounded prefetch, GPU, response checks, first-chunk full GMP audit and local durable journal commits. Fixed exact-region span and commit cadence for all widths.',
++    holds='Winner selected from training windows before disjoint holdout runs; 4 physical cores; no full-domain or production speedup claim.'),indent=2)+'\n')

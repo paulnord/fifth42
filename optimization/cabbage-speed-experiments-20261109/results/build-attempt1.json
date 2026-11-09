@@ -1,0 +1,21 @@
+[
+  {
+    "mode": 0,
+    "name": "baseline",
+    "command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/cuda-13.2/nvidia/cu13/bin/nvcc",
+      "-std=c++17",
+      "-O3",
+      "-arch=sm_86",
+      "-ccbin",
+      "g++-13",
+      "-DEXPERIMENT=0",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/fast_gpu.cu",
+      "-o",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/bin/baseline"
+    ],
+    "seconds": 0.47556059196358547,
+    "exit_code": 2,
+    "output": "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/native_fast.hpp(11): error: no operator \"-\" matches these operands\n            operand types are: I192 - I192\n      const auto r=fifth64(a)+fifth64(b)-fifth64(c);\n                                        ^\n/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/source/lattice_gpu/src/../vendor/exact.hpp(33): note #3322-D: number of parameters of function \"I192::operator-\" does not match the call\n      __attribute__((host)) __attribute__((device)) I192 operator-() const {\n                                                         ^\n/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/native_fast.hpp(11): note #3328-D: built-in operator-(<promoted arithmetic>, <promoted arithmetic>) does not match because argument #1 does not match parameter\n      const auto r=fifth64(a)+fifth64(b)-fifth64(c);\n                                        ^\n/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/native_fast.hpp(11): note #3328-D: built-in operator-(<pointer to object>, <ptrdiff_t>) does not match because argument #1 does not match parameter\n      const auto r=fifth64(a)+fifth64(b)-fifth64(c);\n                                        ^\n\n1 error detected in the compilation of \"/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/fast_gpu.cu\".\n"
+  }
+]

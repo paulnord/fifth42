@@ -1,0 +1,21 @@
+[
+  {
+    "command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/validate.py",
+      "native"
+    ],
+    "exit_code": 0,
+    "stdout": "baseline GPU validation passed 51 packets\nlow64 GPU validation passed 51 packets\nrows GPU validation passed 51 packets\nwheel GPU validation passed 51 packets\ndifferences GPU validation passed 51 packets\nwheel_differences GPU validation passed 51 packets\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python",
+      "/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/validate_candidate.py"
+    ],
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/pnord/scratch/speed-experiments-20261109-x3mtuna_/validate_candidate.py\", line 3, in <module>\n    if __name__=='__main__':validate.run('recommended')\n                            ^^^^^^^^^^^^\nAttributeError: module 'validate' has no attribute 'run'\n"
+  }
+]
