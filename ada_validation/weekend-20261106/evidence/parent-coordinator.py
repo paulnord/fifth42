@@ -21,10 +21,11 @@ class Coordinator:
         self.cfg_path=Path(retained_config);self.test=test;self.context=None;self.fd=None;self.active=False;self.activation_audit=None
         if not test:guard.require(sha(__file__)==self.g['coordinator_source_sha256'],'Coordinator source differs from grant')
     def acquire(self):
-        g=self.g;store=ada_export_store.Store(g['parent_ledger']);claim=parent_claim(store,g['parent_job'])
-        guard.require((claim['sha256'],claim['first'],claim['last'])==(g['parent_claim_sha256'],g['parent_first'],g['parent_last']),'Original parent claim changed')
+        g=self.g;store=ada_export_store.Store(g['parent_ledger'])
         self.context=store.locked(store.root/'jobs'/g['parent_job']/'journal.jsonl')
         self.fd=self.context.__enter__();self.store=store
+        claim=parent_claim(store,g['parent_job'])
+        guard.require((claim['sha256'],claim['first'],claim['last'])==(g['parent_claim_sha256'],g['parent_first'],g['parent_last']),'Original parent claim changed')
         self.cfg=read(self.cfg_path);self.cfg_sha=sha(self.cfg_path)
         c=self.cfg;a=g['assignments']['ada']
         guard.require(c['TEST_ONLY'] is self.test and [c['initial_patch'],c['range_end']]==a,'Retained configuration does not enforce its hard cap')
@@ -56,7 +57,7 @@ class Coordinator:
                         audited=audit_grouped.audit_suffix(p,dict(checkpoint=dict(next_patch=self.cfg['initial_patch']),config=self.cfg),point,'fresh',self.cfg['gmp_audit_period'])
                         self.activation_audit=dict(status='passed',**audited)
                     self.active=True
-        atomic(Path(g['child_ledger'])/'coordinator-state.json',dict(status='active' if self.active else 'prepared',grant_sha256=self.sha,coordinator_pid=os.getpid(),parent_job=g['parent_job'],parent_claim_sha256=g['parent_claim_sha256'],retained_configuration_sha256=self.cfg_sha,retained_manifest_sha256=g['retained_manifest_sha256'],retained_range_end=g['assignments']['ada'][1],activation_audit=self.activation_audit,stop_epoch=g['stop_epoch'],updated_epoch=time.time(),TEST_ONLY=self.test))
+        atomic(Path(g['child_ledger'])/g.get('coordinator_state_file','coordinator-state.json'),dict(status='active' if self.active else 'prepared',grant_sha256=self.sha,coordinator_pid=os.getpid(),parent_job=g['parent_job'],parent_claim_sha256=g['parent_claim_sha256'],retained_configuration_sha256=self.cfg_sha,retained_manifest_sha256=g['retained_manifest_sha256'],retained_range_end=g['assignments']['ada'][1],activation_audit=self.activation_audit,stop_epoch=g['stop_epoch'],updated_epoch=time.time(),TEST_ONLY=self.test))
     def close(self):
         if self.context:
             self.context.__exit__(None,None,None);self.context=None;self.fd=None

@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "manifest_sha256": "d4eb5fcbd7f971f0367b24622e5854921623b5451dd49222c21b85a293df9781",
+  "manifest_sha256": "97454dbbf1864edf8ac3080e008c1eda77d001b4f22ddf40ab82337db2a04001",
   "actual_gpu": true,
   "actual_parent_lease": true,
   "signal_stop_passed": true,
@@ -11,34 +11,47 @@
       "TEST_ONLY": true,
       "actual_gpu": true,
       "actual_parent_lease": true,
-      "independent_gmp_every_chunk": true,
-      "source_manifest_sha256": "d4eb5fcbd7f971f0367b24622e5854921623b5451dd49222c21b85a293df9781",
-      "new_chunks": 8,
-      "new_patches": 2048,
-      "new_gmp_audited_chunks": 8,
-      "next_patch": 4564957824
+      "source_manifest_sha256": "97454dbbf1864edf8ac3080e008c1eda77d001b4f22ddf40ab82337db2a04001",
+      "partial_16_window_batch": true,
+      "partial_8_record_flush": true,
+      "verification_note": "Initial harness used audit_period=1 against frozen config period=128; original successful GPU service was rechecked with its actual configured cadence, without rerunning or changing its files",
+      "new_chunks": 17,
+      "new_patches": 4352,
+      "new_gmp_audited_chunks": 1,
+      "next_patch": 5887339648
     },
     {
+      "existing_output_rejected": true,
+      "independent_deadline_timer": null,
       "status": "passed",
       "case": "signal",
       "TEST_ONLY": true,
       "actual_gpu": true,
       "actual_parent_lease": true,
       "independent_gmp_every_chunk": true,
-      "source_manifest_sha256": "d4eb5fcbd7f971f0367b24622e5854921623b5451dd49222c21b85a293df9781",
-      "new_chunks": 3,
-      "new_patches": 768,
-      "new_gmp_audited_chunks": 3,
-      "next_patch": 4564956544
+      "source_manifest_sha256": "97454dbbf1864edf8ac3080e008c1eda77d001b4f22ddf40ab82337db2a04001",
+      "new_chunks": 82,
+      "new_patches": 20992,
+      "new_gmp_audited_chunks": 1,
+      "next_patch": 5887356288
+    },
+    {
+      "existing_output_rejected": true,
+      "independent_deadline_timer": "NextElapseUSecRealtime=\nLastTriggerUSec=\n",
+      "status": "passed",
+      "case": "deadline",
+      "TEST_ONLY": true,
+      "actual_gpu": true,
+      "actual_parent_lease": true,
+      "independent_gmp_every_chunk": true,
+      "source_manifest_sha256": "97454dbbf1864edf8ac3080e008c1eda77d001b4f22ddf40ab82337db2a04001",
+      "new_chunks": 5889,
+      "new_patches": 1507584,
+      "new_gmp_audited_chunks": 47,
+      "next_patch": 5888842880
     }
   ],
-  "unchanged_math_packet_kernel_and_gmp": true,
-  "changed_runtime_files": [
-    "policy.py",
-    "search_supervisor.py",
-    "suballocation_guard.py",
-    "transition_resources.py"
-  ],
-  "baseline_manifest_sha256": "5b6582e2f47656993faf01f06b856e513816381a594e6c859eeac08e3cf16f71",
-  "validated_utc": "2026-11-10T00:33:41.855628+00:00"
+  "existing_output_rejected": true,
+  "production_started": false,
+  "deadline_observation": "RuntimeMaxSec stopped the GPU service before the fixed deadline; independent calendar oneshot also executed successfully, confirmed in the user journal. Worker exit 0, leases released, both copies audited."
 }
