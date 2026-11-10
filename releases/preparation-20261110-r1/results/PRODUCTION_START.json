@@ -1,0 +1,163 @@
+{
+  "status": "running",
+  "captured_utc": "2026-11-10T19:53:34.306843+00:00",
+  "source_commit": "8dfdc227bde0c9d7d0c45012cfc0d646e972fdee",
+  "run_id": "cabbage-extended-upgrade-20261110",
+  "controller_root": "/home/pnord/scratch/cabbage-extended-upgrade-20261110",
+  "config_sha256": "e140f84a8e896c77704519c5d573dc5ad80806d643e72a3a855b67eb5c883a39",
+  "manifest_sha256": "10667476ea82566f527b4397d00c57b10232f88d29557c837b0fb6f468fafbd0",
+  "initial_patch": 1538849024,
+  "checkpoint": {
+    "chunks": 17662,
+    "completed_bound": null,
+    "coverage_schema": "logical-width8-physical-groups-v1",
+    "hits": [],
+    "identity": {
+      "source_identity": "f0060cf466895aca6491657d5f8e123ef19a8002b1237a43e3c9369136e051a3",
+      "trial": "cabbage-extended-upgrade-20261110"
+    },
+    "journal_offset": 175023192,
+    "journal_sha256": "e67372623b0b9b06f0ce6c516710867ebe3bcb162c04cd591d4008dd6bb7ec99",
+    "next_patch": 1543370496,
+    "patches": 4521472,
+    "physical_tasks": 565184,
+    "points": 29712787204,
+    "window": {
+      "bits": 222,
+      "cap": 42,
+      "first": 1538849024,
+      "geometry_policy": "adaptive",
+      "hi": 200000000000,
+      "last": 2250000000,
+      "lo": 100000000001,
+      "width": 8
+    }
+  },
+  "worker_status": {
+    "automatic_resume": false,
+    "backend": "gpu",
+    "canonical_task_cache": true,
+    "chunks": 17409,
+    "coefficient_points": 29285872934,
+    "combined_selected_patches": 1043305728,
+    "completed_bound": null,
+    "dispatch_chunksize": 2,
+    "engine_pid": 3680516,
+    "error": null,
+    "geometry_policy": "adaptive",
+    "gmp_audited_chunks": 137,
+    "gpu_preparation": null,
+    "group_limit": 8,
+    "hits": [],
+    "independent_oracle_verified_through": 0,
+    "initial_patch": 1538849024,
+    "journal_buffer": {
+      "flush_count": 2179,
+      "flush_seconds": 12.054546074941754,
+      "pending_bytes": 0,
+      "pending_chunks": 0
+    },
+    "journal_offset": 172515920,
+    "journal_sha256": "5b55ad47445e88b80e09d4a4081221bd6e3252eb5ee866efb6b570f621f4fef7",
+    "journal_storage": "local durable journal; verified periodic bulk replica",
+    "ledger_claim_sha256": "8f413e93a894f1f7442e63afdbbfc283759f9f6569bedf1de8a4f4c9b59bbbdd",
+    "ledger_root": "/mnt/nfs_share/fifth42-shared-20261107",
+    "next_patch": 1543305728,
+    "parent_run": "/mnt/fifth42-storage/archives/CABBAGE-EXTENDED-PARENT-20261110T193826Z",
+    "patches": 4456704,
+    "patches_per_second": 36943.71644763443,
+    "physical_tasks": 557088,
+    "prefetch": {
+      "active": 1,
+      "consumer_wait_empty_seconds": 18.80380776640959,
+      "elapsed_seconds": 115.08006144495448,
+      "inflight": 1,
+      "max_outstanding": 3,
+      "maximum_prepared_payload_bytes": 3836924,
+      "mean_ready_depth": 0.2262148068518455,
+      "outstanding": 3,
+      "peak_outstanding": 3,
+      "peak_ready": 1,
+      "peak_reserved_bytes": 37748736,
+      "preparation_batch_windows": 16,
+      "preparation_batches": 1090,
+      "prepare_wall_seconds": 114.07503880228614,
+      "producer_wait_capacity_seconds": 0.0008266361546702683,
+      "producer_wait_full_seconds": 14.463884283497464,
+      "queue_units": "bounded preparation batches; original execution/journal windows preserved",
+      "ready": 1,
+      "ready_depth_seconds": {
+        "0": 89.0472445266787,
+        "1": 26.03281387226889
+      },
+      "ready_limit": 1,
+      "reserved_bytes": 37748736
+    },
+    "preparation_backend": "cpu",
+    "preparation_load_ceiling": 17.0,
+    "preparation_pacing_seconds": 0.0,
+    "preparation_windows": 16,
+    "publication": false,
+    "reason": null,
+    "replication": {
+      "captured_epoch": 1794340296.320715,
+      "checkpoint_sha256": "13c48edfc1fc9210cdf2cdeafa447aceb766c3b0786783a1e66c64085ec2f907",
+      "chunks": 8,
+      "committed_bytes": 79242,
+      "identity": {
+        "source_identity": "f0060cf466895aca6491657d5f8e123ef19a8002b1237a43e3c9369136e051a3",
+        "trial": "cabbage-extended-upgrade-20261110"
+      },
+      "journal_sha256": "cd0501cc7a7b298c9467b724385f02b23f9ef7c3b8f347efffe5512cad70d00d",
+      "method": "append, fsync, byte readback, audit copies, checkpoint, receipt",
+      "next_patch": 1538851072,
+      "raw_sha256": "7bf1cbd62a5e79ed327626e7400d4cabfdd99ea6f2df6e08b8dae462d4be9249",
+      "status": "verified",
+      "synced_epoch": 1794340317.0215518
+    },
+    "replication_error": null,
+    "run_id": "cabbage-extended-upgrade-20261110",
+    "search_seconds": 120.63496660703095,
+    "selected_interval": [
+      1538849024,
+      1543305728
+    ],
+    "source_identity": "f0060cf466895aca6491657d5f8e123ef19a8002b1237a43e3c9369136e051a3",
+    "status": "running",
+    "stop_epoch": 1794438000,
+    "stop_local": "2026-11-11T17:00:00-06:00",
+    "updated_utc": "2026-11-10T19:53:31.224885+00:00",
+    "worker_pid": 3680433,
+    "workers": 16
+  },
+  "replication_health": {
+    "error": null,
+    "last_success_epoch": 1794340296.320715,
+    "receipt": {
+      "captured_epoch": 1794340296.320715,
+      "checkpoint_sha256": "13c48edfc1fc9210cdf2cdeafa447aceb766c3b0786783a1e66c64085ec2f907",
+      "chunks": 8,
+      "committed_bytes": 79242,
+      "identity": {
+        "source_identity": "f0060cf466895aca6491657d5f8e123ef19a8002b1237a43e3c9369136e051a3",
+        "trial": "cabbage-extended-upgrade-20261110"
+      },
+      "journal_sha256": "cd0501cc7a7b298c9467b724385f02b23f9ef7c3b8f347efffe5512cad70d00d",
+      "method": "append, fsync, byte readback, audit copies, checkpoint, receipt",
+      "next_patch": 1538851072,
+      "raw_sha256": "7bf1cbd62a5e79ed327626e7400d4cabfdd99ea6f2df6e08b8dae462d4be9249",
+      "status": "verified",
+      "synced_epoch": 1794340317.0215518
+    },
+    "updated_epoch": 1794340323.074452
+  },
+  "units": {
+    "cabbage-extended-controller-20261109.service": "ActiveState=active\nSubState=running\nRestart=no\nMainPID=3680206\n",
+    "fifth-cabbage-extended-upgrade-20261110.service": "ActiveState=active\nSubState=running\nRestart=no\nMainPID=3680418\n",
+    "cabbage-extended-controller-20261109-deadline.timer": "ActiveState=active\nSubState=waiting\nNextElapseUSecRealtime=Wed 2026-11-11 16:59:50 CST\n",
+    "fifth-cabbage-extended-upgrade-20261110-deadline.timer": "ActiveState=active\nSubState=waiting\nNextElapseUSecRealtime=Wed 2026-11-11 16:59:50 CST\n",
+    "fifth-cabbage-extended-rotation-20261110T172254Z-deadline.timer": "ActiveState=inactive\nSubState=dead\nNextElapseUSecRealtime=\n"
+  },
+  "source_archive_still_matches_all_deployed_files": true,
+  "linger": "Linger=yes"
+}

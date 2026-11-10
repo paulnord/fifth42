@@ -1,0 +1,69 @@
+{
+  "status": "tested_and_published",
+  "host": "cabbage",
+  "github": {
+    "repository": "paulnord/fifth42",
+    "branch": "release/preparation-20261110-r1",
+    "source_commit": "8dfdc227bde0c9d7d0c45012cfc0d646e972fdee"
+  },
+  "baseline_commit": "f853942822f5e9139322ad424be3c6edcf797442",
+  "source_bundle_sha256": "be24a0810541657250a620acfdc53ed81453e9e9e901361fe67ab99dc59e8ce3",
+  "source_manifest_sha256": "2dec853a14d80376ae0d94610d20335a792ac587cef67ebe0a0797375be6cc31",
+  "evidence_bundle_sha256": "909918116bd30d6a73cded33d86c28fd8d8b15e5fa4de0f8186630687a6bc572",
+  "tested_source_files": 217,
+  "tests": {
+    "controller_regressions": 25,
+    "policy": 14,
+    "preparation_contracts": 7,
+    "rotation": 3,
+    "actual_services": [
+      "CPUfinite17windows",
+      "GPUfinite17windows",
+      "graceful_signal",
+      "independent_deadline"
+    ]
+  },
+  "timing": {
+    "current_first": 1538849024,
+    "samples": 18,
+    "cells_per_trial": 32768,
+    "repeats": 3,
+    "selected": {
+      "preparation_backend": "cpu",
+      "preparation_windows": 16,
+      "ready_queue_limit": 1,
+      "group_limit": 8,
+      "dispatch_chunksize": 2
+    },
+    "baseline_cells_per_second": 23898.946636007968,
+    "selected_cells_per_second": 47102.39845793514,
+    "samples_file": "results/current-region-samples.json",
+    "limits": "Finite tests; startup/finalaudit excluded; no whole-search rate guarantee"
+  },
+  "production": {
+    "started": true,
+    "run_id": "cabbage-extended-upgrade-20261110",
+    "initial_cursor": 1538849024,
+    "checkpoint_snapshot": 1543370496,
+    "old_parent_sha256": "fe45bc2d74fe90ea2c542ac6e3423967d8f7e65c756c9406379482fe2a3db5cc",
+    "sealed_parent": "/mnt/fifth42-storage/archives/CABBAGE-EXTENDED-PARENT-20261110T193826Z",
+    "original_reservation": [
+      500000000,
+      2250000000
+    ],
+    "config_sha256": "e140f84a8e896c77704519c5d573dc5ad80806d643e72a3a855b67eb5c883a39",
+    "manifest_sha256": "10667476ea82566f527b4397d00c57b10232f88d29557c837b0fb6f468fafbd0",
+    "new_stop_epoch": 1794438000,
+    "new_stop_local": "2026-11-11T17:00:00-06:00",
+    "periodic_replica_seconds": 60,
+    "final_copy": true
+  },
+  "peer_handoffs": [
+    "HANDOFF_ADA.txt",
+    "HANDOFF_BOOLE.txt",
+    "INSTALL_COMMON.txt"
+  ],
+  "peer_status": "Cabbage tested; peers must seal their own actualfrontier, preserve ownownership and pass actual-release tests",
+  "schema_changes": false,
+  "shared_signal": "/mnt/nfs_share/fifth42-integration-20261109/combined/preparation-r1-20261110/READY.json"
+}
