@@ -1,0 +1,23 @@
+Codex on Cabbage: isolated other-speed-tests
+
+Fetch branch experiment/production-speed-tests-20261110 from paulnord/fifth42.
+Read experiments/production-speed-tests-20261110/README.md first.
+Use its setup.sh into a fresh local directory, then its bounded run_all.sh.
+The implementation and tests are prepared; do not invent a replacement benchmark.
+Prerequisites and all setup/test commands are in README. This is separate from
+CGBN/cuPQC, not an alternative version of those tests.
+
+Before starting, confirm Cabbage production has stopped gracefully and reconcile
+checkpoint/controller state, especially the prior KeyError('worker_exit_code').
+Do not repair or restart production as a side effect. Do not change shared ledger,
+reservations, deadlines, service files or production source.
+
+Build/run correctness before timings. CUDA is not yet compiled on the authoring
+machine. If build/API errors require correction, preserve and report the exact
+error and code diff; do not silently suppress errors or downgrade checks.
+
+Return separate results for grouping, warm reduction, packet sealing and overlap.
+Keep microbenchmarks separate from full-pipeline grouping results. Include all
+raw timings and rejection/fallback data, exact checks, hardware/compiler/package
+versions, source commit/hashes and logs. Publish the report and evidence to this
+experiment branch. Do not deploy a winner or restart production without direction.
