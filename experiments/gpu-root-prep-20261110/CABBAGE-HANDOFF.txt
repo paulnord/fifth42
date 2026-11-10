@@ -1,0 +1,21 @@
+Run the isolated fifth42 GPU root-preparation experiment on Cabbage. Do not stop, edit, deploy to, or claim coverage for any production worker. Use a fresh scratch directory, never an existing production checkout.
+
+Repository: https://github.com/paulnord/fifth42.git
+Branch: experiment/cgbn-cupqc-root-prep-20261110
+Package: experiments/gpu-root-prep-20261110
+
+Run these commands in bash (or save in a bash script):
+
+set -euo pipefail
+W=$(mktemp -d "$HOME/fifth42-gpu-root-test.XXXXXX")
+git clone --depth 1 --single-branch --branch experiment/cgbn-cupqc-root-prep-20261110 https://github.com/paulnord/fifth42.git "$W/repo"
+git -C "$W/repo" rev-parse HEAD | tee "$W/SOURCE-COMMIT.txt"
+bash "$W/repo/experiments/gpu-root-prep-20261110/run.sh" "$W/evidence"
+
+The runner verifies package hashes, pins CGBN, builds the actual CUDA kernels, checks exact root certificates, and records kernel/whole-process timings. No GPU compilation or GPU pass is claimed in advance. Existing nvcc, compatible host compiler, Python3 and Git are required; it does not alter the system. If your already-installed pinned Python environment has gmpy2, activate it first so the real GMP iroot baseline is measured. Otherwise GMP timing is explicitly unavailable and no production-speedup claim is allowed.
+
+The runner tests both libraries. It uses CUPQC_ROOT if already installed, otherwise downloads the official cuPQC 0.6.0 archive, verifies its pinned SHA256, and extracts only inside the evidence directory. NVIDIA's proprietary SDK license terms apply (see https://developer.nvidia.com/cupqc-downloads and the archive license files). No system-wide install occurs. Set CUPQC_DOWNLOAD=0 to skip downloading; that explicitly leaves cuPQC blocked unless CUPQC_ROOT is set.
+
+Do not terminate other workloads. Record unrelated CPU/GPU activity and treat timings as preliminary if busy. If a build or exact certificate fails, stop and report the failure logs, compiler version, source SHA and command; do not bypass any guard.
+
+Return evidence/SUMMARY.json, run.log, GPU/compiler version files and any blocker. Report CGBN versus cuPQC separately, first versus later kernel repetitions, process-wall time and CPU GMP root time. These are root microbenchmarks, not whole fifth42-pipeline gains. Full-pipeline integration is NOT included; preserve CPU certification and production behavior.
