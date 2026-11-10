@@ -1,11 +1,44 @@
 {
   "status": "passed",
+  "manifest_sha256": "d4eb5fcbd7f971f0367b24622e5854921623b5451dd49222c21b85a293df9781",
   "actual_gpu": true,
-  "independent_gmp": true,
-  "nonempty_controls": true,
-  "manifest_sha256": "5b6582e2f47656993faf01f06b856e513816381a594e6c859eeac08e3cf16f71",
-  "evidence": [
-    "/home/pnord/fifth42-local-runs/TEST_ONLY_overnight_20261109/ada-overnight-test-finite-20261109/run/controls.json",
-    "/home/pnord/fifth42-local-runs/TEST_ONLY_overnight_20261109/ada-overnight-test-signal-20261109/run/controls.json"
-  ]
+  "actual_parent_lease": true,
+  "signal_stop_passed": true,
+  "cases": [
+    {
+      "status": "passed",
+      "case": "finite",
+      "TEST_ONLY": true,
+      "actual_gpu": true,
+      "actual_parent_lease": true,
+      "independent_gmp_every_chunk": true,
+      "source_manifest_sha256": "d4eb5fcbd7f971f0367b24622e5854921623b5451dd49222c21b85a293df9781",
+      "new_chunks": 8,
+      "new_patches": 2048,
+      "new_gmp_audited_chunks": 8,
+      "next_patch": 4564957824
+    },
+    {
+      "status": "passed",
+      "case": "signal",
+      "TEST_ONLY": true,
+      "actual_gpu": true,
+      "actual_parent_lease": true,
+      "independent_gmp_every_chunk": true,
+      "source_manifest_sha256": "d4eb5fcbd7f971f0367b24622e5854921623b5451dd49222c21b85a293df9781",
+      "new_chunks": 3,
+      "new_patches": 768,
+      "new_gmp_audited_chunks": 3,
+      "next_patch": 4564956544
+    }
+  ],
+  "unchanged_math_packet_kernel_and_gmp": true,
+  "changed_runtime_files": [
+    "policy.py",
+    "search_supervisor.py",
+    "suballocation_guard.py",
+    "transition_resources.py"
+  ],
+  "baseline_manifest_sha256": "5b6582e2f47656993faf01f06b856e513816381a594e6c859eeac08e3cf16f71",
+  "validated_utc": "2026-11-10T00:33:41.855628+00:00"
 }
