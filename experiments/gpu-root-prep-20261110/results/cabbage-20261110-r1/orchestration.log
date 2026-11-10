@@ -1,0 +1,18 @@
+package-checksums sha256sum --check SHA256SUMS
+nvidia-smi nvidia-smi -q
+nvcc-version nvcc --version
+host-compiler g++-13 --version
+cpu lscpu
+memory free -h
+unrelated-cpu-activity ps -eo pid,comm,pcpu,pmem --sort=-pcpu
+python-gmp /home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3 -c 'import sys,gmpy2;print(sys.version);print(gmpy2.version());print(gmpy2.mp_version())'
+exact-cpu-correctness /home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/test_cpu.py
+archived-oracle-correctness /home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/validate.py /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/lattice_prototype/compiled_experiment/lattice5_snapshot.py
+fixture-gmp-256 /home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/record_fixtures.py /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/gpu_check.py 256 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/correctness/fixtures-256
+fixture-gmp-1024 /home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/record_fixtures.py /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/gpu_check.py 1024 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/correctness/fixtures-1024
+fixture-gmp-4096 /home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/record_fixtures.py /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/gpu_check.py 4096 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/correctness/fixtures-4096
+cgbn-download git clone https://github.com/NVlabs/CGBN.git /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/CGBN
+cgbn-pin git checkout --detach 114601b07ae8c3e4d46b250208ea8d9def7a12f0
+cupqc-download curl --fail --location --retry 2 https://developer.nvidia.com/downloads/compute/cupqc/downloads/secure/cupqc-sdk-0.6.0-x86_64.tar.gz -o /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc.tar.gz
+cgbn-build-tpi4 nvcc -O3 -std=c++17 -arch=sm_86 -DROOT_TPI=4 -I/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/CGBN/include /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/root_cuda.cu -o /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/root-tpi4
+cupqc-build-tpi4 nvcc -O3 -std=c++17 -arch=sm_86 -DROOT_TPI=4 -dlto -DROOT_SM=860 -I/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc-sdk-0.6.0-x86_64/include/cupqc -I/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc-sdk-0.6.0-x86_64/include -L/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc-sdk-0.6.0-x86_64/lib -L/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc-sdk-0.6.0-x86_64/lib64 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/root_cupqc.cu -lcupqc-bigint -o /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc-tpi4

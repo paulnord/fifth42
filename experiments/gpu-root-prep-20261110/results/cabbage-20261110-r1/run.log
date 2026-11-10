@@ -1,0 +1,998 @@
+Dot GPU root-preparation comparison: correctness preflight
+Source e6979d463aa8c22f627f5d40955750c6472850ee
+Original run.sh not executed: both preflight GPU builds failed.
+
+$ sha256sum --check SHA256SUMS
+exit=0 seconds=0.003864
+prototype.py: OK
+validate.py: OK
+test_cpu.py: OK
+gpu_check.py: OK
+summarize.py: OK
+root_cuda.cu: OK
+root_cupqc.cu: OK
+run.sh: OK
+CUPQC_NOTES.md: OK
+
+$ nvidia-smi -q
+exit=0 seconds=0.164002
+
+==============NVSMI LOG==============
+
+Timestamp                                              : Tue Nov 10 11:59:01 2026
+Driver Version                                         : 595.99.02
+CUDA Version                                           : 13.2
+
+Attached GPUs                                          : 1
+GPU 00000000:0A:00.0
+    Product Name                                       : NVIDIA GeForce RTX 3060
+    Product Brand                                      : GeForce
+    Product Architecture                               : Ampere
+    Display Mode                                       : Requested functionality has been deprecated
+    Display Attached                                   : No
+    Display Active                                     : Disabled
+    Persistence Mode                                   : Enabled
+    Addressing Mode                                    : HMM
+    MIG Mode
+        Current                                        : N/A
+        Pending                                        : N/A
+    Accounting Mode                                    : Disabled
+    Accounting Mode Buffer Size                        : 4000
+    Driver Model
+        Current                                        : N/A
+        Pending                                        : N/A
+    Serial Number                                      : N/A
+    GPU UUID                                           : GPU-0ac31113-e5a8-64c0-0674-dc1621318133
+    GPU PDI                                            : 0xb530f4f05644fbeb
+    Minor Number                                       : 0
+    VBIOS Version                                      : 94.06.2F.00.95
+    MultiGPU Board                                     : No
+    Board ID                                           : 0xa00
+    Board Part Number                                  : N/A
+    GPU Part Number                                    : 2504-302-A1
+    FRU Part Number                                    : N/A
+    Platform Info
+        Chassis Serial Number                          : N/A
+        Slot Number                                    : N/A
+        Tray Index                                     : N/A
+        Host ID                                        : N/A
+        Peer Type                                      : N/A
+        Module Id                                      : 1
+        GPU Fabric GUID                                : N/A
+    Inforom Version
+        Image Version                                  : G001.0000.03.03
+        OEM Object                                     : 2.0
+        ECC Object                                     : N/A
+        Power Management Object                        : N/A
+    Inforom BBX Object Flush
+        Latest Timestamp                               : N/A
+        Latest Duration                                : N/A
+    GPU Operation Mode
+        Current                                        : N/A
+        Pending                                        : N/A
+    GPU C2C Mode                                       : N/A
+    GPU Virtualization Mode
+        Virtualization Mode                            : None
+        Host VGPU Mode                                 : N/A
+        vGPU Heterogeneous Mode                        : N/A
+    GPU Recovery Action                                : None
+    GSP Firmware Version                               : 595.99.02
+    IBMNPU
+        Relaxed Ordering Mode                          : N/A
+    PCI
+        Bus                                            : 0x0A
+        Device                                         : 0x00
+        Domain                                         : 0x0000
+        Base Classcode                                 : 0x3
+        Sub Classcode                                  : 0x0
+        Device Id                                      : 0x250410DE
+        Bus Id                                         : 00000000:0A:00.0
+        Sub System Id                                  : 0x36563842
+        GPU Link Info
+            PCIe Generation
+                Max                                    : 4
+                Current                                : 1
+                Device Current                         : 1
+                Device Max                             : 4
+                Host Max                               : 4
+            Link Width
+                Max                                    : 16x
+                Current                                : 8x
+        Bridge Chip
+            Type                                       : N/A
+            Firmware                                   : N/A
+        Replays Since Reset                            : 0
+        Replay Number Rollovers                        : 0
+        Tx Throughput                                  : 537 KB/s
+        Rx Throughput                                  : 390 KB/s
+        Atomic Caps Outbound                           : N/A
+        Atomic Caps Inbound                            : N/A
+    Fan Speed                                          : 0 %
+    Performance State                                  : P8
+    Clocks Event Reasons
+        Idle                                           : Active
+        Applications Clocks Setting                    : Not Active
+        SW Power Cap                                   : Not Active
+        HW Slowdown                                    : Not Active
+            HW Thermal Slowdown                        : Not Active
+            HW Power Brake Slowdown                    : Not Active
+        Sync Boost                                     : Not Active
+        SW Thermal Slowdown                            : Not Active
+        Display Clock Setting                          : Not Active
+    Clocks Event Reasons Counters
+        SW Power Capping                               : 4271693936 us
+        Sync Boost                                     : 0 us
+        SW Thermal Slowdown                            : 0 us
+        HW Thermal Slowdown                            : 0 us
+        HW Power Braking                               : 0 us
+    Sparse Operation Mode                              : N/A
+    FB Memory Usage
+        Total                                          : 12288 MiB
+        Reserved                                       : 379 MiB
+        Used                                           : 27 MiB
+        Free                                           : 11883 MiB
+    BAR1 Memory Usage
+        Total                                          : 256 MiB
+        Used                                           : 2 MiB
+        Free                                           : 254 MiB
+    Conf Compute Protected Memory Usage
+        Total                                          : 0 MiB
+        Used                                           : 0 MiB
+        Free                                           : 0 MiB
+    Compute Mode                                       : Default
+    Utilization
+        GPU                                            : 0 %
+        Memory                                         : 0 %
+        Encoder                                        : 0 %
+        Decoder                                        : 0 %
+        JPEG                                           : 0 %
+        OFA                                            : 0 %
+    Encoder Stats
+        Active Sessions                                : 0
+        Average FPS                                    : 0
+        Average Latency                                : 0
+    FBC Stats
+        Active Sessions                                : 0
+        Average FPS                                    : 0
+        Average Latency                                : 0
+    DRAM Encryption Mode
+        Current                                        : N/A
+        Pending                                        : N/A
+    ECC Mode
+        Current                                        : N/A
+        Pending                                        : N/A
+    ECC Errors
+        Volatile
+            SRAM Correctable                           : N/A
+            SRAM Uncorrectable Parity                  : N/A
+            SRAM Uncorrectable SEC-DED                 : N/A
+            DRAM Correctable                           : N/A
+            DRAM Uncorrectable                         : N/A
+        Aggregate
+            SRAM Correctable                           : N/A
+            SRAM Uncorrectable Parity                  : N/A
+            SRAM Uncorrectable SEC-DED                 : N/A
+            DRAM Correctable                           : N/A
+            DRAM Uncorrectable                         : N/A
+            SRAM Threshold Exceeded                    : N/A
+        Aggregate Uncorrectable SRAM Sources
+            SRAM L2                                    : N/A
+            SRAM SM                                    : N/A
+            SRAM Microcontroller                       : N/A
+            SRAM PCIE                                  : N/A
+            SRAM Other                                 : N/A
+        Channel Repair Pending                         : No
+        TPC Repair Pending                             : No
+        Unrepairable Memory                            : N/A
+    Retired Pages
+        Single Bit ECC                                 : N/A
+        Double Bit ECC                                 : N/A
+        Pending Page Blacklist                         : N/A
+    Remapped Rows                                      : N/A
+    Temperature
+        GPU Current Temp                               : 50 C
+        GPU T.Limit Temp                               : N/A
+        GPU Shutdown Temp                              : 98 C
+        GPU Slowdown Temp                              : 95 C
+        GPU Max Operating Temp                         : 93 C
+        GPU Target Temperature                         : 83 C
+        Memory Current Temp                            : N/A
+        Memory Max Operating Temp                      : N/A
+    GPU Power Readings
+        Average Power Draw                             : 17.93 W
+        Instantaneous Power Draw                       : 17.94 W
+        Current Power Limit                            : 170.00 W
+        Requested Power Limit                          : 170.00 W
+        Default Power Limit                            : 170.00 W
+        Min Power Limit                                : 100.00 W
+        Max Power Limit                                : 190.00 W
+    GPU Memory Power Readings 
+        Average Power Draw                             : N/A
+        Instantaneous Power Draw                       : N/A
+    Module Power Readings
+        Average Power Draw                             : N/A
+        Instantaneous Power Draw                       : N/A
+        Current Power Limit                            : N/A
+        Requested Power Limit                          : N/A
+        Default Power Limit                            : N/A
+        Min Power Limit                                : N/A
+        Max Power Limit                                : N/A
+    Power Smoothing                                    : N/A
+    Workload Power Profiles
+        Requested Profiles                             : N/A
+        Enforced Profiles                              : N/A
+    EDPp Multiplier                                    : N/A
+    Clocks
+        Graphics                                       : 210 MHz
+        SM                                             : 210 MHz
+        Memory                                         : 405 MHz
+        Video                                          : 555 MHz
+    Applications Clocks
+        Graphics                                       : Requested functionality has been deprecated
+        Memory                                         : Requested functionality has been deprecated
+    Default Applications Clocks
+        Graphics                                       : Requested functionality has been deprecated
+        Memory                                         : Requested functionality has been deprecated
+    Deferred Clocks
+        Memory                                         : N/A
+    Max Clocks
+        Graphics                                       : 2145 MHz
+        SM                                             : 2145 MHz
+        Memory                                         : 7501 MHz
+        Video                                          : 1995 MHz
+    Max Customer Boost Clocks
+        Graphics                                       : N/A
+    Clock Policy
+        Auto Boost                                     : N/A
+        Auto Boost Default                             : N/A
+    Fabric
+        State                                          : N/A
+        Status                                         : N/A
+        CliqueId                                       : N/A
+        ClusterUUID                                    : N/A
+        Health
+            Summary                                    : N/A
+            Bandwidth                                  : N/A
+            Route Recovery in progress                 : N/A
+            Route Unhealthy                            : N/A
+            Access Timeout Recovery                    : N/A
+            Incorrect Configuration                    : N/A
+            Partition Assigned                         : N/A
+    Processes
+        GPU instance ID                   : N/A
+        Compute instance ID               : N/A
+        Process ID                        : 2597
+            Type                          : G
+            Name                          : /usr/lib/xorg/Xorg
+            Used GPU Memory               : 16 MiB
+    Capabilities
+        EGM                                            : disabled
+
+
+$ nvcc --version
+exit=0 seconds=0.003612
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2026 NVIDIA Corporation
+Built on Thu_Mar_19_11:12:51_PM_PDT_2026
+Cuda compilation tools, release 13.2, V13.2.78
+Build cuda_13.2.r13.2/compiler.37668154_0
+
+$ g++-13 --version
+exit=0 seconds=0.001685
+g++-13 (Ubuntu 13.4.0-10ubuntu1) 13.4.0
+Copyright (C) 2023 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+$ lscpu
+exit=0 seconds=0.015905
+Architecture:                            x86_64
+CPU op-mode(s):                          32-bit, 64-bit
+Address sizes:                           48 bits physical, 48 bits virtual
+Byte Order:                              Little Endian
+CPU(s):                                  32
+On-line CPU(s) list:                     0-31
+Vendor ID:                               AuthenticAMD
+Model name:                              AMD Ryzen 9 5950X 16-Core Processor
+CPU family:                              25
+Model:                                   33
+Thread(s) per core:                      2
+Core(s) per socket:                      16
+Socket(s):                               1
+Stepping:                                0
+Frequency boost:                         enabled
+CPU(s) scaling MHz:                      61%
+CPU max MHz:                             5086.1812
+CPU min MHz:                             582.1540
+BogoMIPS:                                6787.32
+Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate ssbd mba ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local user_shstk clzero irperf xsaveerptr rdpru wbnoinvd arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif v_spec_ctrl umip pku ospke vaes vpclmulqdq rdpid overflow_recov succor smca fsrm debug_swap
+L1d cache:                               512 KiB (16 instances)
+L1i cache:                               512 KiB (16 instances)
+L2 cache:                                8 MiB (16 instances)
+L3 cache:                                64 MiB (2 instances)
+NUMA node(s):                            1
+NUMA node0 CPU(s):                       0-31
+Vulnerability Gather data sampling:      Not affected
+Vulnerability Ghostwrite:                Not affected
+Vulnerability Indirect target selection: Not affected
+Vulnerability Itlb multihit:             Not affected
+Vulnerability L1tf:                      Not affected
+Vulnerability Mds:                       Not affected
+Vulnerability Meltdown:                  Not affected
+Vulnerability Mmio stale data:           Not affected
+Vulnerability Old microcode:             Not affected
+Vulnerability Reg file data sampling:    Not affected
+Vulnerability Retbleed:                  Not affected
+Vulnerability Spec rstack overflow:      Mitigation; Safe RET
+Vulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:                Mitigation; Retpolines; IBPB conditional; IBRS_FW; STIBP always-on; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+Vulnerability Srbds:                     Not affected
+Vulnerability Tsa:                       Mitigation; Clear CPU buffers
+Vulnerability Tsx async abort:           Not affected
+Vulnerability Vmscape:                   Mitigation; IBPB before exit to userspace
+
+$ free -h
+exit=0 seconds=0.002328
+               total        used        free      shared  buff/cache   available
+Mem:           125Gi       5.7Gi       3.8Gi       9.6Mi       117Gi       119Gi
+Swap:          975Mi       352Ki       975Mi
+
+$ ps -eo pid,comm,pcpu,pmem --sort=-pcpu
+exit=0 seconds=0.031756
+    PID COMMAND         %CPU %MEM
+3524280 python3         11.1  0.0
+ 267207 systemd          0.3  0.0
+      1 systemd          0.1  0.0
+   2415 nxserver.bin     0.1  0.1
+   4067 qdrant           0.1  0.1
+   3007 systemd          0.1  0.0
+   3685 java             0.1  0.4
+   2130 containerd       0.1  0.0
+   2404 dockerd          0.1  0.0
+   3318 java             0.0  1.2
+1690389 codex            0.0  0.2
+3468701 kworker/u130:17  0.0  0.0
+1690254 codex            0.0  0.1
+3346441 kworker/u130:2-  0.0  0.0
+2424581 kworker/u128:1-  0.0  0.0
+3210939 kworker/u130:4-  0.0  0.0
+   3112 containerd-shim  0.0  0.0
+3346442 kworker/u130:3-  0.0  0.0
+2173269 python           0.0  0.0
+     15 rcu_preempt      0.0  0.0
+    594 systemd-udevd    0.0  0.0
+    485 jbd2/dm-0-8      0.0  0.0
+3521892 kworker/u130:5-  0.0  0.0
+   1685 dbus-daemon      0.0  0.0
+2741517 kworker/u128:0-  0.0  0.0
+2656573 atop             0.0  0.0
+   1838 NetworkManager   0.0  0.0
+3468702 kworker/u130:19  0.0  0.0
+3503425 kworker/u130:8-  0.0  0.0
+3515895 kworker/u130:0-  0.0  0.0
+3396975 kworker/u129:0-  0.0  0.0
+    221 kcompactd0       0.0  0.0
+   1741 udisksd          0.0  0.0
+   2426 apcupsd          0.0  0.0
+3498716 kworker/u130:6-  0.0  0.0
+    546 systemd-journal  0.0  0.1
+3503426 kworker/u130:9-  0.0  0.0
+   1805 atopacctd        0.0  0.0
+    768 systemd-oomd     0.0  0.0
+3483201 kworker/0:1-mem  0.0  0.0
+   3113 containerd-shim  0.0  0.0
+3515890 kworker/u129:9-  0.0  0.0
+3503427 kworker/u130:10  0.0  0.0
+   1730 snapd            0.0  0.0
+3415016 kworker/u129:4-  0.0  0.0
+1689098 sshd-session     0.0  0.0
+3433217 kworker/u129:2-  0.0  0.0
+   1684 avahi-daemon     0.0  0.0
+3510822 kworker/0:2-cgr  0.0  0.0
+3499249 kworker/u129:5-  0.0  0.0
+3458462 kworker/u129:3-  0.0  0.0
+   3836 lightdm-gtk-gre  0.0  0.0
+3521894 kworker/u130:12  0.0  0.0
+3521897 kworker/u130:15  0.0  0.0
+3515891 kworker/u129:12  0.0  0.0
+   2597 Xorg             0.0  0.0
+  41367 fwupd            0.0  0.0
+3511259 kworker/3:1-eve  0.0  0.0
+   1710 polkitd          0.0  0.0
+    247 kswapd0          0.0  0.0
+1690530 codex            0.0  0.1
+3508342 kworker/19:0-ev  0.0  0.0
+3454744 kworker/16:1-me  0.0  0.0
+3503424 kworker/u130:7-  0.0  0.0
+3515893 kworker/u129:14  0.0  0.0
+3515873 kworker/16:0-ev  0.0  0.0
+   1739 systemd-logind   0.0  0.0
+3519886 kworker/15:2-ev  0.0  0.0
+3477962 kworker/4:1-eve  0.0  0.0
+     24 migration/1      0.0  0.0
+3492608 kworker/u129:1-  0.0  0.0
+3450410 kworker/3:0-eve  0.0  0.0
+   3114 containerd-shim  0.0  0.0
+     14 ksoftirqd/0      0.0  0.0
+3518698 kworker/18:0-ev  0.0  0.0
+   1823 rsyslogd         0.0  0.0
+3469528 kworker/2:2-eve  0.0  0.0
+3498695 kworker/1:0-eve  0.0  0.0
+3504890 kworker/15:1-ev  0.0  0.0
+     66 migration/8      0.0  0.0
+3473625 kworker/6:0-mm_  0.0  0.0
+3465117 kworker/9:2-mm_  0.0  0.0
+3476163 kworker/21:0-ev  0.0  0.0
+3487980 kworker/11:1-ev  0.0  0.0
+     90 migration/12     0.0  0.0
+     25 ksoftirqd/1      0.0  0.0
+    962 kworker/19:1H-k  0.0  0.0
+3435531 kworker/8:1-eve  0.0  0.0
+2662424 cups-browsed     0.0  0.0
+  12889 nxnode.bin       0.0  0.0
+     54 migration/6      0.0  0.0
+3423950 kworker/1:2-cgr  0.0  0.0
+3490252 kworker/24:2-mm  0.0  0.0
+3515887 kworker/7:0-mem  0.0  0.0
+3515894 kworker/u129:15  0.0  0.0
+3515851 kworker/23:1-ev  0.0  0.0
+3515677 kworker/8:0-eve  0.0  0.0
+3506912 kworker/22:1-ev  0.0  0.0
+    481 kworker/21:1H-k  0.0  0.0
+    585 systemd-resolve  0.0  0.0
+     72 migration/9      0.0  0.0
+3477233 kworker/14:0-mm  0.0  0.0
+     78 migration/10     0.0  0.0
+3485689 kworker/25:2-ev  0.0  0.0
+     42 migration/4      0.0  0.0
+    115 ksoftirqd/16     0.0  0.0
+   1842 wpa_supplicant   0.0  0.0
+  41376 upowerd          0.0  0.0
+   2417 ollama           0.0  0.0
+3461998 kworker/26:0-mm  0.0  0.0
+     30 migration/2      0.0  0.0
+1692128 codex-code-mode  0.0  0.0
+    102 migration/14     0.0  0.0
+     84 migration/11     0.0  0.0
+3469550 kworker/18:2-cg  0.0  0.0
+3390165 kworker/7:1-eve  0.0  0.0
+   1680 accounts-daemon  0.0  0.0
+     96 migration/13     0.0  0.0
+     60 migration/7      0.0  0.0
+     48 migration/5      0.0  0.0
+    108 migration/15     0.0  0.0
+     17 rcu_exp_gp_kthr  0.0  0.0
+3495431 kworker/31:1-me  0.0  0.0
+    121 migration/17     0.0  0.0
+3480244 kworker/28:3-me  0.0  0.0
+3509574 kworker/10:0-mm  0.0  0.0
+    857 nv_mem_pool_scr  0.0  0.0
+3508329 kworker/5:1-eve  0.0  0.0
+3508165 kworker/23:2-ev  0.0  0.0
+3458947 kworker/12:1-ev  0.0  0.0
+3507361 kworker/20:1-ev  0.0  0.0
+3490085 kworker/12:0-ev  0.0  0.0
+    965 kworker/23:1H-k  0.0  0.0
+3470970 kworker/15:0-ev  0.0  0.0
+3506119 kworker/13:0-ev  0.0  0.0
+     18 migration/0      0.0  0.0
+    691 kworker/17:1H-k  0.0  0.0
+   3316 tini             0.0  0.0
+3504564 kworker/17:2-in  0.0  0.0
+     31 ksoftirqd/2      0.0  0.0
+3502410 kworker/29:1-ev  0.0  0.0
+     16 rcu_exp_par_gp_  0.0  0.0
+    151 migration/22     0.0  0.0
+3501170 kworker/10:1-ev  0.0  0.0
+     36 migration/3      0.0  0.0
+3498711 kworker/30:1-ev  0.0  0.0
+    163 migration/24     0.0  0.0
+3498134 kworker/13:2-cg  0.0  0.0
+     37 ksoftirqd/3      0.0  0.0
+    187 migration/28     0.0  0.0
+    127 migration/18     0.0  0.0
+    175 migration/26     0.0  0.0
+    199 migration/30     0.0  0.0
+     43 ksoftirqd/4      0.0  0.0
+    157 migration/23     0.0  0.0
+    169 migration/25     0.0  0.0
+    584 kworker/25:1H-k  0.0  0.0
+   3997 rtkit-daemon     0.0  0.0
+    960 kworker/27:1H-k  0.0  0.0
+     49 ksoftirqd/5      0.0  0.0
+    193 migration/29     0.0  0.0
+     67 ksoftirqd/8      0.0  0.0
+    139 migration/20     0.0  0.0
+    181 migration/27     0.0  0.0
+      2 kthreadd         0.0  0.0
+    122 ksoftirqd/17     0.0  0.0
+    205 migration/31     0.0  0.0
+   4319 power-profiles-  0.0  0.0
+    961 kworker/29:1H-k  0.0  0.0
+    959 kworker/31:1H-k  0.0  0.0
+   6475 at-spi2-registr  0.0  0.0
+     55 ksoftirqd/6      0.0  0.0
+   4228 dbus-daemon      0.0  0.0
+   1714 nscd             0.0  0.0
+    145 migration/21     0.0  0.0
+     61 ksoftirqd/7      0.0  0.0
+   2503 NFSv4 callback   0.0  0.0
+    688 kworker/20:1H-k  0.0  0.0
+     73 ksoftirqd/9      0.0  0.0
+   2326 master           0.0  0.0
+    859 nv_mem_pool_scr  0.0  0.0
+    134 ksoftirqd/19     0.0  0.0
+   3984 wireplumber      0.0  0.0
+    206 ksoftirqd/31     0.0  0.0
+    128 ksoftirqd/18     0.0  0.0
+     85 ksoftirqd/11     0.0  0.0
+    109 ksoftirqd/15     0.0  0.0
+    690 kworker/16:1H-k  0.0  0.0
+    146 ksoftirqd/21     0.0  0.0
+    158 ksoftirqd/23     0.0  0.0
+     79 ksoftirqd/10     0.0  0.0
+    140 ksoftirqd/20     0.0  0.0
+    944 kworker/22:1H-k  0.0  0.0
+    586 systemd-timesyn  0.0  0.0
+    114 migration/16     0.0  0.0
+    133 migration/19     0.0  0.0
+    152 ksoftirqd/22     0.0  0.0
+     97 ksoftirqd/13     0.0  0.0
+    216 khungtaskd       0.0  0.0
+    182 ksoftirqd/27     0.0  0.0
+    200 ksoftirqd/30     0.0  0.0
+    170 ksoftirqd/25     0.0  0.0
+    194 ksoftirqd/29     0.0  0.0
+     91 ksoftirqd/12     0.0  0.0
+    176 ksoftirqd/26     0.0  0.0
+    164 ksoftirqd/24     0.0  0.0
+    949 kworker/18:1H-k  0.0  0.0
+    103 ksoftirqd/14     0.0  0.0
+    188 ksoftirqd/28     0.0  0.0
+   2524 nfsd             0.0  0.0
+   2530 nfsd             0.0  0.0
+   2528 nfsd             0.0  0.0
+   2529 nfsd             0.0  0.0
+   2516 nfsd             0.0  0.0
+   2521 nfsd             0.0  0.0
+   2522 nfsd             0.0  0.0
+   2526 nfsd             0.0  0.0
+   2527 nfsd             0.0  0.0
+   2531 nfsd             0.0  0.0
+   2515 nfsd             0.0  0.0
+   2517 nfsd             0.0  0.0
+   2518 nfsd             0.0  0.0
+   2519 nfsd             0.0  0.0
+   2520 nfsd             0.0  0.0
+   2523 nfsd             0.0  0.0
+   2556 cron             0.0  0.0
+ 267240 user-session-he  0.0  0.0
+ 267234 dbus-daemon      0.0  0.0
+   3033 kworker/24:1H-k  0.0  0.0
+    549 kworker/0:1H-kb  0.0  0.0
+   3030 kworker/26:1H-k  0.0  0.0
+   1109 rpcbind          0.0  0.0
+    686 kworker/4:1H-kb  0.0  0.0
+    687 kworker/5:1H-kb  0.0  0.0
+    482 kworker/3:1H-kb  0.0  0.0
+   1096 UVM global queu  0.0  0.0
+    685 kworker/2:1H-kb  0.0  0.0
+   1623 kworker/30:1H-k  0.0  0.0
+   1098 UVM Tools Event  0.0  0.0
+    958 kworker/28:1H-k  0.0  0.0
+   8533 colord           0.0  0.0
+   3700 docker-proxy     0.0  0.0
+   3473 docker-proxy     0.0  0.0
+    689 kworker/1:1H-kb  0.0  0.0
+   3514 docker-proxy     0.0  0.0
+    942 kworker/6:1H-kb  0.0  0.0
+2662332 cupsd            0.0  0.0
+   3937 docker-proxy     0.0  0.0
+   3967 docker-proxy     0.0  0.0
+   3769 docker-proxy     0.0  0.0
+   3681 docker-proxy     0.0  0.0
+   2583 kerneloops       0.0  0.0
+   2570 kerneloops       0.0  0.0
+    957 kworker/7:1H-kb  0.0  0.0
+   3792 docker-proxy     0.0  0.0
+   3533 docker-proxy     0.0  0.0
+   3421 docker-proxy     0.0  0.0
+   2328 qmgr             0.0  0.0
+   1626 kworker/15:1H-k  0.0  0.0
+1689099 bash             0.0  0.0
+ 267245 wireplumber      0.0  0.0
+    953 kworker/8:1H-kb  0.0  0.0
+    583 kworker/9:1H-kb  0.0  0.0
+    760 kworker/14:1H-k  0.0  0.0
+    617 kworker/11:1H-k  0.0  0.0
+   1719 nvidia-persiste  0.0  0.0
+    616 kworker/10:1H-k  0.0  0.0
+    948 kworker/13:1H-k  0.0  0.0
+   2567 lightdm          0.0  0.0
+   1915 ModemManager     0.0  0.0
+   1700 networkd-dispat  0.0  0.0
+    964 kworker/12:1H-k  0.0  0.0
+ 267360 xdg-document-po  0.0  0.0
+ 748996 tlsmgr           0.0  0.0
+   2120 unattended-upgr  0.0  0.0
+  15667 sshd             0.0  0.0
+ 267239 pipewire-pulse   0.0  0.0
+   3795 dbus-daemon      0.0  0.0
+   3799 pipewire         0.0  0.0
+   3303 bash             0.0  0.0
+   2923 lightdm          0.0  0.0
+   1733 switcheroo-cont  0.0  0.0
+   4177 xdg-document-po  0.0  0.0
+   3818 pipewire-pulse   0.0  0.0
+    250 kworker/u131:0-  0.0  0.0
+      3 pool_workqueue_  0.0  0.0
+      4 kworker/R-rcu_g  0.0  0.0
+      5 kworker/R-sync_  0.0  0.0
+      6 kworker/R-kvfre  0.0  0.0
+      7 kworker/R-slub_  0.0  0.0
+      8 kworker/R-netns  0.0  0.0
+     10 kworker/0:0H-kb  0.0  0.0
+     13 kworker/R-mm_pe  0.0  0.0
+     19 kprobe-optimize  0.0  0.0
+     20 idle_inject/0    0.0  0.0
+     21 cpuhp/0          0.0  0.0
+     22 cpuhp/1          0.0  0.0
+     23 idle_inject/1    0.0  0.0
+     27 kworker/1:0H-kb  0.0  0.0
+     28 cpuhp/2          0.0  0.0
+     29 idle_inject/2    0.0  0.0
+     33 kworker/2:0H-kb  0.0  0.0
+     34 cpuhp/3          0.0  0.0
+     35 idle_inject/3    0.0  0.0
+     39 kworker/3:0H-kb  0.0  0.0
+     40 cpuhp/4          0.0  0.0
+     41 idle_inject/4    0.0  0.0
+     45 kworker/4:0H-kb  0.0  0.0
+     46 cpuhp/5          0.0  0.0
+     47 idle_inject/5    0.0  0.0
+     51 kworker/5:0H-kb  0.0  0.0
+     52 cpuhp/6          0.0  0.0
+     53 idle_inject/6    0.0  0.0
+     57 kworker/6:0H-kb  0.0  0.0
+     58 cpuhp/7          0.0  0.0
+     59 idle_inject/7    0.0  0.0
+     63 kworker/7:0H-kb  0.0  0.0
+     64 cpuhp/8          0.0  0.0
+     65 idle_inject/8    0.0  0.0
+     69 kworker/8:0H-kb  0.0  0.0
+     70 cpuhp/9          0.0  0.0
+     71 idle_inject/9    0.0  0.0
+     75 kworker/9:0H-kb  0.0  0.0
+     76 cpuhp/10         0.0  0.0
+     77 idle_inject/10   0.0  0.0
+     81 kworker/10:0H-k  0.0  0.0
+     82 cpuhp/11         0.0  0.0
+     83 idle_inject/11   0.0  0.0
+     87 kworker/11:0H-k  0.0  0.0
+     88 cpuhp/12         0.0  0.0
+     89 idle_inject/12   0.0  0.0
+     93 kworker/12:0H-k  0.0  0.0
+     94 cpuhp/13         0.0  0.0
+     95 idle_inject/13   0.0  0.0
+     99 kworker/13:0H-k  0.0  0.0
+    100 cpuhp/14         0.0  0.0
+    101 idle_inject/14   0.0  0.0
+    105 kworker/14:0H-k  0.0  0.0
+    106 cpuhp/15         0.0  0.0
+    107 idle_inject/15   0.0  0.0
+    111 kworker/15:0H-k  0.0  0.0
+    112 cpuhp/16         0.0  0.0
+    113 idle_inject/16   0.0  0.0
+    117 kworker/16:0H-k  0.0  0.0
+    118 rcu_exp_par_gp_  0.0  0.0
+    119 cpuhp/17         0.0  0.0
+    120 idle_inject/17   0.0  0.0
+    124 kworker/17:0H-k  0.0  0.0
+    125 cpuhp/18         0.0  0.0
+    126 idle_inject/18   0.0  0.0
+    130 kworker/18:0H-k  0.0  0.0
+    131 cpuhp/19         0.0  0.0
+    132 idle_inject/19   0.0  0.0
+    136 kworker/19:0H-k  0.0  0.0
+    137 cpuhp/20         0.0  0.0
+    138 idle_inject/20   0.0  0.0
+    142 kworker/20:0H-k  0.0  0.0
+    143 cpuhp/21         0.0  0.0
+    144 idle_inject/21   0.0  0.0
+    148 kworker/21:0H-k  0.0  0.0
+    149 cpuhp/22         0.0  0.0
+    150 idle_inject/22   0.0  0.0
+    154 kworker/22:0H-k  0.0  0.0
+    155 cpuhp/23         0.0  0.0
+    156 idle_inject/23   0.0  0.0
+    160 kworker/23:0H-k  0.0  0.0
+    161 cpuhp/24         0.0  0.0
+    162 idle_inject/24   0.0  0.0
+    166 kworker/24:0H-k  0.0  0.0
+    167 cpuhp/25         0.0  0.0
+    168 idle_inject/25   0.0  0.0
+    172 kworker/25:0H-k  0.0  0.0
+    173 cpuhp/26         0.0  0.0
+    174 idle_inject/26   0.0  0.0
+    178 kworker/26:0H-k  0.0  0.0
+    179 cpuhp/27         0.0  0.0
+    180 idle_inject/27   0.0  0.0
+    184 kworker/27:0H-k  0.0  0.0
+    185 cpuhp/28         0.0  0.0
+    186 idle_inject/28   0.0  0.0
+    190 kworker/28:0H-k  0.0  0.0
+    191 cpuhp/29         0.0  0.0
+    192 idle_inject/29   0.0  0.0
+    196 kworker/29:0H-k  0.0  0.0
+    197 cpuhp/30         0.0  0.0
+    198 idle_inject/30   0.0  0.0
+    202 kworker/30:0H-k  0.0  0.0
+    203 cpuhp/31         0.0  0.0
+    204 idle_inject/31   0.0  0.0
+    208 kworker/31:0H    0.0  0.0
+    211 kdevtmpfs        0.0  0.0
+    212 kworker/R-inet_  0.0  0.0
+    213 rcu_tasks_kthre  0.0  0.0
+    214 rcu_tasks_rude_  0.0  0.0
+    215 kauditd          0.0  0.0
+    218 oom_reaper       0.0  0.0
+    220 kworker/R-write  0.0  0.0
+    222 ksmd             0.0  0.0
+    223 khugepaged       0.0  0.0
+    224 kworker/R-kbloc  0.0  0.0
+    225 kworker/R-blkcg  0.0  0.0
+    226 kworker/R-kinte  0.0  0.0
+    227 irq/9-acpi       0.0  0.0
+    232 kworker/R-tpm_d  0.0  0.0
+    233 kworker/R-ata_s  0.0  0.0
+    234 kworker/R-md_bi  0.0  0.0
+    235 kworker/R-md_ll  0.0  0.0
+    236 kworker/R-md_ll  0.0  0.0
+    237 kworker/R-edac-  0.0  0.0
+    239 kworker/R-devfr  0.0  0.0
+    240 watchdogd        0.0  0.0
+    242 kworker/R-quota  0.0  0.0
+    245 irq/26-AMD-Vi    0.0  0.0
+    248 ecryptfs-kthrea  0.0  0.0
+    249 kworker/R-kthro  0.0  0.0
+    251 irq/27-aerdrv    0.0  0.0
+    252 irq/28-aerdrv    0.0  0.0
+    253 irq/29-aerdrv    0.0  0.0
+    254 irq/31-aerdrv    0.0  0.0
+    255 irq/32-aerdrv    0.0  0.0
+    256 kworker/R-acpi_  0.0  0.0
+    264 kworker/R-mld    0.0  0.0
+    265 kworker/R-ipv6_  0.0  0.0
+    266 kworker/R-kstrp  0.0  0.0
+    277 kworker/u132:0   0.0  0.0
+    278 kworker/u133:0   0.0  0.0
+    290 kworker/R-charg  0.0  0.0
+    405 kworker/R-atlan  0.0  0.0
+    409 scsi_eh_0        0.0  0.0
+    410 kworker/R-scsi_  0.0  0.0
+    411 scsi_eh_1        0.0  0.0
+    412 kworker/R-scsi_  0.0  0.0
+    415 kworker/R-nvme-  0.0  0.0
+    416 kworker/R-nvme-  0.0  0.0
+    417 kworker/R-nvme-  0.0  0.0
+    418 kworker/R-nvme-  0.0  0.0
+    432 kworker/R-kdmfl  0.0  0.0
+    433 kworker/R-kdmfl  0.0  0.0
+    486 kworker/R-ext4-  0.0  0.0
+    591 kworker/R-rpcio  0.0  0.0
+    592 kworker/R-xprti  0.0  0.0
+    618 psimon           0.0  0.0
+    843 kworker/R-cfg80  0.0  0.0
+    852 kworker/R-led_w  0.0  0.0
+    856 nv_queue         0.0  0.0
+    858 nv_mem_pool_scr  0.0  0.0
+    860 nv_queue         0.0  0.0
+    861 nv_open_q        0.0  0.0
+    867 nvidia-modeset/  0.0  0.0
+    868 nvidia-modeset/  0.0  0.0
+    870 irq/101-nvidia   0.0  0.0
+    871 nvidia           0.0  0.0
+    872 nv_queue         0.0  0.0
+    874 kworker/R-ath12  0.0  0.0
+    875 kworker/R-ath12  0.0  0.0
+    876 irq/104-bhi      0.0  0.0
+    884 kworker/u131:1   0.0  0.0
+   1055 jbd2/sda-8       0.0  0.0
+   1056 kworker/R-ext4-  0.0  0.0
+   1097 UVM deferred re  0.0  0.0
+   1611 nfsdcld          0.0  0.0
+   1689 fsidd            0.0  0.0
+   1786 avahi-daemon     0.0  0.0
+   2116 sh               0.0  0.0
+   2127 distccd          0.0  0.0
+   2131 distccd          0.0  0.0
+   2132 distccd          0.0  0.0
+   2133 distccd          0.0  0.0
+   2134 distccd          0.0  0.0
+   2135 distccd          0.0  0.0
+   2136 distccd          0.0  0.0
+   2137 distccd          0.0  0.0
+   2138 distccd          0.0  0.0
+   2139 distccd          0.0  0.0
+   2140 distccd          0.0  0.0
+   2419 rpc.idmapd       0.0  0.0
+   2422 rpc.mountd       0.0  0.0
+   2425 rpc.statd        0.0  0.0
+   2452 lockd            0.0  0.0
+   2455 kworker/R-nfsio  0.0  0.0
+   2512 NFSv4 callback   0.0  0.0
+   2514 NFSv4 callback   0.0  0.0
+   2591 nginx            0.0  0.0
+   2592 nginx            0.0  0.0
+   2613 agetty           0.0  0.0
+   2798 irq/68-enp4s0    0.0  0.0
+   2800 nvidia-drm/time  0.0  0.0
+   2826 irq/86-enp11s0   0.0  0.0
+   2950 nxd              0.0  0.0
+   3020 (sd-pam)         0.0  0.0
+   3813 pipewire         0.0  0.0
+   3830 lightdm-greeter  0.0  0.0
+   4179 at-spi-bus-laun  0.0  0.0
+   4237 xdg-permission-  0.0  0.0
+   4302 gvfsd            0.0  0.0
+   4335 fusermount3      0.0  0.0
+   4489 gvfsd-fuse       0.0  0.0
+   5862 gvfsd-metadata   0.0  0.0
+   6455 lightdm          0.0  0.0
+  12887 nxexec           0.0  0.0
+ 233414 psimon           0.0  0.0
+ 267214 (sd-pam)         0.0  0.0
+ 267235 pipewire         0.0  0.0
+ 267237 pipewire         0.0  0.0
+ 267244 mpris-proxy      0.0  0.0
+ 267400 xdg-permission-  0.0  0.0
+ 267420 fusermount3      0.0  0.0
+ 273513 at-spi-bus-laun  0.0  0.0
+1688968 sshd-session     0.0  0.0
+2663051 dbus             0.0  0.0
+3490253 kworker/2:1      0.0  0.0
+3491739 pickup           0.0  0.0
+3495110 kworker/17:1-me  0.0  0.0
+3496732 kworker/9:0-mem  0.0  0.0
+3499929 kworker/25:1-ev  0.0  0.0
+3506321 kworker/27:2-cg  0.0  0.0
+3509408 kworker/26:2-ev  0.0  0.0
+3509429 kworker/11:2-ev  0.0  0.0
+3509595 kworker/6:2-eve  0.0  0.0
+3510838 kworker/18:1-me  0.0  0.0
+3511927 kworker/4:0-eve  0.0  0.0
+3512076 kworker/31:0-me  0.0  0.0
+3513324 kworker/27:1-me  0.0  0.0
+3513726 kworker/30:0-ev  0.0  0.0
+3514422 kworker/28:1-mm  0.0  0.0
+3514794 kworker/20:0-ev  0.0  0.0
+3514974 kworker/22:0     0.0  0.0
+3516963 kworker/5:0-eve  0.0  0.0
+3517128 kworker/19:2-cg  0.0  0.0
+3517267 kworker/17:0-mm  0.0  0.0
+3517461 kworker/21:2-ev  0.0  0.0
+3518214 kworker/24:1-me  0.0  0.0
+3518250 kworker/14:1-ev  0.0  0.0
+3518368 kworker/29:0-mm  0.0  0.0
+3518682 kworker/6:1-mem  0.0  0.0
+3519259 kworker/31:2-ev  0.0  0.0
+3519578 kworker/u130:1-  0.0  0.0
+3519908 kworker/1:1-eve  0.0  0.0
+3520786 kworker/11:0-ev  0.0  0.0
+3520802 kworker/17:3     0.0  0.0
+3521290 kworker/10:2-cg  0.0  0.0
+3521468 kworker/4:2-mm_  0.0  0.0
+3521473 kworker/0:0-eve  0.0  0.0
+3521620 kworker/28:0-ev  0.0  0.0
+3521870 kworker/20:2-ev  0.0  0.0
+3521884 kworker/9:1-eve  0.0  0.0
+3521893 kworker/u130:11  0.0  0.0
+3521895 kworker/u130:13  0.0  0.0
+3521896 kworker/u130:14  0.0  0.0
+3521898 kworker/u130:16  0.0  0.0
+3521899 kworker/u130:18  0.0  0.0
+3522401 kworker/16:2     0.0  0.0
+3522684 kworker/13:1-mm  0.0  0.0
+3522685 kworker/u128:2   0.0  0.0
+3523577 kworker/5:2-eve  0.0  0.0
+3523777 kworker/7:2-mm_  0.0  0.0
+3524211 kworker/27:0-ev  0.0  0.0
+3524221 bash             0.0  0.0
+3524292 ps               0.0  0.0
+
+$ /home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3 -c 'import sys,gmpy2;print(sys.version);print(gmpy2.version());print(gmpy2.mp_version())'
+exit=0 seconds=0.015688
+3.12.16 (main, Oct 26 2026, 14:08:45) [Clang 23.1.3 ]
+2.2.2
+GMP 6.3.0
+
+$ /home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/test_cpu.py
+exit=0 seconds=0.364145
+PASS: 41200 exact root comparisons, malformed certificates and width guards
+
+$ /home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/validate.py /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/lattice_prototype/compiled_experiment/lattice5_snapshot.py
+exit=0 seconds=0.113821
+{
+  "cases": 424,
+  "matching_backends": 3,
+  "max_proven_intermediate_bits": 2234,
+  "cpu_python_seconds_not_gpu_benchmark": {
+    "source-reference": 0.020541246980428696,
+    "newton": 0.003071548999287188,
+    "division-free": 0.027961629966739565
+  },
+  "source": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/lattice_prototype/compiled_experiment/lattice5_snapshot.py",
+  "gpu_compile": "not run: nvcc absent",
+  "production_changed": false
+}
+
+$ /home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/record_fixtures.py /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/gpu_check.py 256 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/correctness/fixtures-256
+exit=0 seconds=0.063802
+{
+  "gmp_iroot_seconds": 0.0003165339585393667,
+  "records": 252,
+  "width_fallbacks": 4,
+  "python_reference_seconds_not_GMP": 0.0019884190405718982,
+  "gpu": "not run"
+}
+
+$ /home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/record_fixtures.py /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/gpu_check.py 1024 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/correctness/fixtures-1024
+exit=0 seconds=0.063812
+{
+  "gmp_iroot_seconds": 0.0012133849668316543,
+  "records": 1020,
+  "width_fallbacks": 4,
+  "python_reference_seconds_not_GMP": 0.008353203011211008,
+  "gpu": "not run"
+}
+
+$ /home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/record_fixtures.py /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/gpu_check.py 4096 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/correctness/fixtures-4096
+exit=0 seconds=0.113865
+{
+  "gmp_iroot_seconds": 0.004984005994629115,
+  "records": 4092,
+  "width_fallbacks": 4,
+  "python_reference_seconds_not_GMP": 0.03487949201371521,
+  "gpu": "not run"
+}
+
+$ git clone https://github.com/NVlabs/CGBN.git /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/CGBN
+exit=0 seconds=0.564563
+Cloning into '/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/CGBN'...
+
+$ git checkout --detach 114601b07ae8c3e4d46b250208ea8d9def7a12f0
+exit=0 seconds=0.007697
+HEAD is now at 114601b Fix typo in sample code
+
+$ curl --fail --location --retry 2 https://developer.nvidia.com/downloads/compute/cupqc/downloads/secure/cupqc-sdk-0.6.0-x86_64.tar.gz -o /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc.tar.gz
+exit=0 seconds=6.725086
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+
+  0      0   0      0   0      0      0      0                              0
+  0      0   0      0   0      0      0      0                              0
+  0      0   0      0   0      0      0      0                              0
+
+  0      0   0      0   0      0      0      0                              0
+  7 180.2M   7 13.71M   0      0  7.53M      0   00:23   00:01   00:22 13.51M
+ 29 180.2M  29 53.75M   0      0 18.95M      0   00:09   00:02   00:07 26.49M
+ 49 180.2M  49 89.10M   0      0 23.05M      0   00:07   00:03   00:04 29.12M
+ 67 180.2M  67 122.0M   0      0 25.03M      0   00:07   00:04   00:03 29.99M
+ 86 180.2M  86 155.0M   0      0 26.31M      0   00:06   00:05   00:01 30.48M
+100 180.2M 100 180.2M   0      0 26.94M      0   00:06   00:06         30.48M
+100 180.2M 100 180.2M   0      0 26.94M      0   00:06   00:06         30.48M
+100 180.2M 100 180.2M   0      0 26.94M      0   00:06   00:06         30.48M
+
+$ nvcc -O3 -std=c++17 -arch=sm_86 -DROOT_TPI=4 -I/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/CGBN/include /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/root_cuda.cu -o /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/root-tpi4
+exit=1 seconds=0.164123
+In file included from /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/CGBN/include/cgbn/cgbn.h:81,
+                 from /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/root_cuda.cu:11:
+/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/CGBN/include/cgbn/cgbn_cpu.h:25:2: error: #error You must use GMP for now
+   25 | #error You must use GMP for now
+      |  ^~~~~
+
+$ nvcc -O3 -std=c++17 -arch=sm_86 -DROOT_TPI=4 -dlto -DROOT_SM=860 -I/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc-sdk-0.6.0-x86_64/include/cupqc -I/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc-sdk-0.6.0-x86_64/include -L/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc-sdk-0.6.0-x86_64/lib -L/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc-sdk-0.6.0-x86_64/lib64 /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/root_cupqc.cu -lcupqc-bigint -o /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc-tpi4
+exit=1 seconds=1.866129
+nvlink fatal   : elfLink linker library load error

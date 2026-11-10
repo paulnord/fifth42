@@ -1,0 +1,279 @@
+[
+  {
+    "name": "package-checksums",
+    "argv": [
+      "sha256sum",
+      "--check",
+      "SHA256SUMS"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110",
+    "started_epoch": 1794333541.5909035,
+    "seconds": 0.003864288330078125,
+    "returncode": 0,
+    "stdout": "logs/package-checksums.stdout.log",
+    "stderr": "logs/package-checksums.stderr.log"
+  },
+  {
+    "name": "nvidia-smi",
+    "argv": [
+      "nvidia-smi",
+      "-q"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j",
+    "started_epoch": 1794333541.595048,
+    "seconds": 0.1640019416809082,
+    "returncode": 0,
+    "stdout": "logs/nvidia-smi.stdout.log",
+    "stderr": "logs/nvidia-smi.stderr.log"
+  },
+  {
+    "name": "nvcc-version",
+    "argv": [
+      "nvcc",
+      "--version"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j",
+    "started_epoch": 1794333541.7593346,
+    "seconds": 0.0036122798919677734,
+    "returncode": 0,
+    "stdout": "logs/nvcc-version.stdout.log",
+    "stderr": "logs/nvcc-version.stderr.log"
+  },
+  {
+    "name": "host-compiler",
+    "argv": [
+      "g++-13",
+      "--version"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j",
+    "started_epoch": 1794333541.7632005,
+    "seconds": 0.0016846656799316406,
+    "returncode": 0,
+    "stdout": "logs/host-compiler.stdout.log",
+    "stderr": "logs/host-compiler.stderr.log"
+  },
+  {
+    "name": "cpu",
+    "argv": [
+      "lscpu"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j",
+    "started_epoch": 1794333541.7651405,
+    "seconds": 0.015904664993286133,
+    "returncode": 0,
+    "stdout": "logs/cpu.stdout.log",
+    "stderr": "logs/cpu.stderr.log"
+  },
+  {
+    "name": "memory",
+    "argv": [
+      "free",
+      "-h"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j",
+    "started_epoch": 1794333541.781353,
+    "seconds": 0.0023279190063476562,
+    "returncode": 0,
+    "stdout": "logs/memory.stdout.log",
+    "stderr": "logs/memory.stderr.log"
+  },
+  {
+    "name": "unrelated-cpu-activity",
+    "argv": [
+      "ps",
+      "-eo",
+      "pid,comm,pcpu,pmem",
+      "--sort=-pcpu"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j",
+    "started_epoch": 1794333541.783957,
+    "seconds": 0.03175616264343262,
+    "returncode": 0,
+    "stdout": "logs/unrelated-cpu-activity.stdout.log",
+    "stderr": "logs/unrelated-cpu-activity.stderr.log"
+  },
+  {
+    "name": "python-gmp",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "-c",
+      "import sys,gmpy2;print(sys.version);print(gmpy2.version());print(gmpy2.mp_version())"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j",
+    "started_epoch": 1794333541.8159966,
+    "seconds": 0.01568770408630371,
+    "returncode": 0,
+    "stdout": "logs/python-gmp.stdout.log",
+    "stderr": "logs/python-gmp.stderr.log"
+  },
+  {
+    "name": "exact-cpu-correctness",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/test_cpu.py"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j",
+    "started_epoch": 1794333541.8321135,
+    "seconds": 0.36414456367492676,
+    "returncode": 0,
+    "stdout": "logs/exact-cpu-correctness.stdout.log",
+    "stderr": "logs/exact-cpu-correctness.stderr.log"
+  },
+  {
+    "name": "archived-oracle-correctness",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/validate.py",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/lattice_prototype/compiled_experiment/lattice5_snapshot.py"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j",
+    "started_epoch": 1794333542.1965888,
+    "seconds": 0.11382126808166504,
+    "returncode": 0,
+    "stdout": "logs/archived-oracle-correctness.stdout.log",
+    "stderr": "logs/archived-oracle-correctness.stderr.log"
+  },
+  {
+    "name": "fixture-gmp-256",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/record_fixtures.py",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/gpu_check.py",
+      "256",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/correctness/fixtures-256"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j",
+    "started_epoch": 1794333542.3108225,
+    "seconds": 0.06380224227905273,
+    "returncode": 0,
+    "stdout": "logs/fixture-gmp-256.stdout.log",
+    "stderr": "logs/fixture-gmp-256.stderr.log"
+  },
+  {
+    "name": "fixture-gmp-1024",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/record_fixtures.py",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/gpu_check.py",
+      "1024",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/correctness/fixtures-1024"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j",
+    "started_epoch": 1794333542.3749924,
+    "seconds": 0.0638120174407959,
+    "returncode": 0,
+    "stdout": "logs/fixture-gmp-1024.stdout.log",
+    "stderr": "logs/fixture-gmp-1024.stderr.log"
+  },
+  {
+    "name": "fixture-gmp-4096",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/record_fixtures.py",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/gpu_check.py",
+      "4096",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/correctness/fixtures-4096"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j",
+    "started_epoch": 1794333542.4391782,
+    "seconds": 0.11386489868164062,
+    "returncode": 0,
+    "stdout": "logs/fixture-gmp-4096.stdout.log",
+    "stderr": "logs/fixture-gmp-4096.stderr.log"
+  },
+  {
+    "name": "cgbn-download",
+    "argv": [
+      "git",
+      "clone",
+      "https://github.com/NVlabs/CGBN.git",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/CGBN"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j",
+    "started_epoch": 1794333542.553451,
+    "seconds": 0.5645627975463867,
+    "returncode": 0,
+    "stdout": "logs/cgbn-download.stdout.log",
+    "stderr": "logs/cgbn-download.stderr.log"
+  },
+  {
+    "name": "cgbn-pin",
+    "argv": [
+      "git",
+      "checkout",
+      "--detach",
+      "114601b07ae8c3e4d46b250208ea8d9def7a12f0"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/CGBN",
+    "started_epoch": 1794333543.1185322,
+    "seconds": 0.007696866989135742,
+    "returncode": 0,
+    "stdout": "logs/cgbn-pin.stdout.log",
+    "stderr": "logs/cgbn-pin.stderr.log"
+  },
+  {
+    "name": "cupqc-download",
+    "argv": [
+      "curl",
+      "--fail",
+      "--location",
+      "--retry",
+      "2",
+      "https://developer.nvidia.com/downloads/compute/cupqc/downloads/secure/cupqc-sdk-0.6.0-x86_64.tar.gz",
+      "-o",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc.tar.gz"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j",
+    "started_epoch": 1794333543.126595,
+    "seconds": 6.725086450576782,
+    "returncode": 0,
+    "stdout": "logs/cupqc-download.stdout.log",
+    "stderr": "logs/cupqc-download.stderr.log"
+  },
+  {
+    "name": "cgbn-build-tpi4",
+    "argv": [
+      "nvcc",
+      "-O3",
+      "-std=c++17",
+      "-arch=sm_86",
+      "-DROOT_TPI=4",
+      "-I/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/CGBN/include",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/root_cuda.cu",
+      "-o",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/root-tpi4"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j",
+    "started_epoch": 1794333550.4057505,
+    "seconds": 0.1641225814819336,
+    "returncode": 1,
+    "stdout": "logs/cgbn-build-tpi4.stdout.log",
+    "stderr": "logs/cgbn-build-tpi4.stderr.log"
+  },
+  {
+    "name": "cupqc-build-tpi4",
+    "argv": [
+      "nvcc",
+      "-O3",
+      "-std=c++17",
+      "-arch=sm_86",
+      "-DROOT_TPI=4",
+      "-dlto",
+      "-DROOT_SM=860",
+      "-I/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc-sdk-0.6.0-x86_64/include/cupqc",
+      "-I/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc-sdk-0.6.0-x86_64/include",
+      "-L/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc-sdk-0.6.0-x86_64/lib",
+      "-L/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc-sdk-0.6.0-x86_64/lib64",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/root_cupqc.cu",
+      "-lcupqc-bigint",
+      "-o",
+      "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/cupqc-tpi4"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j",
+    "started_epoch": 1794333550.5704935,
+    "seconds": 1.8661293983459473,
+    "returncode": 1,
+    "stdout": "logs/cupqc-build-tpi4.stdout.log",
+    "stderr": "logs/cupqc-build-tpi4.stderr.log"
+  }
+]

@@ -1,0 +1,109 @@
+{
+  "status": "blocked_before_gpu_timing",
+  "host": "cabbage",
+  "source_commit": "e6979d463aa8c22f627f5d40955750c6472850ee",
+  "hardware": {
+    "cpu": "AMD Ryzen 9 5950X, 16 physical cores / 32 threads",
+    "gpu": "NVIDIA GeForce RTX 3060, Ampere SM86",
+    "driver": "595.99.02",
+    "cuda": "13.2.78",
+    "host_compiler": "g++-13",
+    "python": "3.12.16",
+    "gmpy2": "2.2.2",
+    "gmp": "6.3.0"
+  },
+  "correctness": {
+    "exhaustive_cpu_cases": 41200,
+    "archived_reference_cases": 424,
+    "archived_reference_backends": 3,
+    "status": "all_cpu_checks_passed",
+    "gpu_exact_certificates": "not executed: both backend builds failed",
+    "width_fallbacks_per_requested_batch": 4,
+    "unsupported_inputs_saved": true
+  },
+  "backends": {
+    "cgbn": {
+      "build": "failed",
+      "tested_tpi": 4,
+      "remaining_tpi": [
+        8,
+        16,
+        32
+      ],
+      "remaining_tpi_status": "not attempted after first build failure",
+      "gpu_correctness": "not run",
+      "kernel_first_ms": null,
+      "kernel_warm_ms": null,
+      "process_wall_ms": null,
+      "error": "In file included from /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/CGBN/include/cgbn/cgbn.h:81,\n                 from /home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/repo/experiments/gpu-root-prep-20261110/root_cuda.cu:11:\n/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence/CGBN/include/cgbn/cgbn_cpu.h:25:2: error: #error You must use GMP for now\n   25 | #error You must use GMP for now\n      |  ^~~~~\n"
+    },
+    "cupqc": {
+      "build": "failed",
+      "tested_tpi": 4,
+      "remaining_tpi": [
+        8,
+        16,
+        32
+      ],
+      "remaining_tpi_status": "not attempted after first build failure",
+      "gpu_correctness": "not run",
+      "kernel_first_ms": null,
+      "kernel_warm_ms": null,
+      "process_wall_ms": null,
+      "error": "nvlink fatal   : elfLink linker library load error\n"
+    }
+  },
+  "gmp_preflight_samples": [
+    {
+      "gmp_iroot_seconds": 0.0003165339585393667,
+      "records": 252,
+      "width_fallbacks": 4,
+      "python_reference_seconds_not_GMP": 0.0019884190405718982,
+      "gpu": "not run",
+      "requested_count": 256,
+      "gmp_ms": 0.3165339585393667
+    },
+    {
+      "gmp_iroot_seconds": 0.0012133849668316543,
+      "records": 1020,
+      "width_fallbacks": 4,
+      "python_reference_seconds_not_GMP": 0.008353203011211008,
+      "gpu": "not run",
+      "requested_count": 1024,
+      "gmp_ms": 1.2133849668316543
+    },
+    {
+      "gmp_iroot_seconds": 0.004984005994629115,
+      "records": 4092,
+      "width_fallbacks": 4,
+      "python_reference_seconds_not_GMP": 0.03487949201371521,
+      "gpu": "not run",
+      "requested_count": 4096,
+      "gmp_ms": 4.984005994629115
+    }
+  ],
+  "timing_sweep_started": false,
+  "timing_sweep_reason": "Both GPU build gates failed; original run.sh deliberately not run",
+  "production": {
+    "worker_exit_code": 0,
+    "final_replica_verified": true,
+    "final_cursor": 1538849024,
+    "source_modified": false,
+    "restarted": false,
+    "controller_stop_diagnostic": "KeyError('worker_exit_code') during manual stop; traceback retained without production edits"
+  },
+  "dependencies": {
+    "cgbn_commit": "114601b07ae8c3e4d46b250208ea8d9def7a12f0",
+    "cupqc_version": "0.6.0",
+    "cupqc_archive_sha256": "8026ac00d81130180d2ff0afb3eb9bce852b76cc6a02141f9e45b799a17ae571",
+    "cupqc_archive_bytes": 189031499
+  },
+  "started_epoch": 1794333541.5909035,
+  "finished_epoch": 1794333552.4366229,
+  "notes": [
+    "CPU/GMP samples are single preflight batches, not a completed GPU timing sweep.",
+    "No GPU speedup or full-pipeline conclusion can be drawn.",
+    "Legacy validate.py emits a static nvcc-absent label; actual local CUDA compiler identity is recorded separately.",
+    "Source guards and package hashes were preserved. Independent backends were attempted separately; neither failed build was bypassed."
+  ]
+}

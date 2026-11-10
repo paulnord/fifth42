@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/pnord/scratch/cabbage-extended-20261109/controller.py", line 110, in <module>
+    if __name__=='__main__':raise SystemExit(main())
+                                             ^^^^^^
+  File "/home/pnord/scratch/cabbage-extended-20261109/controller.py", line 77, in main
+    assert status['error'] is None and sup['error'] is None and sup['worker_exit_code']==0 and sup['leases_released'],'Failure requires explicit recovery; no automatic restart'
+                                                                ~~~^^^^^^^^^^^^^^^^^^^^
+KeyError: 'worker_exit_code'
