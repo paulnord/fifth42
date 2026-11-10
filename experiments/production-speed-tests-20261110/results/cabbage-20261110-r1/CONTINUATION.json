@@ -1,0 +1,174 @@
+{
+  "original_failure": "run_all grouping CPU-load guard after 23 trials",
+  "guards_unchanged": true,
+  "global_deadline_epoch": 1794337674.973348,
+  "commands": [
+    {
+      "name": "grouping-followup-cabbage",
+      "argv": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=10s",
+        "2199",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/venv/bin/python",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/run_groups.py",
+        "--region",
+        "cabbage",
+        "--repeats",
+        "3"
+      ],
+      "started_epoch": 1794335475.6221323,
+      "seconds": 17.437313556671143,
+      "returncode": 0,
+      "load_before": [
+        2.7041015625,
+        1.7490234375,
+        1.69775390625
+      ]
+    },
+    {
+      "name": "grouping-followup-dense",
+      "argv": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=10s",
+        "2181",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/venv/bin/python",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/run_groups.py",
+        "--region",
+        "dense",
+        "--repeats",
+        "3"
+      ],
+      "started_epoch": 1794335493.0795958,
+      "seconds": 12.72576093673706,
+      "returncode": 1,
+      "load_before": [
+        4.27734375,
+        2.125,
+        1.82080078125
+      ]
+    },
+    {
+      "name": "export-packets",
+      "argv": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=10s",
+        "2169",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/venv/bin/python",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/export_packets.py",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/diagnostics-20261110T182755Z/packets"
+      ],
+      "started_epoch": 1794335505.8056448,
+      "seconds": 0.4918556213378906,
+      "returncode": 0,
+      "load_before": [
+        4.27734375,
+        2.125,
+        1.82080078125
+      ]
+    },
+    {
+      "name": "make-controls",
+      "argv": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=10s",
+        "2168",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/venv/bin/python",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/overlap/make_controls.py",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/diagnostics-20261110T182755Z/controls"
+      ],
+      "started_epoch": 1794335506.2977602,
+      "seconds": 0.02221393585205078,
+      "returncode": 0,
+      "load_before": [
+        4.27734375,
+        2.125,
+        1.82080078125
+      ]
+    },
+    {
+      "name": "overlap-error-controls",
+      "argv": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=10s",
+        "2168",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/venv/bin/python",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/overlap/test_engine_errors.py",
+        "--engine",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/worker/bin/scaling_gpu_overlap",
+        "--controls",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/diagnostics-20261110T182755Z/controls"
+      ],
+      "started_epoch": 1794335506.3201392,
+      "seconds": 0.2660253047943115,
+      "returncode": 0,
+      "load_before": [
+        4.27734375,
+        2.125,
+        1.82080078125
+      ]
+    },
+    {
+      "name": "overlap-controls",
+      "argv": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=10s",
+        "2143",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/venv/bin/python",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/overlap/bench_overlap.py",
+        "--baseline",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/worker/bin/scaling_gpu",
+        "--candidate",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/worker/bin/scaling_gpu_overlap",
+        "--gmp",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/worker/bin/gmp_reference",
+        "--packets",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/diagnostics-20261110T182755Z/controls",
+        "--output",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/diagnostics-20261110T182755Z/overlap-controls"
+      ],
+      "started_epoch": 1794335531.62465,
+      "seconds": 0.5725464820861816,
+      "returncode": 0,
+      "load_before": [
+        2.81689453125,
+        1.953125,
+        1.771484375
+      ]
+    },
+    {
+      "name": "overlap-packets",
+      "argv": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=10s",
+        "2142",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/venv/bin/python",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/overlap/bench_overlap.py",
+        "--baseline",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/worker/bin/scaling_gpu",
+        "--candidate",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/worker/bin/scaling_gpu_overlap",
+        "--gmp",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/worker/bin/gmp_reference",
+        "--packets",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/diagnostics-20261110T182755Z/packets",
+        "--output",
+        "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/diagnostics-20261110T182755Z/overlap-packets"
+      ],
+      "started_epoch": 1794335532.2179923,
+      "seconds": 15.723768949508667,
+      "returncode": 0,
+      "load_before": [
+        2.41357421875,
+        1.90576171875,
+        1.75830078125
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/run_groups.py", line 52, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/run_groups.py", line 28, in main
+    idle();remaining=deadline-time.monotonic()
+    ^^^^^^
+  File "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/run_groups.py", line 17, in idle
+    if os.getloadavg()[0]>4:raise RuntimeError('Load guard: CPU load >4; retry on idle machine')
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Load guard: CPU load >4; retry on idle machine

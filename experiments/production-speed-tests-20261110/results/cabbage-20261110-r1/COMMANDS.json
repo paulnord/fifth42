@@ -1,0 +1,37 @@
+{
+  "source_commit": "cb908547e6cefd51713da9595073e576eaca6950",
+  "setup": [
+    "bash",
+    "experiments/production-speed-tests-20261110/setup.sh",
+    "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench"
+  ],
+  "run": [
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=10s",
+    "40m",
+    "bash",
+    "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/run_all.sh"
+  ],
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "gpu_owner_lease_held": true,
+  "production_restarted": false,
+  "started_epoch": 1794335274.973348
+}

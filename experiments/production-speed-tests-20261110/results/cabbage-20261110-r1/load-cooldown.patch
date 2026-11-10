@@ -1,0 +1,19 @@
+--- published/run_groups.py
++++ isolated-copy/run_groups.py
+@@ -14,7 +14,15 @@
+  def idle():
+   r=subprocess.run(['nvidia-smi','--query-compute-apps=pid','--format=csv,noheader,nounits'],capture_output=True,text=True,check=True)
+   if r.stdout.strip():raise RuntimeError('GPU compute process present: '+r.stdout)
+-  if os.getloadavg()[0]>4:raise RuntimeError('Load guard: CPU load >4; retry on idle machine')
++  began=time.monotonic();initial_load=os.getloadavg()[0]
++  while os.getloadavg()[0]>4:
++   if time.monotonic()-began>120:raise RuntimeError('Load guard: CPU load >4 after bounded cooldown')
++   time.sleep(1)
++   r=subprocess.run(['nvidia-smi','--query-compute-apps=pid','--format=csv,noheader,nounits'],capture_output=True,text=True,check=True)
++   if r.stdout.strip():raise RuntimeError('GPU compute process present during cooldown: '+r.stdout)
++  waited=time.monotonic()-began
++  if waited>.01:
++   with (out/'cooldown-waits.jsonl').open('a') as stream:stream.write(json.dumps(dict(seconds=waited,initial_load=initial_load,admitted_load=os.getloadavg()[0]))+'\n')
+  idle();(out/'hardware.txt').write_text(subprocess.check_output(['nvidia-smi'],text=True)+subprocess.check_output(['uname','-a'],text=True))
+  env=dict(os.environ,OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',PYTHONDONTWRITEBYTECODE='1')
+  # This control proves nonempty hits against independent brute force and GMP.
