@@ -1,0 +1,42 @@
+{
+  "sdk": "cuPQC SDK 0.6.0",
+  "sdk_archive_sha256": "8026ac00d81130180d2ff0afb3eb9bce852b76cc6a02141f9e45b799a17ae571",
+  "cuda": {
+    "nvcc": "13.2.78",
+    "nvvm": "13.2.78",
+    "crt": "13.2.78",
+    "runtime": "13.2.75"
+  },
+  "target": "sm_86",
+  "compile_link": [
+    {
+      "tpi": 4,
+      "exit_code": 0,
+      "log": "cupqc-tpi4.log"
+    },
+    {
+      "tpi": 8,
+      "exit_code": 0,
+      "log": "cupqc-tpi8.log"
+    },
+    {
+      "tpi": 16,
+      "exit_code": 0,
+      "log": "cupqc-tpi16.log"
+    },
+    {
+      "tpi": 32,
+      "exit_code": 0,
+      "log": "cupqc-tpi32.log"
+    }
+  ],
+  "command_template": "<staged-nvcc> -O3 -std=c++17 -dlto -arch=sm_86 -DROOT_SM=860 -DROOT_TPI=<TPI> -I<CUPQC_ROOT>/include/cupqc -I<CUPQC_ROOT>/include root_cupqc.cu -L<CUPQC_ROOT>/lib -lcupqc-bigint -o <binary>",
+  "original_layout_failure": "nvlink fatal : elfLink linker library load error",
+  "cause": "pip layout has lib/libnvvm.so.4; nvcc LTO expects nvvm/lib64/libnvvm.so",
+  "fix": "Private stage_cuda.py overlay; source toolchain untouched. Tested after removing temporary link from original toolchain.",
+  "gpu_execution": false,
+  "gpu_arithmetic_validated": false,
+  "performance_measured": false,
+  "source_sha256": "0668f0ff75d293b366d52f07c2e124a84d55ba81b67ee8077912166e351d9b4e",
+  "helper_sha256": "2c944d6d91d301d0df4d4790290510ab6ca065177b52947649c073b03ab43caf"
+}
