@@ -1,6 +1,10 @@
+## Revision 2 build repair
+
+See [BUILD-FIX-R2.md](BUILD-FIX-R2.md). Both backends now compile and link on CUDA 13.2.78 for TPI 4/8/16/32. GPU arithmetic is still untested here. The runner fixes CGBN's GMP include/link prerequisite and stages a private CUDA layout for cuPQC's NVVM loader; the original toolkit remains unchanged. Cabbage is already diagnosing independently: reconcile results before running this separate revision, do not overwrite its work or restart production.
+
 # Isolated GPU root-preparation study
 
-No production edits, no GPU compilation or measurements. Includes CPU-validated mathematical specifications and ready-to-build CUDA source, still awaiting actual GPU validation.
+No production edits, no GPU execution or measurements. Includes CPU-validated mathematical specifications and ready-to-build CUDA source, compile/link checked, still awaiting actual GPU validation.
 
 Pinned source examined: fifth42 b6ee86ce9b1269ab31cdd51a06fb499d51b7a138, Boole archived common worker.
 
@@ -50,11 +54,11 @@ Current `exact_host_opt.certify_task` reconstructs make_patch and repeats the ro
 
 ## Ready-to-run Cabbage experiment (2026-11-10)
 
-`root_cuda.cu` is an implementable CGBN2048 division-free kernel. **Source inspected only: no nvcc or GPU available in the authoring environment.** It is deliberately a correctness-first baseline, not a promised improvement. It searches the dyadic root one bit at a time; Newton/seed refinement may be necessary for useful speed.
+`root_cuda.cu` is an implementable CGBN2048 division-free kernel. **Compiled and linked using an isolated CUDA 13.2.78 toolchain; no GPU available for execution.** It is deliberately a correctness-first baseline, not a promised improvement. It searches the dyadic root one bit at a time; Newton/seed refinement may be necessary for useful speed.
 
 `run.sh` clones CGBN at pinned commit114601b07ae8c3e4d46b250208ea8d9def7a12f0, uses existing CUDA/GCC/Python, builds SM86/C++17 with4,8,16,32 threads per integer, tests batches256/1024/4096 with six repeated kernels each. First repeat is cold; repeats1–5 are warm. It does not install packages, change drivers, modify production, stop services, or claim coverage. Missing dependencies cause a clear stop. Choose a quiet period for timings; do not stop production to make it quiet.
 
-Dependencies: CUDA toolkit supporting SM86, compatible host C++ compiler, Git, Python3 standard library. Optional existing gmpy2 enables a true GMP iroot baseline; absent gmpy2 is explicitly null in reports (Python reference timing is NOT the production baseline). The cuPQC SDK is downloaded locally by default under its NVIDIA license terms; set CUPQC_DOWNLOAD=0 to skip.
+Dependencies: CUDA toolkit supporting SM86, compatible host C++ compiler, GMP development headers/library, Git, Python3 standard library. Optional existing gmpy2 enables a true GMP iroot baseline; absent gmpy2 is explicitly null in reports (Python reference timing is NOT the production baseline). The cuPQC SDK is downloaded locally by default under its NVIDIA license terms; set CUPQC_DOWNLOAD=0 to skip.
 
 One invocation from this directory:
 
@@ -73,6 +77,6 @@ CPU local preflight:41,200 exhaustive rational cases (denominators1..100,bits1..
 3. Alternate unchanged CPU/GMP and candidate at identical source/config/cursor for30 paired trials, record packing,transfer,kernel,certification,LLL,enumeration and total wall time. Use persistent process too; distinguish cold startup. Require exact bounds,counts,hit sets and journal digest equality; run known-positive and boundary cases, not only empty-hit patches.
 4. Publish raw evidence and confidence intervals. Deploy only after end-to-end benefit and independent review; this package does not deploy.
 
-cuPQC comparison source is bundled as `root_cupqc.cu`, implemented against the official 0.6.0 BigInt API, not compiled here. It runs the same fixtures and exact certificates, using 2048-bit cooperative multiplication rather than unavailable cooperative division. Set `CUPQC_ROOT` to an already-authorized 0.6.0 SDK installation; the same runner then builds and tests both libraries. If downloading is disabled and no SDK is supplied, it finishes CGBN and records cuPQC-BLOCKED.txt explicitly. The SDK is proprietary and its license terms apply; the runner downloads it into the isolated evidence directory by default. Set CUPQC_DOWNLOAD=0 to skip downloading. Official requirements: https://docs.nvidia.com/cuda/cupqc/introduction/requirements.html . Download: https://developer.nvidia.com/cupqc-downloads .
+cuPQC comparison source is bundled as `root_cupqc.cu`, implemented against the official 0.6.0 BigInt API, compiled and linked here, not GPU-executed. It runs the same fixtures and exact certificates, using 2048-bit cooperative multiplication rather than unavailable cooperative division. Set `CUPQC_ROOT` to an already-authorized 0.6.0 SDK installation; the same runner then builds and tests both libraries. If downloading is disabled and no SDK is supplied, it finishes CGBN and records cuPQC-BLOCKED.txt explicitly. The SDK is proprietary and its license terms apply; the runner downloads it into the isolated evidence directory by default. Set CUPQC_DOWNLOAD=0 to skip downloading. Official requirements: https://docs.nvidia.com/cuda/cupqc/introduction/requirements.html . Download: https://developer.nvidia.com/cupqc-downloads .
 
 Automatic SDK setup: running `bash run.sh` uses NVIDIA's proprietary cuPQC SDK under its included license terms. This downloads the official 0.6.0 x86_64 archive (about189 MB), checks SHA256 `8026ac00d81130180d2ff0afb3eb9bce852b76cc6a02141f9e45b799a17ae571`, and extracts only under the fresh evidence directory. It does not install system-wide. Set `CUPQC_DOWNLOAD=0` to decline the download. CUDA must already be installed. SDK license files are included in the archive; see NVIDIA's download page for terms before running.
