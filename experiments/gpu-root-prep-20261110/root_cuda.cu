@@ -1,4 +1,4 @@
-// Isolated experimental root preparation. Not compiled or GPU-validated by Dot.
+// Isolated experimental root preparation. Compile/link validated; GPU arithmetic still unvalidated.
 // No production integration. Protocol is explicitly little-endian, without padding.
 #include <cuda_runtime.h>
 #include <cstdint>
@@ -8,6 +8,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <gmp.h>  // CGBN host pass selects its supported GMP adapter.
 #include "cgbn/cgbn.h"
 #ifndef ROOT_TPI
 #define ROOT_TPI 8
