@@ -1,0 +1,7 @@
+Run the isolated fused GPU roots+geometry experiment from this pinned commit. Do not stop, modify, resume or claim any fifth42 production work. If production is active, ask Paul to arrange a clean stop before benchmarking; do not kill it.
+
+Read experiments/fused-gpu-prep-20261110/README.md. Use a fresh worktree or clone, preserve all existing local changes, and invoke its run.sh once with a new local evidence directory under a 45-minute timeout. The script builds/tests both CGBN and cuPQC, installs only local dependencies, and handles the pip-CUDA NVVM layout privately. cuPQC download/use accepts NVIDIA Math SDK license as disclosed in README.
+
+Do not bypass correctness gates. On missing prerequisite or build failure, preserve complete logs and report the exact blocker. If all checks pass, publish logs, reports, versions, source hashes and concise results to a new results branch on paulnord/fifth42, verifying the readback. Exclude SDK and binary input/output bulk from GitHub; retain their hashes and local locations.
+
+Report actual cold prep+certification+LLL timings and warm-component estimates separately. These tests offload root radicands and exact geometry terms; rational normalization, LLL and certificates remain on CPU. They do not measure candidate enumeration or full production throughput. Do not deploy or restart production automatically.
