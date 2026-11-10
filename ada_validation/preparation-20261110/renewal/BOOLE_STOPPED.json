@@ -1,0 +1,93 @@
+{
+  "archive_receipt": "/mnt/fifth42-storage/runs/boole-delegated-20261109-06/boole-delegated-20261109-06/run/ARCHIVE_RECEIPT.json",
+  "archive_receipt_sha256": "1665967c01b7ea23037832ddab8b400bf733d4154bdaf430ed582b00bf0413aa",
+  "checkpoint_sha256": "457b4ab11332b47f23b7ccd4b2a03ea94dd830e5fcbe87b99098cbcbd57a9c28",
+  "claim_job": "boole-delegated-20261109-06",
+  "claim_sha256": "a0500cb12a9ba926dce103b8631cc51dce3f282a371467a6751b418a27c11e6b",
+  "configuration_sha256": "13d8ee7d73021f6c951aca1febcef60e5c6b1d5ac120ac9e8b70f3483b00348b",
+  "error": null,
+  "final_cursor": 7437659904,
+  "final_replica": {
+    "compute_started": false,
+    "finished_epoch": 1794341040.7861419,
+    "receipt": {
+      "captured_epoch": 1794341022.1976407,
+      "checkpoint_sha256": "457b4ab11332b47f23b7ccd4b2a03ea94dd830e5fcbe87b99098cbcbd57a9c28",
+      "chunks": 209609,
+      "committed_bytes": 3859890786,
+      "identity": {
+        "source_identity": "905bf8c79f36956bfe6db714584975d00b507d527eee89db607938573f8f8965",
+        "trial": "boole-delegated-20261109-06"
+      },
+      "journal_sha256": "88b77e8f862be4cd8c660e258bd9144405e1d6ef5aab904138459fdab90c9b3f",
+      "method": "append, fsync, byte readback, audit copies, checkpoint, receipt",
+      "next_patch": 7437659904,
+      "raw_sha256": "f247c79c0ad309c4e6866b620a9c0bbeaccca4cb3a22f2a28f37968e562514ad",
+      "status": "verified",
+      "synced_epoch": 1794341040.3255312
+    },
+    "status": "verified"
+  },
+  "host": "boole",
+  "journal_offset": 3859890786,
+  "journal_sha256": "88b77e8f862be4cd8c660e258bd9144405e1d6ef5aab904138459fdab90c9b3f",
+  "leases_released": true,
+  "local_output": "/home/pnord/fifth42-local-runs/boole-delegated-20261109-06/boole-delegated-20261109-06/run",
+  "manifest_sha256": "347953376e8c0943a7b450e97627e42912d95b37ac9e8fed27592c4282b68def",
+  "new_stop_epoch_authorized": 1794438000,
+  "parent_audit": {
+    "captured_checkpoint_sha256": "457b4ab11332b47f23b7ccd4b2a03ea94dd830e5fcbe87b99098cbcbd57a9c28",
+    "committed_bytes": 3859890786,
+    "committed_chain_sha256": "88b77e8f862be4cd8c660e258bd9144405e1d6ef5aab904138459fdab90c9b3f",
+    "committed_raw_sha256": "f247c79c0ad309c4e6866b620a9c0bbeaccca4cb3a22f2a28f37968e562514ad",
+    "completed_bound": null,
+    "final_checkpoint": true,
+    "final_checkpoint_source": "/home/pnord/fifth42-local-runs/boole-delegated-20261109-06/boole-delegated-20261109-06/run",
+    "first": 7384000000,
+    "gmp_audited_chunks": 1638,
+    "local_grouped_audit": {
+      "new_chunks": 209609,
+      "new_gmp_audited_chunks": 1638,
+      "new_patches": 53659904,
+      "next_patch": 7437659904
+    },
+    "next_patch": 7437659904,
+    "replica_audit": "Identical full journal bytes and every GMP reference; same parsed receipt audit applies",
+    "selected_interval": [
+      7384000000,
+      7437659904
+    ],
+    "status": "passed",
+    "uncommitted_trailing_bytes": 0
+  },
+  "pending_bytes": 0,
+  "pending_chunks": 0,
+  "queue_inactive": true,
+  "queue_service": "boole-delegated-queue-20261109.service",
+  "raw_sha256": "f247c79c0ad309c4e6866b620a9c0bbeaccca4cb3a22f2a28f37968e562514ad",
+  "replica_output": "/mnt/fifth42-storage/runs/boole-delegated-20261109-06/boole-delegated-20261109-06/run",
+  "service": "boole-delegated-20261109-06.service",
+  "service_state": {
+    "ActiveState": "inactive",
+    "MainPID": "0"
+  },
+  "status": "stopped_and_sealed",
+  "verified_utc": "2026-11-10T20:08:28.255173+00:00",
+  "worker_exit_code": 0,
+  "controller_service": "boole-delegated-queue-20261109.service",
+  "controller_inactive": true,
+  "run_id": "boole-delegated-20261109-06",
+  "worker_service": "boole-delegated-20261109-06.service",
+  "worker_inactive": true,
+  "config_sha256": "13d8ee7d73021f6c951aca1febcef60e5c6b1d5ac120ac9e8b70f3483b00348b",
+  "committed_bytes": 3859890786,
+  "final_replica_status": "verified",
+  "stop_intent": {
+    "reason": "User-authorized preparation-r1 upgrade with new deadline",
+    "active_service": "boole-delegated-20261109-06.service",
+    "old_queue_service": "boole-delegated-queue-20261109.service",
+    "config_sha256": "13d8ee7d73021f6c951aca1febcef60e5c6b1d5ac120ac9e8b70f3483b00348b",
+    "stop_epoch_authorized": 1794438000,
+    "automatic_resume": false
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "started_utc": "2026-11-10T20:18:16.216082+00:00",
+  "stop_local": "2026-11-11T17:00:00-06:00",
+  "resume_cursor": 5887335296,
+  "commands": [
+    {
+      "kind": "timer",
+      "command": [
+        "systemd-run",
+        "--user",
+        "--unit=ada-preparation-20261110-deadline",
+        "--collect",
+        "--service-type=oneshot",
+        "--on-calendar=2026-11-11 22:59:50 UTC",
+        "--timer-property=AccuracySec=1s",
+        "--timer-property=RandomizedDelaySec=0",
+        "--timer-property=Persistent=no",
+        "/usr/bin/systemctl",
+        "--user",
+        "stop",
+        "ada-preparation-20261110.service"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Running timer as unit: ada-preparation-20261110-deadline.timer\nWill run service as unit: ada-preparation-20261110-deadline.service\n"
+    },
+    {
+      "kind": "service",
+      "command": [
+        "systemd-run",
+        "--user",
+        "--unit=ada-preparation-20261110",
+        "--collect",
+        "--service-type=exec",
+        "--description=Sixteen-worker fifth-power weekend continuation",
+        "--property=RuntimeMaxSec=96093",
+        "--property=TimeoutStopSec=8s",
+        "--property=KillMode=mixed",
+        "--property=Restart=no",
+        "--property=Nice=19",
+        "--property=CPUAffinity=0-15",
+        "--property=UMask=0077",
+        "--working-directory=/home/pnord/ada-preparation-release-20261110/worker",
+        "--property=StandardOutput=append:/home/pnord/ada-preparation-release-20261110/worker/service.stdout.log",
+        "--property=StandardError=append:/home/pnord/ada-preparation-release-20261110/worker/service.stderr.log",
+        "--setenv=PYTHONDONTWRITEBYTECODE=1",
+        "--setenv=PYTHONUNBUFFERED=1",
+        "--setenv=CUDA_VISIBLE_DEVICES=0",
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "-u",
+        "/home/pnord/ada-preparation-release-20261110/worker/search_supervisor.py",
+        "--config",
+        "/home/pnord/ada-preparation-release-20261110/worker/config.json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Running as unit: ada-preparation-20261110.service; invocation ID: fc3487220f6a453ea5dcfe102ec25768\n"
+    }
+  ],
+  "status": "service_started"
+}
