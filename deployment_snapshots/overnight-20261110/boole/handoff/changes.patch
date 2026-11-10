@@ -1,0 +1,408 @@
+--- baseline/worker/policy.py
++++ delegated/worker/policy.py
+@@ -6,7 +6,7 @@
+ ROOT=Path(__file__).resolve().parent
+ BULK=Path('/mnt/fifth42-storage')
+ SHARED=Path('/mnt/nfs_share/fifth42-shared-20261107')
+-TEST_LEDGER=Path('/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/boole-validation/extra-20261109')
++TEST_LEDGER=Path('/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/suballocation-tests/boole-local-delegated-20261109')
+ LOCAL=Path('/home/pnord/fifth42-local-runs')
+ class RequestedStop(Exception):pass
+ def require(ok,message):
+@@ -87,7 +87,30 @@
+     require(cursor==reference_cursor and proof['covered_interval']==[3000000000,cursor],'Parent lineage cursor changed')
+     return state
+ 
++def validate_protected_grant(config):
++    import ada_export_store,suballocation_guard
++    grant=suballocation_guard.check(config)
++    require(config['allocation_role']=='boole','Wrong allocation role')
++    if config.get('TEST_ONLY') is not True:
++        require(config['suballocation_grant_sha256']=='7c8422f5e9086519db3bc8ad2e8eeab8d7d1d60706f9b327766ba0a069c6a389' and
++                grant['parent_claim_sha256']=='7d6b55c80d480208b324d6748fcc3660e12a0b70a7f2a21ad8c28bf0b0a16b33',
++                'Wrong parent allocation generation')
++        require(digest(ROOT/'bin/scaling_gpu')==grant['boole_native_gpu_sha256'] and
++                digest(ROOT/'bin/gmp_reference')==grant['boole_native_gmp_sha256'],'Grant native identities differ')
++    else:
++        require(Path(config['suballocation_grant_file']).is_relative_to(TEST_LEDGER),'Test grant escaped isolated namespace')
++    store=ada_export_store.Store(grant['parent_ledger']);until=time.monotonic()+2
++    while True:
++        try:claim=store.claim(grant['parent_job']);break
++        except ada_export_store.Busy:
++            if time.monotonic()>=until:raise
++            time.sleep(.02)
++    require(claim['sha256']==grant['parent_claim_sha256'] and
++            (claim['first'],claim['last'])==(grant['parent_first'],grant['parent_last']),'Legacy parent claim changed')
++    return grant
++
+ def validate_ledger(config):
++    validate_protected_grant(config)
+     import ada_export_store
+     coverage_path=Path(config['coverage_file'])
+     require(digest(coverage_path)==config['coverage_sha256'],'Frozen coverage link changed')
+@@ -137,18 +160,18 @@
+     if config.get('TEST_ONLY') is True:
+         allowed={'TEST_ONLY','run_id','output','replica_output','ledger_root','ledger_job','ledger_device',
+                  'ledger_claim_sha256','range_end','gmp_audit_period','test_chunk_limit',
+-                 'stop_epoch','stop_local','service_name','deadline_service_name'}
++                 'stop_epoch','stop_local','service_name','deadline_service_name','suballocation_grant_file','suballocation_grant_sha256'}
+         require(all(config.get(k)==v for k,v in base.items() if k not in allowed),
+                 'Validation changed frozen geometry/resource/parent settings')
+         require(Path(config['ledger_root']).is_relative_to(TEST_LEDGER),'Test ledger escaped isolated namespace')
+-        expected=LOCAL/'TEST_ONLY_boole_extra_20261109'/config['run_id']/'run'
+-        replica_expected=BULK/'TEST_ONLY_boole_extra_20261109'/config['run_id']/'run'
++        expected=LOCAL/'TEST_ONLY_boole_delegated_20261109'/config['run_id']/'run'
++        replica_expected=BULK/'TEST_ONLY_boole_delegated_20261109'/config['run_id']/'run'
+         require(config['initial_patch']<config['range_end']<=base['range_end'],'Invalid test interval')
+     else:
+         require(config==base,'Production configuration differs from sealed base')
+-        require(config['run_id'].startswith('boole-extra-20261109-') and config['ledger_job'].startswith('boole-extended-20261109-') and config['stop_epoch']==1794351600,'Frozen new allocation identity/deadline changed')
+-        require(100000000<=config['reservation_initial_patch']==config['initial_patch']<config['range_end']<=500000000 and config['range_end']-config['initial_patch']<=200000000,'New allocation escaped tested planning interval')
+-        require(Path(config['ledger_root'])==SHARED,'Wrong production coordinator')
++        require(config['run_id'].startswith('boole-delegated-20261109-') and config['ledger_job']==config['run_id'] and config['stop_epoch']==1794351600,'Frozen new allocation identity/deadline changed')
++        require(7000000000<=config['reservation_initial_patch']==config['initial_patch']<config['range_end']<=11250000001 and config['range_end']-config['initial_patch']<=64000000,'New allocation escaped tested planning interval')
++        require(Path(config['ledger_root'])==SHARED/'suballocations/ada-boole-20261109-r1','Wrong protected child coordinator')
+         expected=LOCAL/config['ledger_job']/config['run_id']/'run'
+         replica_expected=BULK/'runs'/config['ledger_job']/config['run_id']/'run'
+         require(config.get('test_chunk_limit') is None,'Production test limit is forbidden')
+--- baseline/worker/suballocation_guard.py
++++ delegated/worker/suballocation_guard.py
+@@ -0,0 +1,55 @@
++"""Parent-lease protected, disjoint subclaims; no arithmetic or coverage changes."""
++import errno,fcntl,hashlib,json,os,time
++from pathlib import Path
++import ada_export_store
++GLOBAL=Path('/mnt/nfs_share/fifth42-shared-20261107')
++TEST=Path('/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/suballocation-tests')
++def require(ok,message):
++    if not ok:raise RuntimeError(message)
++def read(path):return json.loads(Path(path).read_bytes())
++def digest(raw):return hashlib.sha256(raw).hexdigest()
++def locked_by_other(path):
++    fd=os.open(path,os.O_RDWR|os.O_NOFOLLOW)
++    try:
++        try:fcntl.lockf(fd,fcntl.LOCK_EX|fcntl.LOCK_NB)
++        except OSError as e:
++            if e.errno in (errno.EACCES,errno.EAGAIN):return True
++            raise
++        fcntl.lockf(fd,fcntl.LOCK_UN);return False
++    finally:os.close(fd)
++def load_grant(path,expected_sha,test=False):
++    path=Path(path);raw=path.read_bytes();require(digest(raw)==expected_sha,'Suballocation grant changed')
++    g=json.loads(raw)
++    require(g['schema']=='fifth42-parent-suballocation-v1' and g['TEST_ONLY'] is test,'Wrong suballocation schema/scope')
++    parent=Path(g['parent_ledger']);child=Path(g['child_ledger'])
++    require(parent.is_relative_to(TEST) if test else parent==GLOBAL,'Wrong parent ledger namespace')
++    require(child.is_relative_to(parent/'suballocations') and child!=parent,'Child ledger escaped parent namespace')
++    require(g['stop_epoch']>time.time() and (test or g['stop_epoch']==1794351600),'Suballocation cutoff expired/changed')
++    a,z=g['assignments']['ada'],g['assignments']['boole']
++    require(all(type(x) is int for x in [*a,*z,g['parent_first'],g['parent_last']]),'Noninteger suballocation boundary')
++    require(g['parent_first']<=a[0]<a[1]==z[0]<z[1]==g['parent_last'],'Suballocation has a gap, overlap or overflow')
++    require(g['coverage_claimed'] is False,'Allocation is not completed coverage')
++    return g
++def check(config,force=False,observer_role=None):
++    test=config.get('TEST_ONLY') is True
++    path=Path(config['suballocation_grant_file']);expected=config['suballocation_grant_sha256']
++    g=load_grant(path,expected,test)
++    role=config['allocation_role'];require(role in ('ada','boole'),'Unknown suballocation role')
++    if not test:
++        if observer_role is None:require(os.uname().nodename.split('.')[0]==role,'Wrong suballocation host')
++        else:require(observer_role==role and os.uname().nodename.split('.')[0]=='ada','Invalid read-only observer role')
++    require(Path(config['ledger_root'])==Path(g['child_ledger']),'Wrong child ledger')
++    first,last=g['assignments'][role]
++    require(first<=config['initial_patch']<config['range_end']<=last,'Worker escaped its delegated interval')
++    require(config['stop_epoch']==g['stop_epoch'],'Worker changed delegated cutoff')
++    state=read(Path(g['child_ledger'])/'coordinator-state.json')
++    require(state['grant_sha256']==expected and state['stop_epoch']==g['stop_epoch'],'Coordinator generation changed')
++    require(-5<=time.time()-state['updated_epoch']<=10,'Coordinator heartbeat is stale')
++    require(state['status']=='active' or (role=='ada' and state['status']=='prepared'),'Suballocation is not active')
++    require(state['retained_range_end']==g['assignments']['ada'][1],'Retained worker cap changed')
++    if not test and role=='boole':
++        require((state.get('activation_audit') or {}).get('status')=='passed','Retained native/GMP prefix has not been independently checked')
++        ready=read(Path(g['child_ledger'])/'READY.json')
++        require(ready['status']=='active_delegation_ready' and ready['grant_sha256']==expected,'Delegation handoff has not been admitted')
++    require(locked_by_other(Path(g['parent_ledger'])/'jobs'/g['parent_job']/'journal.jsonl'),'Exclusive parent lease is absent')
++    return g
+--- baseline/validate_boole_services.py
++++ delegated/validate_boole_services.py
+@@ -47,13 +47,13 @@
+   PYTHON,'-B','-u',str(W/'boole_supervisor.py'),'--config',str(path)]))
+  return calls,cleanup+'.service',timer_name+'.timer'
+ 
+-def case(label,finite=False,signal_stop=False,deadline=False):
++def _case(label,finite=False,signal_stop=False,deadline=False):
+  base=json.loads((W/'base-config.json').read_bytes());c=dict(base)
+- name='boole-extra-test-'+label+'-20261109'
+- local=policy.LOCAL/'TEST_ONLY_boole_extra_20261109'/name
+- replica=policy.BULK/'TEST_ONLY_boole_extra_20261109'/name
++ name='boole-delegated-test-'+label+'-20261109'
++ local=policy.LOCAL/'TEST_ONLY_boole_delegated_20261109'/name
++ replica=policy.BULK/'TEST_ONLY_boole_delegated_20261109'/name
+  local.mkdir(mode=0o700,parents=True,exist_ok=False)
+- ledger=policy.TEST_LEDGER/label;s=ada_export_store.Store(ledger)
++ parent_ledger=policy.TEST_LEDGER/label;ledger=parent_ledger/'suballocations/borrower';s=ada_export_store.Store(ledger)
+  c.update(TEST_ONLY=True,run_id=name,output=str(local/'run'),replica_output=str(replica/'run'),
+    ledger_root=str(ledger),ledger_job=label,ledger_device=s.device,range_end=c['initial_patch']+1000000,
+    gmp_audit_period=1 if finite else 128,test_chunk_limit=17 if finite else None,
+@@ -61,6 +61,14 @@
+  c['stop_local']=datetime.fromtimestamp(c['stop_epoch'],timezone.utc).isoformat()
+  claim=s.reserve(c['ledger_job'],c['initial_patch'],c['range_end'],c['manifest_sha256'])
+  c['ledger_claim_sha256']=claim['sha256']
++ parent=ada_export_store.Store(parent_ledger)
++ parent_claim=parent.reserve('test-parent',3917103232,c['range_end'],c['manifest_sha256'])
++ grant=dict(schema='fifth42-parent-suballocation-v1',TEST_ONLY=True,parent_ledger=str(parent_ledger),parent_job='test-parent',parent_claim_sha256=parent_claim['sha256'],parent_first=parent_claim['first'],parent_last=parent_claim['last'],child_ledger=str(ledger),assignments=dict(ada=[4631300224,c['initial_patch']],boole=[c['initial_patch'],c['range_end']]),stop_epoch=c['stop_epoch'],coverage_claimed=False)
++ grant_path=ledger/'GRANT.json';atomic(grant_path,grant)
++ c.update(suballocation_grant_file=str(grant_path),suballocation_grant_sha256=policy.digest(grant_path))
++ global _fixture
++ _fixture=subprocess.Popen([PYTHON,'-B','-u',str(ROOT/'test_coordinator.py'),'--grant',str(grant_path)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
++ policy.require(_fixture.stdout.readline().strip()=='ready','Test coordinator did not acquire its parent lease')
+  folder=ROOT/'evidence/boole-validation'/label;folder.mkdir()
+  path=folder/'config.json';atomic(path,c);policy.load_config(path)
+  calls,cleanup,timer=launch(c,path,folder);timer_started=unit(timer)
+@@ -118,12 +126,24 @@
+   row['existing_output_reuse_rejected']=True;row['reuse_rejection']=failure;atomic(folder/'result.json',row)
+  return row
+ 
++_fixture=None
++def case(*args,**kwargs):
++ global _fixture
++ policy.require(_fixture is None,'Test fixture already owned')
++ try:return _case(*args,**kwargs)
++ finally:
++  if _fixture is not None:
++   _fixture.terminate()
++   try:_fixture.wait(timeout=5)
++   except subprocess.TimeoutExpired:_fixture.kill();_fixture.wait(timeout=5)
++   _fixture.stdout.close();_fixture.stderr.close();_fixture=None
++
+ def main():
+  parser=argparse.ArgumentParser();parser.add_argument('--revision',default='r1');args=parser.parse_args()
+  cases=[case('finite-'+args.revision,finite=True),case('signal-'+args.revision,signal_stop=True),case('deadline-'+args.revision,deadline=True)]
+  report=dict(status='passed',checked_utc=policy.utc(),TEST_ONLY=True,scientific_coverage=False,
+   manifest_sha256=policy.digest(W/'release-manifest.json'),config_sha256=policy.digest(W/'production-config.json'),
+-  compute_grouping=json.loads((ROOT/'evidence/boole-validation/buffered-compute.json').read_bytes()),
++  allocation_guard='Exact supplied guard plus actual NFS fixture in every service test',
+   mirror_unit_tests='9 passed',cases=cases)
+  atomic(ROOT/'runtime-validation.json',report)
+  print(json.dumps(dict(status='passed',runtime_validation=str(ROOT/'runtime-validation.json'))),flush=True)
+--- baseline/test_coordinator.py
++++ delegated/test_coordinator.py
+@@ -0,0 +1,21 @@
++"""TEST_ONLY parent lease and heartbeat fixture; never handles production grants."""
++import argparse,ctypes,hashlib,json,os,signal,sys,time
++from pathlib import Path
++ROOT=Path(__file__).resolve().parent;sys.path.insert(0,str(ROOT/'worker'))
++import ada_export_store
++from durable_mirror import atomic
++
++def main():
++ p=argparse.ArgumentParser();p.add_argument('--grant',type=Path,required=True);a=p.parse_args()
++ raw=a.grant.read_bytes();g=json.loads(raw)
++ assert g['TEST_ONLY'] is True and Path(g['parent_ledger']).is_relative_to(Path('/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/suballocation-tests/boole-local-delegated-20261109'))
++ stop=[False];signal.signal(signal.SIGTERM,lambda *_:stop.__setitem__(0,True))
++ libc=ctypes.CDLL(None,use_errno=True);assert libc.prctl(1,signal.SIGKILL)==0
++ if os.getppid()==1:raise RuntimeError('Fixture parent exited')
++ store=ada_export_store.Store(g['parent_ledger'])
++ with store.locked(store.root/'jobs'/g['parent_job']/'journal.jsonl'):
++  while not stop[0] and time.time()<g['stop_epoch']+5:
++   atomic(Path(g['child_ledger'])/'coordinator-state.json',dict(TEST_ONLY=True,status='active',grant_sha256=hashlib.sha256(raw).hexdigest(),stop_epoch=g['stop_epoch'],retained_range_end=g['assignments']['ada'][1],updated_epoch=time.time()))
++   if not getattr(main,'ready',False):print('ready',flush=True);main.ready=True
++   time.sleep(.2)
++if __name__=='__main__':main()
+--- baseline/controller.py
++++ controller/controller.py
+@@ -75,6 +75,9 @@
+  return folder
+ 
+ def start_collector(spec,c):
++ if c.get('allocation_role')=='boole':
++  import delegated_publication
++  return delegated_publication.start(spec,c,sys.modules[__name__])
+  # The collector is read-only; every stage gets a separate immutable identity/share.
+  root=Path(spec['root']);folder=root/('controller-reporter-'+c['run_id']);folder.mkdir(mode=0o700)
+  share=Path('/mnt/nfs_share')/(c['run_id']+'-publishing');share.mkdir(mode=0o700,parents=True,exist_ok=False)
+@@ -90,6 +93,7 @@
+  p=argparse.ArgumentParser();p.add_argument('--plan',type=Path,required=True);p.add_argument('--plan-sha256',required=True);p.add_argument('--adopt-first',action='store_true');a=p.parse_args()
+  require(sha(a.plan)==a.plan_sha256,'Frozen controller plan changed');plan=json.loads(a.plan.read_bytes())
+  require(not plan.get('controller_sha256') or sha(__file__)==plan['controller_sha256'],'Controller source differs from plan')
++ for name,expected in plan.get('helper_sha256',{}).items():require(sha(name)==expected,'Frozen controller helper changed: '+name)
+  require(plan['automatic_resume'] is False,'Crash recovery is forbidden');require(plan['stages'],'No planned stages')
+  allow_test=plan.get('TEST_ONLY') is True
+  require(allow_test or plan['stop_epoch']==1794351600,'Wrong production cutoff')
+@@ -109,7 +113,7 @@
+    if not(index==0 and a.adopt_first):
+     start_stage(spec,c)
+     if not allow_test:report['collector_share']=start_collector(spec,c)
+-   else:require(unit(c['service_name'])['ActiveState']=='active','First stage is not running for adoption')
++   else:require(unit(c['service_name'])['ActiveState'] in ('active','inactive'),'First stage cannot be adopted')
+    report.update(status='running',active=dict(index=index,run_id=c['run_id'],interval=[c['initial_patch'],c['range_end']],service=c['service_name']));save()
+    waiting_since=None
+    while True:
+--- /dev/null
++++ controller/delegated_publication.py
+@@ -0,0 +1,55 @@
++"""Identity-bound publication evidence and one collector for the stable delegated share."""
++import hashlib,json,math,shutil,subprocess,sys,tarfile,time
++from pathlib import Path
++SHARE=Path('/mnt/nfs_share/boole-delegated-publishing-20261109')
++
++def archive(root,destination,ctl):
++ w=root/'worker';manifest=json.loads((w/'release-manifest.json').read_bytes())
++ with tarfile.open(destination,'w:gz') as tar:
++  for name in manifest['files']:tar.add(w/name,arcname='worker/'+name,recursive=False)
++  for name in ('release-manifest.json','production-config.json','base-config.json'):tar.add(w/name,arcname='worker/'+name,recursive=False)
++  for path in manifest.get('external_files',{}):tar.add(path,arcname=Path(path).name,recursive=False)
++  tar.add(w/'production-config.json',arcname='production-config.json',recursive=False)
++ with tarfile.open(destination,'r:gz') as tar:
++  for name,expected in manifest['files'].items():ctl.require(hashlib.sha256(tar.extractfile('worker/'+name).read()).hexdigest()==expected,'Archived runtime source changed')
++  ctl.require(tar.extractfile('production-config.json').read()==(w/'production-config.json').read_bytes(),'Archived configuration differs')
++ return ctl.sha(destination)
++
++def start(stage,c,ctl):
++ root=Path(stage['root']);name=c['run_id'];SHARE.mkdir(mode=0o700,parents=True,exist_ok=True)
++ # Stop the previous stable-share collector only after its verified stage completion.
++ spec_path=SHARE/'active-publication-spec.json'
++ if spec_path.exists():
++  prior=json.loads(spec_path.read_bytes())['run_id']
++  if prior!=name:subprocess.run(['systemctl','--user','stop',prior+'-collector.service'],check=True,capture_output=True,text=True,timeout=15)
++ evidence=SHARE/'runs'/name;evidence.mkdir(mode=0o700,parents=True,exist_ok=False)
++ files={'configuration.json':Path(stage['config']),'source-manifest.json':Path(c['manifest']),'parent-audit.json':Path(c['parent_audit_file']),
++        'original-claim.json':Path(c['origin_claim_file']),'runtime-validation.json':root/'runtime-validation.json'}
++ for dest,source in files.items():shutil.copy2(source,evidence/dest)
++ archive_hash=archive(root,evidence/'source.tar.gz',ctl)
++ hashes={p.name:ctl.sha(p) for p in evidence.iterdir() if p.is_file()}
++ fingerprint=hashlib.sha256(json.dumps(dict(manifest_sha256=c['manifest_sha256'],config=c),sort_keys=True,separators=(',',':')).encode()).hexdigest()
++ publication=dict(run_id=name,manifest_sha256=c['manifest_sha256'],config_sha256=stage['config_sha256'],source_identity=fingerprint,ledger_claim_sha256=c['ledger_claim_sha256'],evidence=hashes)
++ folder=root/('controller-reporter-'+name);folder.mkdir(mode=0o700)
++ shutil.copy2(root/'collector.py',folder/'collector.py')
++ ctl.atomic(folder/'collector-settings.json',dict(host='boole',config=stage['config'],manifest=c['manifest'],config_sha256=stage['config_sha256'],manifest_sha256=c['manifest_sha256'],supervisor_report=str(Path(c['output']).parent/'supervisor.json'),output=str(SHARE),stop_epoch=c['stop_epoch']))
++ cmd=['systemd-run','--user','--unit='+name+'-collector','--collect','--service-type=exec','--property=Restart=no','--property=Nice=19','--property=UMask=0077',
++ '--property=RuntimeMaxSec='+str(max(1,math.floor(c['stop_epoch']+1800-time.time()))),'--property=StandardOutput=append:'+str(folder/'stdout.log'),'--property=StandardError=append:'+str(folder/'stderr.log'),sys.executable,'-B','-u',str(folder/'collector.py')]
++ subprocess.run(cmd,check=True,capture_output=True,text=True,timeout=15)
++ until=time.monotonic()+100
++ while time.monotonic()<until:
++  p=SHARE/'status.json'
++  if p.exists():
++   row=json.loads(p.read_bytes())
++   if row.get('run_id')==name and row['phase']=='running' and row.get('checkpoint') and not row['alerts']:
++    ctl.require(row['config_sha256']==stage['config_sha256'] and row['manifest_sha256']==c['manifest_sha256'] and row['source_identity']==fingerprint,'Stable collector identity mismatch')
++    cp=row['checkpoint'];receipt=row['replica']
++    ctl.require(cp['identity']==receipt['identity']==dict(trial=name,source_identity=fingerprint),'First verified replica identity mismatch')
++    break
++  ctl.require(ctl.unit(c['service_name'])['ActiveState']=='active','Production stopped before first verified replica')
++  time.sleep(1)
++ else:raise TimeoutError('Stable collector never observed a healthy verified replica')
++ ctl.atomic(SHARE/'publication-spec.json',publication)
++ ctl.atomic(SHARE/'active-publication-spec.json',dict(run_id=name,config_sha256=stage['config_sha256'],manifest_sha256=c['manifest_sha256'],source_archive_sha256=archive_hash,evidence_sha256=hashes))
++ ctl.atomic(root/'PUBLICATION_READY.json',dict(status='publisher_requested',share=str(SHARE),source_archive_sha256=archive_hash,evidence_sha256=hashes))
++ return str(SHARE)
+--- /dev/null
++++ controller/validate_at_boundary.py
+@@ -0,0 +1,40 @@
++"""Validate on the actual GPU when the current compute stage finishes naturally."""
++import argparse,hashlib,json,os,subprocess,sys,time
++from pathlib import Path
++ROOT=Path(__file__).resolve().parent;sys.path.insert(0,str(ROOT));import controller
++PYTHON='/home/pnord/boole-results-20261107/venv312/bin/python'
++def main():
++ p=argparse.ArgumentParser();p.add_argument('--source-sha256',required=True);p.add_argument('--stages-sha256',required=True);a=p.parse_args()
++ controller.require(controller.sha(__file__)==a.source_sha256 and controller.sha(ROOT/'stages.json')==a.stages_sha256,'Validation input changed')
++ prior=json.loads(Path('/home/pnord/boole-overnight-20261109/worker/production-config.json').read_bytes())
++ stages=json.loads((ROOT/'stages.json').read_bytes())['stages'];first=stages[0]
++ controller.atomic(ROOT/'LOCAL_VALIDATION_STATUS.json',dict(status='waiting_for_natural_boundary',active_compute=prior['service_name'],source_sha256=a.source_sha256))
++ while controller.unit(prior['service_name'])['ActiveState']=='active':
++  controller.require(time.time()<1794351300,'No time remains for local validation');time.sleep(2)
++ local=Path(prior['output']);cp=json.loads((local/'checkpoint.json').read_bytes());sup=json.loads((local.parent/'supervisor.json').read_bytes())
++ controller.require(cp['next_patch']==prior['range_end'] and sup['status']=='finished' and sup['error'] is None and sup['worker_exit_code']==0 and sup['leases_released'],'Current segment did not finish normally')
++ controller.require(controller.free_lock('/home/pnord/boole-production-validation-20261107/gpu-owner.lock'),'GPU owner is not released')
++ while os.getloadavg()[0]>=17:time.sleep(1)
++ controller.atomic(ROOT/'LOCAL_VALIDATION_STATUS.json',dict(status='actual_gpu_tests_running',source_sha256=a.source_sha256))
++ result=subprocess.run([PYTHON,'-B','-u',str(Path(first['root'])/'validate_boole_services.py'),'--revision','delegated-r1'],capture_output=True,text=True,timeout=330)
++ (ROOT/'actual-gpu.stdout').write_text(result.stdout);(ROOT/'actual-gpu.stderr').write_text(result.stderr)
++ controller.require(result.returncode==0,'Actual local GPU validation failed: '+result.stderr[-4000:])
++ actual=Path(first['root'])/'runtime-validation.json';raw=actual.read_bytes();controller.require(json.loads(raw)['status']=='passed','Actual GPU validation did not pass')
++ (ROOT/'actual-gpu-validation.json').write_bytes(raw);actual_sha=controller.sha(ROOT/'actual-gpu-validation.json')
++ assert len({s['code_equivalence_sha256'] for s in stages})==1
++ for stage in stages:
++  c=controller.load_stage(stage)
++  code="import sys;sys.path[:0]=sys.argv[1:3];import policy;policy.load_config(sys.argv[3])"
++  w=Path(stage['root'])/'worker';subprocess.run([PYTHON,'-B','-c',code,str(w),str(w/'source/lattice_gpu'),stage['config']],check=True,timeout=30)
++  report=dict(status='passed',manifest_sha256=stage['manifest_sha256'],config_sha256=stage['config_sha256'],TEST_ONLY=False,
++   scientific_coverage=False,validation_scope='Exact executable code tested by actual Boole GPU finite, signal and deadline services; this frozen claim configuration separately admitted against live protected ledger.',
++   code_equivalence_sha256=stage['code_equivalence_sha256'],representative_actual_gpu_run=first['root'],actual_gpu_validation_sha256=actual_sha,
++   actual_gpu_cases=[dict(case=r['case'],status=r['status'],chunks=r['checkpoint']['chunks'],gmp_audited_chunks=r['local_audit']['new_gmp_audited_chunks']) for r in json.loads(raw)['cases']],
++   guard_validation_sha256=controller.sha(ROOT/'guard-validation.json'),each_production_stage='Runs nonempty controls and first-chunk full independent GMP comparison again before committing.')
++  controller.atomic(Path(stage['root'])/'runtime-validation.json',report)
++ controller.atomic(ROOT/'LOCAL_VALIDATION_STATUS.json',dict(status='passed',stages=67,actual_gpu_validation_sha256=actual_sha,code_equivalence_sha256=stages[0]['code_equivalence_sha256']))
++ print(json.dumps(dict(status='passed',stages=67,actual_gpu_validation_sha256=actual_sha)),flush=True)
++if __name__=='__main__':
++ try:main()
++ except BaseException as e:
++  controller.atomic(ROOT/'LOCAL_VALIDATION_FAILURE.json',dict(status='failed',error=repr(e)));raise
+--- /dev/null
++++ controller/install_after_validation.py
+@@ -0,0 +1,30 @@
++"""Install the pinned replacement controller after local actual-GPU tests pass."""
++import argparse,json,math,subprocess,sys,time
++from pathlib import Path
++ROOT=Path(__file__).resolve().parent;sys.path.insert(0,str(ROOT));import controller
++
++def main():
++ p=argparse.ArgumentParser();p.add_argument('--plan-sha256',required=True);a=p.parse_args();path=ROOT/'production-plan.json'
++ controller.require(controller.sha(path)==a.plan_sha256,'Prepared queue changed')
++ controller.atomic(ROOT/'INSTALL_STATUS.json',dict(status='waiting_for_local_gpu_validation',plan_sha256=a.plan_sha256))
++ while True:
++  if (ROOT/'LOCAL_VALIDATION_FAILURE.json').exists():raise RuntimeError('Local GPU validation failed; replacement queue not installed')
++  proof=ROOT/'LOCAL_VALIDATION_STATUS.json'
++  if proof.exists() and json.loads(proof.read_bytes())['status']=='passed':break
++  controller.require(time.time()<1794351300,'Too late to install replacement queue');time.sleep(2)
++ plan=json.loads(path.read_bytes());controller.require(len(plan['stages'])==70,'Wrong expanded queue size')
++ for stage in plan['stages']:
++  c=controller.load_stage(stage);validation=json.loads((Path(stage['root'])/'runtime-validation.json').read_bytes())
++  controller.require(validation['status']=='passed' and validation['manifest_sha256']==stage['manifest_sha256'],'Stage validation does not match its source')
++ # This affects only the old once-only controller, never the compute/final-copy units.
++ subprocess.run(['systemctl','--user','stop','boole-overnight-queue-20261109.service'],check=True,timeout=15)
++ controller.require(controller.unit('boole-overnight-queue-20261109.service')['ActiveState']=='inactive','Old controller still active')
++ controller.require(controller.sha(path)==a.plan_sha256,'Expanded queue changed during admission')
++ cmd=['systemd-run','--user','--unit=boole-delegated-queue-20261109','--collect','--service-type=exec','--property=Restart=no','--property=Nice=19','--property=UMask=0077',
++ '--property=RuntimeMaxSec='+str(math.floor(1794353400-time.time())-2),'--property=StandardOutput=append:'+str(ROOT/'production.stdout'),'--property=StandardError=append:'+str(ROOT/'production.stderr'),sys.executable,'-B','-u',str(ROOT/'controller.py'),'--plan',str(path),'--plan-sha256',a.plan_sha256,'--adopt-first']
++ result=subprocess.run(cmd,check=True,capture_output=True,text=True,timeout=15)
++ controller.atomic(ROOT/'INSTALL_STATUS.json',dict(status='expanded_queue_started',plan_sha256=a.plan_sha256,stages=70,additional_claims=67,additional_reserved_cells=4250000001,compute_restarted=False,command=cmd,stderr=result.stderr))
++ print(result.stderr,flush=True)
++if __name__=='__main__':
++ try:main()
++ except BaseException as error:controller.atomic(ROOT/'INSTALL_FAILURE.json',dict(status='failed',error=repr(error)));raise
+--- /dev/null
++++ controller/install_r2.py
+@@ -0,0 +1,31 @@
++"""Install the pinned replacement controller after local actual-GPU tests pass."""
++import argparse,json,math,subprocess,sys,time
++from pathlib import Path
++ROOT=Path(__file__).resolve().parent;sys.path.insert(0,str(ROOT));import controller
++
++def main():
++ p=argparse.ArgumentParser();p.add_argument('--plan-sha256',required=True);a=p.parse_args();path=ROOT/'production-plan.json'
++ controller.require(controller.sha(path)==a.plan_sha256,'Prepared queue changed')
++ controller.atomic(ROOT/'INSTALL_STATUS.json',dict(status='waiting_for_local_gpu_validation',plan_sha256=a.plan_sha256))
++ while True:
++  if (ROOT/'LOCAL_VALIDATION_FAILURE.json').exists():raise RuntimeError('Local GPU validation failed; replacement queue not installed')
++  proof=ROOT/'LOCAL_VALIDATION_STATUS.json'
++  if proof.exists() and json.loads(proof.read_bytes())['status']=='passed':break
++  controller.require(time.time()<1794351300,'Too late to install replacement queue');time.sleep(2)
++ plan=json.loads(path.read_bytes());controller.require(len(plan['stages'])==70,'Wrong expanded queue size')
++ for stage in plan['stages']:
++  c=controller.load_stage(stage);validation=json.loads((Path(stage['root'])/'runtime-validation.json').read_bytes())
++  controller.require(validation['status']=='passed' and validation['manifest_sha256']==stage['manifest_sha256'],'Stage validation does not match its source')
++ # This affects only the old once-only controller, never the compute/final-copy units.
++ if controller.unit('boole-overnight-queue-20261109.service')['ActiveState']!='inactive':
++  subprocess.run(['systemctl','--user','stop','boole-overnight-queue-20261109.service'],check=True,timeout=15)
++ controller.require(controller.unit('boole-overnight-queue-20261109.service')['ActiveState']=='inactive','Old controller still active')
++ controller.require(controller.sha(path)==a.plan_sha256,'Expanded queue changed during admission')
++ cmd=['systemd-run','--user','--unit=boole-delegated-queue-20261109','--collect','--service-type=exec','--property=Restart=no','--property=Nice=19','--property=UMask=0077',
++ '--property=RuntimeMaxSec='+str(math.floor(1794353400-time.time())-2),'--property=StandardOutput=append:'+str(ROOT/'production.stdout'),'--property=StandardError=append:'+str(ROOT/'production.stderr'),sys.executable,'-B','-u',str(ROOT/'controller.py'),'--plan',str(path),'--plan-sha256',a.plan_sha256,'--adopt-first']
++ result=subprocess.run(cmd,check=True,capture_output=True,text=True,timeout=15)
++ controller.atomic(ROOT/'INSTALL_STATUS.json',dict(status='expanded_queue_started',plan_sha256=a.plan_sha256,stages=70,additional_claims=67,additional_reserved_cells=4250000001,compute_restarted=False,command=cmd,stderr=result.stderr))
++ print(result.stderr,flush=True)
++if __name__=='__main__':
++ try:main()
++ except BaseException as error:controller.atomic(ROOT/'INSTALL_R2_FAILURE.json',dict(status='failed',error=repr(error)));raise

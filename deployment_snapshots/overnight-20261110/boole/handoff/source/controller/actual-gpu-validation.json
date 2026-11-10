@@ -1,0 +1,1616 @@
+{
+  "TEST_ONLY": true,
+  "allocation_guard": "Exact supplied guard plus actual NFS fixture in every service test",
+  "cases": [
+    {
+      "TEST_ONLY": true,
+      "case": "finite-delegated-r1",
+      "checkpoint": {
+        "chunks": 17,
+        "completed_bound": null,
+        "coverage_schema": "logical-width8-physical-groups-v1",
+        "hits": [],
+        "identity": {
+          "source_identity": "4c09597189acbd778d2354cdcf9dec4b40300eceadb4430745d2551c0ba158df",
+          "trial": "boole-delegated-test-finite-delegated-r1-20261109"
+        },
+        "journal_offset": 313337,
+        "journal_sha256": "c06b01f7bba92e7d7bfb29c54de08b6998299d7334e57d5d3cb10cb3eb69f40b",
+        "next_patch": 7000004352,
+        "patches": 4352,
+        "physical_tasks": 1088,
+        "points": 668397160,
+        "window": {
+          "bits": 222,
+          "cap": 42,
+          "first": 7000000000,
+          "geometry_policy": "adaptive",
+          "hi": 200000000000,
+          "last": 7000004352,
+          "lo": 100000000001,
+          "width": 8
+        }
+      },
+      "commands": [
+        {
+          "command": [
+            "systemd-run",
+            "--user",
+            "--unit=boole-delegated-test-finite-delegated-r1-20261109-final-copy",
+            "--collect",
+            "--service-type=exec",
+            "--property=Restart=no",
+            "--property=Nice=19",
+            "--property=UMask=0077",
+            "--property=RuntimeMaxSec=146",
+            "--property=StandardOutput=append:/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/finite-delegated-r1/final-copy.stdout",
+            "--property=StandardError=append:/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/finite-delegated-r1/final-copy.stderr",
+            "/home/pnord/boole-results-20261107/venv312/bin/python",
+            "-B",
+            "/home/pnord/boole-delegated-20261109-00/worker/finalize_replica.py",
+            "--config",
+            "/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/finite-delegated-r1/config.json",
+            "--config-sha256",
+            "a59f142f8553ccf1833491924e503eb9379bac467874ad91fd7eb83b0255b7af",
+            "--wait"
+          ],
+          "stderr": "Running as unit: boole-delegated-test-finite-delegated-r1-20261109-final-copy.service; invocation ID: 1680fd47e7da49bb926b07cc8799f3f5\n",
+          "stdout": ""
+        },
+        {
+          "command": [
+            "systemd-run",
+            "--user",
+            "--unit=boole-delegated-test-finite-delegated-r1-20261109-deadline",
+            "--service-type=oneshot",
+            "--on-calendar=2026-11-10 03:43:05 UTC",
+            "--timer-property=AccuracySec=1s",
+            "--timer-property=RandomizedDelaySec=0",
+            "--timer-property=Persistent=no",
+            "/usr/bin/systemctl",
+            "--user",
+            "stop",
+            "boole-delegated-test-finite-delegated-r1-20261109.service"
+          ],
+          "stderr": "Running timer as unit: boole-delegated-test-finite-delegated-r1-20261109-deadline.timer\nWill run service as unit: boole-delegated-test-finite-delegated-r1-20261109-deadline.service\n",
+          "stdout": ""
+        },
+        {
+          "command": [
+            "systemd-run",
+            "--user",
+            "--unit=boole-delegated-test-finite-delegated-r1-20261109",
+            "--collect",
+            "--service-type=exec",
+            "--property=Restart=no",
+            "--property=KillMode=mixed",
+            "--property=TimeoutStopSec=8",
+            "--property=Nice=19",
+            "--property=UMask=0077",
+            "--property=CPUAffinity=0-15",
+            "--property=RuntimeMaxSec=87",
+            "--property=StandardOutput=append:/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/finite-delegated-r1/worker.stdout",
+            "--property=StandardError=append:/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/finite-delegated-r1/worker.stderr",
+            "/home/pnord/boole-results-20261107/venv312/bin/python",
+            "-B",
+            "-u",
+            "/home/pnord/boole-delegated-20261109-00/worker/boole_supervisor.py",
+            "--config",
+            "/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/finite-delegated-r1/config.json"
+          ],
+          "stderr": "Running as unit: boole-delegated-test-finite-delegated-r1-20261109.service; invocation ID: 2eac6d27bc374b0582baa4650a44df99\n",
+          "stdout": ""
+        }
+      ],
+      "config": {
+        "TEST_ONLY": true,
+        "allocation_kind": "independent_reserved_interval",
+        "allocation_role": "boole",
+        "authorization": "User authorized continued production until 2026-11-10 17:00 Central and appending all 67 Ada-protected child claims; no automatic crash resume.",
+        "automatic_resume": false,
+        "backend": "gpu",
+        "bits": 222,
+        "cap": 42,
+        "chunk_patches": 256,
+        "coverage_file": "/home/pnord/boole-delegated-20261109-00/worker/final-coverage.json",
+        "coverage_sha256": "1521df3a7ea17c3fb6207c2e52ce84e53cae728c29bb956ef8a4fc57e26c92f3",
+        "data_device": 83,
+        "deadline_service_name": "boole-delegated-test-finite-delegated-r1-20261109-deadline.service",
+        "dispatch_chunksize": 4,
+        "geometry_policy": "adaptive",
+        "gmp_audit_period": 1,
+        "group_limit": 4,
+        "initial_patch": 7000000000,
+        "journal_buffer_bytes": 8388608,
+        "journal_buffer_max_age_seconds": 0.25,
+        "journal_buffer_records": 8,
+        "journal_limit_bytes": 34359738368,
+        "ledger_claim_sha256": "b37d3423169b7cb0241369f32db6c33eca7433441096779d5fc2b0a73433f10d",
+        "ledger_device": 92,
+        "ledger_job": "finite-delegated-r1",
+        "ledger_root": "/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/suballocation-tests/boole-local-delegated-20261109/finite-delegated-r1/suballocations/borrower",
+        "local_data_device": 66306,
+        "manifest": "/home/pnord/boole-delegated-20261109-00/worker/release-manifest.json",
+        "manifest_sha256": "4f948d745dd526e89480388a7279ad17f0aa70bda5d5f8e2dd75115c8aa6f79e",
+        "maximum_replica_lag_seconds": 300,
+        "minimum_free_disk_bytes": 17179869184,
+        "optimization": "saved-root+exact-host+low64+group4+checked-task-cache+ready-queue+durable-eight-record-buffer",
+        "origin_claim_file": "/home/pnord/boole-delegated-20261109-00/worker/child-claim.json",
+        "origin_claim_file_sha256": "0ec043cb9685abeb36adc2a87830246a984858ace7dc9a5e5cc236cd62c3fcd0",
+        "output": "/home/pnord/fifth42-local-runs/TEST_ONLY_boole_delegated_20261109/boole-delegated-test-finite-delegated-r1-20261109/run",
+        "parent_archive_receipt": "/mnt/fifth42-storage/runs/boole-precision-20261107T222232Z/boole-combined-local-20261109/run/ARCHIVE_RECEIPT.json",
+        "parent_archive_receipt_sha256": "70a2dce598629717984e7476c2b7c41b152f04909a6404e8610de06e46d88338",
+        "parent_audit_file": "/home/pnord/boole-delegated-20261109-00/worker/parent-audit.json",
+        "parent_audit_sha256": "b93382702e0d31ddfca1395e4d652bb9ba0117117dc306872f5b0eb1e8856e37",
+        "parent_checkpoint_sha256": "87358f0de5c2e4286a90b501b7204f5ff9ee1ea6c2e3cfa5e78b2541e21ec94a",
+        "parent_journal_identity": [
+          83,
+          10231726,
+          3879139449,
+          1794255668995245618,
+          1794255668995245618
+        ],
+        "parent_journal_offset": 3879139449,
+        "parent_journal_raw_sha256": "2de054277d50e8fa5292056a10d05453f53ad83ebd2ae0afc7b78ba3f2415bb3",
+        "parent_journal_sha256": "500d286b62c3fdf7d55db7ed1fd5d84a13c729609f2e02c58f493a8d5852df4b",
+        "parent_lineage_file": "/home/pnord/boole-delegated-20261109-00/worker/parent-lineage.json",
+        "parent_lineage_sha256": "79ebf96c8d062e10ff03b9263c19181d2b50b68419912522e5307f8b1a5c6993",
+        "parent_run": "/mnt/fifth42-storage/runs/boole-precision-20261107T222232Z/boole-combined-local-20261109/run",
+        "parent_selected_patches": 0,
+        "parent_status_sha256": "df74e63672353f0a01408ed0bf04570453b72fa40752eee84364b17a2920ee4d",
+        "physical_cpus": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "prep_load_ceiling": 17.0,
+        "preparation_windows": 1,
+        "publication": false,
+        "range_end": 7001000000,
+        "ready_queue_limit": 3,
+        "reference_parent_cursor": 3363301376,
+        "replica_interval_seconds": 60,
+        "replica_output": "/mnt/fifth42-storage/TEST_ONLY_boole_delegated_20261109/boole-delegated-test-finite-delegated-r1-20261109/run",
+        "reservation_initial_patch": 7000000000,
+        "reservation_manifest_sha256": "7c8422f5e9086519db3bc8ad2e8eeab8d7d1d60706f9b327766ba0a069c6a389",
+        "run_id": "boole-delegated-test-finite-delegated-r1-20261109",
+        "running_load_limit": 20.0,
+        "service_name": "boole-delegated-test-finite-delegated-r1-20261109.service",
+        "shell_hi": 200000000000,
+        "shell_lo": 100000000001,
+        "stop_epoch": 1794282195.9985394,
+        "stop_local": "2026-11-10T03:43:15.998539+00:00",
+        "suballocation_grant_file": "/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/suballocation-tests/boole-local-delegated-20261109/finite-delegated-r1/suballocations/borrower/GRANT.json",
+        "suballocation_grant_sha256": "240948569753b46a199f6f0ed1d98f71a92ceb67544fdac7a38dae5a83e06d25",
+        "test_chunk_limit": 17,
+        "width": 8,
+        "workers": 16
+      },
+      "controls": {
+        "cases": [
+          {
+            "bound": 34,
+            "cap": 42,
+            "full_oracle_equal": true,
+            "hits": [
+              [
+                1,
+                1,
+                2,
+                -30
+              ],
+              [
+                13,
+                16,
+                17,
+                12
+              ]
+            ]
+          },
+          {
+            "bound": 100,
+            "cap": 2951,
+            "full_oracle_equal": true,
+            "hits": [
+              [
+                1,
+                1,
+                2,
+                -30
+              ],
+              [
+                1,
+                1,
+                3,
+                -241
+              ],
+              [
+                1,
+                1,
+                4,
+                -1022
+              ],
+              [
+                1,
+                2,
+                3,
+                -210
+              ],
+              [
+                1,
+                2,
+                4,
+                -991
+              ],
+              [
+                1,
+                3,
+                4,
+                -780
+              ],
+              [
+                1,
+                3,
+                5,
+                -2881
+              ],
+              [
+                1,
+                4,
+                5,
+                -2100
+              ],
+              [
+                2,
+                2,
+                3,
+                -179
+              ],
+              [
+                2,
+                2,
+                4,
+                -960
+              ],
+              [
+                2,
+                3,
+                4,
+                -749
+              ],
+              [
+                2,
+                3,
+                5,
+                -2850
+              ],
+              [
+                2,
+                4,
+                5,
+                -2069
+              ],
+              [
+                3,
+                3,
+                4,
+                -538
+              ],
+              [
+                3,
+                3,
+                5,
+                -2639
+              ],
+              [
+                3,
+                4,
+                5,
+                -1858
+              ],
+              [
+                4,
+                4,
+                5,
+                -1077
+              ],
+              [
+                5,
+                5,
+                6,
+                -1526
+              ],
+              [
+                6,
+                6,
+                7,
+                -1255
+              ],
+              [
+                7,
+                7,
+                8,
+                846
+              ],
+              [
+                9,
+                10,
+                11,
+                -2002
+              ],
+              [
+                13,
+                16,
+                17,
+                12
+              ],
+              [
+                26,
+                32,
+                34,
+                384
+              ],
+              [
+                39,
+                48,
+                51,
+                2916
+              ],
+              [
+                42,
+                71,
+                72,
+                2951
+              ]
+            ]
+          }
+        ],
+        "status": "passed"
+      },
+      "existing_output_reuse_rejected": true,
+      "final_replica": {
+        "compute_started": false,
+        "finished_epoch": 1794282139.0529737,
+        "receipt": {
+          "captured_epoch": 1794282137.4481497,
+          "checkpoint_sha256": "4e8f901ad576503e21f5bc3047b8bddd0b55618417394e8eb8f57d945b60b67f",
+          "chunks": 17,
+          "committed_bytes": 313337,
+          "identity": {
+            "source_identity": "4c09597189acbd778d2354cdcf9dec4b40300eceadb4430745d2551c0ba158df",
+            "trial": "boole-delegated-test-finite-delegated-r1-20261109"
+          },
+          "journal_sha256": "c06b01f7bba92e7d7bfb29c54de08b6998299d7334e57d5d3cb10cb3eb69f40b",
+          "method": "append, fsync, byte readback, audit copies, checkpoint, receipt",
+          "next_patch": 7000004352,
+          "raw_sha256": "c3d84d0f08fa9985e30ace3d6b6a359ee38ff92f3ab16ccef3a187ff277a4701",
+          "status": "verified",
+          "synced_epoch": 1794282138.875954
+        },
+        "status": "verified"
+      },
+      "gpu_lease_exclusion": true,
+      "local_audit": {
+        "new_chunks": 17,
+        "new_gmp_audited_chunks": 17,
+        "new_patches": 4352,
+        "next_patch": 7000004352
+      },
+      "original_owner_lock_exclusion": true,
+      "original_timer": {
+        "ActiveState": "active",
+        "NextElapseUSecRealtime": "Mon 2026-11-09 21:43:05 CST",
+        "Result": "success",
+        "SubState": "waiting"
+      },
+      "replica_audit": {
+        "new_chunks": 17,
+        "new_gmp_audited_chunks": 17,
+        "new_patches": 4352,
+        "next_patch": 7000004352
+      },
+      "reuse_rejection": {
+        "TEST_ONLY": true,
+        "config_sha256": "69d9da61c79228290d749919ac41a1722b2efbf863ead99c7bbc319db085749a",
+        "error": "RuntimeError('Fresh run/replica output already exists; reuse forbidden')",
+        "leases_released": true,
+        "load_average": [
+          4.89794921875,
+          6.08837890625,
+          6.005859375
+        ],
+        "status": "failed",
+        "updated_utc": "2026-11-10T03:42:19.389135+00:00",
+        "wall_seconds": 0.06384704896481708
+      },
+      "scientific_coverage": false,
+      "stable_owner_inode": 47211510,
+      "status": "passed",
+      "supervisor": {
+        "TEST_ONLY": true,
+        "all_owned_processes_exited_utc": "2026-11-10T03:42:17.381630+00:00",
+        "config_sha256": "a59f142f8553ccf1833491924e503eb9379bac467874ad91fd7eb83b0255b7af",
+        "error": null,
+        "leases_released": true,
+        "load_average": [
+          5.150390625,
+          6.15771484375,
+          6.02783203125
+        ],
+        "status": "finished",
+        "updated_utc": "2026-11-10T03:42:17.381653+00:00",
+        "wall_seconds": 27.108070863003377,
+        "worker_exit_code": 0,
+        "worker_pid": 2433203
+      },
+      "worker_status": {
+        "automatic_resume": false,
+        "backend": "gpu",
+        "canonical_task_cache": true,
+        "chunks": 17,
+        "coefficient_points": 668397160,
+        "combined_selected_patches": 4352,
+        "completed_bound": null,
+        "dispatch_chunksize": 4,
+        "engine_pid": 2433283,
+        "error": null,
+        "geometry_policy": "adaptive",
+        "gmp_audited_chunks": 17,
+        "group_limit": 4,
+        "hits": [],
+        "independent_oracle_verified_through": 0,
+        "initial_patch": 7000000000,
+        "journal_buffer": {
+          "flush_count": 9,
+          "flush_seconds": 0.026686540979426354,
+          "pending_bytes": 0,
+          "pending_chunks": 0
+        },
+        "journal_offset": 313337,
+        "journal_sha256": "c06b01f7bba92e7d7bfb29c54de08b6998299d7334e57d5d3cb10cb3eb69f40b",
+        "journal_storage": "local durable journal; verified periodic bulk replica",
+        "ledger_claim_sha256": "b37d3423169b7cb0241369f32db6c33eca7433441096779d5fc2b0a73433f10d",
+        "ledger_root": "/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/suballocation-tests/boole-local-delegated-20261109/finite-delegated-r1/suballocations/borrower",
+        "next_patch": 7000004352,
+        "parent_run": "/mnt/fifth42-storage/runs/boole-precision-20261107T222232Z/boole-combined-local-20261109/run",
+        "patches": 4352,
+        "patches_per_second": 264.10974773035355,
+        "physical_tasks": 1088,
+        "prefetch": {
+          "active": 0,
+          "consumer_wait_empty_seconds": 0.01101808698149398,
+          "elapsed_seconds": 16.476146327040624,
+          "inflight": 0,
+          "max_outstanding": 5,
+          "maximum_prepared_payload_bytes": 480348,
+          "mean_ready_depth": 2.5387844559495414,
+          "outstanding": 0,
+          "peak_outstanding": 5,
+          "peak_ready": 3,
+          "peak_reserved_bytes": 41943040,
+          "preparation_batches": 17,
+          "prepare_wall_seconds": 11.507272211019881,
+          "producer_wait_capacity_seconds": 1.8229999113827944e-05,
+          "producer_wait_full_seconds": 11.283999055915046,
+          "ready": 0,
+          "ready_depth_seconds": {
+            "0": 1.2814327260130085,
+            "1": 1.2569204940809868,
+            "2": 1.2409023959189653,
+            "3": 12.69688630104065
+          },
+          "ready_limit": 3,
+          "reserved_bytes": 0
+        },
+        "preparation_load_ceiling": 17.0,
+        "preparation_pacing_seconds": 0.0,
+        "publication": false,
+        "reason": "Bounded integration chunks completed",
+        "replication": {
+          "captured_epoch": 1794282119.3447056,
+          "checkpoint_sha256": "caa0c64623a0ce7ea1b79f76ca9040055aa6967cb4b616abe251221e22e3e571",
+          "chunks": 2,
+          "committed_bytes": 36865,
+          "identity": {
+            "source_identity": "4c09597189acbd778d2354cdcf9dec4b40300eceadb4430745d2551c0ba158df",
+            "trial": "boole-delegated-test-finite-delegated-r1-20261109"
+          },
+          "journal_sha256": "b53ea3a382c0e718d941939dea02e2f51d044663641a6b14d78cbef26fa5d07a",
+          "method": "append, fsync, byte readback, audit copies, checkpoint, receipt",
+          "next_patch": 7000000512,
+          "raw_sha256": "68ee990526ebc3c4f436146ca74d4332d2b47e173b2feb0770d548987aec0695",
+          "status": "verified",
+          "synced_epoch": 1794282119.9454017
+        },
+        "replication_error": null,
+        "run_id": "boole-delegated-test-finite-delegated-r1-20261109",
+        "search_seconds": 16.47799839801155,
+        "selected_interval": [
+          7000000000,
+          7000004352
+        ],
+        "source_identity": "4c09597189acbd778d2354cdcf9dec4b40300eceadb4430745d2551c0ba158df",
+        "status": "completed_test",
+        "stop_epoch": 1794282195.9985394,
+        "stop_local": "2026-11-10T03:43:15.998539+00:00",
+        "updated_utc": "2026-11-10T03:42:14.057912+00:00",
+        "worker_pid": 2433203,
+        "workers": 16
+      }
+    },
+    {
+      "TEST_ONLY": true,
+      "case": "signal-delegated-r1",
+      "checkpoint": {
+        "chunks": 11,
+        "completed_bound": null,
+        "coverage_schema": "logical-width8-physical-groups-v1",
+        "hits": [],
+        "identity": {
+          "source_identity": "69408f639c982fe70e878d9713a601957ab1ad0c6bacfae50555408b1499135f",
+          "trial": "boole-delegated-test-signal-delegated-r1-20261109"
+        },
+        "journal_offset": 202755,
+        "journal_sha256": "cc55ac43473f8e9d24115a044084ddb2b7ada0ea7e7291892994a59df31ff0c0",
+        "next_patch": 7000002816,
+        "patches": 2816,
+        "physical_tasks": 704,
+        "points": 432568732,
+        "window": {
+          "bits": 222,
+          "cap": 42,
+          "first": 7000000000,
+          "geometry_policy": "adaptive",
+          "hi": 200000000000,
+          "last": 7001000000,
+          "lo": 100000000001,
+          "width": 8
+        }
+      },
+      "commands": [
+        {
+          "command": [
+            "systemd-run",
+            "--user",
+            "--unit=boole-delegated-test-signal-delegated-r1-20261109-final-copy",
+            "--collect",
+            "--service-type=exec",
+            "--property=Restart=no",
+            "--property=Nice=19",
+            "--property=UMask=0077",
+            "--property=RuntimeMaxSec=157",
+            "--property=StandardOutput=append:/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/signal-delegated-r1/final-copy.stdout",
+            "--property=StandardError=append:/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/signal-delegated-r1/final-copy.stderr",
+            "/home/pnord/boole-results-20261107/venv312/bin/python",
+            "-B",
+            "/home/pnord/boole-delegated-20261109-00/worker/finalize_replica.py",
+            "--config",
+            "/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/signal-delegated-r1/config.json",
+            "--config-sha256",
+            "5603bab8003f9a065767d289cd5c99fcbeb7f59531572e1d6eab7e3d8c4f3dc3",
+            "--wait"
+          ],
+          "stderr": "Running as unit: boole-delegated-test-signal-delegated-r1-20261109-final-copy.service; invocation ID: 0775504a305a4b02aae8879e2e13aec7\n",
+          "stdout": ""
+        },
+        {
+          "command": [
+            "systemd-run",
+            "--user",
+            "--unit=boole-delegated-test-signal-delegated-r1-20261109-deadline",
+            "--service-type=oneshot",
+            "--on-calendar=2026-11-10 03:43:49 UTC",
+            "--timer-property=AccuracySec=1s",
+            "--timer-property=RandomizedDelaySec=0",
+            "--timer-property=Persistent=no",
+            "/usr/bin/systemctl",
+            "--user",
+            "stop",
+            "boole-delegated-test-signal-delegated-r1-20261109.service"
+          ],
+          "stderr": "Running timer as unit: boole-delegated-test-signal-delegated-r1-20261109-deadline.timer\nWill run service as unit: boole-delegated-test-signal-delegated-r1-20261109-deadline.service\n",
+          "stdout": ""
+        },
+        {
+          "command": [
+            "systemd-run",
+            "--user",
+            "--unit=boole-delegated-test-signal-delegated-r1-20261109",
+            "--collect",
+            "--service-type=exec",
+            "--property=Restart=no",
+            "--property=KillMode=mixed",
+            "--property=TimeoutStopSec=8",
+            "--property=Nice=19",
+            "--property=UMask=0077",
+            "--property=CPUAffinity=0-15",
+            "--property=RuntimeMaxSec=98",
+            "--property=StandardOutput=append:/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/signal-delegated-r1/worker.stdout",
+            "--property=StandardError=append:/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/signal-delegated-r1/worker.stderr",
+            "/home/pnord/boole-results-20261107/venv312/bin/python",
+            "-B",
+            "-u",
+            "/home/pnord/boole-delegated-20261109-00/worker/boole_supervisor.py",
+            "--config",
+            "/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/signal-delegated-r1/config.json"
+          ],
+          "stderr": "Running as unit: boole-delegated-test-signal-delegated-r1-20261109.service; invocation ID: e1720250323446a99a7fdc502ef7f75d\n",
+          "stdout": ""
+        }
+      ],
+      "config": {
+        "TEST_ONLY": true,
+        "allocation_kind": "independent_reserved_interval",
+        "allocation_role": "boole",
+        "authorization": "User authorized continued production until 2026-11-10 17:00 Central and appending all 67 Ada-protected child claims; no automatic crash resume.",
+        "automatic_resume": false,
+        "backend": "gpu",
+        "bits": 222,
+        "cap": 42,
+        "chunk_patches": 256,
+        "coverage_file": "/home/pnord/boole-delegated-20261109-00/worker/final-coverage.json",
+        "coverage_sha256": "1521df3a7ea17c3fb6207c2e52ce84e53cae728c29bb956ef8a4fc57e26c92f3",
+        "data_device": 83,
+        "deadline_service_name": "boole-delegated-test-signal-delegated-r1-20261109-deadline.service",
+        "dispatch_chunksize": 4,
+        "geometry_policy": "adaptive",
+        "gmp_audit_period": 128,
+        "group_limit": 4,
+        "initial_patch": 7000000000,
+        "journal_buffer_bytes": 8388608,
+        "journal_buffer_max_age_seconds": 0.25,
+        "journal_buffer_records": 8,
+        "journal_limit_bytes": 34359738368,
+        "ledger_claim_sha256": "93509565412859c8c20375d175b091463261603b505d7aaee0d0a3bdfac8fe02",
+        "ledger_device": 92,
+        "ledger_job": "signal-delegated-r1",
+        "ledger_root": "/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/suballocation-tests/boole-local-delegated-20261109/signal-delegated-r1/suballocations/borrower",
+        "local_data_device": 66306,
+        "manifest": "/home/pnord/boole-delegated-20261109-00/worker/release-manifest.json",
+        "manifest_sha256": "4f948d745dd526e89480388a7279ad17f0aa70bda5d5f8e2dd75115c8aa6f79e",
+        "maximum_replica_lag_seconds": 300,
+        "minimum_free_disk_bytes": 17179869184,
+        "optimization": "saved-root+exact-host+low64+group4+checked-task-cache+ready-queue+durable-eight-record-buffer",
+        "origin_claim_file": "/home/pnord/boole-delegated-20261109-00/worker/child-claim.json",
+        "origin_claim_file_sha256": "0ec043cb9685abeb36adc2a87830246a984858ace7dc9a5e5cc236cd62c3fcd0",
+        "output": "/home/pnord/fifth42-local-runs/TEST_ONLY_boole_delegated_20261109/boole-delegated-test-signal-delegated-r1-20261109/run",
+        "parent_archive_receipt": "/mnt/fifth42-storage/runs/boole-precision-20261107T222232Z/boole-combined-local-20261109/run/ARCHIVE_RECEIPT.json",
+        "parent_archive_receipt_sha256": "70a2dce598629717984e7476c2b7c41b152f04909a6404e8610de06e46d88338",
+        "parent_audit_file": "/home/pnord/boole-delegated-20261109-00/worker/parent-audit.json",
+        "parent_audit_sha256": "b93382702e0d31ddfca1395e4d652bb9ba0117117dc306872f5b0eb1e8856e37",
+        "parent_checkpoint_sha256": "87358f0de5c2e4286a90b501b7204f5ff9ee1ea6c2e3cfa5e78b2541e21ec94a",
+        "parent_journal_identity": [
+          83,
+          10231726,
+          3879139449,
+          1794255668995245618,
+          1794255668995245618
+        ],
+        "parent_journal_offset": 3879139449,
+        "parent_journal_raw_sha256": "2de054277d50e8fa5292056a10d05453f53ad83ebd2ae0afc7b78ba3f2415bb3",
+        "parent_journal_sha256": "500d286b62c3fdf7d55db7ed1fd5d84a13c729609f2e02c58f493a8d5852df4b",
+        "parent_lineage_file": "/home/pnord/boole-delegated-20261109-00/worker/parent-lineage.json",
+        "parent_lineage_sha256": "79ebf96c8d062e10ff03b9263c19181d2b50b68419912522e5307f8b1a5c6993",
+        "parent_run": "/mnt/fifth42-storage/runs/boole-precision-20261107T222232Z/boole-combined-local-20261109/run",
+        "parent_selected_patches": 0,
+        "parent_status_sha256": "df74e63672353f0a01408ed0bf04570453b72fa40752eee84364b17a2920ee4d",
+        "physical_cpus": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "prep_load_ceiling": 17.0,
+        "preparation_windows": 1,
+        "publication": false,
+        "range_end": 7001000000,
+        "ready_queue_limit": 3,
+        "reference_parent_cursor": 3363301376,
+        "replica_interval_seconds": 60,
+        "replica_output": "/mnt/fifth42-storage/TEST_ONLY_boole_delegated_20261109/boole-delegated-test-signal-delegated-r1-20261109/run",
+        "reservation_initial_patch": 7000000000,
+        "reservation_manifest_sha256": "7c8422f5e9086519db3bc8ad2e8eeab8d7d1d60706f9b327766ba0a069c6a389",
+        "run_id": "boole-delegated-test-signal-delegated-r1-20261109",
+        "running_load_limit": 20.0,
+        "service_name": "boole-delegated-test-signal-delegated-r1-20261109.service",
+        "shell_hi": 200000000000,
+        "shell_lo": 100000000001,
+        "stop_epoch": 1794282239.6714797,
+        "stop_local": "2026-11-10T03:43:59.671480+00:00",
+        "suballocation_grant_file": "/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/suballocation-tests/boole-local-delegated-20261109/signal-delegated-r1/suballocations/borrower/GRANT.json",
+        "suballocation_grant_sha256": "fbe178d9f9a5e1b17762836f899e9e0b728548eb70e41c8cb5c0aa87fa319c66",
+        "test_chunk_limit": null,
+        "width": 8,
+        "workers": 16
+      },
+      "controls": {
+        "cases": [
+          {
+            "bound": 34,
+            "cap": 42,
+            "full_oracle_equal": true,
+            "hits": [
+              [
+                1,
+                1,
+                2,
+                -30
+              ],
+              [
+                13,
+                16,
+                17,
+                12
+              ]
+            ]
+          },
+          {
+            "bound": 100,
+            "cap": 2951,
+            "full_oracle_equal": true,
+            "hits": [
+              [
+                1,
+                1,
+                2,
+                -30
+              ],
+              [
+                1,
+                1,
+                3,
+                -241
+              ],
+              [
+                1,
+                1,
+                4,
+                -1022
+              ],
+              [
+                1,
+                2,
+                3,
+                -210
+              ],
+              [
+                1,
+                2,
+                4,
+                -991
+              ],
+              [
+                1,
+                3,
+                4,
+                -780
+              ],
+              [
+                1,
+                3,
+                5,
+                -2881
+              ],
+              [
+                1,
+                4,
+                5,
+                -2100
+              ],
+              [
+                2,
+                2,
+                3,
+                -179
+              ],
+              [
+                2,
+                2,
+                4,
+                -960
+              ],
+              [
+                2,
+                3,
+                4,
+                -749
+              ],
+              [
+                2,
+                3,
+                5,
+                -2850
+              ],
+              [
+                2,
+                4,
+                5,
+                -2069
+              ],
+              [
+                3,
+                3,
+                4,
+                -538
+              ],
+              [
+                3,
+                3,
+                5,
+                -2639
+              ],
+              [
+                3,
+                4,
+                5,
+                -1858
+              ],
+              [
+                4,
+                4,
+                5,
+                -1077
+              ],
+              [
+                5,
+                5,
+                6,
+                -1526
+              ],
+              [
+                6,
+                6,
+                7,
+                -1255
+              ],
+              [
+                7,
+                7,
+                8,
+                846
+              ],
+              [
+                9,
+                10,
+                11,
+                -2002
+              ],
+              [
+                13,
+                16,
+                17,
+                12
+              ],
+              [
+                26,
+                32,
+                34,
+                384
+              ],
+              [
+                39,
+                48,
+                51,
+                2916
+              ],
+              [
+                42,
+                71,
+                72,
+                2951
+              ]
+            ]
+          }
+        ],
+        "status": "passed"
+      },
+      "final_replica": {
+        "compute_started": false,
+        "finished_epoch": 1794282146.7921407,
+        "receipt": {
+          "captured_epoch": 1794282145.847402,
+          "checkpoint_sha256": "7b26e04b4db65da77166daeba882eab421afd92693f0129c42416df696cb6183",
+          "chunks": 11,
+          "committed_bytes": 202755,
+          "identity": {
+            "source_identity": "69408f639c982fe70e878d9713a601957ab1ad0c6bacfae50555408b1499135f",
+            "trial": "boole-delegated-test-signal-delegated-r1-20261109"
+          },
+          "journal_sha256": "cc55ac43473f8e9d24115a044084ddb2b7ada0ea7e7291892994a59df31ff0c0",
+          "method": "append, fsync, byte readback, audit copies, checkpoint, receipt",
+          "next_patch": 7000002816,
+          "raw_sha256": "5dc4a317c99ae5e1db4a7849303b9d2045f0e67caec277a88f7c0cc146d602df",
+          "status": "verified",
+          "synced_epoch": 1794282146.6075377
+        },
+        "status": "verified"
+      },
+      "gpu_lease_exclusion": true,
+      "local_audit": {
+        "new_chunks": 11,
+        "new_gmp_audited_chunks": 1,
+        "new_patches": 2816,
+        "next_patch": 7000002816
+      },
+      "original_owner_lock_exclusion": true,
+      "original_timer": {
+        "ActiveState": "active",
+        "NextElapseUSecRealtime": "Mon 2026-11-09 21:43:49 CST",
+        "Result": "success",
+        "SubState": "waiting"
+      },
+      "replica_audit": {
+        "new_chunks": 11,
+        "new_gmp_audited_chunks": 1,
+        "new_patches": 2816,
+        "next_patch": 7000002816
+      },
+      "scientific_coverage": false,
+      "stable_owner_inode": 47211537,
+      "status": "passed",
+      "supervisor": {
+        "TEST_ONLY": true,
+        "all_owned_processes_exited_utc": "2026-11-10T03:42:24.902397+00:00",
+        "config_sha256": "5603bab8003f9a065767d289cd5c99fcbeb7f59531572e1d6eab7e3d8c4f3dc3",
+        "error": null,
+        "leases_released": true,
+        "load_average": [
+          4.66552734375,
+          6.02001953125,
+          5.98388671875
+        ],
+        "status": "finished",
+        "stop_trigger": "signal",
+        "updated_utc": "2026-11-10T03:42:24.902426+00:00",
+        "wall_seconds": 4.980409032024909,
+        "worker_exit_code": 0,
+        "worker_pid": 2433585
+      },
+      "worker_status": {
+        "automatic_resume": false,
+        "backend": "gpu",
+        "canonical_task_cache": true,
+        "chunks": 11,
+        "coefficient_points": 432568732,
+        "combined_selected_patches": 2816,
+        "completed_bound": null,
+        "dispatch_chunksize": 4,
+        "engine_pid": 2433657,
+        "error": null,
+        "geometry_policy": "adaptive",
+        "gmp_audited_chunks": 1,
+        "group_limit": 4,
+        "hits": [],
+        "independent_oracle_verified_through": 0,
+        "initial_patch": 7000000000,
+        "journal_buffer": {
+          "flush_count": 2,
+          "flush_seconds": 0.010170113062486053,
+          "pending_bytes": 0,
+          "pending_chunks": 0
+        },
+        "journal_offset": 202755,
+        "journal_sha256": "cc55ac43473f8e9d24115a044084ddb2b7ada0ea7e7291892994a59df31ff0c0",
+        "journal_storage": "local durable journal; verified periodic bulk replica",
+        "ledger_claim_sha256": "93509565412859c8c20375d175b091463261603b505d7aaee0d0a3bdfac8fe02",
+        "ledger_root": "/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/suballocation-tests/boole-local-delegated-20261109/signal-delegated-r1/suballocations/borrower",
+        "next_patch": 7000002816,
+        "parent_run": "/mnt/fifth42-storage/runs/boole-precision-20261107T222232Z/boole-combined-local-20261109/run",
+        "patches": 2816,
+        "patches_per_second": 2391.987756391326,
+        "physical_tasks": 704,
+        "prefetch": {
+          "active": 0,
+          "consumer_wait_empty_seconds": 0.013469192024786025,
+          "elapsed_seconds": 1.1707269109901972,
+          "inflight": 0,
+          "max_outstanding": 5,
+          "maximum_prepared_payload_bytes": 480348,
+          "mean_ready_depth": 2.6885608227427022,
+          "outstanding": 0,
+          "peak_outstanding": 5,
+          "peak_ready": 3,
+          "peak_reserved_bytes": 41943040,
+          "preparation_batches": 15,
+          "prepare_wall_seconds": 1.0160420981119387,
+          "producer_wait_capacity_seconds": 1.5880155842751265e-05,
+          "producer_wait_full_seconds": 0.908103127963841,
+          "ready": 0,
+          "ready_depth_seconds": {
+            "0": 0.10495586099568754,
+            "1": 0.015192381979431957,
+            "2": 0.019342758925631642,
+            "3": 1.0312308690627106
+          },
+          "ready_limit": 3,
+          "reserved_bytes": 0
+        },
+        "preparation_load_ceiling": 17.0,
+        "preparation_pacing_seconds": 0.0,
+        "publication": false,
+        "reason": "Stop requested",
+        "replication": null,
+        "replication_error": null,
+        "run_id": "boole-delegated-test-signal-delegated-r1-20261109",
+        "search_seconds": 1.1772635509842075,
+        "selected_interval": [
+          7000000000,
+          7000002816
+        ],
+        "source_identity": "69408f639c982fe70e878d9713a601957ab1ad0c6bacfae50555408b1499135f",
+        "status": "stopped",
+        "stop_epoch": 1794282239.6714797,
+        "stop_local": "2026-11-10T03:43:59.671480+00:00",
+        "updated_utc": "2026-11-10T03:42:21.984997+00:00",
+        "worker_pid": 2433585,
+        "workers": 16
+      }
+    },
+    {
+      "TEST_ONLY": true,
+      "case": "deadline-delegated-r1",
+      "checkpoint": {
+        "chunks": 1537,
+        "completed_bound": null,
+        "coverage_schema": "logical-width8-physical-groups-v1",
+        "hits": [],
+        "identity": {
+          "source_identity": "186fdbc487b57afc17ec7f7983b6de3b7794ce1195c2b328a173e2d131994309",
+          "trial": "boole-delegated-test-deadline-delegated-r1-20261109"
+        },
+        "journal_offset": 28336235,
+        "journal_sha256": "65e7b8db62007e7f49bc6d7e8b6a0757c62c4d0f853bf51d3d3774c46db9bb6a",
+        "next_patch": 7000393472,
+        "patches": 393472,
+        "physical_tasks": 98368,
+        "points": 60368623214,
+        "window": {
+          "bits": 222,
+          "cap": 42,
+          "first": 7000000000,
+          "geometry_policy": "adaptive",
+          "hi": 200000000000,
+          "last": 7001000000,
+          "lo": 100000000001,
+          "width": 8
+        }
+      },
+      "commands": [
+        {
+          "command": [
+            "systemd-run",
+            "--user",
+            "--unit=boole-delegated-test-deadline-delegated-r1-20261109-final-copy",
+            "--collect",
+            "--service-type=exec",
+            "--property=Restart=no",
+            "--property=Nice=19",
+            "--property=UMask=0077",
+            "--property=RuntimeMaxSec=97",
+            "--property=StandardOutput=append:/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/deadline-delegated-r1/final-copy.stdout",
+            "--property=StandardError=append:/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/deadline-delegated-r1/final-copy.stderr",
+            "/home/pnord/boole-results-20261107/venv312/bin/python",
+            "-B",
+            "/home/pnord/boole-delegated-20261109-00/worker/finalize_replica.py",
+            "--config",
+            "/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/deadline-delegated-r1/config.json",
+            "--config-sha256",
+            "1178e1a78fc3821c52bacbb23ff7bbfa263dafd98953944e900aa58274f29c1b",
+            "--wait"
+          ],
+          "stderr": "Running as unit: boole-delegated-test-deadline-delegated-r1-20261109-final-copy.service; invocation ID: 766f54f2e0524e938ab1ab727db85cbd\n",
+          "stdout": ""
+        },
+        {
+          "command": [
+            "systemd-run",
+            "--user",
+            "--unit=boole-delegated-test-deadline-delegated-r1-20261109-deadline",
+            "--service-type=oneshot",
+            "--on-calendar=2026-11-10 03:42:57 UTC",
+            "--timer-property=AccuracySec=1s",
+            "--timer-property=RandomizedDelaySec=0",
+            "--timer-property=Persistent=no",
+            "/usr/bin/systemctl",
+            "--user",
+            "stop",
+            "boole-delegated-test-deadline-delegated-r1-20261109.service"
+          ],
+          "stderr": "Running timer as unit: boole-delegated-test-deadline-delegated-r1-20261109-deadline.timer\nWill run service as unit: boole-delegated-test-deadline-delegated-r1-20261109-deadline.service\n",
+          "stdout": ""
+        },
+        {
+          "command": [
+            "systemd-run",
+            "--user",
+            "--unit=boole-delegated-test-deadline-delegated-r1-20261109",
+            "--collect",
+            "--service-type=exec",
+            "--property=Restart=no",
+            "--property=KillMode=mixed",
+            "--property=TimeoutStopSec=8",
+            "--property=Nice=19",
+            "--property=UMask=0077",
+            "--property=CPUAffinity=0-15",
+            "--property=RuntimeMaxSec=38",
+            "--property=StandardOutput=append:/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/deadline-delegated-r1/worker.stdout",
+            "--property=StandardError=append:/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/deadline-delegated-r1/worker.stderr",
+            "/home/pnord/boole-results-20261107/venv312/bin/python",
+            "-B",
+            "-u",
+            "/home/pnord/boole-delegated-20261109-00/worker/boole_supervisor.py",
+            "--config",
+            "/home/pnord/boole-delegated-20261109-00/evidence/boole-validation/deadline-delegated-r1/config.json"
+          ],
+          "stderr": "Running as unit: boole-delegated-test-deadline-delegated-r1-20261109.service; invocation ID: fd9edffea3a34976a72d2ad202165888\n",
+          "stdout": ""
+        }
+      ],
+      "config": {
+        "TEST_ONLY": true,
+        "allocation_kind": "independent_reserved_interval",
+        "allocation_role": "boole",
+        "authorization": "User authorized continued production until 2026-11-10 17:00 Central and appending all 67 Ada-protected child claims; no automatic crash resume.",
+        "automatic_resume": false,
+        "backend": "gpu",
+        "bits": 222,
+        "cap": 42,
+        "chunk_patches": 256,
+        "coverage_file": "/home/pnord/boole-delegated-20261109-00/worker/final-coverage.json",
+        "coverage_sha256": "1521df3a7ea17c3fb6207c2e52ce84e53cae728c29bb956ef8a4fc57e26c92f3",
+        "data_device": 83,
+        "deadline_service_name": "boole-delegated-test-deadline-delegated-r1-20261109-deadline.service",
+        "dispatch_chunksize": 4,
+        "geometry_policy": "adaptive",
+        "gmp_audit_period": 128,
+        "group_limit": 4,
+        "initial_patch": 7000000000,
+        "journal_buffer_bytes": 8388608,
+        "journal_buffer_max_age_seconds": 0.25,
+        "journal_buffer_records": 8,
+        "journal_limit_bytes": 34359738368,
+        "ledger_claim_sha256": "cc32c2ce8489850db0eb1b9f4d85b460b1028ad85b019138ea4a48f3b97fbd36",
+        "ledger_device": 92,
+        "ledger_job": "deadline-delegated-r1",
+        "ledger_root": "/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/suballocation-tests/boole-local-delegated-20261109/deadline-delegated-r1/suballocations/borrower",
+        "local_data_device": 66306,
+        "manifest": "/home/pnord/boole-delegated-20261109-00/worker/release-manifest.json",
+        "manifest_sha256": "4f948d745dd526e89480388a7279ad17f0aa70bda5d5f8e2dd75115c8aa6f79e",
+        "maximum_replica_lag_seconds": 300,
+        "minimum_free_disk_bytes": 17179869184,
+        "optimization": "saved-root+exact-host+low64+group4+checked-task-cache+ready-queue+durable-eight-record-buffer",
+        "origin_claim_file": "/home/pnord/boole-delegated-20261109-00/worker/child-claim.json",
+        "origin_claim_file_sha256": "0ec043cb9685abeb36adc2a87830246a984858ace7dc9a5e5cc236cd62c3fcd0",
+        "output": "/home/pnord/fifth42-local-runs/TEST_ONLY_boole_delegated_20261109/boole-delegated-test-deadline-delegated-r1-20261109/run",
+        "parent_archive_receipt": "/mnt/fifth42-storage/runs/boole-precision-20261107T222232Z/boole-combined-local-20261109/run/ARCHIVE_RECEIPT.json",
+        "parent_archive_receipt_sha256": "70a2dce598629717984e7476c2b7c41b152f04909a6404e8610de06e46d88338",
+        "parent_audit_file": "/home/pnord/boole-delegated-20261109-00/worker/parent-audit.json",
+        "parent_audit_sha256": "b93382702e0d31ddfca1395e4d652bb9ba0117117dc306872f5b0eb1e8856e37",
+        "parent_checkpoint_sha256": "87358f0de5c2e4286a90b501b7204f5ff9ee1ea6c2e3cfa5e78b2541e21ec94a",
+        "parent_journal_identity": [
+          83,
+          10231726,
+          3879139449,
+          1794255668995245618,
+          1794255668995245618
+        ],
+        "parent_journal_offset": 3879139449,
+        "parent_journal_raw_sha256": "2de054277d50e8fa5292056a10d05453f53ad83ebd2ae0afc7b78ba3f2415bb3",
+        "parent_journal_sha256": "500d286b62c3fdf7d55db7ed1fd5d84a13c729609f2e02c58f493a8d5852df4b",
+        "parent_lineage_file": "/home/pnord/boole-delegated-20261109-00/worker/parent-lineage.json",
+        "parent_lineage_sha256": "79ebf96c8d062e10ff03b9263c19181d2b50b68419912522e5307f8b1a5c6993",
+        "parent_run": "/mnt/fifth42-storage/runs/boole-precision-20261107T222232Z/boole-combined-local-20261109/run",
+        "parent_selected_patches": 0,
+        "parent_status_sha256": "df74e63672353f0a01408ed0bf04570453b72fa40752eee84364b17a2920ee4d",
+        "physical_cpus": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "prep_load_ceiling": 17.0,
+        "preparation_windows": 1,
+        "publication": false,
+        "range_end": 7001000000,
+        "ready_queue_limit": 3,
+        "reference_parent_cursor": 3363301376,
+        "replica_interval_seconds": 60,
+        "replica_output": "/mnt/fifth42-storage/TEST_ONLY_boole_delegated_20261109/boole-delegated-test-deadline-delegated-r1-20261109/run",
+        "reservation_initial_patch": 7000000000,
+        "reservation_manifest_sha256": "7c8422f5e9086519db3bc8ad2e8eeab8d7d1d60706f9b327766ba0a069c6a389",
+        "run_id": "boole-delegated-test-deadline-delegated-r1-20261109",
+        "running_load_limit": 20.0,
+        "service_name": "boole-delegated-test-deadline-delegated-r1-20261109.service",
+        "shell_hi": 200000000000,
+        "shell_lo": 100000000001,
+        "stop_epoch": 1794282187.13266,
+        "stop_local": "2026-11-10T03:43:07.132660+00:00",
+        "suballocation_grant_file": "/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/suballocation-tests/boole-local-delegated-20261109/deadline-delegated-r1/suballocations/borrower/GRANT.json",
+        "suballocation_grant_sha256": "ab5426a374982d0bb2ace7ee77a377053eadf09e04f62fa03a2d480952b7fc0d",
+        "test_chunk_limit": null,
+        "width": 8,
+        "workers": 16
+      },
+      "controls": {
+        "cases": [
+          {
+            "bound": 34,
+            "cap": 42,
+            "full_oracle_equal": true,
+            "hits": [
+              [
+                1,
+                1,
+                2,
+                -30
+              ],
+              [
+                13,
+                16,
+                17,
+                12
+              ]
+            ]
+          },
+          {
+            "bound": 100,
+            "cap": 2951,
+            "full_oracle_equal": true,
+            "hits": [
+              [
+                1,
+                1,
+                2,
+                -30
+              ],
+              [
+                1,
+                1,
+                3,
+                -241
+              ],
+              [
+                1,
+                1,
+                4,
+                -1022
+              ],
+              [
+                1,
+                2,
+                3,
+                -210
+              ],
+              [
+                1,
+                2,
+                4,
+                -991
+              ],
+              [
+                1,
+                3,
+                4,
+                -780
+              ],
+              [
+                1,
+                3,
+                5,
+                -2881
+              ],
+              [
+                1,
+                4,
+                5,
+                -2100
+              ],
+              [
+                2,
+                2,
+                3,
+                -179
+              ],
+              [
+                2,
+                2,
+                4,
+                -960
+              ],
+              [
+                2,
+                3,
+                4,
+                -749
+              ],
+              [
+                2,
+                3,
+                5,
+                -2850
+              ],
+              [
+                2,
+                4,
+                5,
+                -2069
+              ],
+              [
+                3,
+                3,
+                4,
+                -538
+              ],
+              [
+                3,
+                3,
+                5,
+                -2639
+              ],
+              [
+                3,
+                4,
+                5,
+                -1858
+              ],
+              [
+                4,
+                4,
+                5,
+                -1077
+              ],
+              [
+                5,
+                5,
+                6,
+                -1526
+              ],
+              [
+                6,
+                6,
+                7,
+                -1255
+              ],
+              [
+                7,
+                7,
+                8,
+                846
+              ],
+              [
+                9,
+                10,
+                11,
+                -2002
+              ],
+              [
+                13,
+                16,
+                17,
+                12
+              ],
+              [
+                26,
+                32,
+                34,
+                384
+              ],
+              [
+                39,
+                48,
+                51,
+                2916
+              ],
+              [
+                42,
+                71,
+                72,
+                2951
+              ]
+            ]
+          }
+        ],
+        "status": "passed"
+      },
+      "final_replica": {
+        "compute_started": false,
+        "finished_epoch": 1794282185.3387964,
+        "receipt": {
+          "captured_epoch": 1794282181.6375747,
+          "checkpoint_sha256": "79a1f81193dc030f296670986d72193481bf3d34bfce0334283c7754c949ae6c",
+          "chunks": 1537,
+          "committed_bytes": 28336235,
+          "identity": {
+            "source_identity": "186fdbc487b57afc17ec7f7983b6de3b7794ce1195c2b328a173e2d131994309",
+            "trial": "boole-delegated-test-deadline-delegated-r1-20261109"
+          },
+          "journal_sha256": "65e7b8db62007e7f49bc6d7e8b6a0757c62c4d0f853bf51d3d3774c46db9bb6a",
+          "method": "append, fsync, byte readback, audit copies, checkpoint, receipt",
+          "next_patch": 7000393472,
+          "raw_sha256": "ed761db01c5f95d11acbf7aa0d33fc98484eafefb26a1615b2cba7aa75f06305",
+          "status": "verified",
+          "synced_epoch": 1794282185.152552
+        },
+        "status": "verified"
+      },
+      "gpu_lease_exclusion": true,
+      "local_audit": {
+        "new_chunks": 1537,
+        "new_gmp_audited_chunks": 13,
+        "new_patches": 393472,
+        "next_patch": 7000393472
+      },
+      "original_owner_lock_exclusion": true,
+      "original_timer": {
+        "ActiveState": "active",
+        "NextElapseUSecRealtime": "Mon 2026-11-09 21:42:57 CST",
+        "Result": "success",
+        "SubState": "waiting"
+      },
+      "replica_audit": {
+        "new_chunks": 1537,
+        "new_gmp_audited_chunks": 13,
+        "new_patches": 393472,
+        "next_patch": 7000393472
+      },
+      "scientific_coverage": false,
+      "stable_owner_inode": 47211523,
+      "status": "passed",
+      "supervisor": {
+        "TEST_ONLY": true,
+        "all_owned_processes_exited_utc": "2026-11-10T03:43:01.152943+00:00",
+        "config_sha256": "1178e1a78fc3821c52bacbb23ff7bbfa263dafd98953944e900aa58274f29c1b",
+        "error": null,
+        "leases_released": true,
+        "load_average": [
+          4.51708984375,
+          5.7900390625,
+          5.9052734375
+        ],
+        "status": "finished",
+        "stop_trigger": "signal",
+        "updated_utc": "2026-11-10T03:43:01.152969+00:00",
+        "wall_seconds": 33.79121745098382,
+        "worker_exit_code": 0,
+        "worker_pid": 2433739
+      },
+      "worker_status": {
+        "automatic_resume": false,
+        "backend": "gpu",
+        "canonical_task_cache": true,
+        "chunks": 1537,
+        "coefficient_points": 60368623214,
+        "combined_selected_patches": 393472,
+        "completed_bound": null,
+        "dispatch_chunksize": 4,
+        "engine_pid": 2433811,
+        "error": null,
+        "geometry_policy": "adaptive",
+        "gmp_audited_chunks": 13,
+        "group_limit": 4,
+        "hits": [],
+        "independent_oracle_verified_through": 0,
+        "initial_patch": 7000000000,
+        "journal_buffer": {
+          "flush_count": 193,
+          "flush_seconds": 1.0709434968885034,
+          "pending_bytes": 0,
+          "pending_chunks": 0
+        },
+        "journal_offset": 28336235,
+        "journal_sha256": "65e7b8db62007e7f49bc6d7e8b6a0757c62c4d0f853bf51d3d3774c46db9bb6a",
+        "journal_storage": "local durable journal; verified periodic bulk replica",
+        "ledger_claim_sha256": "cc32c2ce8489850db0eb1b9f4d85b460b1028ad85b019138ea4a48f3b97fbd36",
+        "ledger_root": "/mnt/nfs_share/TEST_ONLY_ada_export_adapter_20261107_ada/suballocation-tests/boole-local-delegated-20261109/deadline-delegated-r1/suballocations/borrower",
+        "next_patch": 7000393472,
+        "parent_run": "/mnt/fifth42-storage/runs/boole-precision-20261107T222232Z/boole-combined-local-20261109/run",
+        "patches": 393472,
+        "patches_per_second": 13280.698958604522,
+        "physical_tasks": 98368,
+        "prefetch": {
+          "active": 0,
+          "consumer_wait_empty_seconds": 0.6057677892968059,
+          "elapsed_seconds": 29.62104851496406,
+          "inflight": 0,
+          "max_outstanding": 5,
+          "maximum_prepared_payload_bytes": 481598,
+          "mean_ready_depth": 1.9904521640465738,
+          "outstanding": 0,
+          "peak_outstanding": 5,
+          "peak_ready": 3,
+          "peak_reserved_bytes": 41943040,
+          "preparation_batches": 1540,
+          "prepare_wall_seconds": 28.66541514347773,
+          "producer_wait_capacity_seconds": 0.0009941183379851282,
+          "producer_wait_full_seconds": 11.673550568521023,
+          "ready": 0,
+          "ready_depth_seconds": {
+            "0": 5.39622512110509,
+            "1": 5.272171709104441,
+            "2": 3.1708412155276164,
+            "3": 15.781808659259696
+          },
+          "ready_limit": 3,
+          "reserved_bytes": 0
+        },
+        "preparation_load_ceiling": 17.0,
+        "preparation_pacing_seconds": 0.0,
+        "publication": false,
+        "reason": "Stop requested",
+        "replication": {
+          "captured_epoch": 1794282149.1950917,
+          "checkpoint_sha256": "e810d7e4e1ab7140cc2acb32247bf182929b41588ba41879ade8089944aed88a",
+          "chunks": 8,
+          "committed_bytes": 147466,
+          "identity": {
+            "source_identity": "186fdbc487b57afc17ec7f7983b6de3b7794ce1195c2b328a173e2d131994309",
+            "trial": "boole-delegated-test-deadline-delegated-r1-20261109"
+          },
+          "journal_sha256": "292b9c91decdbe0713688e48c54030a07cf1ae44d7dc98858acf68f15611bb35",
+          "method": "append, fsync, byte readback, audit copies, checkpoint, receipt",
+          "next_patch": 7000002048,
+          "raw_sha256": "5e8a77d5a31c476d28dc01d7a819a4a91374e7723d3ed80c5ba8bdd3fce1b5db",
+          "status": "verified",
+          "synced_epoch": 1794282149.7606802
+        },
+        "replication_error": null,
+        "run_id": "boole-delegated-test-deadline-delegated-r1-20261109",
+        "search_seconds": 29.62735630304087,
+        "selected_interval": [
+          7000000000,
+          7000393472
+        ],
+        "source_identity": "186fdbc487b57afc17ec7f7983b6de3b7794ce1195c2b328a173e2d131994309",
+        "status": "stopped",
+        "stop_epoch": 1794282187.13266,
+        "stop_local": "2026-11-10T03:43:07.132660+00:00",
+        "updated_utc": "2026-11-10T03:42:57.835200+00:00",
+        "worker_pid": 2433739,
+        "workers": 16
+      }
+    }
+  ],
+  "checked_utc": "2026-11-10T03:43:06.955694+00:00",
+  "config_sha256": "4c4fbf585d7eea218cefdaf46888f1d2f3de868f03a9b2ff03df8b276f232a04",
+  "manifest_sha256": "4f948d745dd526e89480388a7279ad17f0aa70bda5d5f8e2dd75115c8aa6f79e",
+  "mirror_unit_tests": "9 passed",
+  "scientific_coverage": false,
+  "status": "passed"
+}

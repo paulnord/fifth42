@@ -1,0 +1,375 @@
+#!/usr/bin/env python3
+"""Guarded CUDA/emulation comparison; launch from an ADA terminal with GPU access."""
+import argparse
+import fcntl
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import platform
+import resource
+import shutil
+import signal
+import statistics
+import subprocess
+import sys
+import tempfile
+import time
+import traceback
+from datetime import datetime, timezone
+
+ROOT = Path(__file__).resolve().parent
+CPU_ROOT = Path('/home/pnord/fifth-lattice-optimizations-ada-20261105')
+SOURCE_ROOT = Path('/home/pnord/fifth-lattice-gpu')
+BOUNDS = [2000, 4000, 8000]
+REPEATS = 5
+WALL_LIMIT = 600
+GPU_PROCESS_LIMIT = 120
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+def write_json(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name+'.tmp')
+    tmp.write_text(json.dumps(data, indent=2)+'\n')
+    tmp.replace(path)
+
+def load_module(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module
+    spec.loader.exec_module(module)
+    return module
+
+def expanded_model(workspace):
+    """Keep the validated model unchanged; extend one guard in an isolated copy."""
+    source = (workspace/'model.py').read_text()
+    old = "if type(bound)!=int or not 1<=bound<=1000:raise ValueError('Full-domain preparation is capped at bound 1000')"
+    new = "if type(bound)!=int or not 1<=bound<=8000:raise ValueError('Benchmark full-domain preparation is capped at bound 8000')"
+    if source.count(old) != 1:
+        raise RuntimeError('Validated model guard does not match the reviewed source')
+    path = workspace/'benchmark_model.py'
+    path.write_text(source.replace(old, new))
+    return load_module('lattice_cuda_benchmark_model', path)
+
+def worker(config):
+    run = Path(config['run'])
+    report = dict(status='running', bounds=BOUNDS, repeats=REPEATS, cases=[], controls=[],
+        domain='1 <= a <= b < c <= bound, abs(a^5+b^5-c^5) <= 42',
+        comparison='CUDA coefficient-box engine versus ordinary CPU emulation',
+        optimized_direct_cpu_comparison=False, gpu_process_wall_seconds=0)
+
+    def save():
+        write_json(run/'results.json', report)
+
+    def event(kind, **data):
+        with (run/'events.jsonl').open('a') as stream:
+            stream.write(json.dumps(dict(event=kind, **data))+'\n')
+
+    def remaining(cap=60):
+        left = config['deadline_monotonic']-time.monotonic()-8
+        if left < 1:
+            raise TimeoutError('600-second benchmark allowance exhausted')
+        return min(cap, left)
+
+    def oracle(bound, cap):
+        command = [str(ROOT/'bin/near-oracle'), str(bound), str(cap)]
+        result = subprocess.run(command, text=True, capture_output=True, timeout=remaining())
+        if result.returncode:
+            raise RuntimeError('Independent exact oracle failed: '+result.stderr)
+        data = json.loads(result.stdout)
+        if data.get('complete') is not True or data['bound'] != bound or data['cap'] != cap:
+            raise RuntimeError('Independent oracle metadata mismatch')
+        hits = {tuple(h) for h in data['hits']}
+        for a,b,c,r in hits:
+            if not (1 <= a <= b < c <= bound and a**5+b**5-c**5 == r and abs(r) <= cap):
+                raise RuntimeError('Independent oracle emitted an invalid exact hit')
+        write_json(run/'oracles'/f'B{bound}-cap{cap}.json', dict(command=command,result=data))
+        return hits
+
+    def prepare(bound, cap):
+        start = time.perf_counter()
+        plan = model.make_plan(bound, 'constant', cap)
+        make_seconds = time.perf_counter()-start
+        start = time.perf_counter()
+        packet = model.packet(plan)  # verifies every exact certificate
+        verify_seconds = time.perf_counter()-start
+        preparation = make_seconds+verify_seconds
+        write_json(run/'plans'/f'B{bound}-cap{cap}.json', plan)
+        packet_path = run/'packets'/f'B{bound}-cap{cap}.txt'
+        packet_path.parent.mkdir(exist_ok=True)
+        packet_path.write_text(packet)
+        info = dict(preparation_seconds=preparation, make_plan_seconds=make_seconds,
+            packet_verification_seconds=verify_seconds, patches=len(plan['tasks']),
+            coefficient_points=plan['points'], packet_sha256=sha(packet_path))
+        return plan, packet, info
+
+    def engine(name, plan, packet, preparation):
+        timeout = remaining()
+        if name == 'cuda':
+            timeout = min(timeout, GPU_PROCESS_LIMIT-report['gpu_process_wall_seconds'])
+            if timeout < 1:
+                raise TimeoutError('120-second cumulative CUDA process allowance exhausted')
+        start = time.perf_counter()
+        try:
+            process = subprocess.run([str(ROOT/'bin'/name)], input=packet, text=True,
+                capture_output=True, timeout=timeout)
+        finally:
+            wall = time.perf_counter()-start
+            if name == 'cuda':
+                report['gpu_process_wall_seconds'] += wall
+        if process.returncode:
+            raise RuntimeError(name+' failed: '+process.stderr+' '+process.stdout[:500])
+        result = json.loads(process.stdout)
+        start = time.perf_counter()
+        hits = set(map(tuple,model.decode(plan,result,'gpu' if name=='cuda' else 'emulated')))
+        verification = time.perf_counter()-start
+        metrics = dict(engine_seconds=result['engine_seconds'],kernel_seconds=result['kernel_seconds'],
+            engine_process_seconds=wall,host_verification_seconds=verification,
+            cached_packet_seconds=wall+verification,
+            end_to_end_seconds=preparation+wall+verification)
+        return result, hits, metrics
+
+    try:
+        model = expanded_model(ROOT)
+        report['expanded_model_sha256'] = sha(ROOT/'benchmark_model.py')
+        report['model_limits'] = dict(full_domain_bound=8000, tasks=model.MAX_TASKS,
+            packet_points=model.MAX_POINTS, patch_points=model.MAX_PATCH_POINTS)
+        for invalid in (0,8001):
+            try:
+                model.expected_specs(invalid,'constant',42,2)
+            except ValueError:
+                continue
+            raise RuntimeError('Expanded bound guard failed closed')
+        # Nonempty controls compare every backend with an independent exact search.
+        for bound,cap in ((34,384),(100,2951)):
+            expected = oracle(bound,cap)
+            if not expected:
+                raise RuntimeError('Nonempty control is empty')
+            plan,packet,info = prepare(bound,cap)
+            control = dict(bound=bound,cap=cap,expected=sorted(expected),**info,backends={})
+            for name in ('emulated','emulated-sanitized','cuda'):
+                result,hits,metrics = engine(name,plan,packet,info['preparation_seconds'])
+                if hits != expected:
+                    raise RuntimeError('Nonempty control mismatch: '+name)
+                control['backends'][name] = dict(metrics=metrics,result=result)
+            report['controls'].append(control);save();event('control_passed',bound=bound,cap=cap)
+        for bound in BOUNDS:
+            case = dict(bound=bound,cap=42,complete=False,phase='prepare',samples={'emulated':[],'cuda':[]},orders=[])
+            report['cases'].append(case);save();event('step_started',bound=bound)
+            expected = oracle(bound,42)
+            case['oracle_hits'] = sorted(expected)
+            plan,packet,info = prepare(bound,42)
+            case.update(info,phase='paired_repeats');save()
+            event('packet_ready',bound=bound,**info)
+            for repeat in range(REPEATS):
+                order = ('emulated','cuda') if repeat%2==0 else ('cuda','emulated')
+                case['orders'].append(list(order))
+                for name in order:
+                    result,hits,metrics = engine(name,plan,packet,info['preparation_seconds'])
+                    if hits != expected:
+                        raise RuntimeError(f'Independent exact oracle mismatch: {name}, bound {bound}')
+                    path = run/'trials'/f'B{bound}-repeat{repeat+1}-{name}.json'
+                    write_json(path,dict(bound=bound,repeat=repeat+1,backend=name,metrics=metrics,
+                        oracle_equal=True,result=result,decoded_hits=sorted(hits)))
+                    case['samples'][name].append(dict(repeat=repeat+1,**metrics,oracle_equal=True,
+                        result_file=str(path.relative_to(run)),result_sha256=sha(path)))
+                    save()
+                event('round_complete',bound=bound,repeat=repeat+1)
+            case['medians'] = {name:{key:statistics.median(s[key] for s in samples)
+                for key in samples[0] if key.endswith('_seconds')}
+                for name,samples in case['samples'].items()}
+            case.update(complete=True,phase='complete')
+            save();event('step_complete',bound=bound,medians=case['medians'])
+        report['status'] = 'passed'
+        save();event('finished',status='passed')
+        return 0
+    except BaseException as error:
+        report.update(status='stopped_at_guard' if isinstance(error,(TimeoutError,subprocess.TimeoutExpired)) else 'failed',
+            error=f'{type(error).__name__}: {error}',traceback=traceback.format_exc())
+        save();event('finished',status=report['status'],error=report['error'])
+        return 2
+
+def passing_validation():
+    for path in sorted((SOURCE_ROOT/'validation-runs').glob('*/report.json'),reverse=True):
+        report = json.loads(path.read_text())
+        if report.get('status') != 'passed' or not report.get('gpu_validation_started'):
+            continue
+        run = path.parent
+        device = run/'device-results/report.json'
+        if not device.is_file() or json.loads(device.read_text()).get('status') != 'passed':
+            continue
+        hashes = report['source_sha256']
+        if all(sha(SOURCE_ROOT/name)==digest and sha(run/'workspace'/name)==digest
+               for name,digest in hashes.items()):
+            return dict(report=str(path),report_sha256=sha(path),device_report_sha256=sha(device),source_sha256=hashes)
+    raise RuntimeError('A passing GPU validation with matching current source hashes is required')
+
+def resources():
+    return load_module('lattice_benchmark_resource_guard',CPU_ROOT/'benchmark_ada.py')
+
+def hardware_blockers():
+    reasons=[]
+    if not Path('/dev/nvidia0').exists():
+        reasons.append('CUDA device is unavailable; run this command in a normal ADA terminal')
+    if not shutil.which('nvidia-smi'):
+        reasons.append('nvidia-smi is unavailable')
+    if not Path('/usr/local/cuda/bin/nvcc').is_file():
+        reasons.append('CUDA compiler is unavailable')
+    return reasons
+
+def idle_gpu():
+    result = subprocess.run(['nvidia-smi','--query-compute-apps=pid','--format=csv,noheader'],
+        capture_output=True,text=True,timeout=5)
+    if result.returncode or result.stdout.strip():
+        raise RuntimeError('GPU occupancy could not be established as idle: '+(result.stderr or result.stdout).strip())
+
+def acquire_leases(guard, wait):
+    start=time.monotonic();last_notice=-30
+    while True:
+        handles=[]
+        production=guard.lock_paths()
+        extra=guard.PRODUCTION/'filtered/runs/benchmark.lock'
+        if extra.is_file():production.append(extra)
+        reason=None
+        try:
+            busy=guard.blockers(production)
+            if busy:raise BlockingIOError(', '.join(busy))
+            for path in [CPU_ROOT/'cpu-benchmark.lock',SOURCE_ROOT/'validation.lock',*production]:
+                handle=path.open('a+')
+                handles.append(handle)
+                try:fcntl.flock(handle,fcntl.LOCK_EX|fcntl.LOCK_NB)
+                except BlockingIOError:raise BlockingIOError('busy lock: '+str(path))
+            return handles,set(production)
+        except BlockingIOError as error:
+            reason=str(error)
+            for handle in handles:handle.close()
+        if not wait or time.monotonic()-start>=1800:
+            raise RuntimeError('Deferred: '+reason)
+        if time.monotonic()-start-last_notice>=30:
+            print('WAITING '+reason+'; benchmark allowance starts after resources are free',flush=True)
+            last_notice=time.monotonic()-start
+        time.sleep(2)
+
+def coordinator(args):
+    baseline=passing_validation()
+    blockers=hardware_blockers()
+    guard=resources()
+    busy=guard.blockers(guard.lock_paths()+[CPU_ROOT/'cpu-benchmark.lock',SOURCE_ROOT/'validation.lock'])
+    if args.check_only:
+        print(json.dumps(dict(status='deferred' if blockers or busy else 'ready',
+            blockers=blockers+busy,bounds=BOUNDS,repeats=REPEATS,wall_limit_seconds=WALL_LIMIT,
+            passing_gpu_validation=baseline['report'],wait_supported=True),indent=2))
+        return 3 if blockers or busy else 0
+    if blockers:
+        raise RuntimeError('; '.join(blockers))
+    handles,leased_production=acquire_leases(guard,args.wait)
+    active=None
+    run=None
+    try:
+        idle_gpu()
+        os.nice(19)
+        os.sched_setaffinity(0,{min(os.sched_getaffinity(0))})
+        start=time.monotonic();deadline=start+WALL_LIMIT
+        directory=SOURCE_ROOT/'benchmark-runs';directory.mkdir(exist_ok=True)
+        run=Path(tempfile.mkdtemp(prefix=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ-'),dir=directory))
+        work=run/'workspace';work.mkdir()
+        names=[*baseline['source_sha256'],'benchmark.py','near_oracle.cpp','tests/test_benchmark.py']
+        for name in names:
+            target=work/name;target.parent.mkdir(parents=True,exist_ok=True)
+            shutil.copyfile(SOURCE_ROOT/name,target)
+        hashes={name:sha(work/name) for name in names}
+        env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',CUDA_VISIBLE_DEVICES='0',
+            OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',
+            ASAN_OPTIONS='detect_leaks=0')
+        report=dict(status='running',started_utc=datetime.now(timezone.utc).isoformat(),
+            run=str(run),host=platform.node(),platform=platform.platform(),python=sys.version,
+            bounds=BOUNDS,repeats=REPEATS,hard_wall_limit_seconds=WALL_LIMIT,
+            cuda_process_wall_limit_seconds=GPU_PROCESS_LIMIT,automatic_resume=False,
+            execution='one logical host CPU, nice 19, one GPU; numerical threads 1',
+            baseline=baseline,source_sha256=hashes,commands=[])
+        metadata=subprocess.run(['nvidia-smi','--query-gpu=name,uuid,driver_version,memory.total',
+            '--format=csv,noheader'],capture_output=True,text=True,timeout=5)
+        if metadata.returncode:raise RuntimeError('Could not capture GPU identity')
+        report['gpu_identity']=metadata.stdout.strip()
+        write_json(run/'report.json',report)
+        print('RUN_DIRECTORY '+str(run),flush=True)
+        offset=0
+        def relay():
+            nonlocal offset
+            path=run/'events.jsonl'
+            if not path.exists():return
+            with path.open() as stream:
+                stream.seek(offset)
+                while True:
+                    position=stream.tell();line=stream.readline()
+                    if not line:break
+                    if not line.endswith('\n'):
+                        stream.seek(position);break
+                    print('PROGRESS '+line.strip(),flush=True)
+                offset=stream.tell()
+        def execute(name,command):
+            nonlocal active
+            before=time.monotonic()
+            with (run/(name+'.stdout.txt')).open('x') as out,(run/(name+'.stderr.txt')).open('x') as err:
+                active=subprocess.Popen(command,cwd=work,stdout=out,stderr=err,env=env,
+                    start_new_session=True,preexec_fn=guard.parent_death_signal)
+                while active.poll() is None:
+                    relay()
+                    if (run/'STOP').exists():raise RuntimeError('User stop requested')
+                    if time.monotonic()>=deadline-3:raise TimeoutError('600-second benchmark cap reached')
+                    new_locks=[p for p in guard.lock_paths() if p not in leased_production]
+                    busy=guard.blockers(new_locks,True)
+                    if busy:raise RuntimeError('Yielding to active production work: '+', '.join(busy))
+                    time.sleep(.25)
+            relay()
+            code=active.returncode;active=None
+            report['commands'].append(dict(name=name,command=command,exit_code=code,
+                wall_seconds=time.monotonic()-before))
+            write_json(run/'report.json',report)
+            if code:raise RuntimeError(name+' failed; inspect its saved output')
+        try:
+            execute('host-tests',[sys.executable,'-m','unittest','discover','-s','tests','-v'])
+            execute('build',['make','-j1','all'])
+            execute('compile-oracle',['g++','-O3','-std=c++17','-Wall','-Wextra','-Werror',
+                'near_oracle.cpp','-o','bin/near-oracle'])
+            report['binary_sha256']={p.name:sha(p) for p in (work/'bin').iterdir() if p.is_file()}
+            config=dict(run=str(run),deadline_monotonic=deadline)
+            write_json(run/'config.json',config)
+            execute('benchmark-worker',[sys.executable,str(work/'benchmark.py'),'--worker',str(run/'config.json')])
+            report['status']='passed'
+        except BaseException as error:
+            report.update(status='stopped_or_failed',error=f'{type(error).__name__}: {error}')
+        finally:
+            if active is not None and active.poll() is None:
+                os.killpg(active.pid,signal.SIGTERM)
+                try:active.wait(timeout=2)
+                except subprocess.TimeoutExpired:os.killpg(active.pid,signal.SIGKILL);active.wait()
+            report['elapsed_seconds']=time.monotonic()-start
+            report['source_files_preserved']=all(sha(SOURCE_ROOT/name)==h for name,h in hashes.items())
+            results=run/'results.json'
+            if results.is_file():report['results']=json.loads(results.read_text())
+            report['completed_bounds']=[c['bound'] for c in report.get('results',{}).get('cases',[]) if c['complete']]
+            if not report['source_files_preserved']:report['status']='failed_source_identity'
+            write_json(run/'report.json',report)
+            print(json.dumps(dict(status=report['status'],report=str(run/'report.json'),
+                completed_bounds=report['completed_bounds'],elapsed_seconds=report['elapsed_seconds']),indent=2),flush=True)
+        return 0 if report['status']=='passed' else 2
+    finally:
+        for handle in handles:handle.close()
+
+def main():
+    if sys.flags.optimize:raise SystemExit('Run without python -O')
+    if len(sys.argv)==3 and sys.argv[1]=='--worker':
+        return worker(json.loads(Path(sys.argv[2]).read_text()))
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--check-only',action='store_true',help='inspect readiness without starting tests')
+    parser.add_argument('--wait',action='store_true',help='wait up to 30 minutes for CPU/production locks before the ten-minute benchmark')
+    try:return coordinator(parser.parse_args())
+    except (RuntimeError,TimeoutError,subprocess.TimeoutExpired) as error:
+        print(json.dumps(dict(status='deferred',error=str(error),automatic_resume=False),indent=2))
+        return 3
+
+if __name__=='__main__':raise SystemExit(main())

@@ -1,0 +1,20 @@
+Pinned Python: /home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python
+Run from /home/pnord/scratch/cabbage-extended-20261109:
+  <pinned-python> -B run_buffering_tests.py
+  <pinned-python> -B accept_runtime.py
+  python3 -B test_controller.py
+Fresh-reservation acceptance: same pinned Python and accept_runtime.py in
+continuations/cabbage-extended-next-20261109 (finite supervisor case).
+The supplied 17 buffering and 5 scheduling tests ran unchanged under the
+original host/NFS leases. Actual finite, signal-stop and short-deadline cases
+passed; local/replica receipts were independently checked, final partial buffers
+flushed, ownership was released, existing output reuse was rejected.
+The independent grouped auditor is unchanged; the parent audit partitions it
+across byte spans and verifies all sequence/hash/cursor seams and full totals.
+Validation includes matching a known valid prefix and rejecting same-length
+hash corruption. The complete 801372-record parent passed, including 6261 GMP
+audits, with matching local and final-replica raw SHA256.
+No native source or binary was changed or rebuilt. Previous validated commands:
+  nvcc -std=c++17 -O3 -arch=sm_86 -ccbin g++-13 native-baseline/src/scaling_gpu.cu -o bin/scaling_gpu
+  g++-13 -std=c++17 -O3 -Wall -Wextra -Werror independent/gmp_reference.cpp -lgmpxx -lgmp -o bin/gmp_reference
+Compiler: /home/pnord/scratch/saved-root-pAjTHBhR/cuda-13.2/nvidia/cu13/bin/nvcc

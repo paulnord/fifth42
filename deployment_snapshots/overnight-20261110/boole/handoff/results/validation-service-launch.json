@@ -1,0 +1,24 @@
+{
+  "command": [
+    "systemd-run",
+    "--user",
+    "--unit=boole-delegated-local-validation-20261109",
+    "--collect",
+    "--service-type=exec",
+    "--property=Restart=no",
+    "--property=Nice=19",
+    "--property=UMask=0077",
+    "--property=RuntimeMaxSec=3600",
+    "--property=StandardOutput=append:/home/pnord/boole-delegated-controller-20261109/local-validation.stdout",
+    "--property=StandardError=append:/home/pnord/boole-delegated-controller-20261109/local-validation.stderr",
+    "/home/pnord/boole-results-20261107/venv312/bin/python",
+    "-B",
+    "-u",
+    "/home/pnord/boole-delegated-controller-20261109/validate_at_boundary.py",
+    "--source-sha256",
+    "ec6e07b49ccc700993d7137cecefb6aca7ab41c0540c7861dc1a6ee7ec362f50",
+    "--stages-sha256",
+    "b07664dfb08a40b211fd393d3ecdfd05ebf89cfc2779f83a06faea1f02205f6d"
+  ],
+  "stderr": "Running as unit: boole-delegated-local-validation-20261109.service; invocation ID: 9566db6e604c4ec5a775451975039b63\n"
+}

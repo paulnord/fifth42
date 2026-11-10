@@ -1,0 +1,22 @@
+{
+  "command": [
+    "systemd-run",
+    "--user",
+    "--unit=boole-delegated-queue-install-20261109",
+    "--collect",
+    "--service-type=exec",
+    "--property=Restart=no",
+    "--property=Nice=19",
+    "--property=UMask=0077",
+    "--property=RuntimeMaxSec=3700",
+    "--property=StandardOutput=append:/home/pnord/boole-delegated-controller-20261109/install.stdout",
+    "--property=StandardError=append:/home/pnord/boole-delegated-controller-20261109/install.stderr",
+    "/home/pnord/boole-results-20261107/venv312/bin/python",
+    "-B",
+    "-u",
+    "/home/pnord/boole-delegated-controller-20261109/install_after_validation.py",
+    "--plan-sha256",
+    "6e374da7c660f3ecac4965fab5b2a9c58f3f2a493d298068218a78f383cebcfc"
+  ],
+  "stderr": "Running as unit: boole-delegated-queue-install-20261109.service; invocation ID: 11840ddb417c436085051b77a70850b8\n"
+}

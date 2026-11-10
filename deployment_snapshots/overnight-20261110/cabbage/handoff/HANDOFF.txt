@@ -1,0 +1,40 @@
+Cabbage production extension, authorized 9 November 2026.
+User: continue production until tomorrow at 5 pm.
+Actual clock at request: today's deadline had already stopped the earlier run.
+New compute deadline: 2026-11-10 17:00 America/Chicago (1794351600).
+Independent global timer and every child timer stop compute at 16:59:50;
+separate final-copy services may finish after computation stops.
+
+First new run: cabbage-extended-20261109, exact start 2572492928 under the
+unchanged original Cabbage reservation. The full stopped parent was audited
+and its verified replica retained as a read-only archive; original local data
+and earlier archives/configurations/source identities remain preserved.
+
+The controller starts fresh, separately identified local journals after a normal
+32 GiB journal-cap stop. It waits for a verified final replica and seals/audits
+each parent before continuing from the exact committed cursor. It never retries
+a failed or manually stopped run, reuses an output or recovers automatically.
+Disk reserve, physical workers, resource leases, exact arithmetic, logical width,
+GMP cadence, source checks and original ownership checks are retained.
+
+After the original reservation completes, the next tested reservation is
+cabbage-extended-allocation-20261109, logical cell interval [500000000,2250000000).
+This is new uncomputed work; no old coverage is imported into that interval.
+It has its own NFS claim and stable owner lock. Further work, if needed, can only
+be reserved from unclaimed intervals through the existing atomic allocator.
+Patch zero is a separate unresolved boundary and remains outside that allocation;
+no full-box or whole-shell completion claim is made. No overlap is permitted.
+
+Current reporting: /mnt/nfs_share/cabbage-extended-publishing-20261109/status.json
+The controller writes per-run source archives, pinned configuration/manifest,
+original claim and parent evidence under runs/<run_id>/, with READY.json last.
+The stable collector follows active-configuration.json across journal rotations.
+The old buffered reporter/publisher retains its original immutable binding;
+Ada's publisher needs a new binding for this extended collector and deadline.
+
+Controller: cabbage-extended-controller-20261109.service
+Global timer: cabbage-extended-controller-20261109-deadline.timer
+Collector: cabbage-extended-collector-20261109.service
+Manual graceful stop: pinned Python -B stop_controller.py
+Linger=yes; services survive terminal logout. Every compute child has a separate
+source/config identity, independent deadline timer and final-copy service.

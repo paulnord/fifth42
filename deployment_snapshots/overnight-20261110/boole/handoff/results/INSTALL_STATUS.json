@@ -1,0 +1,31 @@
+{
+  "status": "expanded_queue_started",
+  "plan_sha256": "6e374da7c660f3ecac4965fab5b2a9c58f3f2a493d298068218a78f383cebcfc",
+  "stages": 70,
+  "additional_claims": 67,
+  "additional_reserved_cells": 4250000001,
+  "compute_restarted": false,
+  "command": [
+    "systemd-run",
+    "--user",
+    "--unit=boole-delegated-queue-20261109",
+    "--collect",
+    "--service-type=exec",
+    "--property=Restart=no",
+    "--property=Nice=19",
+    "--property=UMask=0077",
+    "--property=RuntimeMaxSec=71089",
+    "--property=StandardOutput=append:/home/pnord/boole-delegated-controller-20261109/production.stdout",
+    "--property=StandardError=append:/home/pnord/boole-delegated-controller-20261109/production.stderr",
+    "/home/pnord/boole-results-20261107/venv312/bin/python",
+    "-B",
+    "-u",
+    "/home/pnord/boole-delegated-controller-20261109/controller.py",
+    "--plan",
+    "/home/pnord/boole-delegated-controller-20261109/production-plan.json",
+    "--plan-sha256",
+    "6e374da7c660f3ecac4965fab5b2a9c58f3f2a493d298068218a78f383cebcfc",
+    "--adopt-first"
+  ],
+  "stderr": "Running as unit: boole-delegated-queue-20261109.service; invocation ID: efcb9bab365f43fda621d42203978b2d\n"
+}

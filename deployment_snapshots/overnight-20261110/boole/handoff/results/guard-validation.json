@@ -1,0 +1,44 @@
+{
+  "TEST_ONLY": true,
+  "guard_sha256": "975c482638c36cc02ffbeda49653a3449333d2e708c529def6bca83828e80f04",
+  "manifest_sha256": "4f948d745dd526e89480388a7279ad17f0aa70bda5d5f8e2dd75115c8aa6f79e",
+  "production_guard": "Passed from Boole against live Ada coordinator, original parent lock, activation audit, READY and every claim boundary",
+  "scientific_coverage": false,
+  "status": "passed",
+  "tests": [
+    {
+      "status": "passed",
+      "test": "full_local_test_admission"
+    },
+    {
+      "error": "Suballocation grant changed",
+      "status": "passed",
+      "test": "grant_digest"
+    },
+    {
+      "error": "Worker escaped its delegated interval",
+      "status": "passed",
+      "test": "interval_overflow"
+    },
+    {
+      "error": "Wrong child ledger",
+      "status": "passed",
+      "test": "wrong_child"
+    },
+    {
+      "error": "Worker changed delegated cutoff",
+      "status": "passed",
+      "test": "wrong_deadline"
+    },
+    {
+      "error": "Coordinator heartbeat is stale",
+      "status": "passed",
+      "test": "stale_heartbeat"
+    },
+    {
+      "error": "Exclusive parent lease is absent",
+      "status": "passed",
+      "test": "lost_parent_lease"
+    }
+  ]
+}

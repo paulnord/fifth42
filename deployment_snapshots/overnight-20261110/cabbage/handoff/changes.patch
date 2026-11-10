@@ -1,0 +1,48 @@
+--- buffered-r1/worker/cabbage_policy.py
++++ extended-r1/worker/cabbage_policy.py
+@@ -8,7 +8,7 @@
+ JOB='cabbage-saved-root-20261108T222040Z'
+ CLAIM='364221db0023ea69fa18b47eb512e9e83362f6d598fc19c101e74b72f4f3d1c8'
+ RESERVATION='a0000b2ed70ea7566baa2c6c0a00bd8cdcbc726f53bdf1247b7b9587eb5d6932'
+-FIRST=2250000000;LAST=3000000000;DEADLINE=1794265200
++FIRST=2250000000;LAST=3000000000;DEADLINE=1794351600
+ class RequestedStop(Exception):pass
+ def require(ok,message):
+     if not ok:raise RuntimeError(message)
+@@ -37,19 +37,19 @@
+     require(digest(parent/'checkpoint.json')==c['parent_checkpoint_sha256'] and digest(parent/'status.json')==c['parent_status_sha256'],'Sealed parent checkpoint/status changed')
+     cp=json.loads((parent/'checkpoint.json').read_bytes());status=json.loads((parent/'status.json').read_bytes())
+     require(status['status']=='stopped' and status['error'] is None,'Parent worker did not stop successfully')
+-    require(cp['identity']==c['parent_identity'] and cp['completed_bound'] is None and cp['next_patch']==c['initial_patch'],'Parent cursor or identity changed')
++    require(cp['identity']==c['parent_identity'] and cp['completed_bound'] is None and cp['next_patch']==c.get('parent_final_cursor',c['initial_patch']),'Parent cursor or identity changed')
+     require((cp['journal_sha256'],cp['journal_offset'])==(c['parent_journal_sha256'],c['parent_journal_offset']),'Parent committed prefix changed')
+-    require(c['parent_selected_patches']==c['initial_patch']-FIRST,'Parent logical lineage changed')
++    require(c['parent_selected_patches']==(0 if c.get('fresh_reservation') else c['initial_patch']-FIRST),'Parent logical lineage changed')
+     require(digest(c['parent_audit_file'])==c['parent_audit_sha256'],'Final parent audit changed')
+     audit=json.loads(Path(c['parent_audit_file']).read_bytes())
+     require(audit['status']=='passed' and audit['final_checkpoint'] and audit['uncommitted_trailing_bytes']==0,'Final audit incomplete')
+-    require((audit['captured_checkpoint_sha256'],audit['committed_chain_sha256'],audit['committed_raw_sha256'],audit['committed_bytes'],audit['selected_interval'][1])==(c['parent_checkpoint_sha256'],c['parent_journal_sha256'],c['parent_journal_raw_sha256'],c['parent_journal_offset'],c['initial_patch']),'Final audit provenance changed')
++    require((audit['captured_checkpoint_sha256'],audit['committed_chain_sha256'],audit['committed_raw_sha256'],audit['committed_bytes'],audit['selected_interval'][1])==(c['parent_checkpoint_sha256'],c['parent_journal_sha256'],c['parent_journal_raw_sha256'],c['parent_journal_offset'],c.get('parent_final_cursor',c['initial_patch'])),'Final audit provenance changed')
+     q=audit['quiescence'];require(q['original_owner_lock_acquired'] and q['gpu_lease_acquired'] and not q['gpu_compute_processes'] and q['worker_exit_code']==0 and q['worker_leases_released'],'Parent quiescence missing')
+     validate_archive(c);return cp
+ def validate_output(c):
+     if c.get('TEST_ONLY') is True:
+-        expected=LOCAL/'TEST_ONLY_cabbage_buffered_20261109'/c['run_id']/'run'
+-        replica=BULK/'TEST_ONLY_cabbage_buffered_20261109'/c['run_id']/'run'
++        expected=LOCAL/'TEST_ONLY_cabbage_extended_20261109'/c['run_id']/'run'
++        replica=BULK/'TEST_ONLY_cabbage_extended_20261109'/c['run_id']/'run'
+     else:
+         expected=LOCAL/JOB/c['run_id']/'run';replica=BULK/'runs'/JOB/c['run_id']/'run'
+     require(Path(c['output']).resolve()==expected and Path(c['replica_output']).resolve()==replica,'Output escaped its reserved directory')
+@@ -82,9 +82,9 @@
+     if c.get('TEST_ONLY') is True:
+         allowed={'TEST_ONLY','run_id','output','replica_output','range_end','gmp_audit_period','test_chunk_limit','stop_epoch','stop_local','service_name','deadline_service_name','cleanup_service_name','group_limit'}
+         require(all(c.get(k)==v for k,v in base.items() if k not in allowed),'Test changed frozen parent/geometry/resources')
+-        require(c['run_id'].startswith('cabbage-buffered-test-'),'Wrong test namespace')
++        require(c['run_id'].startswith('cabbage-extended-test-'),'Wrong test namespace')
+     else:
+-        require(c==base and c['run_id']=='cabbage-buffered-20261109' and c.get('test_chunk_limit') is None,'Production differs from frozen base')
++        require(c==base and c['run_id'].startswith('cabbage-extended-') and c.get('test_chunk_limit') is None,'Production differs from frozen base')
+         require(c['stop_epoch']==DEADLINE and c['range_end']==LAST,'Production deadline or endpoint changed')
+     require(c['backend']=='gpu' and c['workers']==16 and c['physical_cpus']==list(range(16)),'CPU/GPU budget changed')
+     require((c['shell_lo'],c['shell_hi'],c['width'],c['bits'],c['cap'],c['chunk_patches'],c['geometry_policy'])==(100000000001,200000000000,8,222,42,256,'adaptive'),'Arithmetic/logical grid changed')

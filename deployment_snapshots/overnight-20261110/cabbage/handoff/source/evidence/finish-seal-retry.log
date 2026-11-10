@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/pnord/scratch/cabbage-extended-20261109/finish_seal.py", line 26, in <module>
+    save(archive/'ARCHIVE_RECEIPT.json',receipt)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pnord/scratch/cabbage-extended-20261109/seal_previous.py", line 13, in save
+    with p.open('x') as f:json.dump(x,f,indent=2);f.write('\n');f.flush();os.fsync(f.fileno())
+         ~~~~~~^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 772, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileExistsError: [Errno 17] File exists: '/mnt/fifth42-storage/archives/CABBAGE-EXTENDED-PARENT-20261109T230922Z/ARCHIVE_RECEIPT.json'
