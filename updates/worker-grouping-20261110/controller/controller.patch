@@ -1,0 +1,77 @@
+diff --git a/deployment_snapshots/overnight-20261110/cabbage/handoff/source/controller.py b/updates/worker-grouping-20261110/controller/controller.py
+index 72236e0..900da25 100644
+--- a/deployment_snapshots/overnight-20261110/cabbage/handoff/source/controller.py
++++ b/updates/worker-grouping-20261110/controller/controller.py
+@@ -9,12 +9,49 @@ STOP=False
+ def load(p):return json.loads(Path(p).read_bytes())
+ def verify_controller():
+  for name,h in load(ROOT/'controller-manifest.json')['files'].items():assert release.sha(ROOT/name)==h,'Frozen controller changed: '+name
+-def next_action(cp,status,now=None):
++def next_action(cp,status,now=None,supervisor=None):
+  now=time.time() if now is None else now
+- if now>=DEADLINE-10 or status.get('error'):return 'stop'
++ if now>=DEADLINE-10 or status.get('error') or (supervisor or {}).get('stop_trigger'):return 'stop'
+  if cp['next_patch']==cp['window']['last']:return 'next_reservation'
+  if status['reason']=='Local journal byte cap reached':return 'rotate'
+  return 'stop'
++def completion_state(status,sup,config_hash):
++ """Fail closed on explicit failures; missing final fields mean wait, never success."""
++ if not isinstance(status,dict) or not isinstance(sup,dict):
++  raise RuntimeError('Malformed completion report')
++ if status.get('error') is not None or sup.get('error') is not None:
++  raise RuntimeError('Failure requires explicit recovery; no automatic restart')
++ if sup.get('config_sha256') != config_hash:
++  raise RuntimeError('Supervisor report does not match frozen configuration')
++ if 'worker_exit_code' in sup and sup['worker_exit_code'] is not None:
++  code=sup['worker_exit_code']
++  if type(code) is not int or code != 0:
++   raise RuntimeError('Worker did not exit successfully; explicit recovery required')
++ if status.get('status') == 'failed' or sup.get('status') == 'failed':
++  raise RuntimeError('Failed completion report; explicit recovery required')
++ if (status.get('status') == 'stopped' and sup.get('status') == 'finished'
++     and type(sup.get('worker_exit_code')) is int and sup['worker_exit_code'] == 0
++     and sup.get('leases_released') is True
++     and isinstance(sup.get('all_owned_processes_exited_utc'),str)
++     and bool(sup['all_owned_processes_exited_utc'])
++     and 'error' in status and 'error' in sup):
++  return 'complete'
++ return 'pending'
++def await_completion(c,path,timeout=120):
++ """Systemd inactivity is not proof that supervisor cleanup/reporting finished."""
++ until=time.monotonic()+timeout
++ while True:
++  if STOP or time.time()>=DEADLINE-10:return None
++  try:
++   status=load(Path(c['output'])/'status.json')
++   sup=load(Path(c['output']).parent/'supervisor.json')
++   if completion_state(status,sup,release.sha(path)) == 'complete':
++    return status,load(Path(c['output'])/'checkpoint.json'),sup
++  except FileNotFoundError:
++   pass
++  if time.monotonic()>=until:
++   raise TimeoutError('Terminal worker/lease report unavailable; explicit recovery required')
++  time.sleep(2)
+ def available_interval(claims):
+  cursor=1;gaps=[]
+  for row in sorted(claims,key=lambda x:x['first']):
+@@ -73,8 +110,9 @@ def main():
+    if STOP or time.time()>=DEADLINE-10:
+     units.call('stop',c['service_name']);state('stopped',reason='Requested stop or absolute deadline',history=history);return 0
+    if units.state(c['service_name'])['ActiveState']=='active':time.sleep(2);continue
+-   status=load(Path(c['output'])/'status.json');cp=load(Path(c['output'])/'checkpoint.json');sup=load(Path(c['output']).parent/'supervisor.json')
+-   assert status['error'] is None and sup['error'] is None and sup['worker_exit_code']==0 and sup['leases_released'],'Failure requires explicit recovery; no automatic restart'
++   completion=await_completion(c,path)
++   if completion is None:state('stopped',reason='Awaiting final report; requested stop or deadline',history=history);return 0
++   status,cp,sup=completion
+    until=time.monotonic()+900
+    while not (Path(c['output'])/'final-replica.json').exists():
+     if STOP or time.time()>=DEADLINE-10:state('stopped',reason='Compute stopped; independent cleanup remains active',history=history);return 0
+@@ -83,7 +121,7 @@ def main():
+    assert load(Path(c['output'])/'final-replica.json')['status']=='verified'
+    history.append(dict(run_id=c['run_id'],config=str(path),first=c['initial_patch'],last=cp['next_patch'],claim_sha256=c['ledger_claim_sha256'],final_checkpoint_sha256=release.sha(Path(c['output'])/'checkpoint.json')))
+    assert cp['window']['last']==c['range_end'],'Unexpected production endpoint'
+-   action=next_action(cp,status)
++   action=next_action(cp,status,supervisor=sup)
+    if action=='stop':state('stopped',reason=status['reason'],history=history);return 0
+    state('sealing',run_id=c['run_id'],history=history)
+    ev=ROOT/'rotation-evidence'/c['run_id'];ev.mkdir(parents=True,exist_ok=False)

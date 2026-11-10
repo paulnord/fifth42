@@ -1,0 +1,37 @@
+Codex on Ada, Boole or Cabbage:
+
+Prepare the worker update from this branch's updates/worker-grouping-20261110/
+without disrupting current work. Read README.md, run check.sh, and resolve all
+paths yourself from this host's existing verified release records. Do not ask
+Paul to reconstruct paths. The package contains executable benchmark and planning
+tools plus the Cabbage final-report race fix, not just an experiment proposal.
+
+Keep group4 by default. Cabbage's +48.2% group8 result was measured at2572492928,
+NOT its current stopped cursor1538849024. On stopped/quiescent hardware run the
+provided benchmark_current.py at the exact verified cursor using the existing
+isolated speed-test harness; hold the normal local test leases and honor load guards.
+Use plan_update.py against config, local/NFS final checkpoints, final supervisor
+and matching benchmark receipt. A gain >=10% can propose group8/dispatch2 for a
+bounded1M-cell canary; otherwise stay group4/dispatch4. Group16, warm LLL, sealed
+packets, overlap and new big-integer/GPU-prep code are not part of this update.
+
+Cabbage: reconcile the stopped worker and final-copy receipts, apply the derived
+controller fix only in a fresh frozen controller release, regenerate its manifest,
+and run the documented TEST_ONLY delayed-report/graceful-stop/replica lifecycle.
+Ada/Boole: do not copy Cabbage's controller over yours; keep existing correct
+controller flow, audit terminal-report race handling, and only benchmark at an
+already authorized/natural stop boundary. Do not stop a live healthy run for this
+handoff alone.
+
+For any later authorized canary, use a fresh audited continuation/journal at the
+verified committed cursor. Preserve ledger claims, source/config identities,
+nonoverlap, audit cadence, journal/replica limits, publisher and original absolute
+deadline. Do not change production in place, reset cursors, mark experimental work
+as coverage or extend the deadline. Re-read actual current local state, not old
+GitHub status. Follow README gates; fail closed on unknown state or source mismatch.
+
+This handoff authorizes local setup, tests and staging, not automatic production
+restart. Report whether ready for Paul's go-ahead. Publish all tests, source/config
+hashes, decisions and reports to a worker-specific results branch on paulnord/fifth42,
+verify readback, and return its URL. Retain failures. No deployment or speedup claim
+without the actual host's gates and complete-pipeline measurements.
