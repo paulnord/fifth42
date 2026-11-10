@@ -5,12 +5,19 @@ as the CGBN backend. Each root uses ROOT_TPI=4,8,16,32 cooperating lanes. The
 host guard proves every shifted input and even rejected candidate product fits
 2048 bits; `mul_low` therefore preserves the entire mathematical product.
 
-The code was checked against NVIDIA cuPQC SDK **0.6.0** headers, not merely
-unverified function names. `bigint.hpp`, `database/bigint_storage.hpp`, and the
-SDK's documented cooperative execution widths were inspected. No CUDA compiler
-or GPU is present in the preparation workspace, so it is **not yet compiled,
-linked, or GPU-validated**. A successful Cabbage compile and exact fixture run
-are mandatory before any performance conclusion.
+The code was checked against NVIDIA cuPQC SDK **0.6.0** headers and then
+compiled and linked locally with NVIDIA CUDA 13.2.78, runtime 13.2.75, NVVM
+13.2.78, and CRT 13.2.78, targeting sm_86. All four cooperative variants
+(4, 8, 16, 32 lanes) compiled. This workspace has no GPU: **GPU arithmetic
+correctness, speed, and integration remain untested**. Successful Cabbage exact
+fixture runs are mandatory before any performance conclusion.
+
+The first Cabbage build exposed a pip-toolchain layout bug. It was reproduced
+locally: NVVM's library resides in `cu13/lib/libnvvm.so.4`, but nvcc's LTO link
+sets `-nvvmpath=cu13/nvvm` and expects `nvvm/lib64/libnvvm.so`. `stage_cuda.py`
+creates a private overlay with the expected library link, without changing the
+original CUDA installation or drivers. Merely setting LD_LIBRARY_PATH did not
+fix this case; `-Xnvlink --nvvmpath` was overridden by nvcc's later default.
 
 SDK download (official URL; redirects to a temporary signed NVIDIA URL):
 https://developer.nvidia.com/downloads/compute/cupqc/downloads/secure/cupqc-sdk-0.6.0-x86_64.tar.gz
