@@ -1,0 +1,936 @@
+{
+  "TEST_ONLY": true,
+  "all_27_read_only_hash_chain_span_native_count_and_saved_gmp_audits_passed": true,
+  "all_27_reported_recovery_passed": true,
+  "all_27_results_checkpoints_and_committed_journals_consistent": true,
+  "fairness": {
+    "baseline_name_caveat": "CPUw1 means one preparation window per batch, not one CPU worker. All modes use 16 workers.",
+    "basis_policy": "CPU uses proved fpylll reduction; GPU proposes integer U. Exact independent reconstruction, unimodularity, bounds and native guards are mandatory; exact LLL quality is optional and disabled for production-speed timing.",
+    "count_policy": "Different valid boxes are allowed; every box has complete native counts. Periodic GMP checks use that box, and final exact hit sets must agree across modes.",
+    "incremental_comparison": "GPUw16 versus CPUw16 isolates GPU proposal preparation after batching. GPUw16 versus CPUw1 includes both batching and GPU changes.",
+    "logical_cells_per_run": 32768,
+    "native_window_cells": 256,
+    "queue_policy": "CPUw1 ready limit 3, CPUw16/GPUw16 ready limit 1 of larger batches; per-window native requests, durable journal units and exact coverage remain unchanged.",
+    "rotation": "Each repeat rotates CPUw1, CPUw16, GPUw16 order; fresh trial process and scratch journal per sample.",
+    "same_shell_cap_precision_groups_map_chunksize_and_exact_certification": true,
+    "worker_count": 16
+  },
+  "gpu_totals": {
+    "accepted": 61440,
+    "fallback_count": 0,
+    "fallbacks": {},
+    "proposals": 61440
+  },
+  "independent_review": true,
+  "limitations": [
+    "Three repeats per region and short 32768-cell runs are exploratory; no confidence interval or whole-search speedup is established.",
+    "Cabbage steady runs are 0.75\u20131.00 seconds, CPUw16 spans 38049\u201343625 cells/s and overlaps GPU; the median GPU regression is not a robust universal effect.",
+    "Dense incremental difference is below 1% and within overlapping observed ranges; do not claim a demonstrated dense speedup.",
+    "Every repeat revisits the same regions. OS/library/device caches may warm and runtime startup is excluded from steady throughput; fresh processes do not make the system cold.",
+    "All large-region hit sets are empty, a weak standalone positive correctness test. Separate small-shell controls recover all four known brute-force hits.",
+    "Only the first of 128 chunks per timed run is independently GMP-audited. All 128 receipts carry exact certificates and full native count checks, but the timing matrix does not compare every box against GMP.",
+    "Local durable scratch journals are measured; periodic verified NFS copies, production controller behavior, stop/restart reconciliation, and whole-search region mix are outside these tests.",
+    "GPU U can alter point counts and geometry. Tiny signed point changes are reported; raw coefficient-points/s would be less fair than completed logical cells/s.",
+    "Finite controls prove sampled behavior and explicit cold fallback, not every possible overflow, ill-conditioned basis, process death, or long-run service path."
+  ],
+  "matrix": "/home/pnord/scratch/fifth42-gpu-preparation-20261110-e5_idmzk/runs/matrix-r2",
+  "per_sample_checks": [
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "2cd9d9135d7b5bdfbb43d1ae994c07dbbffb4590e77d6fb158871a7861b1159e",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "1e9852aa340ad808dc76133f6b5358083663a2af548210f11b7e89ead9d7f793",
+      "name": "ada-cpu-w1-r0",
+      "reported_recovery_passed": true,
+      "result_sha256": "b85286ef04440ddcd7622b57a4f03af5a236a32ed05fea37b0ba227c6d248e22",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "d1345a701a0821130061852ab8331152a46b9daa91e7e55831e27cad34dde608",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "365a58ffe8bd981e5c83243eae299b00ce612796e8ac3f7f5fd62549fc45ee00",
+      "name": "ada-cpu-w16-r0",
+      "reported_recovery_passed": true,
+      "result_sha256": "2d25ce1eb766c05de01607e0abec38e0caedbc3db46eb24c633d255a11d1230b",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "34481caf77b45aefef4bb40ef62bee09e09255ed30c43c2f91efd5f8dff38030",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "7f7c09d010b742d96ffeb35dea940e1eb0f58f5ba89458ba930f3f6d09afa4e9",
+      "name": "ada-gpu-w16-r0",
+      "reported_recovery_passed": true,
+      "result_sha256": "61e2b894854b4e4de4e3f03b4a3b074420d09db1484e155c42ff6eda020624f1",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "d8e24a167bea069b74aa08b4c1a59ccdcec37784d00db7e7f7150a8ae6852946",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "2087b951c2c3345c9c833cc6ef5fd207c2de610e21afc1449138b25bc7c4acf1",
+      "name": "cabbage-cpu-w1-r0",
+      "reported_recovery_passed": true,
+      "result_sha256": "9dfe20466d7252677a1006175584efcb1b15627ee6d7226a86c16dd17d3a55dd",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "84c8445ec10bbf9a871d142977eb16d983b24290533ade5475f8cb43239782eb",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "32b024708dff78801816751ded02b94afba75a1bc5aef037d114c6ea1dc6d9d0",
+      "name": "cabbage-cpu-w16-r0",
+      "reported_recovery_passed": true,
+      "result_sha256": "d9e76154b258e3f7b332ecb7b0840aeea939874f895b11b00afe95c79a5079a4",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "219642e0ab72d8bd20cc6169e891e576e6835b55726fc1ec2ce975de395486a9",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "30387014e8513179f1d5e2bf5ea536c84d38d69de07beda8f3f21360ff547df6",
+      "name": "cabbage-gpu-w16-r0",
+      "reported_recovery_passed": true,
+      "result_sha256": "be4b74807a0304ad04bdf7b60abe09693c86ddb91fb04f5995530f7d9a681eef",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "fde1b4bd9316e4a5de00e45f64f0d16550056589a0651908cbbc557883e2ca09",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 4,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "e0f036c9db3fdd5bb838e5075f0cd25fa98a12eb4bc39047023845c6e004329b",
+      "name": "dense-cpu-w1-r0",
+      "reported_recovery_passed": true,
+      "result_sha256": "fb4e2f3e1a910b08bea72921b9f0b89ccf1b459fdb60526e9188d7f6586a8f16",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "f9d4298cd1fc82dc5a44e45d4d891f71d05e40cff1d844e18ad3e25a9359f28c",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 4,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "30ebdbe6bdd043b584ea41139b15c59f871e612894f367d7011f7d3af3589fde",
+      "name": "dense-cpu-w16-r0",
+      "reported_recovery_passed": true,
+      "result_sha256": "a29efe24d748831ed8022e66beff80a01cba2d4f0c979956506472a994f6117e",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "0e30ca3196d3aafe8cebd9c9797e955a9f57cd28e06b7e481531c436c9cf7f1d",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 4,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "55d988adaeb250a761c28c9079c7306fe32c25e2bbdf303dc21722465ac3b13d",
+      "name": "dense-gpu-w16-r0",
+      "reported_recovery_passed": true,
+      "result_sha256": "d602cfde4e9b4cdf489d83588e0c7d0fe5d2230a84c628ec264d8facd3fd5c41",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "8fdb3205c8ea2d52a7beed2d637012a6668b1ea9cada0b28bc2510b3855c1547",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "ceac584f8e9d95e2553014ec2932f4769d65c2b534fc1bb9f93279e58be0c757",
+      "name": "ada-cpu-w16-r1",
+      "reported_recovery_passed": true,
+      "result_sha256": "f8b4c005f1e4edf5f839f30db9e54de9f2f22f8e8f0d8915e7ad77bd8446c51a",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "aa704dbc337776059c9240a1497bd82b3be8b52ee382817ac9cc80237213257e",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "93277f55afea6d9c1c35fc06f587cc3758449f696dedd6d97fa02d3a124611d0",
+      "name": "ada-gpu-w16-r1",
+      "reported_recovery_passed": true,
+      "result_sha256": "3600efce0c72f3196c9a97d5c27f3ddbbe0c9a4d52f18882b20664e54ec596d7",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "84332943a8b387c921481c9eddaa0247e5c25098567164af5615fb26f1fd31d4",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "54467da2ba015def2f0767ca10c74cb8c919d872fc8592b71831a80c5fec056d",
+      "name": "ada-cpu-w1-r1",
+      "reported_recovery_passed": true,
+      "result_sha256": "ae80c10bd50ef8fa7d88eb8633161fb82fa502d2046506e8678c2e87b8dd9632",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "fe41d38673783afbd3547bc68360028049d60e1f16eba081b45cd25ee360a225",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "ff1f4d92006ddc2b9c85ea4ee527552b0bb8fb65c02b3000c1a555ffa25ae96a",
+      "name": "cabbage-cpu-w16-r1",
+      "reported_recovery_passed": true,
+      "result_sha256": "e21430a5097dc9d698c438b9c44136f53372aed17c4c25f73d0b3d0e9fa155a1",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "f15324931afd51fc03c80dbb6505a9bf623449e485508c9fc4f2ba0e20172cfa",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "281e75468f9c1446995083cfa1128b4cbeed1992463e9ae82f1c625db26a34bf",
+      "name": "cabbage-gpu-w16-r1",
+      "reported_recovery_passed": true,
+      "result_sha256": "28e6feb8258e5fcafec4276f8bf1ac0efa45a5435183611e68a40d5d6eb55eaf",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "b82c18bc75cd6f7375f33480be9e2d7d8add774174ff9e35297f5216dd8aa3d9",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "a87b80a46e7ff8ae6bb3e1267fc52c94d63f08bceb3332c687d35c3dfb4a557b",
+      "name": "cabbage-cpu-w1-r1",
+      "reported_recovery_passed": true,
+      "result_sha256": "9ec2d92e27d7952a31c0b1d7cdd2ce9e7cf7aca5f57061ce3002b163c7935fc8",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "3de7ee5f704b1fe3f7608086235abae1e1ae97e577a39631d9629f4a0713dc13",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 4,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "1b9b9b93ff5cd46c655b3c9c7734227c8ed0566a42a3a1088b4d4c12e07013a8",
+      "name": "dense-cpu-w16-r1",
+      "reported_recovery_passed": true,
+      "result_sha256": "ec2acd6e9701a8d294184adbe817799e2fb88217617c8e40d07b9f3f8ff570cf",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "a4a273add9f80ee80d49295e8fb4c1cf18297e2ae40e34ed75da7fde1961c9ae",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 4,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "f2f9502888f83c8bd9eebc9146a6f02fce7a891bee6d2dbce463e9d01ca69b51",
+      "name": "dense-gpu-w16-r1",
+      "reported_recovery_passed": true,
+      "result_sha256": "7445777a83083be8e183f615d08bc1bcaa5ef7a60af3ff4fe07a0bf9af55cd42",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "8d6b57b542a0d807f592be0777c2b8996db13ac3f4d5a662afc48a2ef6659ea8",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 4,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "3fcaf105967c7412f43eb1681ac331858667131834177a248d3fec06bcfc0d82",
+      "name": "dense-cpu-w1-r1",
+      "reported_recovery_passed": true,
+      "result_sha256": "c8a24ccddafc334efaac9f8c5869ac3e78cd4c60a6d01d4b4d51a7ff32ff8777",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "1f13d8ab791e8ae14e0bb2dcd09aff6bde651b94690182efcf1c05fb245e1b92",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "22397881d3d7980a5e15e18ce23a75ee3199c1eacf477eb5f36aaa5589dbb6a1",
+      "name": "ada-gpu-w16-r2",
+      "reported_recovery_passed": true,
+      "result_sha256": "ee71a3e0129e48a879b3df5f1abd4c18889c6514a6a5f91bceee77b9b6df4d48",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "854c15e889a76b2c69205f0215e4ec472edbaed4642b45524e550a9ca678f476",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "7a119291860a94445d1918af6e8c3e1ac160222c7d8add0c07966592c5542e67",
+      "name": "ada-cpu-w1-r2",
+      "reported_recovery_passed": true,
+      "result_sha256": "5d21883182b2e9e71adc3765aba1690fa21309e930787a9f540ddf642984b4d0",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "ba99963879d2c549b23d70e2f894096641b236dd60f5dc16fe79893955d2d621",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "1b671edc53f1a29814756a8271b5d0f258920e5c1e904622a445ba3f60043e7d",
+      "name": "ada-cpu-w16-r2",
+      "reported_recovery_passed": true,
+      "result_sha256": "5cb33cf6f5bc91aa0d35c086db98b91d4668ba65bff94572be01b7452a093b44",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "2d31a0e8a4fa2278744af17de59fdd1844212621f7dca95af4395fbc988d2d01",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "75e06253e4168e5edbf47504d08dcfa02db9536ee075cdcae5623927d22d4a55",
+      "name": "cabbage-gpu-w16-r2",
+      "reported_recovery_passed": true,
+      "result_sha256": "731c36ecace7aa9901ce1e6d11c8a4590332d9497f85591312de61b401daafa0",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "4745fc294d4eb2e24ce8ea671d20923416b70881122ce1dd6b7c5ed85c6d7b8d",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "de255ef2cd08e4f7f80d638be4d34bdd70bb36839a3695400d81afb1f1605d90",
+      "name": "cabbage-cpu-w1-r2",
+      "reported_recovery_passed": true,
+      "result_sha256": "00cdf2d40b49a3c84d912ced9524753f4dbd6cd08d11abf38239fa8b0f608a90",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "b7551c535c4680f82d4ce008099b7b66b07f9fbb2c53968461e068d17858516a",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 1,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "4c66dac7ab79ed464d1066475c73624deb61c3c94d78ad7d80953b3435d4161d",
+      "name": "cabbage-cpu-w16-r2",
+      "reported_recovery_passed": true,
+      "result_sha256": "62694bc4a839f1ff13b59095f5c291ace8f612e6a0cb2ef3eb3fb738f2462c3c",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "1aa77f45b1d8906cc5cd780bd633ca07004560b5d742c9f03503bfdecd6500de",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 4,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "ce688761820d1defe620bff2812904042299f86afcf58bf36a32894681afe804",
+      "name": "dense-gpu-w16-r2",
+      "reported_recovery_passed": true,
+      "result_sha256": "a987aa6a83cfa27d996d813d42bfcd21564e908d22366fd55f12944ad3c96da1",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "dbfbbd98f7b458d69e4268665f0542ab9766efc02e4abb37e96ec2416a00b4e6",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 4,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "ef283f4a9bc98ecf6cbce3d1be46ea08d96ce6f52a2641911c6879800dd13bf4",
+      "name": "dense-cpu-w1-r2",
+      "reported_recovery_passed": true,
+      "result_sha256": "44f584a139091da394d2a01757079decab19b70656f61c3ff18e05033068be82",
+      "status": "passed"
+    },
+    {
+      "checkpoint_and_result_equal": true,
+      "checkpoint_file_sha256": "7fcb6921425340b0124a35a1d3e7562166d9a78d663c9765a82ff1ea4e476b7f",
+      "complete_hashed_contiguous_receipts": 128,
+      "durable_close_in_timing_reported": true,
+      "gmp_audited_chunks": 1,
+      "gmp_reference_files": 4,
+      "independent_read_only_replay_passed": true,
+      "journal_fully_committed": true,
+      "journal_sha256": "ea49e66bac9bb8f7130809350a5921118f8ddd5498b93d32e341188b269bbabf",
+      "name": "dense-cpu-w16-r2",
+      "reported_recovery_passed": true,
+      "result_sha256": "e4ec775067b0b5f733d5b2dba345768465996aa8b761857ce58dc2d5050b34b6",
+      "status": "passed"
+    }
+  ],
+  "recovery_was_not_reexecuted_in_review": "Recovery takes the journal writer lock; review stayed read-only.",
+  "regions": {
+    "ada": {
+      "batching_cpu_vs_cpu_window1_percent": 12.657623643704508,
+      "cpu_batching_geometry_identical": true,
+      "cpu_physical_tasks": 8192,
+      "cpu_points": 1333806924,
+      "exact_hits": [],
+      "exact_hits_equal_across_all_nine_samples": true,
+      "gpu_geometry_differs": true,
+      "gpu_physical_tasks": 8192,
+      "gpu_point_difference": -78744,
+      "gpu_point_inflation_percent": -0.005903703046006292,
+      "gpu_points": 1333728180,
+      "incremental_gpu_vs_batched_cpu_percent": 8.428599496197275,
+      "paired_repeat_gpu_vs_batched_cpu_percent": [
+        7.562230218926169,
+        7.382082253281985,
+        21.72949701564162
+      ],
+      "physical_task_difference": 0,
+      "rates_cells_per_second": {
+        "cpu-w1": {
+          "maximum": 21974.47869208523,
+          "median": 20938.74001065553,
+          "minimum": 18883.382880228375,
+          "samples": [
+            20938.74001065553,
+            21974.47869208523,
+            18883.382880228375
+          ]
+        },
+        "cpu-w16": {
+          "maximum": 23897.56115565163,
+          "median": 23589.08691693808,
+          "minimum": 21011.601300455637,
+          "samples": [
+            23897.56115565163,
+            23589.08691693808,
+            21011.601300455637
+          ]
+        },
+        "gpu-w16": {
+          "maximum": 25704.749746950678,
+          "median": 25577.31657797666,
+          "minimum": 25330.452715944626,
+          "samples": [
+            25704.749746950678,
+            25330.452715944626,
+            25577.31657797666
+          ]
+        }
+      },
+      "startup_plus_steady_cells_per_second": {
+        "cpu-w1": {
+          "maximum": 17493.265035268265,
+          "median": 16401.895887331328,
+          "minimum": 15431.235201498856,
+          "samples": [
+            16401.895887331328,
+            17493.265035268265,
+            15431.235201498856
+          ]
+        },
+        "cpu-w16": {
+          "maximum": 18933.839780889288,
+          "median": 18528.586291297368,
+          "minimum": 15987.254458314603,
+          "samples": [
+            18933.839780889288,
+            18528.586291297368,
+            15987.254458314603
+          ]
+        },
+        "gpu-w16": {
+          "maximum": 18740.06444993259,
+          "median": 18709.41339385269,
+          "minimum": 18681.39920585768,
+          "samples": [
+            18740.06444993259,
+            18681.39920585768,
+            18709.41339385269
+          ]
+        }
+      },
+      "startup_seconds": {
+        "cpu-w1": {
+          "maximum": 0.4328717039898038,
+          "median": 0.3882029320229776,
+          "minimum": 0.38199363701278344,
+          "samples": [
+            0.4328717039898038,
+            0.38199363701278344,
+            0.3882029320229776
+          ]
+        },
+        "cpu-w16": {
+          "maximum": 0.49011332297232,
+          "median": 0.3793936020229012,
+          "minimum": 0.35947198601206765,
+          "samples": [
+            0.35947198601206765,
+            0.3793936020229012,
+            0.49011332297232
+          ]
+        },
+        "gpu-w16": {
+          "maximum": 0.4737693620263599,
+          "median": 0.4702826419961639,
+          "minimum": 0.4604234240250662,
+          "samples": [
+            0.4737693620263599,
+            0.4604234240250662,
+            0.4702826419961639
+          ]
+        }
+      },
+      "steady_seconds": {
+        "cpu-w1": {
+          "maximum": 1.7352822959655896,
+          "median": 1.5649461229913868,
+          "minimum": 1.4911844080197625,
+          "samples": [
+            1.5649461229913868,
+            1.4911844080197625,
+            1.7352822959655896
+          ]
+        },
+        "cpu-w16": {
+          "maximum": 1.5595194069901481,
+          "median": 1.3891169300186448,
+          "minimum": 1.3711859459872358,
+          "samples": [
+            1.3711859459872358,
+            1.3891169300186448,
+            1.5595194069901481
+          ]
+        },
+        "gpu-w16": {
+          "maximum": 1.2936207799939439,
+          "median": 1.2811351769487374,
+          "minimum": 1.274783856002614,
+          "samples": [
+            1.274783856002614,
+            1.2936207799939439,
+            1.2811351769487374
+          ]
+        }
+      },
+      "total_gpu_vs_cpu_window1_percent": 22.15308354256562
+    },
+    "cabbage": {
+      "batching_cpu_vs_cpu_window1_percent": 12.45986420983909,
+      "cpu_batching_geometry_identical": true,
+      "cpu_physical_tasks": 4096,
+      "cpu_points": 931475754,
+      "exact_hits": [],
+      "exact_hits_equal_across_all_nine_samples": true,
+      "gpu_geometry_differs": true,
+      "gpu_physical_tasks": 4096,
+      "gpu_point_difference": -54458,
+      "gpu_point_inflation_percent": -0.005846421634292387,
+      "gpu_points": 931421296,
+      "incremental_gpu_vs_batched_cpu_percent": -5.99892476414391,
+      "paired_repeat_gpu_vs_batched_cpu_percent": [
+        1.993832632833037,
+        -5.99892476414391,
+        -9.774446466910657
+      ],
+      "physical_task_difference": 0,
+      "rates_cells_per_second": {
+        "cpu-w1": {
+          "maximum": 37468.86908264588,
+          "median": 36813.649525208595,
+          "minimum": 32891.99628041301,
+          "samples": [
+            32891.99628041301,
+            36813.649525208595,
+            37468.86908264588
+          ]
+        },
+        "cpu-w16": {
+          "maximum": 43625.313911674784,
+          "median": 41400.580266735655,
+          "minimum": 38048.83029826162,
+          "samples": [
+            38048.83029826162,
+            41400.580266735655,
+            43625.313911674784
+          ]
+        },
+        "gpu-w16": {
+          "maximum": 39361.1809573564,
+          "median": 38916.990604615174,
+          "minimum": 38807.460293159624,
+          "samples": [
+            38807.460293159624,
+            38916.990604615174,
+            39361.1809573564
+          ]
+        }
+      },
+      "startup_plus_steady_cells_per_second": {
+        "cpu-w1": {
+          "maximum": 26924.295960156145,
+          "median": 26079.081218618678,
+          "minimum": 23594.919909174132,
+          "samples": [
+            23594.919909174132,
+            26079.081218618678,
+            26924.295960156145
+          ]
+        },
+        "cpu-w16": {
+          "maximum": 30116.852698988274,
+          "median": 29096.34698815452,
+          "minimum": 25869.720433229606,
+          "samples": [
+            25869.720433229606,
+            29096.34698815452,
+            30116.852698988274
+          ]
+        },
+        "gpu-w16": {
+          "maximum": 24208.115781877237,
+          "median": 23973.899733392245,
+          "minimum": 22984.32308801993,
+          "samples": [
+            24208.115781877237,
+            23973.899733392245,
+            22984.32308801993
+          ]
+        }
+      },
+      "startup_seconds": {
+        "cpu-w1": {
+          "maximum": 0.39254332199925557,
+          "median": 0.36638134997338057,
+          "minimum": 0.3425026980112307,
+          "samples": [
+            0.39254332199925557,
+            0.36638134997338057,
+            0.3425026980112307
+          ]
+        },
+        "cpu-w16": {
+          "maximum": 0.4054454560391605,
+          "median": 0.3369051620247774,
+          "minimum": 0.33470299298642203,
+          "samples": [
+            0.4054454560391605,
+            0.33470299298642203,
+            0.3369051620247774
+          ]
+        },
+        "gpu-w16": {
+          "maximum": 0.5931720469961874,
+          "median": 0.5248224910465069,
+          "minimum": 0.5092219110229053,
+          "samples": [
+            0.5092219110229053,
+            0.5248224910465069,
+            0.5931720469961874
+          ]
+        }
+      },
+      "steady_seconds": {
+        "cpu-w1": {
+          "maximum": 0.9962301990017295,
+          "median": 0.8901046329992823,
+          "minimum": 0.8745393389835954,
+          "samples": [
+            0.9962301990017295,
+            0.8901046329992823,
+            0.8745393389835954
+          ]
+        },
+        "cpu-w16": {
+          "maximum": 0.8612091289833188,
+          "median": 0.791486490983516,
+          "minimum": 0.7511235349811614,
+          "samples": [
+            0.8612091289833188,
+            0.791486490983516,
+            0.7511235349811614
+          ]
+        },
+        "gpu-w16": {
+          "maximum": 0.8443737300112844,
+          "median": 0.8419972739648074,
+          "minimum": 0.8324953470146284,
+          "samples": [
+            0.8443737300112844,
+            0.8419972739648074,
+            0.8324953470146284
+          ]
+        }
+      },
+      "total_gpu_vs_cpu_window1_percent": 5.713481566032441
+    },
+    "dense": {
+      "batching_cpu_vs_cpu_window1_percent": 0.15102167957663504,
+      "cpu_batching_geometry_identical": true,
+      "cpu_physical_tasks": 8192,
+      "cpu_points": 19422406046,
+      "exact_hits": [],
+      "exact_hits_equal_across_all_nine_samples": true,
+      "gpu_geometry_differs": true,
+      "gpu_physical_tasks": 8192,
+      "gpu_point_difference": -751204,
+      "gpu_point_inflation_percent": -0.003867718542294174,
+      "gpu_points": 19421654842,
+      "incremental_gpu_vs_batched_cpu_percent": 0.6152765457419163,
+      "paired_repeat_gpu_vs_batched_cpu_percent": [
+        0.6406026235374229,
+        0.6152765457419163,
+        -0.23066932764175263
+      ],
+      "physical_task_difference": 0,
+      "rates_cells_per_second": {
+        "cpu-w1": {
+          "maximum": 6612.923594563805,
+          "median": 6569.210287018773,
+          "minimum": 6541.118367451274,
+          "samples": [
+            6569.210287018773,
+            6612.923594563805,
+            6541.118367451274
+          ]
+        },
+        "cpu-w16": {
+          "maximum": 6580.411942393713,
+          "median": 6579.13121872915,
+          "minimum": 6561.493638239252,
+          "samples": [
+            6580.411942393713,
+            6579.13121872915,
+            6561.493638239252
+          ]
+        },
+        "gpu-w16": {
+          "maximum": 6622.566233936257,
+          "median": 6619.611070031575,
+          "minimum": 6546.358284980669,
+          "samples": [
+            6622.566233936257,
+            6619.611070031575,
+            6546.358284980669
+          ]
+        }
+      },
+      "startup_plus_steady_cells_per_second": {
+        "cpu-w1": {
+          "maximum": 6149.132996065214,
+          "median": 6136.660938974584,
+          "minimum": 6132.4309478712785,
+          "samples": [
+            6149.132996065214,
+            6136.660938974584,
+            6132.4309478712785
+          ]
+        },
+        "cpu-w16": {
+          "maximum": 6135.9006563622415,
+          "median": 6133.1786134963995,
+          "minimum": 6066.120759565037,
+          "samples": [
+            6135.9006563622415,
+            6133.1786134963995,
+            6066.120759565037
+          ]
+        },
+        "gpu-w16": {
+          "maximum": 6092.312740263458,
+          "median": 6084.414267442764,
+          "minimum": 5986.044505102194,
+          "samples": [
+            6084.414267442764,
+            6092.312740263458,
+            5986.044505102194
+          ]
+        }
+      },
+      "startup_seconds": {
+        "cpu-w1": {
+          "maximum": 0.3845659520011395,
+          "median": 0.3407627300475724,
+          "minimum": 0.3338539579999633,
+          "samples": [
+            0.3407627300475724,
+            0.3845659520011395,
+            0.3338539579999633
+          ]
+        },
+        "cpu-w16": {
+          "maximum": 0.4078198840143159,
+          "median": 0.3621466560289264,
+          "minimum": 0.3607458350015804,
+          "samples": [
+            0.3607458350015804,
+            0.3621466560289264,
+            0.4078198840143159
+          ]
+        },
+        "gpu-w16": {
+          "maximum": 0.46853444701991975,
+          "median": 0.43763271503848955,
+          "minimum": 0.42844163498375565,
+          "samples": [
+            0.43763271503848955,
+            0.42844163498375565,
+            0.46853444701991975
+          ]
+        }
+      },
+      "steady_seconds": {
+        "cpu-w1": {
+          "maximum": 5.009540900995489,
+          "median": 4.988118596957065,
+          "minimum": 4.955145713000093,
+          "samples": [
+            4.988118596957065,
+            4.955145713000093,
+            5.009540900995489
+          ]
+        },
+        "cpu-w16": {
+          "maximum": 4.993984877015464,
+          "median": 4.980596815992612,
+          "minimum": 4.979627459018957,
+          "samples": [
+            4.979627459018957,
+            4.980596815992612,
+            4.993984877015464
+          ]
+        },
+        "gpu-w16": {
+          "maximum": 5.005531101953238,
+          "median": 4.950139767024666,
+          "minimum": 4.947930883965455,
+          "samples": [
+            4.947930883965455,
+            4.950139767024666,
+            5.005531101953238
+          ]
+        }
+      },
+      "total_gpu_vs_cpu_window1_percent": 0.7672274262919832
+    }
+  },
+  "review_elapsed_seconds": 1.9052092889905907,
+  "samples_checked": 27,
+  "sources": {
+    "correctness_control_sources": {
+      "integration-controls-exact-lll": {
+        "all_recorded_source_hashes_match_current": true,
+        "gpu_preparation_sha256": "e7c03f5dc67c8e5dcb89e83a272e1b7932635ab477e9f9a91d18ea58de6d40fa",
+        "status": "passed"
+      },
+      "integration-controls-native": {
+        "all_recorded_source_hashes_match_current": true,
+        "gpu_preparation_sha256": "e7c03f5dc67c8e5dcb89e83a272e1b7932635ab477e9f9a91d18ea58de6d40fa",
+        "status": "passed"
+      },
+      "integration-controls-status1": {
+        "all_recorded_source_hashes_match_current": true,
+        "gpu_preparation_sha256": "e7c03f5dc67c8e5dcb89e83a272e1b7932635ab477e9f9a91d18ea58de6d40fa",
+        "status": "passed"
+      },
+      "integration-controls-zero-u": {
+        "all_recorded_source_hashes_match_current": true,
+        "gpu_preparation_sha256": "e7c03f5dc67c8e5dcb89e83a272e1b7932635ab477e9f9a91d18ea58de6d40fa",
+        "status": "passed"
+      }
+    },
+    "current_gpu_library_sha256": "d09ddab1fb364ca7a4f53937dc3f92490678063d07d9e8cb6bb031c431f2ad7a",
+    "current_gpu_preparation_sha256": "e7c03f5dc67c8e5dcb89e83a272e1b7932635ab477e9f9a91d18ea58de6d40fa",
+    "matrix_checkpoint_worker_manifest_sha256": "ea90bdbcf2b4d82d880efcc2ae459fa8d071d07f244a45cff40ff4f736a5d38d",
+    "mismatch_note": "Only the load/GPU guard wrapper changed after the snapshot; matrix metadata captures successful guards and commands.",
+    "scientific_and_runtime_sources_and_gpu_shared_library_match_manifest": true,
+    "source_manifest": "/home/pnord/scratch/fifth42-gpu-preparation-20261110-e5_idmzk/evidence/TESTED_SOURCE_MANIFEST.json",
+    "source_manifest_mismatches": [
+      "run_bounded.py"
+    ]
+  },
+  "status": "passed_with_limitations",
+  "timing": {
+    "durable_close_and_final_flush_included": true,
+    "excluded": "Runtime/pool/GPU startup; final independent read-only journal audit and reopen/recovery verification.",
+    "included": "Steady preparation, native GPU enumeration, exact output verification, first-chunk GMP audit, journal commits and final durable close.",
+    "source_order_verified": true
+  }
+}

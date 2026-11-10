@@ -1,0 +1,13 @@
+ada-cpu-w1-r0 21472.16 cells/s
+ada-cpu-w16-r0 23994.82 cells/s
+ada-gpu-w16-r0 25055.03 cells/s
+Traceback (most recent call last):
+  File "/home/pnord/scratch/fifth42-gpu-preparation-20261110-e5_idmzk/run_matrix.py", line 33, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/pnord/scratch/fifth42-gpu-preparation-20261110-e5_idmzk/run_matrix.py", line 22, in main
+    run(cmd,a.output/(name+'.log'),min(120,int(deadline-time.monotonic())))
+  File "/home/pnord/scratch/fifth42-gpu-preparation-20261110-e5_idmzk/run_bounded.py", line 11, in run
+    utilization,memory=map(int,gpu.split(','));assert utilization<=5 and memory<512,(utilization,memory)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (9, 27)

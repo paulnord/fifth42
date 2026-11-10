@@ -1,0 +1,2571 @@
+{
+  "status": "passed",
+  "source_sha256": "7fb2bdd678fc59d97c2dd26f17e11bedb7505d1782244cd26e7849395d3f2fea",
+  "correctness_cases": 16,
+  "timing_cases": 8,
+  "seconds": 1.4338324620039202,
+  "production_changed": false,
+  "production_restarted": false,
+  "timings": [
+    {
+      "binary": "root_newton_power_tpi8",
+      "fixture": "actual-768",
+      "count": 768,
+      "unique_input_keys": 384,
+      "server_startup_ms": 194.96530998731032,
+      "median_gmp_ms": 0.5303539801388979,
+      "median_warm_kernel_ms": 0.074752,
+      "median_eleven_kernel_request_ms": 1.2939860462211072,
+      "median_single_request_ms": 0.4197970265522599,
+      "median_cpu_proof_ms": 0.5182020249776542,
+      "median_gmp_proof_ms": 0.3986980300396681,
+      "samples": [
+        {
+          "repeat": 0,
+          "gmp_root_ms": 0.6075690034776926,
+          "python_proof_ms": 0.5370370345190167,
+          "gmp_proof_ms": 0.40850596269592643,
+          "response": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.105478,
+            "upload_allocate_ms": 0.03757,
+            "download_ms": 0.064922,
+            "request_ms": 1.35774,
+            "kernel_ms": [
+              0.14768,
+              0.075776,
+              0.075776,
+              0.074752,
+              0.074496,
+              0.075776,
+              0.074752,
+              0.074752,
+              0.07472,
+              0.073824,
+              0.074752
+            ],
+            "client_request_ms": 1.4404199901036918
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.086272,
+            "upload_allocate_ms": 0.020248,
+            "download_ms": 0.045155,
+            "request_ms": 0.371306,
+            "kernel_ms": [
+              0.080512
+            ],
+            "client_request_ms": 0.4197970265522599
+          },
+          "warm_kernel_median_ms": 0.074752
+        },
+        {
+          "repeat": 1,
+          "gmp_root_ms": 0.47303701285272837,
+          "python_proof_ms": 0.5261659971438348,
+          "gmp_proof_ms": 0.3986980300396681,
+          "response": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.119284,
+            "upload_allocate_ms": 0.02124,
+            "download_ms": 0.046647,
+            "request_ms": 1.23311,
+            "kernel_ms": [
+              0.07808,
+              0.075776,
+              0.075776,
+              0.074784,
+              0.075584,
+              0.074752,
+              0.075776,
+              0.073728,
+              0.075712,
+              0.074752,
+              0.075648
+            ],
+            "client_request_ms": 1.2939860462211072
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.096661,
+            "upload_allocate_ms": 0.019557,
+            "download_ms": 0.044243,
+            "request_ms": 0.380373,
+            "kernel_ms": [
+              0.075936
+            ],
+            "client_request_ms": 0.42999599827453494
+          },
+          "warm_kernel_median_ms": 0.075616
+        },
+        {
+          "repeat": 2,
+          "gmp_root_ms": 0.5303539801388979,
+          "python_proof_ms": 0.5182020249776542,
+          "gmp_proof_ms": 0.4031360149383545,
+          "response": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.112331,
+            "upload_allocate_ms": 0.021059,
+            "download_ms": 0.047209,
+            "request_ms": 1.23388,
+            "kernel_ms": [
+              0.07936,
+              0.075776,
+              0.075776,
+              0.074752,
+              0.074976,
+              0.074752,
+              0.074848,
+              0.074752,
+              0.075616,
+              0.074752,
+              0.076544
+            ],
+            "client_request_ms": 1.2862809817306697
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.088917,
+            "upload_allocate_ms": 0.019006,
+            "download_ms": 0.044824,
+            "request_ms": 0.370665,
+            "kernel_ms": [
+              0.076672
+            ],
+            "client_request_ms": 0.41532900650054216
+          },
+          "warm_kernel_median_ms": 0.074912
+        },
+        {
+          "repeat": 3,
+          "gmp_root_ms": 0.5363150266930461,
+          "python_proof_ms": 0.5173999816179276,
+          "gmp_proof_ms": 0.39426900912076235,
+          "response": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.085661,
+            "upload_allocate_ms": 0.019256,
+            "download_ms": 0.048842,
+            "request_ms": 1.2331,
+            "kernel_ms": [
+              0.077408,
+              0.074752,
+              0.075776,
+              0.074752,
+              0.074752,
+              0.074784,
+              0.074752,
+              0.075776,
+              0.074752,
+              0.074752,
+              0.075776
+            ],
+            "client_request_ms": 1.2826939928345382
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.089999,
+            "upload_allocate_ms": 0.019336,
+            "download_ms": 0.045505,
+            "request_ms": 0.370214,
+            "kernel_ms": [
+              0.076224
+            ],
+            "client_request_ms": 0.41404704097658396
+          },
+          "warm_kernel_median_ms": 0.074752
+        },
+        {
+          "repeat": 4,
+          "gmp_root_ms": 0.48743397928774357,
+          "python_proof_ms": 0.5087729659862816,
+          "gmp_proof_ms": 0.33728196285665035,
+          "response": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.11773,
+            "upload_allocate_ms": 0.020559,
+            "download_ms": 0.051767,
+            "request_ms": 1.30485,
+            "kernel_ms": [
+              0.077824,
+              0.075648,
+              0.074752,
+              0.074752,
+              0.074752,
+              0.074624,
+              0.074752,
+              0.080736,
+              0.075904,
+              0.075776,
+              0.074688
+            ],
+            "client_request_ms": 1.358716981485486
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.106349,
+            "upload_allocate_ms": 0.029165,
+            "download_ms": 0.048602,
+            "request_ms": 0.434354,
+            "kernel_ms": [
+              0.079712
+            ],
+            "client_request_ms": 0.48448803136125207
+          },
+          "warm_kernel_median_ms": 0.074752
+        }
+      ]
+    },
+    {
+      "binary": "root_newton_power_tpi8",
+      "fixture": "actual-4096",
+      "count": 4096,
+      "unique_input_keys": 384,
+      "server_startup_ms": 194.96530998731032,
+      "median_gmp_ms": 2.2759870043955743,
+      "median_warm_kernel_ms": 0.19758399999999998,
+      "median_eleven_kernel_request_ms": 3.526590997353196,
+      "median_single_request_ms": 1.3930409913882613,
+      "median_cpu_proof_ms": 2.35447398154065,
+      "median_gmp_proof_ms": 1.685139024630189,
+      "samples": [
+        {
+          "repeat": 0,
+          "gmp_root_ms": 2.2140999790281057,
+          "python_proof_ms": 2.5055769947357476,
+          "gmp_proof_ms": 1.7850670265033841,
+          "response": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.556363,
+            "upload_allocate_ms": 0.080491,
+            "download_ms": 0.252954,
+            "request_ms": 3.68876,
+            "kernel_ms": [
+              0.202656,
+              0.197632,
+              0.197632,
+              0.206848,
+              0.198432,
+              0.198464,
+              0.196608,
+              0.19536,
+              0.204576,
+              0.195584,
+              0.197632
+            ],
+            "client_request_ms": 3.7596580223180354
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.406532,
+            "upload_allocate_ms": 0.079359,
+            "download_ms": 0.194364,
+            "request_ms": 1.25809,
+            "kernel_ms": [
+              0.2032
+            ],
+            "client_request_ms": 1.3120999792590737
+          },
+          "warm_kernel_median_ms": 0.197632
+        },
+        {
+          "repeat": 1,
+          "gmp_root_ms": 2.29226698866114,
+          "python_proof_ms": 2.281215973198414,
+          "gmp_proof_ms": 1.6644499846734107,
+          "response": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.572873,
+            "upload_allocate_ms": 0.075662,
+            "download_ms": 0.164658,
+            "request_ms": 3.47517,
+            "kernel_ms": [
+              0.199392,
+              0.196608,
+              0.195584,
+              0.196896,
+              0.202752,
+              0.203744,
+              0.206848,
+              0.203776,
+              0.195584,
+              0.196608,
+              0.196608
+            ],
+            "client_request_ms": 3.5361689515411854
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.482314,
+            "upload_allocate_ms": 0.082014,
+            "download_ms": 0.161964,
+            "request_ms": 1.32962,
+            "kernel_ms": [
+              0.200512
+            ],
+            "client_request_ms": 1.3885030057281256
+          },
+          "warm_kernel_median_ms": 0.19675199999999998
+        },
+        {
+          "repeat": 2,
+          "gmp_root_ms": 2.2670099860988557,
+          "python_proof_ms": 2.2010260145179927,
+          "gmp_proof_ms": 1.685139024630189,
+          "response": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.462287,
+            "upload_allocate_ms": 0.075261,
+            "download_ms": 0.163477,
+            "request_ms": 3.35639,
+            "kernel_ms": [
+              0.210624,
+              0.197632,
+              0.197632,
+              0.196608,
+              0.1984,
+              0.198656,
+              0.197376,
+              0.19456,
+              0.197536,
+              0.198336,
+              0.196608
+            ],
+            "client_request_ms": 3.4163949894718826
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.479739,
+            "upload_allocate_ms": 0.075161,
+            "download_ms": 0.174527,
+            "request_ms": 1.3664,
+            "kernel_ms": [
+              0.20208
+            ],
+            "client_request_ms": 1.416525978129357
+          },
+          "warm_kernel_median_ms": 0.19758399999999998
+        },
+        {
+          "repeat": 3,
+          "gmp_root_ms": 2.2759870043955743,
+          "python_proof_ms": 2.4322689860127866,
+          "gmp_proof_ms": 1.742686959914863,
+          "response": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.463098,
+            "upload_allocate_ms": 0.104857,
+            "download_ms": 0.164358,
+            "request_ms": 3.37613,
+            "kernel_ms": [
+              0.205152,
+              0.197792,
+              0.197632,
+              0.197632,
+              0.197632,
+              0.207872,
+              0.197632,
+              0.202752,
+              0.197632,
+              0.196768,
+              0.195552
+            ],
+            "client_request_ms": 3.4344589803367853
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.493986,
+            "upload_allocate_ms": 0.075632,
+            "download_ms": 0.17587,
+            "request_ms": 1.34055,
+            "kernel_ms": [
+              0.203648
+            ],
+            "client_request_ms": 1.3930409913882613
+          },
+          "warm_kernel_median_ms": 0.197632
+        },
+        {
+          "repeat": 4,
+          "gmp_root_ms": 2.2926380042918026,
+          "python_proof_ms": 2.35447398154065,
+          "gmp_proof_ms": 1.6795989940874279,
+          "response": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.468919,
+            "upload_allocate_ms": 0.075171,
+            "download_ms": 0.163607,
+            "request_ms": 3.46915,
+            "kernel_ms": [
+              0.202752,
+              0.196768,
+              0.198656,
+              0.196608,
+              0.19456,
+              0.196608,
+              0.196608,
+              0.203776,
+              0.195584,
+              0.197632,
+              0.197632
+            ],
+            "client_request_ms": 3.526590997353196
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.449042,
+            "upload_allocate_ms": 0.076644,
+            "download_ms": 0.173996,
+            "request_ms": 1.34473,
+            "kernel_ms": [
+              0.213408
+            ],
+            "client_request_ms": 1.4030809979885817
+          },
+          "warm_kernel_median_ms": 0.196688
+        }
+      ]
+    },
+    {
+      "binary": "root_newton_power_tpi8",
+      "fixture": "actual-16384",
+      "count": 16384,
+      "unique_input_keys": 384,
+      "server_startup_ms": 194.96530998731032,
+      "median_gmp_ms": 9.128341975156218,
+      "median_warm_kernel_ms": 0.644448,
+      "median_eleven_kernel_request_ms": 12.288106023333967,
+      "median_single_request_ms": 5.544624000322074,
+      "median_cpu_proof_ms": 8.788324950728565,
+      "median_gmp_proof_ms": 6.8761599832214415,
+      "samples": [
+        {
+          "repeat": 0,
+          "gmp_root_ms": 9.240271989256144,
+          "python_proof_ms": 8.766704006120563,
+          "gmp_proof_ms": 6.868055963423103,
+          "response": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 3.73047,
+            "upload_allocate_ms": 0.356258,
+            "download_ms": 3.18585,
+            "request_ms": 16.2446,
+            "kernel_ms": [
+              0.650176,
+              0.64384,
+              0.646944,
+              0.641952,
+              0.644096,
+              0.644224,
+              0.642336,
+              0.644096,
+              0.648928,
+              0.648192,
+              0.64512
+            ],
+            "client_request_ms": 16.362634021788836
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 2.18867,
+            "upload_allocate_ms": 0.331832,
+            "download_ms": 0.88508,
+            "request_ms": 6.07829,
+            "kernel_ms": [
+              0.655424
+            ],
+            "client_request_ms": 6.177070026751608
+          },
+          "warm_kernel_median_ms": 0.6441600000000001
+        },
+        {
+          "repeat": 1,
+          "gmp_root_ms": 9.124945965595543,
+          "python_proof_ms": 8.772324013989419,
+          "gmp_proof_ms": 6.806008983403444,
+          "response": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 2.07286,
+            "upload_allocate_ms": 0.347892,
+            "download_ms": 0.820488,
+            "request_ms": 12.1839,
+            "kernel_ms": [
+              0.653376,
+              0.646048,
+              0.64512,
+              0.647168,
+              0.64512,
+              0.646144,
+              0.644096,
+              0.64512,
+              0.64512,
+              0.63968,
+              0.64
+            ],
+            "client_request_ms": 12.288106023333967
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 2.17449,
+            "upload_allocate_ms": 0.33608,
+            "download_ms": 0.861696,
+            "request_ms": 5.43744,
+            "kernel_ms": [
+              0.653152
+            ],
+            "client_request_ms": 5.535937030799687
+          },
+          "warm_kernel_median_ms": 0.64512
+        },
+        {
+          "repeat": 2,
+          "gmp_root_ms": 9.104556986130774,
+          "python_proof_ms": 8.79805302247405,
+          "gmp_proof_ms": 6.8899160251021385,
+          "response": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 2.0791,
+            "upload_allocate_ms": 0.347491,
+            "download_ms": 0.814146,
+            "request_ms": 11.9774,
+            "kernel_ms": [
+              0.653184,
+              0.644992,
+              0.645472,
+              0.649216,
+              0.638336,
+              0.64,
+              0.643968,
+              0.64512,
+              0.647296,
+              0.648192,
+              0.638976
+            ],
+            "client_request_ms": 12.078613042831421
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 2.10535,
+            "upload_allocate_ms": 0.336281,
+            "download_ms": 0.877485,
+            "request_ms": 5.33178,
+            "kernel_ms": [
+              0.649504
+            ],
+            "client_request_ms": 5.428084987215698
+          },
+          "warm_kernel_median_ms": 0.6450560000000001
+        },
+        {
+          "repeat": 3,
+          "gmp_root_ms": 9.128341975156218,
+          "python_proof_ms": 8.788324950728565,
+          "gmp_proof_ms": 6.8761599832214415,
+          "response": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 2.01101,
+            "upload_allocate_ms": 0.392586,
+            "download_ms": 0.824525,
+            "request_ms": 12.2584,
+            "kernel_ms": [
+              0.65552,
+              0.644928,
+              0.646976,
+              0.643072,
+              0.641024,
+              0.64512,
+              0.647168,
+              0.648032,
+              0.643072,
+              0.643232,
+              0.643072
+            ],
+            "client_request_ms": 12.356634018942714
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 2.10521,
+            "upload_allocate_ms": 0.33585,
+            "download_ms": 0.90658,
+            "request_ms": 5.62054,
+            "kernel_ms": [
+              0.651104
+            ],
+            "client_request_ms": 5.71698701241985
+          },
+          "warm_kernel_median_ms": 0.64408
+        },
+        {
+          "repeat": 4,
+          "gmp_root_ms": 9.220906009431928,
+          "python_proof_ms": 8.884705021046102,
+          "gmp_proof_ms": 7.042412005830556,
+          "response": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 1.99377,
+            "upload_allocate_ms": 0.348613,
+            "download_ms": 0.741911,
+            "request_ms": 11.729,
+            "kernel_ms": [
+              0.645888,
+              0.644096,
+              0.642048,
+              0.646144,
+              0.641024,
+              0.644096,
+              0.647168,
+              0.642144,
+              0.64512,
+              0.6448,
+              0.64512
+            ],
+            "client_request_ms": 11.822664004284889
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 5,
+            "max_newton_iterations": 6,
+            "seed_fallbacks": 0,
+            "parse_ms": 2.18762,
+            "upload_allocate_ms": 0.338224,
+            "download_ms": 0.968245,
+            "request_ms": 5.46586,
+            "kernel_ms": [
+              0.649184
+            ],
+            "client_request_ms": 5.544624000322074
+          },
+          "warm_kernel_median_ms": 0.644448
+        }
+      ]
+    },
+    {
+      "binary": "root_newton_power_tpi8",
+      "fixture": "dot-4096",
+      "count": 4092,
+      "unique_input_keys": 4083,
+      "server_startup_ms": 194.96530998731032,
+      "median_gmp_ms": 2.9751280089840293,
+      "median_warm_kernel_ms": 0.5549599999999999,
+      "median_eleven_kernel_request_ms": 7.799691986292601,
+      "median_single_request_ms": 2.0654320251196623,
+      "median_cpu_proof_ms": 4.217797017190605,
+      "median_gmp_proof_ms": 2.211356011684984,
+      "samples": [
+        {
+          "repeat": 0,
+          "gmp_root_ms": 2.998440992087126,
+          "python_proof_ms": 3.9814329938963056,
+          "gmp_proof_ms": 2.204171963967383,
+          "response": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 7.38563,
+            "max_newton_iterations": 11,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.670697,
+            "upload_allocate_ms": 0.184727,
+            "download_ms": 0.336811,
+            "request_ms": 8.04828,
+            "kernel_ms": [
+              0.560256,
+              0.554784,
+              0.555904,
+              0.55776,
+              0.55776,
+              0.553984,
+              0.554784,
+              0.554144,
+              0.552896,
+              0.556032,
+              0.554784
+            ],
+            "client_request_ms": 8.132765942718834
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 7.38563,
+            "max_newton_iterations": 11,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.580218,
+            "upload_allocate_ms": 0.158327,
+            "download_ms": 0.264135,
+            "request_ms": 2.00285,
+            "kernel_ms": [
+              0.5656
+            ],
+            "client_request_ms": 2.0654320251196623
+          },
+          "warm_kernel_median_ms": 0.554784
+        },
+        {
+          "repeat": 1,
+          "gmp_root_ms": 2.961833029985428,
+          "python_proof_ms": 4.188943014014512,
+          "gmp_proof_ms": 2.665046020410955,
+          "response": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 7.38563,
+            "max_newton_iterations": 11,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.570159,
+            "upload_allocate_ms": 0.156253,
+            "download_ms": 0.27725,
+            "request_ms": 7.73501,
+            "kernel_ms": [
+              0.561792,
+              0.553984,
+              0.55216,
+              0.562048,
+              0.556896,
+              0.55376,
+              0.553056,
+              0.553984,
+              0.554816,
+              0.55296,
+              0.553824
+            ],
+            "client_request_ms": 7.799691986292601
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 7.38563,
+            "max_newton_iterations": 11,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.568516,
+            "upload_allocate_ms": 0.156323,
+            "download_ms": 0.280646,
+            "request_ms": 1.9512,
+            "kernel_ms": [
+              0.561344
+            ],
+            "client_request_ms": 2.004327019676566
+          },
+          "warm_kernel_median_ms": 0.553904
+        },
+        {
+          "repeat": 2,
+          "gmp_root_ms": 3.1562669901177287,
+          "python_proof_ms": 4.217797017190605,
+          "gmp_proof_ms": 2.1130210370756686,
+          "response": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 7.38563,
+            "max_newton_iterations": 11,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.612889,
+            "upload_allocate_ms": 0.156964,
+            "download_ms": 0.254768,
+            "request_ms": 7.69537,
+            "kernel_ms": [
+              0.562272,
+              0.556928,
+              0.553664,
+              0.554976,
+              0.555488,
+              0.55392,
+              0.553824,
+              0.553984,
+              0.556032,
+              0.556032,
+              0.555264
+            ],
+            "client_request_ms": 7.7608589781448245
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 7.38563,
+            "max_newton_iterations": 11,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.624581,
+            "upload_allocate_ms": 0.15962,
+            "download_ms": 0.265868,
+            "request_ms": 2.10626,
+            "kernel_ms": [
+              0.566976
+            ],
+            "client_request_ms": 2.1615320001728833
+          },
+          "warm_kernel_median_ms": 0.5551200000000001
+        },
+        {
+          "repeat": 3,
+          "gmp_root_ms": 2.9465840198099613,
+          "python_proof_ms": 5.334700981620699,
+          "gmp_proof_ms": 2.629138994961977,
+          "response": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 7.38563,
+            "max_newton_iterations": 11,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.537768,
+            "upload_allocate_ms": 0.155491,
+            "download_ms": 0.249167,
+            "request_ms": 7.6289,
+            "kernel_ms": [
+              0.562272,
+              0.55296,
+              0.555616,
+              0.555808,
+              0.554016,
+              0.554976,
+              0.554976,
+              0.555968,
+              0.552704,
+              0.554944,
+              0.554176
+            ],
+            "client_request_ms": 7.688812969718128
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 7.38563,
+            "max_newton_iterations": 11,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.536626,
+            "upload_allocate_ms": 0.161943,
+            "download_ms": 0.310642,
+            "request_ms": 1.9612,
+            "kernel_ms": [
+              0.56352
+            ],
+            "client_request_ms": 2.015979029238224
+          },
+          "warm_kernel_median_ms": 0.55496
+        },
+        {
+          "repeat": 4,
+          "gmp_root_ms": 2.9751280089840293,
+          "python_proof_ms": 4.707704996690154,
+          "gmp_proof_ms": 2.211356011684984,
+          "response": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 7.38563,
+            "max_newton_iterations": 11,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.520075,
+            "upload_allocate_ms": 0.158447,
+            "download_ms": 0.290705,
+            "request_ms": 7.77464,
+            "kernel_ms": [
+              0.561152,
+              0.55456,
+              0.55408,
+              0.55616,
+              0.553984,
+              0.553984,
+              0.55616,
+              0.55696,
+              0.555008,
+              0.554912,
+              0.556032
+            ],
+            "client_request_ms": 7.843273051548749
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 0,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 7.38563,
+            "max_newton_iterations": 11,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.587651,
+            "upload_allocate_ms": 0.159139,
+            "download_ms": 0.358422,
+            "request_ms": 2.13804,
+            "kernel_ms": [
+              0.561344
+            ],
+            "client_request_ms": 2.2027299855835736
+          },
+          "warm_kernel_median_ms": 0.5549599999999999
+        }
+      ]
+    },
+    {
+      "binary": "root_newton_seeded_tpi8",
+      "fixture": "actual-768",
+      "count": 768,
+      "unique_input_keys": 384,
+      "server_startup_ms": 97.25145203992724,
+      "median_gmp_ms": 0.48024096759036183,
+      "median_warm_kernel_ms": 0.063488,
+      "median_eleven_kernel_request_ms": 1.1622690362855792,
+      "median_single_request_ms": 0.4129139706492424,
+      "median_cpu_proof_ms": 0.5095949745737016,
+      "median_gmp_proof_ms": 0.3978959866799414,
+      "samples": [
+        {
+          "repeat": 0,
+          "gmp_root_ms": 0.47456001630052924,
+          "python_proof_ms": 0.43639802606776357,
+          "gmp_proof_ms": 0.36142696626484394,
+          "response": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.131467,
+            "upload_allocate_ms": 0.055444,
+            "download_ms": 0.067427,
+            "request_ms": 1.34478,
+            "kernel_ms": [
+              0.14704,
+              0.065504,
+              0.063488,
+              0.063488,
+              0.063488,
+              0.06544,
+              0.062464,
+              0.063296,
+              0.063488,
+              0.063488,
+              0.063488
+            ],
+            "client_request_ms": 1.4533450012095273
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.105328,
+            "upload_allocate_ms": 0.02142,
+            "download_ms": 0.046137,
+            "request_ms": 0.4905,
+            "kernel_ms": [
+              0.069984
+            ],
+            "client_request_ms": 0.544270034879446
+          },
+          "warm_kernel_median_ms": 0.063488
+        },
+        {
+          "repeat": 1,
+          "gmp_root_ms": 0.4631580086424947,
+          "python_proof_ms": 0.5220080493018031,
+          "gmp_proof_ms": 0.3978959866799414,
+          "response": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.113704,
+            "upload_allocate_ms": 0.024155,
+            "download_ms": 0.051296,
+            "request_ms": 1.16557,
+            "kernel_ms": [
+              0.068448,
+              0.064512,
+              0.064512,
+              0.064256,
+              0.063488,
+              0.062464,
+              0.06352,
+              0.063488,
+              0.063488,
+              0.063488,
+              0.063488
+            ],
+            "client_request_ms": 1.2298159999772906
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.089969,
+            "upload_allocate_ms": 0.019536,
+            "download_ms": 0.045485,
+            "request_ms": 0.363722,
+            "kernel_ms": [
+              0.066304
+            ],
+            "client_request_ms": 0.41306501952931285
+          },
+          "warm_kernel_median_ms": 0.063488
+        },
+        {
+          "repeat": 2,
+          "gmp_root_ms": 0.48024096759036183,
+          "python_proof_ms": 0.5306850071065128,
+          "gmp_proof_ms": 0.41715201223269105,
+          "response": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.111359,
+            "upload_allocate_ms": 0.02146,
+            "download_ms": 0.045055,
+            "request_ms": 1.10369,
+            "kernel_ms": [
+              0.070848,
+              0.064512,
+              0.064512,
+              0.063488,
+              0.063488,
+              0.063488,
+              0.06272,
+              0.063488,
+              0.062464,
+              0.063424,
+              0.062464
+            ],
+            "client_request_ms": 1.1530020274221897
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.089328,
+            "upload_allocate_ms": 0.019596,
+            "download_ms": 0.046367,
+            "request_ms": 0.360516,
+            "kernel_ms": [
+              0.066848
+            ],
+            "client_request_ms": 0.4129139706492424
+          },
+          "warm_kernel_median_ms": 0.063488
+        },
+        {
+          "repeat": 3,
+          "gmp_root_ms": 0.5587369669228792,
+          "python_proof_ms": 0.5095949745737016,
+          "gmp_proof_ms": 0.41028897976502776,
+          "response": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.088205,
+            "upload_allocate_ms": 0.020469,
+            "download_ms": 0.048842,
+            "request_ms": 1.1134,
+            "kernel_ms": [
+              0.066688,
+              0.064512,
+              0.064416,
+              0.063616,
+              0.062464,
+              0.063488,
+              0.065504,
+              0.063488,
+              0.064512,
+              0.063424,
+              0.064352
+            ],
+            "client_request_ms": 1.1622690362855792
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.089328,
+            "upload_allocate_ms": 0.019607,
+            "download_ms": 0.045876,
+            "request_ms": 0.36271,
+            "kernel_ms": [
+              0.06624
+            ],
+            "client_request_ms": 0.4038669867441058
+          },
+          "warm_kernel_median_ms": 0.06398400000000001
+        },
+        {
+          "repeat": 4,
+          "gmp_root_ms": 0.5039949901401997,
+          "python_proof_ms": 0.44052605517208576,
+          "gmp_proof_ms": 0.3379629924893379,
+          "response": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.109916,
+            "upload_allocate_ms": 0.020869,
+            "download_ms": 0.045806,
+            "request_ms": 1.10091,
+            "kernel_ms": [
+              0.066336,
+              0.063488,
+              0.063488,
+              0.063456,
+              0.062464,
+              0.063488,
+              0.063456,
+              0.062464,
+              0.0632,
+              0.063232,
+              0.063488
+            ],
+            "client_request_ms": 1.1490450124256313
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 768,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 768,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.088927,
+            "upload_allocate_ms": 0.019456,
+            "download_ms": 0.045525,
+            "request_ms": 0.356799,
+            "kernel_ms": [
+              0.066016
+            ],
+            "client_request_ms": 0.39693404687568545
+          },
+          "warm_kernel_median_ms": 0.063456
+        }
+      ]
+    },
+    {
+      "binary": "root_newton_seeded_tpi8",
+      "fixture": "actual-4096",
+      "count": 4096,
+      "unique_input_keys": 384,
+      "server_startup_ms": 97.25145203992724,
+      "median_gmp_ms": 2.284232003148645,
+      "median_warm_kernel_ms": 0.176112,
+      "median_eleven_kernel_request_ms": 3.1876660068519413,
+      "median_single_request_ms": 1.3923399965278804,
+      "median_cpu_proof_ms": 2.391432994045317,
+      "median_gmp_proof_ms": 1.7242120229639113,
+      "samples": [
+        {
+          "repeat": 0,
+          "gmp_root_ms": 2.2378360154107213,
+          "python_proof_ms": 2.391432994045317,
+          "gmp_proof_ms": 1.7463740077801049,
+          "response": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.471224,
+            "upload_allocate_ms": 0.076824,
+            "download_ms": 0.223138,
+            "request_ms": 3.32803,
+            "kernel_ms": [
+              0.180672,
+              0.177152,
+              0.176928,
+              0.176992,
+              0.175328,
+              0.176128,
+              0.176,
+              0.175104,
+              0.176192,
+              0.177024,
+              0.176128
+            ],
+            "client_request_ms": 3.394854022189975
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.37895,
+            "upload_allocate_ms": 0.073738,
+            "download_ms": 0.168415,
+            "request_ms": 1.1852,
+            "kernel_ms": [
+              0.183072
+            ],
+            "client_request_ms": 1.2380509870126843
+          },
+          "warm_kernel_median_ms": 0.17615999999999998
+        },
+        {
+          "repeat": 1,
+          "gmp_root_ms": 2.2938199690543115,
+          "python_proof_ms": 2.4039859999902546,
+          "gmp_proof_ms": 1.6804200131446123,
+          "response": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.46922,
+            "upload_allocate_ms": 0.075411,
+            "download_ms": 0.176951,
+            "request_ms": 3.1284,
+            "kernel_ms": [
+              0.18272,
+              0.177152,
+              0.176,
+              0.175104,
+              0.176128,
+              0.176128,
+              0.176128,
+              0.175104,
+              0.175904,
+              0.175104,
+              0.175104
+            ],
+            "client_request_ms": 3.1876660068519413
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.393928,
+            "upload_allocate_ms": 0.075311,
+            "download_ms": 0.16002,
+            "request_ms": 1.20868,
+            "kernel_ms": [
+              0.18048
+            ],
+            "client_request_ms": 1.269038999453187
+          },
+          "warm_kernel_median_ms": 0.175952
+        },
+        {
+          "repeat": 2,
+          "gmp_root_ms": 2.284232003148645,
+          "python_proof_ms": 2.2337170084938407,
+          "gmp_proof_ms": 1.6751409857533872,
+          "response": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.471745,
+            "upload_allocate_ms": 0.075521,
+            "download_ms": 0.162314,
+            "request_ms": 3.11334,
+            "kernel_ms": [
+              0.178208,
+              0.177152,
+              0.178112,
+              0.176128,
+              0.175104,
+              0.176128,
+              0.17584,
+              0.175104,
+              0.176064,
+              0.175104,
+              0.1768
+            ],
+            "client_request_ms": 3.1697520171292126
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.484469,
+            "upload_allocate_ms": 0.077495,
+            "download_ms": 0.172734,
+            "request_ms": 1.38457,
+            "kernel_ms": [
+              0.182656
+            ],
+            "client_request_ms": 1.4338080072775483
+          },
+          "warm_kernel_median_ms": 0.176096
+        },
+        {
+          "repeat": 3,
+          "gmp_root_ms": 2.2702059941366315,
+          "python_proof_ms": 2.798174973577261,
+          "gmp_proof_ms": 1.7362250364385545,
+          "response": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.483566,
+            "upload_allocate_ms": 0.076393,
+            "download_ms": 0.162976,
+            "request_ms": 3.11424,
+            "kernel_ms": [
+              0.181312,
+              0.177088,
+              0.175168,
+              0.176128,
+              0.176096,
+              0.176128,
+              0.175104,
+              0.176128,
+              0.175104,
+              0.175008,
+              0.176128
+            ],
+            "client_request_ms": 3.1766649917699397
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.475872,
+            "upload_allocate_ms": 0.076063,
+            "download_ms": 0.185268,
+            "request_ms": 1.33972,
+            "kernel_ms": [
+              0.17728
+            ],
+            "client_request_ms": 1.3923399965278804
+          },
+          "warm_kernel_median_ms": 0.176112
+        },
+        {
+          "repeat": 4,
+          "gmp_root_ms": 2.312425000127405,
+          "python_proof_ms": 2.3096490185707808,
+          "gmp_proof_ms": 1.7242120229639113,
+          "response": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.573776,
+            "upload_allocate_ms": 0.107251,
+            "download_ms": 0.25625,
+            "request_ms": 3.51052,
+            "kernel_ms": [
+              0.181728,
+              0.178176,
+              0.177152,
+              0.176128,
+              0.176384,
+              0.176128,
+              0.176128,
+              0.175808,
+              0.176128,
+              0.176128,
+              0.176128
+            ],
+            "client_request_ms": 3.6058700061403215
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4096,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 4096,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 0.444323,
+            "upload_allocate_ms": 0.082595,
+            "download_ms": 0.198302,
+            "request_ms": 1.32369,
+            "kernel_ms": [
+              0.17824
+            ],
+            "client_request_ms": 1.4003550168126822
+          },
+          "warm_kernel_median_ms": 0.176128
+        }
+      ]
+    },
+    {
+      "binary": "root_newton_seeded_tpi8",
+      "fixture": "actual-16384",
+      "count": 16384,
+      "unique_input_keys": 384,
+      "server_startup_ms": 97.25145203992724,
+      "median_gmp_ms": 9.221396991051733,
+      "median_warm_kernel_ms": 0.607264,
+      "median_eleven_kernel_request_ms": 12.118438025936484,
+      "median_single_request_ms": 5.740491033066064,
+      "median_cpu_proof_ms": 8.839271031320095,
+      "median_gmp_proof_ms": 6.916947022546083,
+      "samples": [
+        {
+          "repeat": 0,
+          "gmp_root_ms": 9.098026028368622,
+          "python_proof_ms": 8.797091024462134,
+          "gmp_proof_ms": 6.941322993952781,
+          "response": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 3.74786,
+            "upload_allocate_ms": 0.364033,
+            "download_ms": 3.21708,
+            "request_ms": 16.0103,
+            "kernel_ms": [
+              0.613248,
+              0.60928,
+              0.608,
+              0.607072,
+              0.607232,
+              0.607232,
+              0.608032,
+              0.607136,
+              0.608,
+              0.608256,
+              0.607232
+            ],
+            "client_request_ms": 16.135928977746516
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 2.0957,
+            "upload_allocate_ms": 0.337432,
+            "download_ms": 0.889207,
+            "request_ms": 5.54479,
+            "kernel_ms": [
+              0.612192
+            ],
+            "client_request_ms": 5.643719981890172
+          },
+          "warm_kernel_median_ms": 0.6076159999999999
+        },
+        {
+          "repeat": 1,
+          "gmp_root_ms": 9.221396991051733,
+          "python_proof_ms": 9.003197017591447,
+          "gmp_proof_ms": 6.946832989342511,
+          "response": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 2.01124,
+            "upload_allocate_ms": 0.348333,
+            "download_ms": 0.828493,
+            "request_ms": 11.8618,
+            "kernel_ms": [
+              0.614176,
+              0.60928,
+              0.608256,
+              0.607296,
+              0.607232,
+              0.608032,
+              0.609088,
+              0.607232,
+              0.607232,
+              0.608128,
+              0.60816
+            ],
+            "client_request_ms": 11.975860048551112
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 2.30937,
+            "upload_allocate_ms": 0.340328,
+            "download_ms": 0.89624,
+            "request_ms": 5.90383,
+            "kernel_ms": [
+              0.61536
+            ],
+            "client_request_ms": 6.008212978485972
+          },
+          "warm_kernel_median_ms": 0.60808
+        },
+        {
+          "repeat": 2,
+          "gmp_root_ms": 9.232347016222775,
+          "python_proof_ms": 8.914240985177457,
+          "gmp_proof_ms": 6.916947022546083,
+          "response": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 2.05884,
+            "upload_allocate_ms": 0.375223,
+            "download_ms": 0.819466,
+            "request_ms": 11.9904,
+            "kernel_ms": [
+              0.616704,
+              0.608256,
+              0.608256,
+              0.608064,
+              0.607232,
+              0.607168,
+              0.608256,
+              0.607232,
+              0.607296,
+              0.607232,
+              0.6072
+            ],
+            "client_request_ms": 12.099020997993648
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 2.08138,
+            "upload_allocate_ms": 0.329668,
+            "download_ms": 0.919083,
+            "request_ms": 5.65316,
+            "kernel_ms": [
+              0.616256
+            ],
+            "client_request_ms": 5.740491033066064
+          },
+          "warm_kernel_median_ms": 0.607264
+        },
+        {
+          "repeat": 3,
+          "gmp_root_ms": 9.141988004557788,
+          "python_proof_ms": 8.83070396957919,
+          "gmp_proof_ms": 6.89525599591434,
+          "response": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 2.12087,
+            "upload_allocate_ms": 0.339967,
+            "download_ms": 0.974907,
+            "request_ms": 12.2494,
+            "kernel_ms": [
+              0.617088,
+              0.608256,
+              0.608576,
+              0.60736,
+              0.606208,
+              0.607232,
+              0.607488,
+              0.607232,
+              0.607104,
+              0.606208,
+              0.607008
+            ],
+            "client_request_ms": 12.354961014352739
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 1.90645,
+            "upload_allocate_ms": 0.328696,
+            "download_ms": 0.841577,
+            "request_ms": 5.57404,
+            "kernel_ms": [
+              0.615744
+            ],
+            "client_request_ms": 5.66562102176249
+          },
+          "warm_kernel_median_ms": 0.607232
+        },
+        {
+          "repeat": 4,
+          "gmp_root_ms": 9.725701995193958,
+          "python_proof_ms": 8.839271031320095,
+          "gmp_proof_ms": 6.90619699889794,
+          "response": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 2.10452,
+            "upload_allocate_ms": 0.397906,
+            "download_ms": 0.879349,
+            "request_ms": 12.0228,
+            "kernel_ms": [
+              0.616544,
+              0.60928,
+              0.608256,
+              0.607232,
+              0.60688,
+              0.607936,
+              0.60928,
+              0.607232,
+              0.607264,
+              0.607232,
+              0.607232
+            ],
+            "client_request_ms": 12.118438025936484
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 16384,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 0,
+              "1024": 16384,
+              "2048": 0
+            },
+            "mean_newton_iterations": 4,
+            "max_newton_iterations": 4,
+            "seed_fallbacks": 0,
+            "parse_ms": 1.90893,
+            "upload_allocate_ms": 0.329358,
+            "download_ms": 0.909825,
+            "request_ms": 5.67349,
+            "kernel_ms": [
+              0.613312
+            ],
+            "client_request_ms": 5.758334998972714
+          },
+          "warm_kernel_median_ms": 0.607248
+        }
+      ]
+    },
+    {
+      "binary": "root_newton_seeded_tpi8",
+      "fixture": "dot-4096",
+      "count": 4092,
+      "unique_input_keys": 4083,
+      "server_startup_ms": 97.25145203992724,
+      "median_gmp_ms": 3.0284569947980344,
+      "median_warm_kernel_ms": 0.369648,
+      "median_eleven_kernel_request_ms": 5.821492988616228,
+      "median_single_request_ms": 1.815363997593522,
+      "median_cpu_proof_ms": 4.179183975793421,
+      "median_gmp_proof_ms": 2.172804030124098,
+      "samples": [
+        {
+          "repeat": 0,
+          "gmp_root_ms": 3.0284569947980344,
+          "python_proof_ms": 4.377115983515978,
+          "gmp_proof_ms": 2.586859976872802,
+          "response": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 4.16887,
+            "max_newton_iterations": 5,
+            "seed_fallbacks": 31,
+            "parse_ms": 0.691286,
+            "upload_allocate_ms": 0.171121,
+            "download_ms": 0.316243,
+            "request_ms": 6.02208,
+            "kernel_ms": [
+              0.377472,
+              0.370368,
+              0.370848,
+              0.369408,
+              0.369664,
+              0.369536,
+              0.371456,
+              0.367776,
+              0.369568,
+              0.371584,
+              0.3704
+            ],
+            "client_request_ms": 6.106196960899979
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 4.16887,
+            "max_newton_iterations": 5,
+            "seed_fallbacks": 31,
+            "parse_ms": 0.672511,
+            "upload_allocate_ms": 0.156643,
+            "download_ms": 0.280135,
+            "request_ms": 1.87169,
+            "kernel_ms": [
+              0.37472
+            ],
+            "client_request_ms": 1.9272029749117792
+          },
+          "warm_kernel_median_ms": 0.370016
+        },
+        {
+          "repeat": 1,
+          "gmp_root_ms": 3.1559569761157036,
+          "python_proof_ms": 4.228696983773261,
+          "gmp_proof_ms": 2.115556038916111,
+          "response": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 4.16887,
+            "max_newton_iterations": 5,
+            "seed_fallbacks": 31,
+            "parse_ms": 0.684503,
+            "upload_allocate_ms": 0.158527,
+            "download_ms": 0.260899,
+            "request_ms": 5.82237,
+            "kernel_ms": [
+              0.380416,
+              0.370432,
+              0.3688,
+              0.375808,
+              0.369664,
+              0.369376,
+              0.368608,
+              0.370784,
+              0.370688,
+              0.370688,
+              0.370688
+            ],
+            "client_request_ms": 5.8927369536831975
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 4.16887,
+            "max_newton_iterations": 5,
+            "seed_fallbacks": 31,
+            "parse_ms": 0.491051,
+            "upload_allocate_ms": 0.153177,
+            "download_ms": 0.278472,
+            "request_ms": 1.72849,
+            "kernel_ms": [
+              0.372352
+            ],
+            "client_request_ms": 1.789354020729661
+          },
+          "warm_kernel_median_ms": 0.37056
+        },
+        {
+          "repeat": 2,
+          "gmp_root_ms": 2.9513330082409084,
+          "python_proof_ms": 4.168664978351444,
+          "gmp_proof_ms": 2.172804030124098,
+          "response": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 4.16887,
+            "max_newton_iterations": 5,
+            "seed_fallbacks": 31,
+            "parse_ms": 0.507301,
+            "upload_allocate_ms": 0.155923,
+            "download_ms": 0.280987,
+            "request_ms": 5.62209,
+            "kernel_ms": [
+              0.376416,
+              0.369888,
+              0.369696,
+              0.368768,
+              0.36896,
+              0.370016,
+              0.3688,
+              0.367616,
+              0.367808,
+              0.36864,
+              0.36864
+            ],
+            "client_request_ms": 5.68328402005136
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 4.16887,
+            "max_newton_iterations": 5,
+            "seed_fallbacks": 31,
+            "parse_ms": 0.625383,
+            "upload_allocate_ms": 0.16027,
+            "download_ms": 0.276117,
+            "request_ms": 1.81503,
+            "kernel_ms": [
+              0.374944
+            ],
+            "client_request_ms": 1.8675010069273412
+          },
+          "warm_kernel_median_ms": 0.368784
+        },
+        {
+          "repeat": 3,
+          "gmp_root_ms": 3.393321007024497,
+          "python_proof_ms": 4.179183975793421,
+          "gmp_proof_ms": 2.1128009539097548,
+          "response": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 4.16887,
+            "max_newton_iterations": 5,
+            "seed_fallbacks": 31,
+            "parse_ms": 0.637795,
+            "upload_allocate_ms": 0.158307,
+            "download_ms": 0.254457,
+            "request_ms": 5.75385,
+            "kernel_ms": [
+              0.378976,
+              0.367552,
+              0.370272,
+              0.36864,
+              0.375712,
+              0.369408,
+              0.371648,
+              0.369664,
+              0.368544,
+              0.36864,
+              0.369568
+            ],
+            "client_request_ms": 5.821492988616228
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 4.16887,
+            "max_newton_iterations": 5,
+            "seed_fallbacks": 31,
+            "parse_ms": 0.579897,
+            "upload_allocate_ms": 0.155742,
+            "download_ms": 0.249077,
+            "request_ms": 1.76232,
+            "kernel_ms": [
+              0.374464
+            ],
+            "client_request_ms": 1.815363997593522
+          },
+          "warm_kernel_median_ms": 0.36948800000000004
+        },
+        {
+          "repeat": 4,
+          "gmp_root_ms": 2.9481060337275267,
+          "python_proof_ms": 4.178183036856353,
+          "gmp_proof_ms": 2.2016270086169243,
+          "response": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 4.16887,
+            "max_newton_iterations": 5,
+            "seed_fallbacks": 31,
+            "parse_ms": 0.491361,
+            "upload_allocate_ms": 0.156283,
+            "download_ms": 0.259316,
+            "request_ms": 5.54066,
+            "kernel_ms": [
+              0.375808,
+              0.370688,
+              0.369664,
+              0.369824,
+              0.36848,
+              0.368352,
+              0.369632,
+              0.368608,
+              0.370176,
+              0.371712,
+              0.369632
+            ],
+            "client_request_ms": 5.601410986855626
+          },
+          "single_request": {
+            "status": "ok",
+            "count": 4092,
+            "tpi": 8,
+            "float_seed": 1,
+            "width_counts": {
+              "512": 22,
+              "1024": 2403,
+              "2048": 1667
+            },
+            "mean_newton_iterations": 4.16887,
+            "max_newton_iterations": 5,
+            "seed_fallbacks": 31,
+            "parse_ms": 0.608661,
+            "upload_allocate_ms": 0.154951,
+            "download_ms": 0.251772,
+            "request_ms": 1.76209,
+            "kernel_ms": [
+              0.373056
+            ],
+            "client_request_ms": 1.8142910557799041
+          },
+          "warm_kernel_median_ms": 0.369648
+        }
+      ]
+    }
+  ]
+}

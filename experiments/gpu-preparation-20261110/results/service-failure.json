@@ -1,0 +1,88 @@
+{
+  "status": "passed",
+  "TEST_ONLY": true,
+  "GPU_used": false,
+  "production_modified": false,
+  "production_restarted": false,
+  "cpu_affinity": [
+    4,
+    5
+  ],
+  "tests_run": 3,
+  "failures": 0,
+  "errors": 0,
+  "results": [
+    {
+      "test": "real_spawn_service_failure",
+      "status": "passed",
+      "segment": [
+        100000000001,
+        200000000000,
+        2572492928,
+        2572492932,
+        222,
+        42,
+        "adaptive"
+      ],
+      "expected_error": "GPU preparation service failed",
+      "injected_error": "Injected CPU-only GPU service failure",
+      "dispatch_seconds": 0.00459113297984004,
+      "startup_dispatch_cleanup_seconds": 0.2196237940224819,
+      "returned_tasks": false,
+      "gpu_backend": "raising CPU-only stub",
+      "worker_pids": [
+        3633929,
+        3633930
+      ],
+      "worker_exitcodes": [
+        -15,
+        -15
+      ],
+      "workers_joined": true,
+      "service_thread_joined": true,
+      "backend_closed": true,
+      "shared_memory_names": [
+        "psm_dfd2bb20",
+        "psm_70393188"
+      ],
+      "shared_memory_unlinked": true
+    },
+    {
+      "test": "controlled_worker_death",
+      "status": "passed",
+      "expected_error": "Preparation worker died or was replaced",
+      "startup_dispatch_cleanup_seconds": 0.0012454140232875943,
+      "returned_tasks": false,
+      "gpu_backend_created": false,
+      "shared_memory_names": [
+        "psm_4f78c45e",
+        "psm_92423f40"
+      ],
+      "shared_memory_unlinked": true
+    },
+    {
+      "test": "controlled_worker_replacement",
+      "status": "passed",
+      "expected_error": "Preparation worker died or was replaced",
+      "startup_dispatch_cleanup_seconds": 0.0009562820196151733,
+      "returned_tasks": false,
+      "gpu_backend_created": false,
+      "shared_memory_names": [
+        "psm_a732452a",
+        "psm_7b877496"
+      ],
+      "shared_memory_unlinked": true
+    }
+  ],
+  "command": [
+    "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/venv/bin/python",
+    "/home/pnord/scratch/fifth42-gpu-preparation-20261110-e5_idmzk/test_service_failure.py",
+    "--output",
+    "/home/pnord/scratch/fifth42-gpu-preparation-20261110-e5_idmzk/evidence/service-failure.json"
+  ],
+  "source_sha256": {
+    "test_service_failure.py": "9b691f05f8c19cfda2d7c929c7b2413647450b54b44d5f093aa5def7dffde437",
+    "gpu_preparation.py": "e7c03f5dc67c8e5dcb89e83a272e1b7932635ab477e9f9a91d18ea58de6d40fa"
+  },
+  "unittest_log": "test_real_spawn_service_failure_is_explicit_and_bounded (__main__.FailureInjectionTests.test_real_spawn_service_failure_is_explicit_and_bounded) ... ok\ntest_worker_death_is_detected (__main__.FailureInjectionTests.test_worker_death_is_detected) ... ok\ntest_worker_pid_replacement_is_detected (__main__.FailureInjectionTests.test_worker_pid_replacement_is_detected) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.223s\n\nOK\n"
+}

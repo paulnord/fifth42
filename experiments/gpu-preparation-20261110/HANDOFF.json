@@ -1,0 +1,144 @@
+{
+  "host": "cabbage",
+  "status": "tested_experiment_only",
+  "production_used_code": false,
+  "production_changed": false,
+  "production_restarted": false,
+  "github": {
+    "branch": "experiment/gpu-preparation-20261110",
+    "tested_source_commit": "1425190618db3f09a6a0a2ad01c308e3b7c4f8d6",
+    "baseline_commit": "6870fa557510159f9f0c23232568867860a52963"
+  },
+  "baseline": {
+    "worker_manifest_sha256": "ea90bdbcf2b4d82d880efcc2ae459fa8d071d07f244a45cff40ff4f736a5d38d",
+    "native_enumerator_sha256": "086667c3f14f93917c1a8161b2bedd56720bacc5bbdfcf4e449e055941db1b31",
+    "gmp_reference_sha256": "8d514a59a5488de9a16a2f7ab0ecd351fdc13816298ddb777a18d9aa94158eb6"
+  },
+  "tested_source_manifest_sha256": "26aaa90273f5ba774fe3565ade1c3a751231ce2d8a5c392c4e32610783c811d1",
+  "source_archive_sha256": "f4d243599cdb413c1a214f62efd9d6918b9f0dbfdb4b3098fe94054dcc802013",
+  "raw_archive_sha256": "f8fa036024259c292cefb4af977b796b5875c6f5d47b913ed0d62dd308e74d22",
+  "raw_archive_parts": [
+    {
+      "path": "raw-evidence.tar.gz.part00",
+      "bytes": 4194304,
+      "sha256": "71edac9031355f9a17288942edb4453e209d5a6540908b9d0f508d661fe9bc85"
+    },
+    {
+      "path": "raw-evidence.tar.gz.part01",
+      "bytes": 4194304,
+      "sha256": "958e17065bded27fb12386634f7aca7ea188667e3a709382399e1311f858f019"
+    },
+    {
+      "path": "raw-evidence.tar.gz.part02",
+      "bytes": 4194304,
+      "sha256": "f15d1f6789cbc4d453a8fbd11f12cf49af9e57987850222bcd186618571ab7db"
+    },
+    {
+      "path": "raw-evidence.tar.gz.part03",
+      "bytes": 4194304,
+      "sha256": "6d5e26f86b9da3f69d59187d48fd7445d12f5b7fff55de1c637db5ca157f3443"
+    },
+    {
+      "path": "raw-evidence.tar.gz.part04",
+      "bytes": 4194304,
+      "sha256": "7c8cfae3d0ceab29f853cb0c184842e7da286586ebdaf65dbb23af73eda8686b"
+    },
+    {
+      "path": "raw-evidence.tar.gz.part05",
+      "bytes": 2312903,
+      "sha256": "6b1a4e879c560058e1bf0c8d13ecbf177eb542360ad846a2bd8d49522e48d118"
+    }
+  ],
+  "changes": [
+    "Bounded16-window preparation with original256-cell native requests/journals",
+    "Double-double GPU candidate3x3LLL, shared-memory numeric transport, unchanged independent exact CPU certificates and native guards",
+    "Explicit originalCPU/subdivision fallback, fail-closed service/worker errors",
+    "Adaptive512/1024/2048-bit CGBN integerNewton prototype tested separately"
+  ],
+  "schemas": {
+    "packet": "unchanged",
+    "certificate": "unchanged independent exact certificate; GPU U may produce a different valid B/J/digest",
+    "coverage_count": "unchanged original logical spans and physicaltask labels; TEST_ONLY no production credit",
+    "journal": "unchanged local durable hash-chain schema; original256-cell records",
+    "visited_points": "full certified integer boxes enumerated; per-basis exact counts checked",
+    "mathematically_excluded_points": "not separately measured or claimed by this experiment"
+  },
+  "timing": {
+    "definition": "From immediately before bounded preparation to final durable journal close/flush, including worker IPC, enumeration, exact output checks,1/128-window independent GMP audit, and commits; excludes startup and final journal audit/reopen.",
+    "repeats": 3,
+    "cells_per_trial": 32768,
+    "workers": 16,
+    "journals": "localext4",
+    "samples_file": "results/samples.json",
+    "samples_sha256": "91fb1c024d36d1c3fc8fdddc9e83be4e5c51ba91a22b330c984ca8005d7b6b80",
+    "independent_audit_file": "results/AUDIT_MATRIX.json",
+    "summary": {
+      "status": "passed",
+      "TEST_ONLY": true,
+      "production_coverage": false,
+      "median_cells_per_second": {
+        "ada/cpu/w1": 20938.74001065553,
+        "ada/cpu/w16": 23589.08691693808,
+        "ada/gpu/w16": 25577.31657797666,
+        "cabbage/cpu/w1": 36813.649525208595,
+        "cabbage/cpu/w16": 41400.580266735655,
+        "cabbage/gpu/w16": 38916.990604615174,
+        "dense/cpu/w1": 6569.210287018773,
+        "dense/cpu/w16": 6579.13121872915,
+        "dense/gpu/w16": 6619.611070031575
+      },
+      "samples": 27
+    },
+    "limits": {
+      "per_trial_seconds": 120,
+      "main_matrix_budget_seconds": 1200,
+      "dispatch_seconds": 25,
+      "gpu_response_seconds": 30,
+      "gpu_numeric_capacity_per_worker": 128,
+      "queue_max_reserved_bytes": 37748736,
+      "per_native_window_original_limits_unchanged": true
+    }
+  },
+  "correctness": {
+    "native_integration_gates": 9,
+    "positive_controls": "All4 brute-force hits for shell136..153,cap708588,groups4/8/16",
+    "gpu_matrix_accepted": 61440,
+    "gpu_matrix_rejected": 0,
+    "full_journal_audits": 27,
+    "partial_window_test_cells": 2573,
+    "cpu_unit_tests": {
+      "certificate": 8,
+      "buffer": 5,
+      "no_lll": 4,
+      "service_and_worker_failures": 3
+    },
+    "newton_gpu_fixture_checks": 16,
+    "newton_cpu_exhaustive_cases": 10720,
+    "newton_adversarial_seeds_per_case": 6,
+    "newton_wrong_root_rejections": 21440,
+    "newton_native_rejection_checks": 22,
+    "newton_supplement_cpu_fallbacks": 15
+  },
+  "failures_and_unsupported": [
+    "First rootCGBN compile failed const load API; corrected source and compiler logs retained",
+    "First matrix attempt stopped after3 trials when GPU utilization still9% with no compute process; wrapper now waits/rechecks unchangedidlethreshold; complete27-trialmatrix rerun fromscratch",
+    "Originalfinal2-secondNewtonslotexplicitly omittednativeerrors; supplemental22cases passed samefrozenbinaries",
+    "GPU roots are not integrated into pipeline because request+proof cost exceededGMP",
+    "cuPQC Newton notimplemented/tested in this iteration",
+    "No universal double-double conditioning guarantee; device guards/CPU proof/fallback required",
+    "Three short repeats, Cabbagevariance, emptylarge-windowhitsets; positiveoracle separate; no whole-search gain inferred"
+  ],
+  "reproduction": {
+    "script": "reproduce.sh",
+    "python": "3.12.16",
+    "cuda": "13.2.78",
+    "architecture": "sm_86",
+    "cuda_host_compiler": "g++13",
+    "cgbn_commit": "114601b07ae8c3e4d46b250208ea8d9def7a12f0",
+    "dependencies": "results/dependencies.txt",
+    "commands_and_builds": "source-manifest.json and reproduce.sh",
+    "cabbage_gpu_lock": "/home/pnord/scratch/saved-root-readiness-Ija5nMHk/cabbage-runtime/gpu-owner.lock"
+  },
+  "handoff_path": "/mnt/nfs_share/fifth42-integration-20261109/cabbage/gpu-preparation-20261110-r1",
+  "production_reconciliation": "results/PRODUCTION_RECONCILIATION.json"
+}

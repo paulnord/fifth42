@@ -1,0 +1,61 @@
+--- trial_groups_baseline.py
++++ trial_preparation.py
+@@ -6,6 +6,7 @@
+ sys.path[:0]=[str(Path(__file__).resolve().parent/'worker'),str(Path(__file__).resolve().parent/'worker/source/lattice_gpu')]
+ import buffered_pipeline as buffering
+ import scheduling
++import gpu_preparation as gp
+ import adapter_runtime as adapter
+ import audit_grouped
+ from bounded_prefetch import BoundedPrefetch
+@@ -30,12 +31,14 @@
+     parser.add_argument('--workers',type=int,choices=(4,8,16),default=16);parser.add_argument('--first',type=int,required=True)
+     parser.add_argument('--patches',type=int,default=32768);parser.add_argument('--group-limit',type=int,choices=(4,8,16),default=4)
+     parser.add_argument('--map-chunksize',type=int,choices=(1,2,4,8),default=4);parser.add_argument('--prep-windows',type=int,choices=(1,2,4),default=1)
++    parser.add_argument('--quality-gate',choices=('exact-lll','native-bounds'),default='native-bounds');parser.add_argument('--preparation-backend',choices=('cpu','gpu'),default='cpu');parser.add_argument('--window-batch',type=int,choices=(1,4,16,32),default=1)
+     parser.add_argument('--output',type=Path,required=True);args=parser.parse_args();opts=VARIANTS[args.variant]
+     assert 0<args.patches<=65536 and args.first+args.patches<=11250000001
+     args.output.mkdir(mode=0o700,parents=True,exist_ok=False);os.nice(19);cpus=tuple(sorted(os.sched_getaffinity(0))[:args.workers]);os.sched_setaffinity(0,set(cpus))
+     startup=time.monotonic();runtime_initialize.initialize(W/'source/lattice_prototype')
+     if opts['cache']:pipeline.validate_chunk=buffering.validate_cached
+-    pool=mp.get_context('spawn').Pool(args.workers,initializer=runtime_initialize.initialize,initargs=(W/'source/lattice_prototype',cpus))
++    stage=gp.GPUStage(args.workers,require_lll=args.quality_gate=='exact-lll') if args.preparation_backend=='gpu' else None
++    pool=mp.get_context('spawn').Pool(args.workers,initializer=gp.initialize if stage else runtime_initialize.initialize,initargs=stage.initargs(W/'source/lattice_prototype',cpus) if stage else (W/'source/lattice_prototype',cpus))
+     engine=journal=stream=None;started=None
+     try:
+         warmed={};until=time.monotonic()+15
+@@ -43,6 +46,7 @@
+             assert time.monotonic()<until,'Pool did not warm'
+             warmed.update(pool.map(core.worker_identity,range(4*args.workers),1))
+         adapter.verify_workers(warmed,cpus)
++        if stage:stage.start()
+         engine=adapter.open_session(W/'bin/scaling_gpu','gpu',time.monotonic()+120)
+         trial='TEST_ONLY_'+args.output.name;whole=coverage.Window(100000000001,200000000000,args.first,args.first+args.patches,8,222,42,'adaptive',args.group_limit)
+         identity=dict(trial=trial,source_identity=hashlib.sha256((ROOT/'experiment-manifest.json').read_bytes()).hexdigest())
+@@ -54,9 +58,9 @@
+         def windows():
+             for first in range(args.first,whole.last,256):
+                 yield pipeline.Window(whole.lo,whole.hi,first,min(first+256,whole.last),8,222,42,'adaptive')
+-        dispatch=scheduling.DispatchPool(pool,args.map_chunksize)
++        dispatch=gp.GPUPool(pool,stage,args.map_chunksize) if stage else scheduling.DispatchPool(pool,args.map_chunksize)
+         def prepare_many(windows):return scheduling.prepare_many(dispatch,windows,args.group_limit,opts['cache'])
+-        stream=scheduling.ReadyQueue(windows(),prepare_many,batch=args.prep_windows,ready_limit=3,active_limit=1)
++        stream=gp.BulkStream(windows(),prepare_many,args.window_batch)
+         signatures=hashlib.sha256();hits=set();stages={};kernel=0.;audits=0;total_points=0;physical=0;commit_seconds=0.;peak_payload=0
+         accepted_chunks=0;max_pending=0;started=time.monotonic();startup_seconds=started-startup
+         with stream:
+@@ -101,7 +105,7 @@
+         metrics=dict(flush_count=getattr(journal,'flush_count',None),peak_pending_bytes=getattr(journal,'peak_pending_bytes',None))
+         if kind=='async':metrics=dict(flush_count=journal.journal.flush_count,peak_pending_bytes=journal.journal.peak_pending_bytes,peak_queued_records=journal.peak_queued_records)
+         result=dict(status='passed',TEST_ONLY=True,variant=args.variant,workers=args.workers,first=args.first,patches=args.patches,group_limit=args.group_limit,
+-              steady_seconds=elapsed,startup_seconds=startup_seconds,map_chunksize=args.map_chunksize,prep_windows=args.prep_windows,patches_per_second=args.patches/elapsed,points=total_points,physical_tasks=physical,
++              quality_gate=args.quality_gate,preparation_backend=args.preparation_backend,preparation_window_batch=args.window_batch,gpu_preparation_metrics=stage.metrics if stage else None,steady_seconds=elapsed,startup_seconds=startup_seconds,map_chunksize=args.map_chunksize,prep_windows=args.prep_windows,patches_per_second=args.patches/elapsed,points=total_points,physical_tasks=physical,
+               hits=sorted(hits),signatures_sha256=signatures.hexdigest(),kernel_seconds=kernel,stages=stages,commit_seconds=commit_seconds,
+               audit_count=audits,queue=snapshot,maximum_uncommitted_chunks=max_pending,peak_prepared_payload_bytes=peak_payload,
+               parent_maxrss_kib=maxrss,journal=metrics,journal_bytes=state['journal_offset'],recovery_passed=recovery,
+@@ -113,4 +117,5 @@
+         if journal:journal.close()
+         if engine:engine.close()
+         pool.terminate();pool.join()
++        if stage:stage.close()
+ if __name__=='__main__':main()

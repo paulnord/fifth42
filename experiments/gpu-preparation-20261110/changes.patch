@@ -1,0 +1,1680 @@
+--- /dev/null
++++ b/experiments/gpu-preparation-20261110/controls_baseline.py
+@@ -0,0 +1,44 @@
++"""Exact nonempty finite grouped control, independent GMP and brute-force."""
++import argparse,json,subprocess,sys,time
++from pathlib import Path
++ROOT=Path(__file__).resolve().parent;W=ROOT/'worker'
++sys.path[:0]=[str(W),str(W/'source/lattice_gpu')]
++import adapter_runtime as adapter
++import buffered_pipeline as b
++import coordinator_pipeline as pipeline
++import scaling_core as core
++import runtime_initialize
++from fractions import Fraction
++GROUPS=(4,8,16)
++class Serial:
++ def map(self,fn,args,chunksize):return list(map(fn,args))
++def check_spans(chunk):
++ cursor=chunk.window.first
++ for first,last in chunk.window.spans:
++  assert first==cursor and first<last<=chunk.window.last
++  cursor=last
++ assert cursor==chunk.window.last
++parser=argparse.ArgumentParser();parser.add_argument('--backend',choices=('gpu','emulated'),default='gpu');args=parser.parse_args()
++runtime_initialize.initialize(W/'source/lattice_prototype')
++controls=[]
++engine=adapter.open_session(W/'bin/scaling_gpu',args.backend,time.monotonic()+90)
++try:
++ lo,hi,cap=136,153,708588;last=16
++ powers=[x**5 for x in range(hi+1)]
++ expected={(a,bb,c,powers[a]+powers[bb]-powers[c]) for c in range(lo,hi+1) for bb in range(1,c) for a in range(1,bb+1) if abs(powers[a]+powers[bb]-powers[c])<=cap}
++ assert (117,144,153,708588) in expected
++ for group in GROUPS:
++     chunk=b.prepare_cached(Serial(),pipeline.Window(lo,hi,0,last,8,222,cap,'adaptive'),group)
++     check_spans(chunk);b.validate_cached(chunk);hits=set()
++     for batch in chunk.plan.batches:
++         raw,_=engine.run(batch.packet,timeout=15);pipeline.validate_response_types(raw)
++         decoded=core.decode_batch(batch,raw,args.backend);hits.update(decoded)
++         done=subprocess.run([str(W/'bin/gmp_reference')],input=batch.packet,text=True,capture_output=True,check=True,timeout=15)
++         reference=json.loads(done.stdout);pipeline.validate_response_types(reference)
++         assert adapter.normalized_counts(batch,raw)==adapter.normalized_counts(batch,reference)
++         assert adapter.normalized_hits(batch,raw)==adapter.normalized_hits(batch,reference)
++         assert decoded==core.decode_batch(batch,reference,'emulated')
++     assert hits==expected,(group,hits,expected)
++     controls.append(dict(requested_group=group,nonempty_candidates=sorted(hits),logical_spans=chunk.window.spans,points=chunk.plan.points,full_oracle_equal=True))
++finally:engine.close()
++print(json.dumps(controls,indent=2))
+--- /dev/null
++++ b/experiments/gpu-preparation-20261110/gpu_candidate/candidate_reduction.py
+@@ -0,0 +1,113 @@
++"""GPU proposes U; exact existing CPU certificates alone admit tasks."""
++from pathlib import Path
++import ctypes,hashlib,math,sys,time
++from math import prod
++WORKER=Path(__file__).resolve().parent.parent/'worker'
++sys.path[:0]=[str(WORKER),str(WORKER/'source/lattice_gpu')]
++import scaling_core as core
++import exact_host_opt as host
++import overnight_search as night
++import runtime_initialize
++STATUS={0:'candidate',1:'iteration_budget',2:'integer_overflow_or_oversize_quotient',3:'ill_conditioned_or_nonpositive_norm',4:'nonfinite_input'}
++def initialize():runtime_initialize.initialize(WORKER/'source/lattice_prototype')
++def patch_basis(spec):
++ ident,lo,hi,left,right,cap,bits=spec;l=core.lattice();patch=l.make_patch(lo,hi,l.Q(*left),l.Q(*right),cap,bits);return patch,patch.basis()
++def double_double(matrix):
++ l=core.lattice();values=[]
++ for row in matrix:
++  for value in row:
++   high=float(value)
++   if not math.isfinite(high) or (high==0 and value!=0):raise ValueError('floating-input-unrepresentable')
++   low=float(value-l.Q(high))
++   if not math.isfinite(low):raise ValueError('floating-input-unrepresentable')
++   values.extend([high,low])
++ return values
++def is_exact_lll(b):
++ l=core.lattice();mu,norms=l.gram_schmidt(b)
++ return all(abs(mu[i][j])<=l.Q(1,2) for i in range(3) for j in range(i)) and all(norms[k]>=(l.Q(3,4)-mu[k][k-1]**2)*norms[k-1] for k in (1,2))
++def certify_transform(spec,u,patch=None,a=None,require_lll=True):
++ # CPU recomputes B from the integer proposal. No GPU basis/bound is trusted.
++ if len(u)!=3 or any(len(row)!=3 for row in u):raise ValueError('Invalid transform shape')
++ if any(type(v) is not int or abs(v)>core.MAX_I64 for row in u for v in row):raise ValueError('Invalid integer transform')
++ l=core.lattice()
++ if abs(l.det3(u))!=1:raise ValueError('Transform is not unimodular')
++ if patch is None or a is None:patch,a=patch_basis(spec)
++ b=l.matmul(u,a)
++ if require_lll and not is_exact_lll(b):raise ValueError('Exact LLL performance gate failed')
++ j=host.bounds(patch,b,u);ident,lo,hi,left,right,cap,bits=spec
++ task=core.Task(ident,lo,hi,left,right,cap,bits,tuple(tuple(row) for row in u),j,prod(2*x+1 for x in j),core.wire(a),core.wire(b))
++ if not night.native_safe(task):raise ValueError('Native range/point guard rejected candidate')
++ token=host.certify_task(task) # Existing independent reconstruction and checks.
++ return task,token
++class Output(ctypes.Structure):_fields_=[('u',ctypes.c_int64*9),('status',ctypes.c_int32),('steps',ctypes.c_int32)]
++def flat_buffer(values,count,capacity):
++ """Validate shape/dtype and retain an owning reference for the native call."""
++ if type(count) is not int or not 1<=count<=capacity:raise ValueError('GPU batch outside capacity')
++ try:view=memoryview(values)
++ except TypeError:
++  if len(values)!=18*count:raise ValueError('Expected 18 doubles per input basis')
++  data=(ctypes.c_double*(18*count))(*values);return data,data
++ if not view.c_contiguous:raise ValueError('Input doubles must be contiguous')
++ if view.format not in ('d','=d','<d') or view.itemsize!=8:raise ValueError('Input must use native little-endian float64')
++ if view.nbytes!=18*count*8:raise ValueError('Expected 18 doubles per input basis')
++ array=ctypes.c_double*(18*count)
++ data=array.from_buffer_copy(view) if view.readonly else array.from_buffer(view)
++ return data,view
++class GPUCandidates:
++ def __init__(self,library=None,capacity=65536,maxsteps=512):
++  self.library=ctypes.CDLL(str(library or Path(__file__).with_name('libgpu_lll.so')))
++  lib=self.library;lib.gpu_lll_create.argtypes=[ctypes.c_int,ctypes.c_int,ctypes.POINTER(ctypes.c_int)];lib.gpu_lll_create.restype=ctypes.c_void_p
++  lib.gpu_lll_run.argtypes=[ctypes.c_void_p,ctypes.POINTER(ctypes.c_double),ctypes.c_int,ctypes.POINTER(Output),ctypes.POINTER(ctypes.c_double),ctypes.POINTER(ctypes.c_double)];lib.gpu_lll_run.restype=ctypes.c_int
++  lib.gpu_lll_destroy.argtypes=[ctypes.c_void_p];lib.gpu_lll_error.argtypes=[ctypes.c_int];lib.gpu_lll_error.restype=ctypes.c_char_p
++  error=ctypes.c_int();self.context=lib.gpu_lll_create(capacity,maxsteps,ctypes.byref(error));self.capacity=capacity
++  if not self.context:raise RuntimeError(lib.gpu_lll_error(error.value).decode())
++ def close(self):
++  if self.context:self.library.gpu_lll_destroy(self.context);self.context=None
++ def __enter__(self):return self
++ def __exit__(self,*args):self.close()
++ def reduce(self,bases):
++  if not 1<=len(bases)<=self.capacity:raise ValueError('GPU batch outside capacity')
++  values=[x for basis in bases for x in double_double(basis)];array=(ctypes.c_double*len(values))(*values);out=(Output*len(bases))();kernel=ctypes.c_double();wall=ctypes.c_double()
++  error=self.library.gpu_lll_run(self.context,array,len(bases),out,ctypes.byref(kernel),ctypes.byref(wall))
++  if error:raise RuntimeError(self.library.gpu_lll_error(error).decode())
++  return [dict(U=tuple(tuple(int(row.u[3*i+j]) for j in range(3)) for i in range(3)),status=STATUS.get(row.status,'unknown'),status_code=row.status,steps=row.steps) for row in out],dict(kernel_ms=kernel.value,cuda_transfer_and_kernel_ms=wall.value)
++ def reduce_flat(self,dd_values,count,*,raw=False):
++  """Consume precomputed [basis][entry][high,low] float64 buffers.
++
++  Writable contiguous memory (including NumPy shared-memory views) is passed
++  without a Python conversion/copy. raw=True returns the owning ctypes output
++  array so a caller can expose its structured buffer without per-U Python ints.
++  """
++  array,owner=flat_buffer(dd_values,count,self.capacity);out=(Output*count)();kernel=ctypes.c_double();wall=ctypes.c_double()
++  if not self.context:raise RuntimeError('GPU context is closed')
++  error=self.library.gpu_lll_run(self.context,array,count,out,ctypes.byref(kernel),ctypes.byref(wall))
++  if error:raise RuntimeError(self.library.gpu_lll_error(error).decode())
++  timing=dict(kernel_ms=kernel.value,cuda_transfer_and_kernel_ms=wall.value)
++  if raw:return out,timing
++  return [dict(U=tuple(tuple(int(row.u[3*i+j]) for j in range(3)) for i in range(3)),status=STATUS.get(row.status,'unknown'),status_code=row.status,steps=row.steps) for row in out],timing
++def prepare_batch(specifications,gpu):
++ # This sequential host wrapper preserves the two geometry constructions of
++ # the current preparation/certification path. Parallel host phases may call
++ # patch_basis/finalize independently; their IPC must be measured separately.
++ started=time.perf_counter();prepared=[];admitted=[];records=[];pending=[]
++ for index,spec in enumerate(specifications):
++  patch,a=patch_basis(spec)
++  try:double_double(a);pending.append((index,spec,patch,a))
++  except ValueError as exc:records.append(dict(index=index,status='cold_fallback',reason=str(exc)));admitted.append((index,*_cold(spec)))
++ geometry=time.perf_counter()-started
++ stats=dict(kernel_ms=0,cuda_transfer_and_kernel_ms=0)
++ if pending:
++  proposals,stats=gpu.reduce([x[3] for x in pending])
++  for (index,spec,patch,a),proposal in zip(pending,proposals):
++   try:
++    if proposal['status_code']:raise ValueError(proposal['status'])
++    task,token=certify_transform(spec,proposal['U'],patch,a)
++    admitted.append((index,task,token));records.append(dict(index=index,status='gpu_admitted',steps=proposal['steps'],points=task.points,U=proposal['U']))
++   except (ValueError,ArithmeticError) as exc:
++    task,token=_cold(spec);admitted.append((index,task,token));records.append(dict(index=index,status='cold_fallback',reason=str(exc),gpu_status=proposal['status'],steps=proposal['steps'],points=task.points))
++ admitted.sort();records.sort(key=lambda x:x['index']);stats.update(host_geometry_seconds=geometry,total_seconds=time.perf_counter()-started)
++ return [(task,token) for _,task,token in admitted],records,stats
++def _cold(spec):
++ task=host.prepare_task(spec)
++ if not night.native_safe(task):raise ValueError('Cold task also requires existing guarded subdivision/sphere fallback')
++ return task,host.certify_task(task)
+--- /dev/null
++++ b/experiments/gpu-preparation-20261110/gpu_candidate/gpu_lll.cu
+@@ -0,0 +1,115 @@
++// Isolated batched candidate reduction. GPU values never certify a lattice.
++#include <cuda_runtime.h>
++#include <cmath>
++#include <cstdint>
++#include <climits>
++#include <chrono>
++#include <new>
++
++struct DD { double h,l; };
++struct Result { int64_t u[9]; int32_t status,steps; };
++__device__ DD norm(double a,double b) { double s=a+b; return {s,b-(s-a)}; }
++__device__ DD add(DD a,DD b) {
++ double s=a.h+b.h,v=s-a.h;
++ double e=((a.h-(s-v))+(b.h-v))+a.l+b.l; return norm(s,e);
++}
++__device__ DD neg(DD a) { return {-a.h,-a.l}; }
++__device__ DD sub(DD a,DD b) { return add(a,neg(b)); }
++__device__ DD mul(DD a,DD b) {
++ double p=a.h*b.h;double e=fma(a.h,b.h,-p)+a.h*b.l+a.l*b.h;
++ DD z=norm(p,e);return add(z,{a.l*b.l,0});
++}
++__device__ DD divd(DD a,DD b) {
++ double q1=a.h/b.h;DD r=sub(a,mul(b,{q1,0}));
++ double q2=r.h/b.h;r=sub(r,mul(b,{q2,0}));
++ double q3=r.h/b.h;return add(add({q1,0},{q2,0}),{q3,0});
++}
++__device__ bool finite(DD a) { return isfinite(a.h)&&isfinite(a.l); }
++__device__ int cmp(DD a,DD b) {
++ DD d=sub(a,b);return d.h>0?1:(d.h<0?-1:(d.l>0?1:(d.l<0?-1:0)));
++}
++__device__ DD dot(const DD*a,const DD*b) { return add(add(mul(a[0],b[0]),mul(a[1],b[1])),mul(a[2],b[2])); }
++__device__ bool gs(DD b[9],DD mu[9],DD d[3]) {
++ DD star[9];
++ for(int i=0;i<9;i++)mu[i]={0,0};
++ for(int i=0;i<3;i++) {
++  for(int c=0;c<3;c++)star[3*i+c]=b[3*i+c];
++  for(int j=0;j<i;j++) {
++   if(cmp(d[j],{0,0})<=0||!finite(d[j]))return false;
++   mu[3*i+j]=divd(dot(b+3*i,star+3*j),d[j]);
++   if(!finite(mu[3*i+j]))return false;
++   for(int c=0;c<3;c++)star[3*i+c]=sub(star[3*i+c],mul(mu[3*i+j],star[3*j+c]));
++  }
++  d[i]=dot(star+3*i,star+3*i);
++  if(cmp(d[i],{0,0})<=0||!finite(d[i]))return false;
++ }
++ return true;
++}
++__device__ bool row_integer(int64_t*dst,const int64_t*src,int64_t q) {
++ constexpr int64_t limit=(int64_t(1)<<60)-1;
++ int64_t temp[3];
++ for(int i=0;i<3;i++) {
++  uint64_t a=q<0?-uint64_t(q):uint64_t(q),b=src[i]<0?-uint64_t(src[i]):uint64_t(src[i]);
++  if(b && a>uint64_t(limit)/b)return false;
++  int64_t product=q*src[i];
++  if((product>0&&dst[i]<-limit+product)||(product<0&&dst[i]>limit+product))return false;
++  temp[i]=dst[i]-product;
++  if(temp[i]<-limit||temp[i]>limit)return false;
++ }
++ for(int i=0;i<3;i++)dst[i]=temp[i];return true;
++}
++__global__ void candidates(const DD*input,Result*output,int count,int maxsteps) {
++ int index=blockIdx.x*blockDim.x+threadIdx.x;if(index>=count)return;
++ DD b[9],mu[9],d[3];Result r{};
++ for(int i=0;i<9;i++){b[i]=input[9*index+i];r.u[i]=(i/3==i%3);if(!finite(b[i]))r.status=4;}
++ int k=1;
++ while(k<3 && r.status==0) {
++  if(++r.steps>maxsteps){r.status=1;break;}
++  for(int j=k-1;j>=0;j--) {
++   if(!gs(b,mu,d)){r.status=3;break;}
++   double value=mu[3*k+j].h+mu[3*k+j].l;
++   if(!isfinite(value)||fabs(value)>=1125899906842624.0){r.status=2;break;}
++   int64_t q=static_cast<int64_t>(floor(value+0.5));
++   if(q) {
++    if(!row_integer(r.u+3*k,r.u+3*j,q)){r.status=2;break;}
++    for(int c=0;c<3;c++)b[3*k+c]=sub(b[3*k+c],mul({double(q),0},b[3*j+c]));
++   }
++  }
++  if(r.status)break;
++  if(!gs(b,mu,d)){r.status=3;break;}
++  DD rhs=mul(sub({0.75,0},mul(mu[3*k+k-1],mu[3*k+k-1])),d[k-1]);
++  if(cmp(d[k],rhs)>=0)k++;
++  else {
++   for(int c=0;c<3;c++){DD v=b[3*k+c];b[3*k+c]=b[3*(k-1)+c];b[3*(k-1)+c]=v;int64_t u=r.u[3*k+c];r.u[3*k+c]=r.u[3*(k-1)+c];r.u[3*(k-1)+c]=u;}
++   k=k>1?k-1:1;
++  }
++ }
++ output[index]=r;
++}
++struct Context { DD*input=nullptr;Result*output=nullptr;int capacity,maxsteps;cudaEvent_t begin,end; };
++extern "C" void* gpu_lll_create(int capacity,int maxsteps,int*error) {
++ *error=0;if(capacity<1||capacity>65536||maxsteps<1||maxsteps>4096){*error=int(cudaErrorInvalidValue);return nullptr;}
++ Context*c=new(std::nothrow) Context;if(!c){*error=int(cudaErrorMemoryAllocation);return nullptr;}c->capacity=capacity;c->maxsteps=maxsteps;
++ cudaError_t e=cudaSetDevice(0);
++ if(e==cudaSuccess)e=cudaMalloc(reinterpret_cast<void**>(&c->input),sizeof(DD)*9*capacity);
++ if(e==cudaSuccess)e=cudaMalloc(reinterpret_cast<void**>(&c->output),sizeof(Result)*capacity);
++ if(e==cudaSuccess)e=cudaEventCreate(&c->begin);
++ if(e==cudaSuccess)e=cudaEventCreate(&c->end);
++ if(e!=cudaSuccess){*error=int(e);if(c->input)cudaFree(c->input);if(c->output)cudaFree(c->output);delete c;return nullptr;}
++ return c;
++}
++extern "C" int gpu_lll_run(void*handle,const double*input,int count,Result*output,double*kernel_ms,double*wall_ms) {
++ Context*c=static_cast<Context*>(handle);if(!c||count<1||count>c->capacity)return int(cudaErrorInvalidValue);
++ auto start=std::chrono::steady_clock::now();cudaError_t e=cudaMemcpy(c->input,input,sizeof(DD)*9*count,cudaMemcpyHostToDevice);
++ if(e==cudaSuccess)e=cudaEventRecord(c->begin);
++ if(e==cudaSuccess){candidates<<<(count+127)/128,128>>>(c->input,c->output,count,c->maxsteps);e=cudaGetLastError();}
++ if(e==cudaSuccess)e=cudaEventRecord(c->end);
++ if(e==cudaSuccess)e=cudaEventSynchronize(c->end);
++ float ms=0;if(e==cudaSuccess)e=cudaEventElapsedTime(&ms,c->begin,c->end);
++ if(e==cudaSuccess)e=cudaMemcpy(output,c->output,sizeof(Result)*count,cudaMemcpyDeviceToHost);
++ *kernel_ms=ms;*wall_ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-start).count();return int(e);
++}
++extern "C" void gpu_lll_destroy(void*handle) {
++ Context*c=static_cast<Context*>(handle);if(c){cudaEventDestroy(c->begin);cudaEventDestroy(c->end);cudaFree(c->input);cudaFree(c->output);delete c;}
++}
++extern "C" const char* gpu_lll_error(int code) { return cudaGetErrorString(static_cast<cudaError_t>(code)); }
+--- /dev/null
++++ b/experiments/gpu-preparation-20261110/gpu_candidate/review/test_no_lll.py
+@@ -0,0 +1,41 @@
++"""CPU-only adversarial admission checks with optional LLL gate disabled."""
++import os,sys,unittest
++from pathlib import Path
++from unittest.mock import patch
++sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
++import candidate_reduction as c
++
++class NoLLLGateTests(unittest.TestCase):
++    @classmethod
++    def setUpClass(cls):
++        os.sched_setaffinity(0,{4,5,6,7});c.initialize()
++        cls.spec=(0,16,31,(0,1),(9,10),42,88)
++        cls.patch,cls.a=c.patch_basis(cls.spec)
++        cls.b,u=c.core.lattice().reduce_basis(cls.a,'fpylll')
++        cls.u=tuple(tuple(int(v) for v in row) for row in u)
++    def test_no_gram_schmidt_but_identical_independent_certificate(self):
++        expected=c.certify_transform(self.spec,self.u,self.patch,self.a)
++        with patch.object(c,'is_exact_lll',side_effect=AssertionError('LLL called')):
++            actual=c.certify_transform(self.spec,self.u,self.patch,self.a,require_lll=False)
++        self.assertEqual(expected,actual)
++    def test_unimodular_non_LLL_still_independently_certifies(self):
++        u=[list(row) for row in self.u];u[0]=[x+y for x,y in zip(u[0],u[1])]
++        b=c.core.lattice().matmul(u,self.a)
++        self.assertFalse(c.is_exact_lll(b))
++        task,token=c.certify_transform(self.spec,u,self.patch,self.a,require_lll=False)
++        self.assertEqual(c.host.certify_task(task),token)
++        self.assertTrue(c.night.native_safe(task))
++    def test_malicious_transform_types_determinant_and_overflow(self):
++        proposals=[((0,0,0),)*3,((2,0,0),(0,1,0),(0,0,1)),
++            ((1.,0,0),(0,1,0),(0,0,1)),((True,0,0),(0,1,0),(0,0,1)),
++            ((1,2**64,0),(0,1,0),(0,0,1)),
++            ((1,c.core.MAX_I64,0),(0,1,0),(0,0,1))]
++        for u in proposals:
++            with self.subTest(u=u),self.assertRaises(ValueError):
++                c.certify_transform(self.spec,u,self.patch,self.a,require_lll=False)
++    def test_wrong_precomputed_A_fails_independent_reconstruction(self):
++        a=[list(row) for row in self.a];a[0][0]*=2
++        with self.assertRaises(ValueError):
++            c.certify_transform(self.spec,self.u,self.patch,a,require_lll=False)
++
++if __name__=='__main__':unittest.main(verbosity=2)
+--- /dev/null
++++ b/experiments/gpu-preparation-20261110/gpu_candidate/test_candidate.py
+@@ -0,0 +1,37 @@
++from pathlib import Path
++import ctypes,dataclasses,json,math,os,subprocess,unittest
++from fractions import Fraction
++import candidate_reduction as c
++class CertificateTests(unittest.TestCase):
++ @classmethod
++ def setUpClass(cls):
++  os.sched_setaffinity(0,{4,5,6,7});c.initialize()
++  cls.spec=(0,16,31,(0,1),(9,10),42,88)
++  cls.patch,cls.a=c.patch_basis(cls.spec);cls.b,cls.u=c.core.lattice().reduce_basis(cls.a,'fpylll')
++  cls.u=tuple(tuple(int(v) for v in row) for row in cls.u)
++ def test_correct_exact_transform_and_independent_certificate(self):
++  task,token=c.certify_transform(self.spec,self.u,self.patch,self.a)
++  self.assertEqual(c.host.certify_task(task),token)
++  self.assertEqual(c.core.read(task.B),self.b)
++ def test_singular_and_noninteger_U_rejected(self):
++  for u in [((0,0,0),)*3,((1.,0,0),(0,1,0),(0,0,1)),((True,0,0),(0,1,0),(0,0,1)),((2,0,0),(0,1,0),(0,0,1))]:
++   with self.assertRaises(ValueError):c.certify_transform(self.spec,u)
++ def test_oversize_transform_rejected(self):
++  u=((1,2**64,0),(0,1,0),(0,0,1))
++  with self.assertRaises(ValueError):c.certify_transform(self.spec,u)
++ def test_bad_precomputed_basis_cannot_pass_existing_certification(self):
++  a=[list(row) for row in self.a];a[0][0]*=2
++  with self.assertRaises(ValueError):c.certify_transform(self.spec,self.u,self.patch,a,require_lll=False)
++ def test_nonreduced_basis_rejected_without_weakening_guard(self):
++  with self.assertRaises(ValueError):c.certify_transform(self.spec,((1,0,0),(0,1,0),(0,0,1)))
++ def test_dd_keeps_second_float_and_refuses_underflow(self):
++  values=c.double_double([[c.core.lattice().Q(1,3)]*3 for _ in range(3)])
++  self.assertEqual(len(values),18);self.assertNotEqual(values[1],0)
++  with self.assertRaises(ValueError):c.double_double([[c.core.lattice().Q(1,10**1000)]*3 for _ in range(3)])
++ def test_native_GMP_nonempty_candidate(self):
++  task,token=c.certify_transform(self.spec,self.u,self.patch,self.a);batch=c.core.encode_batch([task],42)
++  done=subprocess.run([str(c.WORKER/'bin/gmp_reference')],input=batch.packet,text=True,capture_output=True,check=True,timeout=20)
++  result=json.loads(done.stdout);self.assertTrue(result['box_complete']);self.assertEqual(result['points_visited'],task.points)
++  values=c.core.decode_batch(batch,result,'emulated');self.assertIn((13,16,17,12),values)
++ def test_structure_layout(self):self.assertEqual(ctypes.sizeof(c.Output),80)
++if __name__=='__main__':unittest.main(verbosity=2)
+--- /dev/null
++++ b/experiments/gpu-preparation-20261110/gpu_candidate/test_flat_buffer.py
+@@ -0,0 +1,22 @@
++import ctypes,unittest
++from array import array
++import numpy as np
++import candidate_reduction as c
++class FlatBufferTests(unittest.TestCase):
++ def test_shared_numpy_buffer_is_zero_copy(self):
++  source=np.zeros((2,18),dtype=np.float64);data,owner=c.flat_buffer(source,2,10)
++  source[1,3]=42;self.assertEqual(data[21],42)
++  data[0]=17;self.assertEqual(source[0,0],17)
++ def test_capacity_shape_dtype_and_strides_rejected(self):
++  cases=[(np.zeros(18),0),(np.zeros(18),True),(np.zeros(18),11),(np.zeros(17),1),(np.zeros(18,dtype=np.int64),1),(np.zeros(36)[::2],1)]
++  for values,count in cases:
++   with self.subTest(count=count,dtype=str(values.dtype)):
++    with self.assertRaises(ValueError):c.flat_buffer(values,count,10)
++ def test_ctypes_and_list_paths(self):
++  x=(ctypes.c_double*18)(*range(18));data,owner=c.flat_buffer(x,1,10);self.assertEqual(data[17],17)
++  data,owner=c.flat_buffer(list(range(18)),1,10);self.assertEqual(data[17],17)
++ def test_readonly_float_buffer_copies_safely(self):
++  x=memoryview(array('d',range(18))).toreadonly();data,owner=c.flat_buffer(x,1,10);self.assertEqual(data[17],17)
++ def test_raw_output_dtype_offsets(self):
++  self.assertEqual((ctypes.sizeof(c.Output),c.Output.status.offset,c.Output.steps.offset),(80,72,76))
++if __name__=='__main__':unittest.main(verbosity=2)
+--- /dev/null
++++ b/experiments/gpu-preparation-20261110/gpu_preparation.py
+@@ -0,0 +1,135 @@
++"""Shared-memory GPU proposals; unchanged exact CPU certification and fallback."""
++from pathlib import Path
++from types import SimpleNamespace
++from collections import Counter
++import ctypes,multiprocessing as mp,queue,sys,threading,time
++from multiprocessing import shared_memory
++import numpy as np
++ROOT=Path(__file__).resolve().parent
++sys.path[:0]=[str(ROOT/'worker'),str(ROOT/'worker/source/lattice_gpu'),str(ROOT/'gpu_candidate')]
++import candidate_reduction as candidate
++import runtime_initialize,scaling_core as core,width_coverage as coverage,scheduling
++DTYPE=np.dtype([('u','<i8',(9,)),('status','<i4'),('steps','<i4')])
++assert DTYPE.itemsize==ctypes.sizeof(candidate.Output)==80
++_MEM=[];_INPUT=_OUTPUT=_EVENTS=_READY=None;_SLOT=0;_LLL=True
++def initialize(source,cpus,names,workers,capacity,events,ready,slots,require_lll=True):
++ global _INPUT,_OUTPUT,_EVENTS,_READY,_SLOT,_LLL
++ runtime_initialize.initialize(source,cpus)
++ _MEM.extend(shared_memory.SharedMemory(name=name) for name in names)
++ _INPUT=np.ndarray((workers,capacity,18),dtype=np.float64,buffer=_MEM[0].buf)
++ _OUTPUT=np.ndarray((workers,capacity),dtype=DTYPE,buffer=_MEM[1].buf)
++ _EVENTS,_READY,_LLL=events,ready,require_lll
++ _SLOT=slots.get(timeout=2) # Unique lifetime ownership; replacement workers fail closed.
++def prepare_block(arguments):
++ start=time.perf_counter();cpu_start=time.process_time();prepared=[];event=_EVENTS[_SLOT];event.clear()
++ for i,args in enumerate(arguments):
++  lo,hi,first,last,bits,cap,geometry=args;spec=coverage.specification(*args)
++  try:
++   patch,a=candidate.patch_basis(spec);dd=candidate.double_double(a)
++   prepared.append((args,spec,patch,a,None));_INPUT[_SLOT,i]=dd
++  except (ValueError,ArithmeticError) as exc:
++   prepared.append((args,spec,None,None,str(exc)));_INPUT[_SLOT,i]=np.array([v for i in range(3) for j in range(3) for v in (float(i==j),0.)])
++ geometry_seconds=time.perf_counter()-start;_READY.put((_SLOT,len(arguments)))
++ began=time.perf_counter()
++ if not event.wait(30):raise TimeoutError('GPU preparation response timed out')
++ wait_seconds=time.perf_counter()-began;parts=[];reasons=Counter();accepted=0;certify_seconds=0
++ for i,(args,spec,patch,a,error) in enumerate(prepared):
++  proposal=_OUTPUT[_SLOT,i]
++  if int(proposal['status'])==99:raise RuntimeError('GPU preparation service failed')
++  began=time.perf_counter()
++  try:
++   if error is not None:raise ValueError(error)
++   if int(proposal['status']):raise ValueError(candidate.STATUS.get(int(proposal['status']),'unknown GPU status'))
++   u=tuple(tuple(int(v) for v in proposal['u'][3*j:3*j+3]) for j in range(3))
++   task,token=candidate.certify_transform(spec,u,patch,a,require_lll=_LLL)
++   elapsed=time.perf_counter()-began;certify_seconds+=elapsed
++   parts.append([(task,token,(geometry_seconds/len(arguments),0.,elapsed,0.),args[2],args[3],spec)]);accepted+=1
++  except (ValueError,ArithmeticError) as exc:
++   reasons[str(exc)]+=1;parts.append(coverage.prepare_segment(args));certify_seconds+=time.perf_counter()-began
++ return dict(parts=parts,accepted=accepted,fallbacks=dict(reasons),geometry_seconds=geometry_seconds,wait_seconds=wait_seconds,certify_seconds=certify_seconds,cpu_seconds=time.process_time()-cpu_start)
++class GPUStage:
++ def __init__(self,workers,capacity=128,require_lll=True):
++  self.workers,self.capacity,self.require_lll=workers,capacity,require_lll;ctx=mp.get_context('spawn')
++  self.memory=[shared_memory.SharedMemory(create=True,size=workers*capacity*18*8),shared_memory.SharedMemory(create=True,size=workers*capacity*DTYPE.itemsize)]
++  self.inputs=np.ndarray((workers,capacity,18),dtype=np.float64,buffer=self.memory[0].buf)
++  self.outputs=np.ndarray((workers,capacity),dtype=DTYPE,buffer=self.memory[1].buf);self.outputs['status']=99
++  self.events=[ctx.Event() for _ in range(workers)];self.ready=ctx.Queue();self.slots=ctx.Queue()
++  for slot in range(workers):self.slots.put(slot)
++  self.stop=threading.Event();self.error=None;self.thread=None;self.gpu=None
++  self.metrics=dict(gpu_batches=0,gpu_proposals=0,kernel_ms=0.,cuda_transfer_and_kernel_ms=0.,accepted=0,fallbacks={},worker_geometry_seconds=0.,worker_wait_seconds=0.,worker_certify_seconds=0.,worker_cpu_seconds=0.)
++ def initargs(self,source,cpus):return(source,cpus,[p.name for p in self.memory],self.workers,self.capacity,self.events,self.ready,self.slots,self.require_lll)
++ def start(self):
++  self.gpu=candidate.GPUCandidates(capacity=self.workers*self.capacity);self.thread=threading.Thread(target=self.serve,daemon=True);self.thread.start()
++ def serve(self):
++  try:
++   while not self.stop.is_set():
++    try:first=self.ready.get(timeout=.05)
++    except queue.Empty:continue
++    messages=[first];end=time.monotonic()+.003
++    while len(messages)<self.workers and time.monotonic()<end:
++     try:messages.append(self.ready.get(timeout=max(.00001,end-time.monotonic())))
++     except queue.Empty:break
++    if len({slot for slot,_ in messages})!=len(messages) or any(type(slot) is not int or type(n) is not int or not 0<=slot<self.workers or not 1<=n<=self.capacity for slot,n in messages):raise ValueError('Invalid or duplicate GPU preparation request')
++    count=sum(n for _,n in messages);flat=np.empty((count,18),dtype=np.float64);at=0
++    for slot,n in messages:flat[at:at+n]=self.inputs[slot,:n];at+=n
++    out,timing=self.gpu.reduce_flat(flat,count,raw=True);view=np.frombuffer(out,dtype=DTYPE,count=count);at=0
++    for slot,n in messages:self.outputs[slot,:n]=view[at:at+n];at+=n;self.events[slot].set()
++    self.metrics['gpu_batches']+=1;self.metrics['gpu_proposals']+=count
++    for key in ['kernel_ms','cuda_transfer_and_kernel_ms']:self.metrics[key]+=timing[key]
++  except BaseException as exc:
++   self.error=exc;self.outputs['status']=99
++   for event in self.events:event.set()
++ def dispatch(self,pool,arguments):
++  size=max(1,min(self.capacity,(len(arguments)+self.workers-1)//self.workers))
++  blocks=[arguments[i:i+size] for i in range(0,len(arguments),size)]
++  pids=tuple(p.pid for p in pool._pool);deadline=time.monotonic()+25
++  pending=pool.map_async(prepare_block,blocks,1)
++  while not pending.ready():
++   if tuple(p.pid for p in pool._pool)!=pids or any(not p.is_alive() for p in pool._pool):raise RuntimeError('Preparation worker died or was replaced')
++   if time.monotonic()>deadline:raise TimeoutError('GPU dispatch exceeded25second bound')
++   if self.error:raise RuntimeError('GPU preparation service failed') from self.error
++   pending.wait(.05)
++  rows=pending.get();parts=[]
++  for row in rows:
++   parts.extend(row['parts']);self.metrics['accepted']+=row['accepted']
++   for key,value in row['fallbacks'].items():self.metrics['fallbacks'][key]=self.metrics['fallbacks'].get(key,0)+value
++   for src,dst in [('geometry_seconds','worker_geometry_seconds'),('wait_seconds','worker_wait_seconds'),('certify_seconds','worker_certify_seconds'),('cpu_seconds','worker_cpu_seconds')]:self.metrics[dst]+=row[src]
++  if self.error:raise RuntimeError('GPU preparation service failed') from self.error
++  return parts
++ def close(self):
++  self.stop.set()
++  if self.thread:self.thread.join(5);assert not self.thread.is_alive()
++  if self.gpu:self.gpu.close()
++  del self.inputs,self.outputs
++  for p in self.memory:p.close();p.unlink()
++  self.ready.cancel_join_thread();self.ready.close();self.slots.cancel_join_thread();self.slots.close()
++class GPUPool:
++ def __init__(self,pool,stage,chunksize):self.pool,self.stage,self.chunksize=pool,stage,chunksize
++ def map(self,function,items,ignored):
++  if function is coverage.prepare_segment:return self.stage.dispatch(self.pool,list(items))
++  return self.pool.map(function,items,self.chunksize)
++class BulkStream:
++ """Bounded preparation batches; execution/coverage remain one window at a time."""
++ def __init__(self,windows,prepare_many,batch_windows):
++  def groups():
++   pending=[]
++   for window in windows:
++    pending.append(window)
++    if len(pending)==batch_windows:yield tuple(pending);pending=[]
++   if pending:yield tuple(pending)
++  def prepare(groups):
++   for group in groups:
++    chunks=tuple(prepare_many(group));yield SimpleNamespace(chunks=chunks,payload_bytes=sum(c.payload_bytes for c in chunks),plan=SimpleNamespace(points=sum(c.plan.points for c in chunks)))
++  self.queue=scheduling.ReadyQueue(groups(),prepare,batch=1,ready_limit=3 if batch_windows==1 else 1,active_limit=1,max_item_bytes=8*1024**2 if batch_windows==1 else 12*1024**2,max_item_points=core.MAX_TOTAL_POINTS*batch_windows)
++  self.batch_windows=batch_windows;self.current=None;self.index=0
++ def __enter__(self):self.queue.start();return self
++ def __exit__(self,*args):self.close()
++ def __iter__(self):return self
++ def __next__(self):
++  if self.current is None:self.current=self.queue.get();self.index=0
++  return self.current.chunks[self.index]
++ def ack(self,chunk):
++  assert self.current.chunks[self.index] is chunk;self.index+=1
++  if self.index==len(self.current.chunks):self.queue.ack(self.current);self.current=None
++ def snapshot(self):return dict(self.queue.snapshot(),preparation_batch_windows=self.batch_windows,queue_units='bounded preparation batches; native requests and journals stay 256 logical cells')
++ def close(self):self.queue.close();self.current=None
+--- /dev/null
++++ b/experiments/gpu-preparation-20261110/integration_controls.py
+@@ -0,0 +1,318 @@
++"""Finite exact gates for isolated GPU preparation. TEST_ONLY; no journals.
++
++Run only while holding the experiment's GPU lease. Both proposed and cold CPU
++bases are enumerated by the native GPU and GMP separately. Different valid
++bases may have different boxes; their final exact candidate sets must agree.
++"""
++from __future__ import annotations
++
++import argparse
++from dataclasses import replace
++import hashlib
++import json
++import multiprocessing as mp
++import os
++from pathlib import Path
++import subprocess
++import sys
++import time
++import traceback
++
++ROOT = Path(__file__).resolve().parent
++WORKER = ROOT / "worker"
++SOURCE = WORKER / "source/lattice_prototype"
++sys.path[:0] = [str(WORKER), str(WORKER / "source/lattice_gpu")]
++
++import adapter_runtime as adapter
++import buffered_pipeline as buffering
++import coordinator_pipeline as pipeline
++import gpu_preparation as preparation
++import runtime_initialize
++import scaling_core as core
++
++
++class Serial:
++    """Unmodified cold CPU preparation in this exact-runtime process."""
++
++    def map(self, function, arguments, chunksize):
++        return list(map(function, arguments))
++
++
++def write_json(path, value):
++    path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n")
++
++
++def sha256(path):
++    return hashlib.sha256(path.read_bytes()).hexdigest()
++
++
++def check_spans(chunk):
++    cursor = chunk.window.first
++    for first, last in chunk.window.spans:
++        if not (first == cursor and first < last <= chunk.window.last):
++            raise AssertionError(("Noncontiguous logical coverage", cursor, first, last))
++        cursor = last
++    if cursor != chunk.window.last:
++        raise AssertionError(("Incomplete logical coverage", cursor, chunk.window.last))
++    if len(chunk.window.spans) != chunk.plan.tasks:
++        raise AssertionError("Physical spans do not identify every admitted task")
++
++
++def check_chunk(chunk):
++    # Neither validator is replaced or weakened for this gate.
++    check_spans(chunk)
++    buffering.validate_cached(chunk)
++    pipeline.validate_chunk(chunk)
++    # A copied/replaced object must not inherit the private checked-data seal.
++    try:
++        buffering.validate_cached(replace(chunk))
++    except ValueError as exc:
++        if "seal" not in str(exc):
++            raise
++    else:
++        raise AssertionError("Unchecked chunk copy inherited a private seal")
++
++
++def brute_force(lo=136, hi=153, cap=708588):
++    powers = [value**5 for value in range(hi + 1)]
++    hits = {
++        (a, b, c, powers[a] + powers[b] - powers[c])
++        for c in range(lo, hi + 1)
++        for b in range(1, c)
++        for a in range(1, b + 1)
++        if abs(powers[a] + powers[b] - powers[c]) <= cap
++    }
++    if (117, 144, 153, 708588) not in hits:
++        raise AssertionError("Full small-shell oracle lost the known positive")
++    return hits
++
++
++def enumerate_and_check(chunk, engine, directory, timeout):
++    directory.mkdir()
++    check_chunk(chunk)
++    hits = set()
++    packets = []
++    for index, batch in enumerate(chunk.plan.batches):
++        stem = directory / f"batch-{index:03d}"
++        stem.with_suffix(".packet").write_text(batch.packet)
++        began = time.perf_counter()
++        raw, _ = engine.run(batch.packet, timeout=timeout)
++        gpu_seconds = time.perf_counter() - began
++        write_json(stem.with_suffix(".gpu.json"), raw)
++        pipeline.validate_response_types(raw)
++        decoded = core.decode_batch(batch, raw, "gpu")
++        began = time.perf_counter()
++        command = [str(WORKER / "bin/gmp_reference")]
++        done = subprocess.run(
++            command, input=batch.packet, text=True, capture_output=True,
++            timeout=timeout, check=False,
++        )
++        gmp_seconds = time.perf_counter() - began
++        stem.with_suffix(".gmp.stdout").write_text(done.stdout)
++        stem.with_suffix(".gmp.stderr").write_text(done.stderr)
++        if done.returncode:
++            raise RuntimeError(f"GMP reference exited {done.returncode}: {done.stderr}")
++        reference = json.loads(done.stdout)
++        pipeline.validate_response_types(reference)
++        reference_hits = core.decode_batch(batch, reference, "emulated")
++        counts = adapter.normalized_counts(batch, raw)
++        native_hits = adapter.normalized_hits(batch, raw)
++        if counts != adapter.normalized_counts(batch, reference):
++            raise AssertionError(("GPU/GMP per-task count mismatch", index))
++        if native_hits != adapter.normalized_hits(batch, reference):
++            raise AssertionError(("GPU/GMP native candidate mismatch", index))
++        if decoded != reference_hits:
++            raise AssertionError(("GPU/GMP exact decoded-hit mismatch", index))
++        hits.update(decoded)
++        packets.append(dict(
++            index=index, packet_sha256=hashlib.sha256(batch.packet.encode()).hexdigest(),
++            points=batch.points, counts=counts, native_hit_records=native_hits,
++            exact_hits=sorted(decoded), gpu_seconds=gpu_seconds,
++            gmp_seconds=gmp_seconds, gpu_gmp_exact_equal=True,
++        ))
++    # Recheck the same sealed object after native work.
++    check_chunk(chunk)
++    return dict(
++        points=chunk.plan.points, physical_tasks=chunk.plan.tasks,
++        logical_spans=chunk.window.spans, geometry_sha256=chunk.geometry_sha256,
++        certificate_sha256=chunk.plan.certificate_sha256,
++        payload_bytes=chunk.payload_bytes, packets=packets, hits=sorted(hits),
++        contiguous_coverage=True, unchanged_buffer_validation=True,
++        copied_chunk_without_seal_rejected=True,
++    ), hits
++
++
++def cases():
++    for group in (4, 8, 16):
++        yield f"known-positive-group{group}", pipeline.Window(
++            136, 153, 0, 16, 8, 222, 708588, "adaptive"
++        ), group, True
++    for name, first, group in (
++        ("Ada", 4564955776, 4),
++        ("Cabbage", 2572492928, 8),
++        ("dense", 9562500096, 4),
++    ):
++        yield name, pipeline.Window(
++            100000000001, 200000000000, first, first + 256,
++            8, 222, 42, "adaptive",
++        ), group, False
++
++
++def run(args):
++    args.output.mkdir(parents=True, exist_ok=False)
++    available = tuple(sorted(os.sched_getaffinity(0)))
++    if len(available) < args.workers:
++        raise RuntimeError("Requested worker count exceeds allowed CPU affinity")
++    cpus = available[:args.workers]
++    os.sched_setaffinity(0, set(cpus))
++    runtime_initialize.initialize(SOURCE)
++    expected = brute_force()
++    write_json(args.output / "small-shell-full-brute-force.json", sorted(expected))
++    result = dict(
++        status="running", TEST_ONLY=True, production_coverage=False,
++        production_changed=False, native_backend="gpu", workers=args.workers,
++        cpus=cpus, cases=[], errors=[], quality_gate=args.quality_gate,
++        proposal_fault=args.proposal_fault,
++        comparison_policy=("Each basis must agree with its own GMP counts and native hits; "
++                           "GPU-prepared and cold CPU bases must have identical exact hits. "
++                           "Basis matrices, box sizes and physical subdivisions may differ."),
++        hashes={str(path.relative_to(ROOT)): sha256(path) for path in (
++            ROOT / "integration_controls.py", ROOT / "gpu_preparation.py",
++            ROOT / "gpu_candidate/candidate_reduction.py",
++            WORKER / "buffered_pipeline.py",
++            WORKER / "source/lattice_gpu/coordinator_pipeline.py",
++        )},
++    )
++    write_json(args.output / "result.json", result)
++    stage = preparation.GPUStage(args.workers, require_lll=args.quality_gate == "exact-lll")
++    pool = engine = None
++    began = time.monotonic()
++    try:
++        pool = mp.get_context("spawn").Pool(
++            args.workers, initializer=preparation.initialize,
++            initargs=stage.initargs(SOURCE, cpus),
++        )
++        warmed = {}
++        warm_deadline = time.monotonic() + 20
++        while len(warmed) < args.workers:
++            if time.monotonic() > warm_deadline:
++                raise TimeoutError("Exact-runtime workers did not all become ready")
++            warmed.update(pool.map(core.worker_identity, range(4 * args.workers), 1))
++        adapter.verify_workers(warmed, cpus)
++        result["worker_identities"] = warmed
++        stage.start()
++        fault = dict(injected=False)
++        if args.proposal_fault != "none":
++            original_reduce = stage.gpu.reduce_flat
++
++            def corrupt_one(*arguments, **keywords):
++                out, timing = original_reduce(*arguments, **keywords)
++                if not fault["injected"]:
++                    if not keywords.get("raw"):
++                        raise AssertionError("Fault gate requires the raw native proposal buffer")
++                    if args.proposal_fault == "zero-u":
++                        for index in range(9):
++                            out[0].u[index] = 0
++                        out[0].status = 0
++                    else:
++                        out[0].status = 1
++                    fault["injected"] = True
++                return out, timing
++
++            stage.gpu.reduce_flat = corrupt_one
++        engine = adapter.open_session(
++            WORKER / "bin/scaling_gpu", "gpu", began + args.deadline,
++        )
++        dispatch = preparation.GPUPool(pool, stage, 1)
++        for name, window, group, full_oracle in cases():
++            if args.case and name not in args.case:
++                continue
++            if time.monotonic() - began >= args.deadline:
++                raise TimeoutError("Finite correctness gate exceeded its deadline")
++            entry = dict(name=name, requested_group=group, window=window.identity())
++            result["cases"].append(entry)
++            directory = args.output / name
++            directory.mkdir()
++            try:
++                start = time.perf_counter()
++                cold = buffering.prepare_cached(Serial(), window, group)
++                entry["cold_cpu_prepare_seconds"] = time.perf_counter() - start
++                start = time.perf_counter()
++                proposed = buffering.prepare_cached(dispatch, window, group)
++                entry["gpu_prepare_seconds"] = time.perf_counter() - start
++                entry["gpu_prepared"], proposed_hits = enumerate_and_check(
++                    proposed, engine, directory / "gpu-prepared", args.timeout,
++                )
++                entry["cold_cpu"], cold_hits = enumerate_and_check(
++                    cold, engine, directory / "cold-cpu", args.timeout,
++                )
++                if proposed_hits != cold_hits:
++                    raise AssertionError(("GPU-prepared/cold CPU exact hits differ", name,
++                                          sorted(proposed_hits), sorted(cold_hits)))
++                entry["cross_basis_exact_hits_equal"] = True
++                entry["identical_geometry"] = proposed.geometry_sha256 == cold.geometry_sha256
++                if full_oracle:
++                    if proposed_hits != expected or cold_hits != expected:
++                        raise AssertionError(("Full small-shell brute-force mismatch", name,
++                                              sorted(proposed_hits), sorted(expected)))
++                    entry["full_small_shell_brute_force_equal"] = True
++                    entry["known_positive_present"] = True
++                entry["status"] = "passed"
++            except Exception as exc:
++                entry.update(status="failed", error_type=type(exc).__name__, error=str(exc),
++                             traceback=traceback.format_exc())
++                result["errors"].append(dict(case=name, type=type(exc).__name__, error=str(exc)))
++            entry["gpu_stage_metrics_cumulative"] = json.loads(json.dumps(stage.metrics))
++            write_json(directory / "result.json", entry)
++            write_json(args.output / "result.json", result)
++            print(json.dumps(dict(case=name, status=entry["status"],
++                                  error=entry.get("error"))), flush=True)
++            if stage.error:
++                raise RuntimeError("GPU preparation service failed") from stage.error
++        if not result["cases"]:
++            raise ValueError("No requested correctness cases matched")
++        if args.proposal_fault != "none":
++            reason = "Transform is not unimodular" if args.proposal_fault == "zero-u" else "iteration_budget"
++            if not fault["injected"] or stage.metrics["fallbacks"].get(reason, 0) < 1:
++                raise AssertionError(("Corrupted proposal did not trigger exact/guarded cold fallback", fault, stage.metrics))
++            result["forced_fault_cold_fallback_verified"] = True
++        result["status"] = "failed" if result["errors"] else "passed"
++    except BaseException as exc:
++        result.update(status="failed", fatal_error_type=type(exc).__name__,
++                      fatal_error=str(exc), fatal_traceback=traceback.format_exc())
++    finally:
++        if engine is not None:
++            engine.close()
++        if pool is not None:
++            pool.terminate()
++            pool.join()
++        stage.close()
++        result["elapsed_seconds"] = time.monotonic() - began
++        result["gpu_stage_metrics"] = dict(stage.metrics)
++        write_json(args.output / "result.json", result)
++    print(json.dumps(dict(status=result["status"], output=str(args.output))), flush=True)
++    return 0 if result["status"] == "passed" else 1
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--output", type=Path, required=True)
++    parser.add_argument("--workers", type=int, choices=(1, 2, 4, 8, 16), default=4)
++    parser.add_argument("--quality-gate", choices=("native-bounds", "exact-lll"),
++                        default="native-bounds")
++    parser.add_argument("--case", action="append", choices=[case[0] for case in cases()],
++                        help="Run only named cases (repeatable); default all six")
++    parser.add_argument("--proposal-fault", choices=("none", "zero-u", "status1"),
++                        default="none", help="Corrupt exactly one isolated GPU proposal to verify cold fallback")
++    parser.add_argument("--timeout", type=float, default=30,
++                        help="Per native packet/GMP timeout in seconds")
++    parser.add_argument("--deadline", type=float, default=300,
++                        help="Bound on the complete isolated gate in seconds")
++    args = parser.parse_args()
++    if args.timeout <= 0 or not 0 < args.deadline <= 900:
++        parser.error("Require positive packet timeout and deadline at most 900 seconds")
++    return run(args)
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/experiments/gpu-preparation-20261110/newton/fixtures.py
+@@ -0,0 +1,71 @@
++"""CPU-only reference/fixtures for exact GPU Newton root candidates."""
++from pathlib import Path
++from fractions import Fraction as Q
++import hashlib,json,random,struct,sys,time
++import gmpy2
++R=Path(__file__).resolve().parent;E=R/'evidence';F=E/'fixtures'
++def check(n,d,b):
++ if not (0<=n<=d and d>0 and 1<=b<=222):raise ValueError('unsupported domain')
++ width=max(n.bit_length(),d.bit_length())+5*(b+1)
++ if width>2048:raise OverflowError('CPU fallback: fixed-width proof failed')
++ return next(w for w in (512,1024,2048) if width<=w)
++def exact(n,d,b,k):
++ value=n<<(5*b)
++ if not d*k**5<=value<d*(k+1)**5:raise ArithmeticError('bad root candidate')
++def cpu_newton(n,d,b,seed=None):
++ check(n,d,b);t=(n<<(5*b))//d
++ if not t:return 0
++ upper=1<<((t.bit_length()+4)//5)
++ r=seed if seed is not None and seed>0 and seed<=upper and seed**5>=t else upper
++ for steps in range(64):
++  z=(4*r+t//r**4)//5
++  if z>=r:exact(n,d,b,r);return r
++  r=z
++ raise RuntimeError('iteration guard')
++def save(name,cases):
++ folder=F/name;folder.mkdir(parents=True,exist_ok=True);accepted=[];rejected=[];expected=[];widths={str(x):0 for x in (512,1024,2048)}
++ for n,d,b,meta in cases:
++  try:w=check(n,d,b)
++  except (ValueError,OverflowError) as exc:
++   fallback=dict(numerator=str(n),denominator=str(d),bits=b,reason=str(exc),meta=meta)
++   if 0<=n<=d and d>0 and 1<=b<=222:
++    k=int(gmpy2.iroot((gmpy2.mpz(n)<<(5*b))//d,5)[0]);exact(n,d,b,k);fallback.update(cpu_fallback_root=str(k),cpu_fallback_certificate_passed=True)
++   else:fallback['cpu_fallback_status']='invalid_domain_not_admissible'
++   rejected.append(fallback);continue
++  k=int(gmpy2.iroot((gmpy2.mpz(n)<<(5*b))//d,5)[0]);exact(n,d,b,k);assert cpu_newton(n,d,b)==k
++  accepted.append((n,d,b));expected.append(k);widths[str(w)]+=1
++ blob=struct.pack('<I',len(accepted))+b''.join(struct.pack('<I',b)+n.to_bytes(256,'little')+d.to_bytes(256,'little') for n,d,b in accepted)
++ (folder/'input.bin').write_bytes(blob);(folder/'expected.bin').write_bytes(struct.pack('<I',len(expected))+b''.join(k.to_bytes(256,'little') for k in expected))
++ info=dict(name=name,count=len(accepted),width_counts=widths,rejected=rejected,input_sha256=hashlib.sha256(blob).hexdigest());(folder/'metadata.json').write_text(json.dumps(info,indent=2)+'\n');return info
++def read(path):
++ raw=Path(path).read_bytes();count,=struct.unpack_from('<I',raw);assert len(raw)==4+516*count
++ return [(int.from_bytes(raw[8+i*516:8+i*516+256],'little'),int.from_bytes(raw[8+i*516+256:4+(i+1)*516],'little'),struct.unpack_from('<I',raw,4+i*516)[0]) for i in range(count)]
++def build():
++ tests=0
++ for d in range(1,65):
++  for n in range(d+1):
++   for b in (1,2,3,8,16):
++    k=int(gmpy2.iroot((gmpy2.mpz(n)<<(5*b))//d,5)[0]);assert cpu_newton(n,d,b)==k
++    for seed in [0,1,k-1,k,k+1,1<<(b+5)]:assert cpu_newton(n,d,b,seed)==k
++    for bad in [k-1,k+1]:
++     try:exact(n,d,b,bad)
++     except ArithmeticError:pass
++     else:raise AssertionError('bad candidate accepted')
++    tests+=1
++ actual=json.loads(Path('/home/pnord/scratch/fifth42-gpu-prep-profile-20261110/ACTUAL_ROOT_INPUTS.json').read_bytes());cases=[(int(x['numerator']),int(x['denominator']),x['bits'],x) for x in actual]
++ out=[save('actual-768',cases)]
++ for count in [4096,16384]:out.append(save('actual-'+str(count),[cases[i%len(cases)] for i in range(count)]))
++ cusp=json.loads(Path('/home/pnord/scratch/fifth42-gpu-prep-profile-20261110/CUSP_AND_GROUP8_ROOT_INPUTS.json').read_bytes());out.append(save('actual-cusp-group8',[(int(x['numerator']),int(x['denominator']),x['bits'],x) for x in cusp]))
++ for count in [256,1024,4096]:
++  path=Path('/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence')/f'tpi8-count{count}/input.bin';rows=read(path);out.append(save('dot-'+str(count),[(n,d,b,dict(kind='Dot original accepted fixture')) for n,d,b in rows]))
++ rng=random.Random(54321);boundary=[]
++ for b in [1,2,53,88,128,176,222]:
++  for k in [0,1,2,(1<<b)//2,(1<<b)-1,1<<b]:
++   for delta in [-1,0,1]:
++    q=Q(k,1<<b)**5+Q(delta,1<<(5*b+8))
++    if 0<=q<=1:boundary.append((q.numerator,q.denominator,b,dict(kind='root-boundary',k=str(k),delta=delta)))
++ for _ in range(2048):
++  d=rng.randrange(1,1<<rng.randrange(1,600));n=rng.randrange(d+1);b=rng.choice([1,53,88,128,176,222]);q=Q(n,d);boundary.append((q.numerator,q.denominator,b,dict(kind='random')))
++ out.append(save('boundary-random',boundary))
++ (E/'CPU_VALIDATION.json').write_text(json.dumps(dict(status='passed',exhaustive_cases=tests,adversarial_seed_variants=6,bad_candidate_rejections=2*tests,fixtures=out),indent=2)+'\n');print(json.dumps(dict(status='passed',exhaustive_cases=tests,fixture_counts=[(x['name'],x['count']) for x in out]),indent=2))
++if __name__=='__main__':build()
+--- /dev/null
++++ b/experiments/gpu-preparation-20261110/newton/root_newton.cu
+@@ -0,0 +1,144 @@
++// Isolated CGBN Newton root prototype. No production integration.
++// GPU candidates must still receive independent exact CPU certification.
++#include <gmp.h>
++#include <cuda_runtime.h>
++#include <cstdint>
++#include <cstdio>
++#include <cstdlib>
++#include <cmath>
++#include <chrono>
++#include <stdexcept>
++#include <string>
++#include <sstream>
++#include <fstream>
++#include <iostream>
++#include <vector>
++#include <array>
++#include <algorithm>
++#include "cgbn/cgbn.h"
++#ifndef ROOT_TPI
++#define ROOT_TPI 8
++#endif
++#ifndef ROOT_FLOAT_SEED
++#define ROOT_FLOAT_SEED 1
++#endif
++static_assert(ROOT_TPI==4 || ROOT_TPI==8 || ROOT_TPI==16 || ROOT_TPI==32);
++constexpr unsigned BLOCK=128;
++struct FullInput { uint32_t bits; std::array<uint32_t,64> n,d; };
++template<unsigned W> struct Input { uint32_t bits; cgbn_mem_t<W> n,d; };
++struct Stats { uint32_t iterations, fallback, error; };
++
++template<unsigned W, class E>
++__device__ __forceinline__ void fifth(E &e,typename E::cgbn_t &out,const typename E::cgbn_t &a) {
++  typename E::cgbn_t square,fourth;
++  cgbn_mul(e,square,a,a);cgbn_mul(e,fourth,square,square);cgbn_mul(e,out,fourth,a);
++}
++
++template<unsigned W>
++__global__ void roots(cgbn_error_report_t *report,Input<W>*input,
++                      cgbn_mem_t<W>*output,Stats*stats,uint32_t count) {
++  const uint32_t i=(blockIdx.x*blockDim.x+threadIdx.x)/ROOT_TPI;
++  if(i>=count)return;
++  using C=cgbn_context_t<ROOT_TPI>;using E=cgbn_env_t<C,W>;
++  C context(cgbn_report_monitor,report,i);E e(context.template env<E>());
++  typename E::cgbn_t n,d,scaled,target,r,one,square,fourth,q,next,sum,power,up;
++  cgbn_load(e,n,&input[i].n);cgbn_load(e,d,&input[i].d);
++  cgbn_shift_left(e,scaled,n,5*input[i].bits);
++  cgbn_div(e,target,scaled,d);
++  cgbn_set_ui32(e,one,1);
++  uint32_t steps=0,fallback=0,error=0;
++  const uint32_t bits=W-cgbn_clz(e,target);
++  if(bits==0)cgbn_set_ui32(e,r,0);
++  else {
++    const uint32_t upper_bit=(bits+4)/5;
++    cgbn_shift_left(e,r,one,upper_bit);
++#if ROOT_FLOAT_SEED
++    // Approximation supplies a candidate only. Exact power comparison below
++    // proves it is an upper bound; otherwise use the integer upper bound.
++    const uint32_t take=bits<24?bits:24;
++    const uint32_t shift=bits-take;
++    const uint32_t top=cgbn_extract_bits_ui32(e,target,shift,take);
++    const float approx=__powf(ldexpf(static_cast<float>(top),shift%5),0.2f);
++    const uint32_t prefix=static_cast<uint32_t>(ceilf(ldexpf(approx,20)))+16;
++    const int exponent=static_cast<int>(shift/5)-20;
++    if(exponent>=0){cgbn_set_ui32(e,next,prefix);cgbn_shift_left(e,next,next,exponent);}
++    else {const uint32_t right=-exponent;cgbn_set_ui32(e,next,(prefix+((1u<<right)-1))>>right);}
++    // Check the certified coefficient range BEFORE any power, so the width
++    // proof remains valid even for a completely inaccurate floating seed.
++    if(cgbn_compare(e,next,r)<=0 && cgbn_compare_ui32(e,next,0)>0) {
++      fifth<W>(e,power,next);
++      // next^5 >= target proves this is a descending-Newton upper seed.
++      if(cgbn_compare(e,power,target)>=0)cgbn_set(e,r,next);
++      else fallback=1;
++    } else fallback=1;
++#endif
++    bool finished=false;
++    for(uint32_t k=0;k<64;++k) {
++      cgbn_mul(e,square,r,r);cgbn_mul(e,fourth,square,square);
++      cgbn_div(e,q,target,fourth);
++      cgbn_mul_ui32(e,sum,r,4);cgbn_add(e,sum,sum,q);cgbn_div_ui32(e,next,sum,5);
++      ++steps;
++      if(cgbn_compare(e,next,r)>=0){finished=true;break;}
++      cgbn_set(e,r,next);
++    }
++    if(!finished)error=1;
++  }
++  // Independent device consistency gate. CPU verifies the original rational
++  // inequalities as well; neither this check nor a float seed replaces it.
++  fifth<W>(e,power,r);
++  if(cgbn_compare(e,power,target)>0)error=2;
++  cgbn_add_ui32(e,up,r,1);fifth<W>(e,power,up);
++  if(cgbn_compare(e,power,target)<=0)error=3;
++  cgbn_store(e,&output[i],r);
++  if(threadIdx.x%ROOT_TPI==0)stats[i]={steps,fallback,error};
++}
++static void check(cudaError_t code,const char*what){if(code!=cudaSuccess)throw std::runtime_error(std::string(what)+": "+cudaGetErrorString(code));}
++#define CUDA(x) check((x),#x)
++static uint32_t read32(FILE*f){unsigned char b[4];if(fread(b,1,4,f)!=4)throw std::runtime_error("truncated input");return uint32_t(b[0])|(uint32_t(b[1])<<8)|(uint32_t(b[2])<<16)|(uint32_t(b[3])<<24);}
++static void write32(FILE*f,uint32_t x){unsigned char b[4]={static_cast<unsigned char>(x),static_cast<unsigned char>(x>>8),static_cast<unsigned char>(x>>16),static_cast<unsigned char>(x>>24)};if(fwrite(b,1,4,f)!=4)throw std::runtime_error("write failed");}
++static unsigned bitlen(const std::array<uint32_t,64>&x){for(int i=63;i>=0;--i)if(x[i])return i*32+32-__builtin_clz(x[i]);return 0;}
++static int compare(const std::array<uint32_t,64>&a,const std::array<uint32_t,64>&b){for(int i=63;i>=0;--i)if(a[i]!=b[i])return a[i]<b[i]?-1:1;return 0;}
++template<unsigned W> struct Bucket {
++  std::vector<Input<W>> host;
++  std::vector<uint32_t> indices;
++  Input<W>*din=nullptr;cgbn_mem_t<W>*dout=nullptr;Stats*dstats=nullptr;size_t capacity=0;
++  void clear(){host.clear();indices.clear();}
++  void append(const FullInput&x,uint32_t i){Input<W> a{};a.bits=x.bits;std::copy_n(x.n.data(),W/32,a.n._limbs);std::copy_n(x.d.data(),W/32,a.d._limbs);host.push_back(a);indices.push_back(i);}
++  void reserve(){if(host.size()<=capacity)return;release();capacity=host.size();CUDA(cudaMalloc(reinterpret_cast<void**>(&din),capacity*sizeof(*din)));CUDA(cudaMalloc(reinterpret_cast<void**>(&dout),capacity*sizeof(*dout)));CUDA(cudaMalloc(reinterpret_cast<void**>(&dstats),capacity*sizeof(*dstats)));}
++  void release(){if(din)cudaFree(din);if(dout)cudaFree(dout);if(dstats)cudaFree(dstats);din=nullptr;dout=nullptr;dstats=nullptr;capacity=0;}
++  ~Bucket(){release();}
++};
++class Session {
++  Bucket<512>b512;Bucket<1024>b1024;Bucket<2048>b2048;
++  cgbn_error_report_t*report=nullptr;cudaEvent_t begin,end;
++ public:
++  Session(){CUDA(cudaSetDevice(0));CUDA(cgbn_error_report_alloc(&report));CUDA(cudaEventCreate(&begin));CUDA(cudaEventCreate(&end));}
++  ~Session(){cudaEventDestroy(begin);cudaEventDestroy(end);cgbn_error_report_free(report);}
++  template<unsigned W>float launch(Bucket<W>&b){if(b.host.empty())return 0;CUDA(cudaEventRecord(begin));roots<W><<<(b.host.size()+BLOCK/ROOT_TPI-1)/(BLOCK/ROOT_TPI),BLOCK>>>(report,b.din,b.dout,b.dstats,b.host.size());CUDA(cudaGetLastError());CUDA(cudaEventRecord(end));CUDA(cudaEventSynchronize(end));if(cgbn_error_report_check(report))throw std::runtime_error(cgbn_error_string(report));float ms=0;CUDA(cudaEventElapsedTime(&ms,begin,end));return ms;}
++  template<unsigned W>void upload(Bucket<W>&b){if(b.host.empty())return;b.reserve();CUDA(cudaMemcpy(b.din,b.host.data(),b.host.size()*sizeof(*b.din),cudaMemcpyHostToDevice));}
++  template<unsigned W>void download(Bucket<W>&b,std::vector<std::array<uint32_t,64>>&output,std::vector<Stats>&stats){if(b.host.empty())return;std::vector<cgbn_mem_t<W>>values(b.host.size());std::vector<Stats>local(b.host.size());CUDA(cudaMemcpy(values.data(),b.dout,values.size()*sizeof(*b.dout),cudaMemcpyDeviceToHost));CUDA(cudaMemcpy(local.data(),b.dstats,local.size()*sizeof(*b.dstats),cudaMemcpyDeviceToHost));for(size_t j=0;j<local.size();++j){if(local[j].error)throw std::runtime_error("Newton/device certificate failure at record "+std::to_string(b.indices[j])+" code "+std::to_string(local[j].error));std::copy_n(values[j]._limbs,W/32,output[b.indices[j]].data());stats[b.indices[j]]=local[j];}}
++  std::string run(const std::string&infile,const std::string&outfile,unsigned repeats){
++    using Clock=std::chrono::steady_clock;const auto start=Clock::now();
++    if(infile==outfile)throw std::runtime_error("input and output must differ");
++    FILE*f=fopen(infile.c_str(),"rb");if(!f)throw std::runtime_error("cannot open input");
++    b512.clear();b1024.clear();b2048.clear();const uint32_t count=read32(f);if(count==0||count>1000000)throw std::runtime_error("count must be 1..1000000");
++    static_assert(sizeof(FullInput)==516);const uint32_t endian=1;if(*reinterpret_cast<const unsigned char*>(&endian)!=1)throw std::runtime_error("unsupported host byte order");std::vector<FullInput> input(count);if(fread(input.data(),sizeof(FullInput),count,f)!=count)throw std::runtime_error("truncated input");
++    for(uint32_t i=0;i<count;++i){const FullInput&x=input[i];const unsigned nb=bitlen(x.n),db=bitlen(x.d);if(db==0||compare(x.n,x.d)>0||x.bits<1||x.bits>222)throw std::runtime_error("unsupported domain at record "+std::to_string(i)+"; CPU fallback required");const unsigned proof=std::max(nb,db)+5*(x.bits+1);if(proof>2048)throw std::runtime_error("unsupported width at record "+std::to_string(i)+"; CPU fallback required");if(proof<=512)b512.append(x,i);else if(proof<=1024)b1024.append(x,i);else b2048.append(x,i);}
++    if(fgetc(f)!=EOF||ferror(f))throw std::runtime_error("trailing bytes or read failure");fclose(f);
++    const auto parsed=Clock::now();upload(b512);upload(b1024);upload(b2048);const auto uploaded=Clock::now();
++    std::vector<float>times;
++    for(unsigned j=0;j<repeats;++j){const float ms=launch(b512)+launch(b1024)+launch(b2048);times.push_back(ms);fprintf(stderr,"kernel_repeat=%u kernel_ms=%.6f\n",j,ms);}
++    const auto computed=Clock::now();std::vector<std::array<uint32_t,64>>output(count);std::vector<Stats>stats(count);download(b512,output,stats);download(b1024,output,stats);download(b2048,output,stats);const auto downloaded=Clock::now();
++    uint64_t iterations=0,fallbacks=0;unsigned max_steps=0;for(auto s:stats){iterations+=s.iterations;fallbacks+=s.fallback;max_steps=std::max(max_steps,s.iterations);}
++    FILE*o=fopen(outfile.c_str(),"wb");if(!o)throw std::runtime_error("cannot open output");write32(o,count);static_assert(sizeof(output[0])==256);if(fwrite(output.data(),256,count,o)!=count)throw std::runtime_error("output write failed");if(fclose(o))throw std::runtime_error("output close failed");
++    auto ms=[](auto a,auto z){return std::chrono::duration<double,std::milli>(z-a).count();};std::ostringstream out;out<<"{\"status\":\"ok\",\"count\":"<<count<<",\"tpi\":"<<ROOT_TPI<<",\"float_seed\":"<<ROOT_FLOAT_SEED<<",\"width_counts\":{\"512\":"<<b512.host.size()<<",\"1024\":"<<b1024.host.size()<<",\"2048\":"<<b2048.host.size()<<"},\"mean_newton_iterations\":"<<double(iterations)/count<<",\"max_newton_iterations\":"<<max_steps<<",\"seed_fallbacks\":"<<fallbacks<<",\"parse_ms\":"<<ms(start,parsed)<<",\"upload_allocate_ms\":"<<ms(parsed,uploaded)<<",\"download_ms\":"<<ms(computed,downloaded)<<",\"request_ms\":"<<ms(start,Clock::now())<<",\"kernel_ms\":[";for(size_t j=0;j<times.size();++j){if(j)out<<',';out<<times[j];}out<<"]}";return out.str();
++  }
++};
++int main(int argc,char**argv){try{
++  const bool server=argc==2&&std::string(argv[1])=="--server";
++  if(!server&&(argc<3||argc>4))throw std::runtime_error("usage: root_newton INPUT OUTPUT [REPEATS] or --server");
++  Session session;
++  if(server){std::cout<<"{\"ready\":true,\"widths\":[512,1024,2048],\"tpi\":"<<ROOT_TPI<<",\"float_seed\":"<<ROOT_FLOAT_SEED<<"}"<<std::endl;std::string line;while(std::getline(std::cin,line)){if(line=="QUIT")break;std::istringstream in(line);std::string cmd,input,output,extra;unsigned repeats=0;if(!(in>>cmd>>input>>output>>repeats)||cmd!="RUN"||(in>>extra)||repeats<1||repeats>10000)throw std::runtime_error("invalid server command");std::cout<<session.run(input,output,repeats)<<std::endl;}}
++  else {unsigned repeats=1;if(argc==4){char*end=nullptr;unsigned long n=strtoul(argv[3],&end,10);if(!*argv[3]||*end||n<1||n>10000)throw std::runtime_error("invalid repeat count");repeats=n;}std::cout<<session.run(argv[1],argv[2],repeats)<<std::endl;}
++  return 0;
++}catch(const std::exception&e){fprintf(stderr,"ERROR: %s\n",e.what());return 1;}}
+--- /dev/null
++++ b/experiments/gpu-preparation-20261110/newton/run_gpu_tests.py
+@@ -0,0 +1,70 @@
++"""Bounded exclusive GPU correctness then resident-kernel/host-latency timings."""
++from pathlib import Path
++import fcntl,json,os,selectors,statistics,struct,subprocess,time,hashlib,traceback
++import gmpy2
++import fixtures
++R=Path(__file__).resolve().parent;E=R/'evidence';F=E/'fixtures'
++def save(p,x):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(x,indent=2)+'\n')
++def certify(rows,roots):
++ for (n,d,b),k in zip(rows,roots):fixtures.exact(n,d,b,k)
++def read_roots(path):
++ raw=path.read_bytes();count,=struct.unpack_from('<I',raw);assert len(raw)==4+count*256
++ return [int.from_bytes(raw[4+i*256:4+(i+1)*256],'little') for i in range(count)]
++class Server:
++ def __init__(self,binary,tag):
++  self.err=(E/(tag+'.stderr.log')).open('w');self.started=time.perf_counter();self.p=subprocess.Popen([str(binary),'--server'],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=self.err,text=True,bufsize=1);self.ready=self.line();self.startup=time.perf_counter()-self.started;assert self.ready['ready']
++ def line(self):
++  with selectors.DefaultSelector() as s:
++   s.register(self.p.stdout,selectors.EVENT_READ)
++   if not s.select(30):raise TimeoutError('GPU server response timeout')
++  raw=self.p.stdout.readline()
++  if not raw:raise RuntimeError('GPU server exited '+str(self.p.poll()))
++  return json.loads(raw)
++ def run(self,src,dest,reps):
++  t=time.perf_counter();self.p.stdin.write(f'RUN {src} {dest} {reps}\n');self.p.stdin.flush();row=self.line();row['client_request_ms']=(time.perf_counter()-t)*1000;return row
++ def close(self):
++  if self.p.poll() is None:
++   self.p.stdin.write('QUIT\n');self.p.stdin.flush()
++   try:self.p.wait(timeout=3)
++   except subprocess.TimeoutExpired:self.p.kill();self.p.wait()
++  self.err.close()
++def main():
++ os.sched_setaffinity(0,set(range(8,12)));lock=Path('/home/pnord/scratch/saved-root-readiness-Ija5nMHk/cabbage-runtime/gpu-owner.lock').open('r+');fcntl.lockf(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
++ assert not subprocess.check_output(['nvidia-smi','--query-compute-apps=pid','--format=csv,noheader'],text=True).strip()
++ names=[p.name for p in sorted(F.iterdir()) if p.is_dir()];binaries=[R/'root_newton_power_tpi8',R/'root_newton_seeded_tpi8'];servers=[];checks=[];timings=[];begin=time.monotonic()
++ try:
++  rejected=[];bad=E/'native-rejections';bad.mkdir(exist_ok=True)
++  def packet(n,d,b):return struct.pack('<II',1,b)+n.to_bytes(256,'little')+d.to_bytes(256,'little')
++  valid=packet(1,2,88)
++  cases={'overwidth':packet(1,(1<<2000)+1,222),'outside-domain':packet(2,1,88),'zero-denominator':packet(1,0,88),'zero-bits':packet(1,2,0),'bits-223':packet(1,2,223),'truncated':valid[:-1],'trailing':valid+b'x','zero-count':struct.pack('<I',0)}
++  if os.environ.get('ROOT_SKIP_NATIVE')=='1':cases={}
++  for name,data in cases.items():
++   src=bad/(name+'.input.bin');src.write_bytes(data);dst=bad/(name+'.output.bin');done=subprocess.run([str(binaries[1]),str(src),str(dst),'1'],capture_output=True,text=True,timeout=3)
++   (bad/(name+'.stderr.txt')).write_text(done.stderr);assert done.returncode!=0 and not dst.exists()
++   rejected.append(dict(case=name,status='rejected',returncode=done.returncode,stderr=done.stderr))
++  save(E/'NATIVE_REJECTIONS.json',dict(status='passed' if rejected else 'not_run_in_final_bounded_gpu_slot',cases=rejected,reason=None if rejected else 'Parent requested <=2-second correctness/timing slot; CPU width refusal/fallback tests remain executed'))
++  for binary in binaries:
++   server=Server(binary,binary.name);servers.append(server)
++   for name in names:
++    folder=F/name;dest=folder/(binary.name+'-correctness.bin');row=server.run(folder/'input.bin',dest,1);assert dest.read_bytes()==(folder/'expected.bin').read_bytes();rows=fixtures.read(folder/'input.bin');certify(rows,read_roots(dest));checks.append(dict(binary=binary.name,fixture=name,status='passed',response=row))
++  save(E/'GPU_CORRECTNESS.json',dict(status='passed',checks=checks,cpu_certificate=True))
++  for binary,server in zip(binaries,servers):
++   for name in ['actual-768','actual-4096','actual-16384','dot-4096']:
++    folder=F/name;rows=fixtures.read(folder/'input.bin');dest=folder/(binary.name+'-timing.bin');mpzrows=[(gmpy2.mpz(n),gmpy2.mpz(d),b) for n,d,b in rows];repeats=[]
++    for repeat in range(5):
++     start=time.perf_counter();cpu=[int(gmpy2.iroot((n<<(5*b))//d,5)[0]) for n,d,b in mpzrows];gmp_ms=(time.perf_counter()-start)*1000
++     row=server.run(folder/'input.bin',dest,11);roots=read_roots(dest);assert roots==cpu;single=server.run(folder/'input.bin',dest,1);assert read_roots(dest)==cpu;start=time.perf_counter();certify(rows,roots);proof_ms=(time.perf_counter()-start)*1000
++     start=time.perf_counter()
++     for (n,d,b),k in zip(mpzrows,roots):
++      k=gmpy2.mpz(k);target=n<<(5*b);assert d*k**5<=target<d*(k+1)**5
++     gmp_proof_ms=(time.perf_counter()-start)*1000
++     repeats.append(dict(repeat=repeat,gmp_root_ms=gmp_ms,python_proof_ms=proof_ms,gmp_proof_ms=gmp_proof_ms,response=row,single_request=single,warm_kernel_median_ms=statistics.median(row['kernel_ms'][1:])))
++    timings.append(dict(binary=binary.name,fixture=name,count=len(rows),unique_input_keys=len(set(rows)),server_startup_ms=server.startup*1000,median_gmp_ms=statistics.median(x['gmp_root_ms'] for x in repeats),median_warm_kernel_ms=statistics.median(x['warm_kernel_median_ms'] for x in repeats),median_eleven_kernel_request_ms=statistics.median(x['response']['client_request_ms'] for x in repeats),median_single_request_ms=statistics.median(x['single_request']['client_request_ms'] for x in repeats),median_cpu_proof_ms=statistics.median(x['python_proof_ms'] for x in repeats),median_gmp_proof_ms=statistics.median(x['gmp_proof_ms'] for x in repeats),samples=repeats))
++    save(E/'TIMINGS.json',timings)
++  save(E/'RESULT.json',dict(status='passed',source_sha256=hashlib.sha256((R/'root_newton.cu').read_bytes()).hexdigest(),correctness_cases=len(checks),timing_cases=len(timings),seconds=time.monotonic()-begin,production_changed=False,production_restarted=False,timings=timings));print('PASS',len(checks),'correctness cases;',len(timings),'timing cases')
++ finally:
++  for server in servers:server.close()
++  lock.close()
++if __name__=='__main__':
++ try:main()
++ except BaseException as exc:save(E/'FAILURE.json',dict(error=repr(exc),traceback=traceback.format_exc()));raise
+--- /dev/null
++++ b/experiments/gpu-preparation-20261110/run_bounded.py
+@@ -0,0 +1,39 @@
++"""Exclusive finite experiments; never changes production state."""
++import argparse,fcntl,json,os,signal,subprocess,sys,time
++from pathlib import Path
++ROOT=Path(__file__).resolve().parent
++LOCK=Path('/home/pnord/scratch/saved-root-readiness-Ija5nMHk/cabbage-runtime/gpu-owner.lock')
++def run(command,output,timeout=120):
++ output=Path(output);output.parent.mkdir(parents=True,exist_ok=True)
++ with LOCK.open('r+') as lease:
++  fcntl.lockf(lease,fcntl.LOCK_EX|fcntl.LOCK_NB)
++  deadline=time.monotonic()+30;guard_samples=[]
++  while True:
++   processes=subprocess.check_output(['nvidia-smi','--query-compute-apps=pid','--format=csv,noheader,nounits'],text=True).strip()
++   assert not processes,('GPU compute owner present',processes)
++   gpu=subprocess.check_output(['nvidia-smi','--query-gpu=utilization.gpu,memory.used','--format=csv,noheader,nounits'],text=True).strip()
++   utilization,memory=map(int,gpu.split(','));guard_samples.append(dict(time=time.time(),utilization=utilization,memory_mib=memory))
++   if utilization<=5 and memory<512:break
++   if time.monotonic()>deadline:raise RuntimeError('GPU idle guard remained busy')
++   time.sleep(1)
++  # The one-minute load average includes our preceding finite test. Wait for it,
++  # keeping the original <=4 threshold, rather than identifying it as another user.
++  deadline=time.monotonic()+120
++  while os.getloadavg()[0]>4:
++   if time.monotonic()>deadline:raise RuntimeError('Load guard remained above4')
++   time.sleep(2)
++  before=dict(load=os.getloadavg(),gpu=gpu,gpu_guard_samples=guard_samples,time=time.time(),command=command)
++  with output.open('w') as log:
++   p=subprocess.Popen(command,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
++   try:p.wait(timeout=timeout)
++   except BaseException:
++    try:os.killpg(p.pid,signal.SIGTERM);p.wait(timeout=5)
++    except subprocess.TimeoutExpired:os.killpg(p.pid,signal.SIGKILL);p.wait()
++    except ProcessLookupError:pass
++    output.with_suffix('.failure.json').write_text(json.dumps(dict(command=command,timeout=timeout,error='process interrupted or timed out',returncode=p.returncode),indent=2)+'\n')
++    raise
++  after=dict(returncode=p.returncode,elapsed=time.time()-before['time'],time=time.time())
++  output.with_suffix('.metadata.json').write_text(json.dumps(dict(before=before,after=after),indent=2)+'\n')
++  if p.returncode:raise RuntimeError(f'Failed {p.returncode}; see {output}')
++if __name__=='__main__':
++ p=argparse.ArgumentParser();p.add_argument('--log',required=True);p.add_argument('--seconds',type=int,default=120);p.add_argument('command',nargs=argparse.REMAINDER);a=p.parse_args();run(a.command,a.log,a.seconds)
+--- /dev/null
++++ b/experiments/gpu-preparation-20261110/run_matrix.py
+@@ -0,0 +1,33 @@
++"""Balanced bounded whole-pipeline comparisons, isolated scratch journals."""
++import argparse,hashlib,json,os,signal,statistics,subprocess,sys,time
++from pathlib import Path
++from run_bounded import run
++ROOT=Path(__file__).resolve().parent
++REGIONS={'ada':(4564955776,4),'cabbage':(2572492928,8),'dense':(9562500096,4)}
++def main():
++ p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True);p.add_argument('--repeats',type=int,default=3);p.add_argument('--patches',type=int,default=32768);p.add_argument('--seconds',type=int,default=1200);p.add_argument('--region',choices=REGIONS);a=p.parse_args()
++ assert 1<=a.repeats<=3 and 256<=a.patches<=32768 and a.patches%256==0 and 1<=a.seconds<=2400
++ for name,digest in json.loads((ROOT/'experiment-manifest.json').read_text())['worker_files'].items():
++  assert hashlib.sha256((ROOT/'worker'/name).read_bytes()).hexdigest()==digest,name
++ a.output.mkdir(parents=True,exist_ok=False);deadline=time.monotonic()+a.seconds
++ rows=[];same={};hits={};modes=[('cpu',1),('cpu',16),('gpu',16)]
++ os.environ.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',PYTHONDONTWRITEBYTECODE='1')
++ for rep in range(a.repeats):
++  for region,(first,group) in REGIONS.items():
++   if a.region and region!=a.region:continue
++   for backend,batch in modes[rep%3:]+modes[:rep%3]:
++    assert time.monotonic()<deadline,'Overall finite deadline exhausted'
++    name=f'{region}-{backend}-w{batch}-r{rep}';folder=a.output/name
++    cmd=[sys.executable,str(ROOT/'trial_preparation.py'),'--variant','cache_buffer8','--workers','16','--first',str(first),'--patches',str(a.patches),'--group-limit',str(group),'--map-chunksize',str(16//group),'--preparation-backend',backend,'--window-batch',str(batch),'--output',str(folder)]
++    run(cmd,a.output/(name+'.log'),min(120,int(deadline-time.monotonic())))
++    r=json.loads((folder/'result.json').read_text());key=(region,backend,batch)
++    sig=(r['signatures_sha256'],r['points'],r['physical_tasks'])
++    if key in same:assert same[key]==sig,('Repeated geometry/count mismatch',key)
++    same[key]=sig
++    if region in hits:assert hits[region]==r['hits'],('Cross-mode hits differ',region)
++    hits[region]=r['hits'];r.update(region=region,repeat=rep);rows.append(r)
++    (a.output/'samples.json').write_text(json.dumps(rows,indent=2)+'\n')
++    print(name,round(r['patches_per_second'],2),'cells/s',flush=True)
++ summary={f'{reg}/{backend}/w{batch}':statistics.median(r['patches_per_second'] for r in rows if r['region']==reg and r['preparation_backend']==backend and r['preparation_window_batch']==batch) for reg in REGIONS if any(r['region']==reg for r in rows) for backend,batch in modes}
++ (a.output/'SUMMARY.json').write_text(json.dumps(dict(status='passed',TEST_ONLY=True,production_coverage=False,median_cells_per_second=summary,samples=len(rows)),indent=2)+'\n')
++if __name__=='__main__':main()
+--- /dev/null
++++ b/experiments/gpu-preparation-20261110/test_service_failure.py
+@@ -0,0 +1,213 @@
++"""CPU-only failure injection for the shared-memory GPU preparation service.
++
++The real spawn workers construct one ordinary patch.  A CPU stub replaces the
++GPU backend before GPUStage.start(), so this test creates no CUDA context.
++"""
++import argparse
++import hashlib
++import io
++import json
++import multiprocessing as mp
++from multiprocessing import shared_memory
++import os
++from pathlib import Path
++import sys
++import time
++import unittest
++from unittest.mock import patch
++
++import gpu_preparation as gp
++
++ROOT = Path(__file__).resolve().parent
++ARGUMENT = (100000000001, 200000000000, 2572492928, 2572492932,
++            222, 42, 'adaptive')
++RECORDS = []
++
++
++class RaisingCPUBackend:
++    """Expose the GPU API while never loading its shared library."""
++    def __init__(self, capacity):
++        self.capacity = capacity
++        self.calls = 0
++        self.closed = False
++
++    def reduce_flat(self, values, count, *, raw=False):
++        assert raw and count == 1 and values.shape == (1, 18)
++        self.calls += 1
++        raise RuntimeError('Injected CPU-only GPU service failure')
++
++    def close(self):
++        self.closed = True
++
++
++def require_unlinked(test, names):
++    for name in names:
++        try:
++            unexpected = shared_memory.SharedMemory(name=name)
++        except FileNotFoundError:
++            continue
++        unexpected.close()
++        test.fail(f'Shared memory was not unlinked: {name}')
++
++
++class FakeWorker:
++    def __init__(self, pid, alive=True):
++        self.pid, self.alive = pid, alive
++
++    def is_alive(self):
++        return self.alive
++
++
++class ControlledPending:
++    def __init__(self, pool):
++        self.pool = pool
++        self.waits = 0
++
++    def ready(self):
++        return False
++
++    def wait(self, timeout):
++        self.waits += 1
++        if self.pool.change == 'replacement':
++            self.pool._pool = [FakeWorker(987654322)]
++        else:
++            self.pool._pool[0].alive = False
++
++    def get(self):
++        raise AssertionError('A failed worker must never return Tasks')
++
++
++class ControlledPool:
++    def __init__(self, change):
++        self.change = change
++        self._pool = [FakeWorker(987654321)]
++        self.pending = ControlledPending(self)
++
++    def map_async(self, function, blocks, chunksize):
++        assert function is gp.prepare_block
++        assert blocks == [[ARGUMENT]] and chunksize == 1
++        return self.pending
++
++
++class FailureInjectionTests(unittest.TestCase):
++    def test_real_spawn_service_failure_is_explicit_and_bounded(self):
++        started = time.monotonic()
++        stage = gp.GPUStage(2, capacity=4)
++        names = [memory.name for memory in stage.memory]
++        pool = None
++        processes = []
++        result = None
++        error = None
++        dispatch_seconds = None
++        try:
++            cpus = tuple(sorted(os.sched_getaffinity(0)))
++            pool = mp.get_context('spawn').Pool(
++                2, initializer=gp.initialize,
++                initargs=stage.initargs(ROOT/'worker/source/lattice_prototype', cpus))
++            processes = list(pool._pool)
++            warmed = set()
++            while len(warmed) < 2:
++                self.assertLess(time.monotonic()-started, 4.)
++                rows = pool.map_async(gp.core.worker_identity, range(4), 1).get(timeout=2)
++                warmed.update(row[0] for row in rows)
++            with patch.object(gp.candidate, 'GPUCandidates', RaisingCPUBackend):
++                stage.start()
++            dispatch_started = time.monotonic()
++            try:
++                result = stage.dispatch(pool, [ARGUMENT])
++            except RuntimeError as exc:
++                error = str(exc)
++            dispatch_seconds = time.monotonic()-dispatch_started
++            self.assertIsNone(result, 'Service failure returned an admitted Task')
++            self.assertIsNotNone(error, 'Service failure was silently accepted')
++            self.assertIn('GPU preparation service failed', error)
++            self.assertLess(dispatch_seconds, 5.)
++            self.assertIsInstance(stage.error, RuntimeError)
++            self.assertEqual(str(stage.error), 'Injected CPU-only GPU service failure')
++            self.assertEqual(stage.gpu.calls, 1)
++            self.assertEqual(stage.metrics['accepted'], 0)
++            self.assertEqual(stage.metrics['fallbacks'], {})
++            self.assertTrue(all(event.is_set() for event in stage.events))
++        finally:
++            if pool is not None:
++                pool.terminate()
++                pool.join()
++            stage.close()
++        require_unlinked(self, names)
++        self.assertTrue(all(not process.is_alive() for process in processes))
++        self.assertFalse(stage.thread.is_alive())
++        self.assertTrue(stage.gpu.closed)
++        elapsed = time.monotonic()-started
++        self.assertLess(elapsed, 5., 'Startup, error propagation and cleanup exceeded bound')
++        RECORDS.append(dict(test='real_spawn_service_failure', status='passed',
++            segment=ARGUMENT, expected_error=error, injected_error=str(stage.error),
++            dispatch_seconds=dispatch_seconds, startup_dispatch_cleanup_seconds=elapsed,
++            returned_tasks=False, gpu_backend='raising CPU-only stub',
++            worker_pids=[process.pid for process in processes],
++            worker_exitcodes=[process.exitcode for process in processes],
++            workers_joined=True, service_thread_joined=True, backend_closed=True,
++            shared_memory_names=names, shared_memory_unlinked=True))
++
++    def check_worker_failure(self, change):
++        started = time.monotonic()
++        stage = gp.GPUStage(1, capacity=1)
++        names = [memory.name for memory in stage.memory]
++        controlled = ControlledPool(change)
++        result = None
++        error = None
++        try:
++            try:
++                result = stage.dispatch(controlled, [ARGUMENT])
++            except RuntimeError as exc:
++                error = str(exc)
++            self.assertIsNone(result)
++            self.assertEqual(error, 'Preparation worker died or was replaced')
++            self.assertEqual(controlled.pending.waits, 1)
++            self.assertIsNone(stage.gpu, 'Worker failure test created a GPU backend')
++        finally:
++            stage.close()
++        require_unlinked(self, names)
++        elapsed = time.monotonic()-started
++        self.assertLess(elapsed, 5.)
++        RECORDS.append(dict(test='controlled_worker_'+change, status='passed',
++            expected_error=error, startup_dispatch_cleanup_seconds=elapsed,
++            returned_tasks=False, gpu_backend_created=False,
++            shared_memory_names=names, shared_memory_unlinked=True))
++
++    def test_worker_pid_replacement_is_detected(self):
++        self.check_worker_failure('replacement')
++
++    def test_worker_death_is_detected(self):
++        self.check_worker_failure('death')
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--output', type=Path, default=ROOT/'evidence/service-failure.json')
++    args = parser.parse_args()
++    allowed = os.sched_getaffinity(0)
++    selected = allowed.intersection({4, 5})
++    if not selected:
++        selected = set(sorted(allowed)[:2])
++    os.sched_setaffinity(0, selected)
++    logs = io.StringIO()
++    suite = unittest.defaultTestLoader.loadTestsFromTestCase(FailureInjectionTests)
++    result = unittest.TextTestRunner(stream=logs, verbosity=2).run(suite)
++    report = dict(status='passed' if result.wasSuccessful() else 'failed', TEST_ONLY=True,
++        GPU_used=False, production_modified=False, production_restarted=False,
++        cpu_affinity=sorted(selected), tests_run=result.testsRun,
++        failures=len(result.failures), errors=len(result.errors), results=RECORDS,
++        command=[sys.executable, str(Path(__file__).resolve()), '--output', str(args.output)],
++        source_sha256={name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
++            for name in ('test_service_failure.py', 'gpu_preparation.py')},
++        unittest_log=logs.getvalue())
++    args.output.parent.mkdir(parents=True, exist_ok=True)
++    args.output.write_text(json.dumps(report, indent=2)+'\n')
++    print(logs.getvalue(), end='')
++    print(json.dumps(dict(status=report['status'], tests_run=result.testsRun,
++                         evidence=str(args.output))))
++    return 0 if result.wasSuccessful() else 1
++
++
++if __name__ == '__main__':
++    raise SystemExit(main())
+--- /dev/null
++++ b/experiments/gpu-preparation-20261110/trial_groups_baseline.py
+@@ -0,0 +1,116 @@
++"""Matched finite pipeline trial. TEST_ONLY; no production ledger writes."""
++import argparse,hashlib,json,multiprocessing as mp,os
++from pathlib import Path
++import resource,subprocess,sys,time
++import sys
++sys.path[:0]=[str(Path(__file__).resolve().parent/'worker'),str(Path(__file__).resolve().parent/'worker/source/lattice_gpu')]
++import buffered_pipeline as buffering
++import scheduling
++import adapter_runtime as adapter
++import audit_grouped
++from bounded_prefetch import BoundedPrefetch
++import coordinator_pipeline as pipeline
++import overnight_search as night
++import runtime_initialize
++import scaling_core as core
++import width_coverage as coverage
++ROOT=Path(__file__).resolve().parent;W=ROOT/'worker'
++VARIANTS={
++ 'baseline':dict(cache=False,journal='baseline'),
++ 'encode_once':dict(cache=False,journal='buffer',records=1,single_encode=True),
++ 'cache':dict(cache=True,journal='baseline'),
++ 'buffer8':dict(cache=False,journal='buffer',records=8,single_encode=False),
++ 'cache_buffer8':dict(cache=True,journal='buffer',records=8,single_encode=True),
++ 'cache_buffer32':dict(cache=True,journal='buffer',records=32,single_encode=True),
++ 'cache_async8':dict(cache=True,journal='async',records=8),
++ 'cache_ram':dict(cache=True,journal='ram')}
++
++def main():
++    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--variant',choices=VARIANTS,required=True)
++    parser.add_argument('--workers',type=int,choices=(4,8,16),default=16);parser.add_argument('--first',type=int,required=True)
++    parser.add_argument('--patches',type=int,default=32768);parser.add_argument('--group-limit',type=int,choices=(4,8,16),default=4)
++    parser.add_argument('--map-chunksize',type=int,choices=(1,2,4,8),default=4);parser.add_argument('--prep-windows',type=int,choices=(1,2,4),default=1)
++    parser.add_argument('--output',type=Path,required=True);args=parser.parse_args();opts=VARIANTS[args.variant]
++    assert 0<args.patches<=65536 and args.first+args.patches<=11250000001
++    args.output.mkdir(mode=0o700,parents=True,exist_ok=False);os.nice(19);cpus=tuple(sorted(os.sched_getaffinity(0))[:args.workers]);os.sched_setaffinity(0,set(cpus))
++    startup=time.monotonic();runtime_initialize.initialize(W/'source/lattice_prototype')
++    if opts['cache']:pipeline.validate_chunk=buffering.validate_cached
++    pool=mp.get_context('spawn').Pool(args.workers,initializer=runtime_initialize.initialize,initargs=(W/'source/lattice_prototype',cpus))
++    engine=journal=stream=None;started=None
++    try:
++        warmed={};until=time.monotonic()+15
++        while len(warmed)<args.workers:
++            assert time.monotonic()<until,'Pool did not warm'
++            warmed.update(pool.map(core.worker_identity,range(4*args.workers),1))
++        adapter.verify_workers(warmed,cpus)
++        engine=adapter.open_session(W/'bin/scaling_gpu','gpu',time.monotonic()+120)
++        trial='TEST_ONLY_'+args.output.name;whole=coverage.Window(100000000001,200000000000,args.first,args.first+args.patches,8,222,42,'adaptive',args.group_limit)
++        identity=dict(trial=trial,source_identity=hashlib.sha256((ROOT/'experiment-manifest.json').read_bytes()).hexdigest())
++        kind=opts['journal']
++        if kind=='baseline':journal=coverage.TrialJournal(args.output,identity,whole)
++        elif kind=='buffer':journal=buffering.BufferedJournal(args.output,identity,whole,records=opts['records'],single_encode=opts['single_encode'])
++        elif kind=='async':journal=buffering.AsyncJournal(args.output,identity,whole,records=opts['records'])
++        else:journal=buffering.MemoryJournal(identity,whole)
++        def windows():
++            for first in range(args.first,whole.last,256):
++                yield pipeline.Window(whole.lo,whole.hi,first,min(first+256,whole.last),8,222,42,'adaptive')
++        dispatch=scheduling.DispatchPool(pool,args.map_chunksize)
++        def prepare_many(windows):return scheduling.prepare_many(dispatch,windows,args.group_limit,opts['cache'])
++        stream=scheduling.ReadyQueue(windows(),prepare_many,batch=args.prep_windows,ready_limit=3,active_limit=1)
++        signatures=hashlib.sha256();hits=set();stages={};kernel=0.;audits=0;total_points=0;physical=0;commit_seconds=0.;peak_payload=0
++        accepted_chunks=0;max_pending=0;started=time.monotonic();startup_seconds=started-startup
++        with stream:
++            for chunk in stream:
++                if time.monotonic()-started>110:raise TimeoutError('Finite test exceeded resource deadline')
++                signatures.update(json.dumps(dict(patches=chunk.patches,geometry=chunk.geometry_sha256,certificate=chunk.plan.certificate_sha256,
++                     packets=[hashlib.sha256(batch.packet.encode()).hexdigest() for batch in chunk.plan.batches],specs=chunk.window.explicit_specs,spans=chunk.window.spans),sort_keys=True,separators=(',',':')).encode())
++                record=coverage.add_coverage(pipeline.execute_chunk(chunk,pipeline.OwnedEngine(engine),trial=trial,coordinator=0,timeout=20),chunk,args.group_limit)
++                record['independent_gmp_audited']=accepted_chunks%128==0
++                if record['independent_gmp_audited']:
++                    folder=args.output/'independent-audits';folder.mkdir(exist_ok=True)
++                    for index,(batch,receipt) in enumerate(zip(chunk.plan.batches,record['batches'])):
++                        done=subprocess.run([str(W/'bin/gmp_reference')],input=batch.packet,text=True,capture_output=True,check=True,timeout=20)
++                        ref=json.loads(done.stdout);pipeline.validate_response_types(ref)
++                        assert adapter.normalized_counts(batch,ref)==list(map(tuple,receipt['native_counts']))
++                        assert adapter.normalized_hits(batch,ref)==list(map(tuple,receipt['native_hit_records']))
++                        night.atomic_json(folder/f'{accepted_chunks+1:08d}-{index}.json',ref)
++                    audits+=1
++                began=time.monotonic();journal.commit(record);commit_seconds+=time.monotonic()-began
++                accepted_chunks+=1;max_pending=max(max_pending,accepted_chunks-journal.state['chunks'])
++                hits.update(map(tuple,record['hits']));total_points+=record['points'];physical+=len(record['patches']);peak_payload=max(peak_payload,chunk.payload_bytes)
++                for name,value in record['stages'].items():
++                    slot=stages.setdefault(name,dict(wall_seconds=0.,thread_cpu_seconds=0.))
++                    slot['wall_seconds']+=value['wall_seconds'];slot['thread_cpu_seconds']+=value['thread_cpu_seconds']
++                kernel+=sum(receipt['kernel_seconds'] or 0. for receipt in record['batches'])
++                stream.ack(chunk)
++        began=time.monotonic();journal.close();commit_seconds+=time.monotonic()-began
++        elapsed=time.monotonic()-started;state=dict(journal.state);snapshot=stream.snapshot()
++        assert state['next_patch']==whole.last and state['patches']==args.patches and state['points']==total_points and state['physical_tasks']==physical
++        maxrss=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
++        if kind!='ram':
++            captured=json.loads((args.output/'checkpoint.json').read_bytes());assert captured==state
++            audit=audit_grouped.audit_suffix(args.output,dict(checkpoint=dict(next_patch=args.first),config=dict(group_limit=args.group_limit,gmp_audit_period=128)),captured,'fresh',128)
++            with coverage.TrialJournal(args.output,identity,whole) as recovered:assert recovered.state==state
++            recovery=True
++        else:
++            previous='0'*64
++            for index,raw in enumerate(journal.data.splitlines(),1):
++                row=json.loads(raw);digest=row.pop('sha256');assert hashlib.sha256(audit_grouped.stable(row)).hexdigest()==digest
++                assert row['previous_sha256']==previous and row['sequence']==index;previous=digest
++            assert previous==state['journal_sha256'];audit=None;recovery=False
++        metrics=dict(flush_count=getattr(journal,'flush_count',None),peak_pending_bytes=getattr(journal,'peak_pending_bytes',None))
++        if kind=='async':metrics=dict(flush_count=journal.journal.flush_count,peak_pending_bytes=journal.journal.peak_pending_bytes,peak_queued_records=journal.peak_queued_records)
++        result=dict(status='passed',TEST_ONLY=True,variant=args.variant,workers=args.workers,first=args.first,patches=args.patches,group_limit=args.group_limit,
++              steady_seconds=elapsed,startup_seconds=startup_seconds,map_chunksize=args.map_chunksize,prep_windows=args.prep_windows,patches_per_second=args.patches/elapsed,points=total_points,physical_tasks=physical,
++              hits=sorted(hits),signatures_sha256=signatures.hexdigest(),kernel_seconds=kernel,stages=stages,commit_seconds=commit_seconds,
++              audit_count=audits,queue=snapshot,maximum_uncommitted_chunks=max_pending,peak_prepared_payload_bytes=peak_payload,
++              parent_maxrss_kib=maxrss,journal=metrics,journal_bytes=state['journal_offset'],recovery_passed=recovery,
++              durable=kind!='ram',durable_journal_closed_before_timing_end=kind!='ram',production_coverage=False)
++        (args.output/'result.json').write_text(json.dumps(result,indent=2)+'\n')
++        print(json.dumps({k:result[k] for k in ('status','variant','workers','steady_seconds','patches_per_second','maximum_uncommitted_chunks','durable')}),flush=True)
++    finally:
++        if stream:stream.close()
++        if journal:journal.close()
++        if engine:engine.close()
++        pool.terminate();pool.join()
++if __name__=='__main__':main()
+--- /dev/null
++++ b/experiments/gpu-preparation-20261110/trial_preparation.py
+@@ -0,0 +1,121 @@
++"""Matched finite pipeline trial. TEST_ONLY; no production ledger writes."""
++import argparse,hashlib,json,multiprocessing as mp,os
++from pathlib import Path
++import resource,subprocess,sys,time
++import sys
++sys.path[:0]=[str(Path(__file__).resolve().parent/'worker'),str(Path(__file__).resolve().parent/'worker/source/lattice_gpu')]
++import buffered_pipeline as buffering
++import scheduling
++import gpu_preparation as gp
++import adapter_runtime as adapter
++import audit_grouped
++from bounded_prefetch import BoundedPrefetch
++import coordinator_pipeline as pipeline
++import overnight_search as night
++import runtime_initialize
++import scaling_core as core
++import width_coverage as coverage
++ROOT=Path(__file__).resolve().parent;W=ROOT/'worker'
++VARIANTS={
++ 'baseline':dict(cache=False,journal='baseline'),
++ 'encode_once':dict(cache=False,journal='buffer',records=1,single_encode=True),
++ 'cache':dict(cache=True,journal='baseline'),
++ 'buffer8':dict(cache=False,journal='buffer',records=8,single_encode=False),
++ 'cache_buffer8':dict(cache=True,journal='buffer',records=8,single_encode=True),
++ 'cache_buffer32':dict(cache=True,journal='buffer',records=32,single_encode=True),
++ 'cache_async8':dict(cache=True,journal='async',records=8),
++ 'cache_ram':dict(cache=True,journal='ram')}
++
++def main():
++    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--variant',choices=VARIANTS,required=True)
++    parser.add_argument('--workers',type=int,choices=(4,8,16),default=16);parser.add_argument('--first',type=int,required=True)
++    parser.add_argument('--patches',type=int,default=32768);parser.add_argument('--group-limit',type=int,choices=(4,8,16),default=4)
++    parser.add_argument('--map-chunksize',type=int,choices=(1,2,4,8),default=4);parser.add_argument('--prep-windows',type=int,choices=(1,2,4),default=1)
++    parser.add_argument('--quality-gate',choices=('exact-lll','native-bounds'),default='native-bounds');parser.add_argument('--preparation-backend',choices=('cpu','gpu'),default='cpu');parser.add_argument('--window-batch',type=int,choices=(1,4,16,32),default=1)
++    parser.add_argument('--output',type=Path,required=True);args=parser.parse_args();opts=VARIANTS[args.variant]
++    assert 0<args.patches<=65536 and args.first+args.patches<=11250000001
++    args.output.mkdir(mode=0o700,parents=True,exist_ok=False);os.nice(19);cpus=tuple(sorted(os.sched_getaffinity(0))[:args.workers]);os.sched_setaffinity(0,set(cpus))
++    startup=time.monotonic();runtime_initialize.initialize(W/'source/lattice_prototype')
++    if opts['cache']:pipeline.validate_chunk=buffering.validate_cached
++    stage=gp.GPUStage(args.workers,require_lll=args.quality_gate=='exact-lll') if args.preparation_backend=='gpu' else None
++    pool=mp.get_context('spawn').Pool(args.workers,initializer=gp.initialize if stage else runtime_initialize.initialize,initargs=stage.initargs(W/'source/lattice_prototype',cpus) if stage else (W/'source/lattice_prototype',cpus))
++    engine=journal=stream=None;started=None
++    try:
++        warmed={};until=time.monotonic()+15
++        while len(warmed)<args.workers:
++            assert time.monotonic()<until,'Pool did not warm'
++            warmed.update(pool.map(core.worker_identity,range(4*args.workers),1))
++        adapter.verify_workers(warmed,cpus)
++        if stage:stage.start()
++        engine=adapter.open_session(W/'bin/scaling_gpu','gpu',time.monotonic()+120)
++        trial='TEST_ONLY_'+args.output.name;whole=coverage.Window(100000000001,200000000000,args.first,args.first+args.patches,8,222,42,'adaptive',args.group_limit)
++        identity=dict(trial=trial,source_identity=hashlib.sha256((ROOT/'experiment-manifest.json').read_bytes()).hexdigest())
++        kind=opts['journal']
++        if kind=='baseline':journal=coverage.TrialJournal(args.output,identity,whole)
++        elif kind=='buffer':journal=buffering.BufferedJournal(args.output,identity,whole,records=opts['records'],single_encode=opts['single_encode'])
++        elif kind=='async':journal=buffering.AsyncJournal(args.output,identity,whole,records=opts['records'])
++        else:journal=buffering.MemoryJournal(identity,whole)
++        def windows():
++            for first in range(args.first,whole.last,256):
++                yield pipeline.Window(whole.lo,whole.hi,first,min(first+256,whole.last),8,222,42,'adaptive')
++        dispatch=gp.GPUPool(pool,stage,args.map_chunksize) if stage else scheduling.DispatchPool(pool,args.map_chunksize)
++        def prepare_many(windows):return scheduling.prepare_many(dispatch,windows,args.group_limit,opts['cache'])
++        stream=gp.BulkStream(windows(),prepare_many,args.window_batch)
++        signatures=hashlib.sha256();hits=set();stages={};kernel=0.;audits=0;total_points=0;physical=0;commit_seconds=0.;peak_payload=0
++        accepted_chunks=0;max_pending=0;started=time.monotonic();startup_seconds=started-startup
++        with stream:
++            for chunk in stream:
++                if time.monotonic()-started>110:raise TimeoutError('Finite test exceeded resource deadline')
++                signatures.update(json.dumps(dict(patches=chunk.patches,geometry=chunk.geometry_sha256,certificate=chunk.plan.certificate_sha256,
++                     packets=[hashlib.sha256(batch.packet.encode()).hexdigest() for batch in chunk.plan.batches],specs=chunk.window.explicit_specs,spans=chunk.window.spans),sort_keys=True,separators=(',',':')).encode())
++                record=coverage.add_coverage(pipeline.execute_chunk(chunk,pipeline.OwnedEngine(engine),trial=trial,coordinator=0,timeout=20),chunk,args.group_limit)
++                record['independent_gmp_audited']=accepted_chunks%128==0
++                if record['independent_gmp_audited']:
++                    folder=args.output/'independent-audits';folder.mkdir(exist_ok=True)
++                    for index,(batch,receipt) in enumerate(zip(chunk.plan.batches,record['batches'])):
++                        done=subprocess.run([str(W/'bin/gmp_reference')],input=batch.packet,text=True,capture_output=True,check=True,timeout=20)
++                        ref=json.loads(done.stdout);pipeline.validate_response_types(ref)
++                        assert adapter.normalized_counts(batch,ref)==list(map(tuple,receipt['native_counts']))
++                        assert adapter.normalized_hits(batch,ref)==list(map(tuple,receipt['native_hit_records']))
++                        night.atomic_json(folder/f'{accepted_chunks+1:08d}-{index}.json',ref)
++                    audits+=1
++                began=time.monotonic();journal.commit(record);commit_seconds+=time.monotonic()-began
++                accepted_chunks+=1;max_pending=max(max_pending,accepted_chunks-journal.state['chunks'])
++                hits.update(map(tuple,record['hits']));total_points+=record['points'];physical+=len(record['patches']);peak_payload=max(peak_payload,chunk.payload_bytes)
++                for name,value in record['stages'].items():
++                    slot=stages.setdefault(name,dict(wall_seconds=0.,thread_cpu_seconds=0.))
++                    slot['wall_seconds']+=value['wall_seconds'];slot['thread_cpu_seconds']+=value['thread_cpu_seconds']
++                kernel+=sum(receipt['kernel_seconds'] or 0. for receipt in record['batches'])
++                stream.ack(chunk)
++        began=time.monotonic();journal.close();commit_seconds+=time.monotonic()-began
++        elapsed=time.monotonic()-started;state=dict(journal.state);snapshot=stream.snapshot()
++        assert state['next_patch']==whole.last and state['patches']==args.patches and state['points']==total_points and state['physical_tasks']==physical
++        maxrss=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
++        if kind!='ram':
++            captured=json.loads((args.output/'checkpoint.json').read_bytes());assert captured==state
++            audit=audit_grouped.audit_suffix(args.output,dict(checkpoint=dict(next_patch=args.first),config=dict(group_limit=args.group_limit,gmp_audit_period=128)),captured,'fresh',128)
++            with coverage.TrialJournal(args.output,identity,whole) as recovered:assert recovered.state==state
++            recovery=True
++        else:
++            previous='0'*64
++            for index,raw in enumerate(journal.data.splitlines(),1):
++                row=json.loads(raw);digest=row.pop('sha256');assert hashlib.sha256(audit_grouped.stable(row)).hexdigest()==digest
++                assert row['previous_sha256']==previous and row['sequence']==index;previous=digest
++            assert previous==state['journal_sha256'];audit=None;recovery=False
++        metrics=dict(flush_count=getattr(journal,'flush_count',None),peak_pending_bytes=getattr(journal,'peak_pending_bytes',None))
++        if kind=='async':metrics=dict(flush_count=journal.journal.flush_count,peak_pending_bytes=journal.journal.peak_pending_bytes,peak_queued_records=journal.peak_queued_records)
++        result=dict(status='passed',TEST_ONLY=True,variant=args.variant,workers=args.workers,first=args.first,patches=args.patches,group_limit=args.group_limit,
++              quality_gate=args.quality_gate,preparation_backend=args.preparation_backend,preparation_window_batch=args.window_batch,gpu_preparation_metrics=stage.metrics if stage else None,steady_seconds=elapsed,startup_seconds=startup_seconds,map_chunksize=args.map_chunksize,prep_windows=args.prep_windows,patches_per_second=args.patches/elapsed,points=total_points,physical_tasks=physical,
++              hits=sorted(hits),signatures_sha256=signatures.hexdigest(),kernel_seconds=kernel,stages=stages,commit_seconds=commit_seconds,
++              audit_count=audits,queue=snapshot,maximum_uncommitted_chunks=max_pending,peak_prepared_payload_bytes=peak_payload,
++              parent_maxrss_kib=maxrss,journal=metrics,journal_bytes=state['journal_offset'],recovery_passed=recovery,
++              durable=kind!='ram',durable_journal_closed_before_timing_end=kind!='ram',production_coverage=False)
++        (args.output/'result.json').write_text(json.dumps(result,indent=2)+'\n')
++        print(json.dumps({k:result[k] for k in ('status','variant','workers','steady_seconds','patches_per_second','maximum_uncommitted_chunks','durable')}),flush=True)
++    finally:
++        if stream:stream.close()
++        if journal:journal.close()
++        if engine:engine.close()
++        pool.terminate();pool.join()
++        if stage:stage.close()
++if __name__=='__main__':main()

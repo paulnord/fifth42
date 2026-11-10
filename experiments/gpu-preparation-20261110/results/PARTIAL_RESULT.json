@@ -1,0 +1,174 @@
+{
+  "status": "passed",
+  "logical_cells": 2573,
+  "original_windows": 11,
+  "last_window_cells": 13,
+  "preparation_batch_windows": 16,
+  "final_buffered_journal_records": 3,
+  "correctness": "Both modes: exact certificates, first-window GMP audit, closed durable journal audit+recovery; hit sets equal",
+  "cpu_result": {
+    "status": "passed",
+    "TEST_ONLY": true,
+    "variant": "cache_buffer8",
+    "workers": 16,
+    "first": 2572492928,
+    "patches": 2573,
+    "group_limit": 8,
+    "quality_gate": "native-bounds",
+    "preparation_backend": "cpu",
+    "preparation_window_batch": 16,
+    "gpu_preparation_metrics": null,
+    "steady_seconds": 0.2566854980541393,
+    "startup_seconds": 0.7582718279445544,
+    "map_chunksize": 2,
+    "prep_windows": 1,
+    "patches_per_second": 10023.939877808409,
+    "points": 72921074,
+    "physical_tasks": 322,
+    "hits": [],
+    "signatures_sha256": "ebbf817c9d63227380c28f347efbdf88984fd162dfd8d7c5ae524c5038b5b31d",
+    "kernel_seconds": 0.004499232,
+    "stages": {
+      "prepared_plan_consistency": {
+        "wall_seconds": 0.0031774650560691953,
+        "thread_cpu_seconds": 0.0031704730000000347
+      },
+      "engine_rpc": {
+        "wall_seconds": 0.0067778019001707435,
+        "thread_cpu_seconds": 0.0007910769999999734
+      },
+      "exact_output_verification": {
+        "wall_seconds": 0.0004757618880830705,
+        "thread_cpu_seconds": 0.000477988000000068
+      }
+    },
+    "commit_seconds": 0.010048578958958387,
+    "audit_count": 1,
+    "queue": {
+      "ready": 0,
+      "inflight": 0,
+      "active": 0,
+      "outstanding": 0,
+      "peak_outstanding": 1,
+      "peak_ready": 1,
+      "ready_limit": 1,
+      "reserved_bytes": 0,
+      "peak_reserved_bytes": 12582912,
+      "max_outstanding": 3,
+      "consumer_wait_empty_seconds": 0.051295732031576335,
+      "producer_wait_full_seconds": 3.7370482459664345e-06,
+      "producer_wait_capacity_seconds": 5.541020072996616e-06,
+      "ready_depth_seconds": {
+        "0": 0.256633338984102,
+        "1": 5.342101212590933e-05
+      },
+      "mean_ready_depth": 0.00020811490530767954,
+      "elapsed_seconds": 0.25668998598121107,
+      "preparation_batches": 1,
+      "prepare_wall_seconds": 0.05169819598086178,
+      "maximum_prepared_payload_bytes": 2408616,
+      "preparation_batch_windows": 16,
+      "queue_units": "bounded preparation batches; native requests and journals stay 256 logical cells"
+    },
+    "maximum_uncommitted_chunks": 7,
+    "peak_prepared_payload_bytes": 240043,
+    "parent_maxrss_kib": 66376,
+    "journal": {
+      "flush_count": 2,
+      "peak_pending_bytes": 80315
+    },
+    "journal_bytes": 102598,
+    "recovery_passed": true,
+    "durable": true,
+    "durable_journal_closed_before_timing_end": true,
+    "production_coverage": false
+  },
+  "gpu_result": {
+    "status": "passed",
+    "TEST_ONLY": true,
+    "variant": "cache_buffer8",
+    "workers": 16,
+    "first": 2572492928,
+    "patches": 2573,
+    "group_limit": 8,
+    "quality_gate": "native-bounds",
+    "preparation_backend": "gpu",
+    "preparation_window_batch": 16,
+    "gpu_preparation_metrics": {
+      "gpu_batches": 1,
+      "gpu_proposals": 322,
+      "kernel_ms": 8.474623680114746,
+      "cuda_transfer_and_kernel_ms": 8.603832,
+      "accepted": 322,
+      "fallbacks": {},
+      "worker_geometry_seconds": 0.027658638020511717,
+      "worker_wait_seconds": 0.20345728803658858,
+      "worker_certify_seconds": 0.20380592852598056,
+      "worker_cpu_seconds": 0.2368761130000001
+    },
+    "steady_seconds": 0.2372037690365687,
+    "startup_seconds": 0.6841411310015246,
+    "map_chunksize": 2,
+    "prep_windows": 1,
+    "patches_per_second": 10847.213813045826,
+    "points": 72910094,
+    "physical_tasks": 322,
+    "hits": [],
+    "signatures_sha256": "abaa2feac642355435ef746c53103a6620b30b4844fc4f8b5c7f763a1970be5a",
+    "kernel_seconds": 0.0044212800000000005,
+    "stages": {
+      "prepared_plan_consistency": {
+        "wall_seconds": 0.0027039440465159714,
+        "thread_cpu_seconds": 0.002698012999999999
+      },
+      "engine_rpc": {
+        "wall_seconds": 0.006016265018843114,
+        "thread_cpu_seconds": 0.0005723229999999857
+      },
+      "exact_output_verification": {
+        "wall_seconds": 0.00033734116004779935,
+        "thread_cpu_seconds": 0.0003388169999997692
+      }
+    },
+    "commit_seconds": 0.008950533927418292,
+    "audit_count": 1,
+    "queue": {
+      "ready": 0,
+      "inflight": 0,
+      "active": 0,
+      "outstanding": 0,
+      "peak_outstanding": 1,
+      "peak_ready": 1,
+      "ready_limit": 1,
+      "reserved_bytes": 0,
+      "peak_reserved_bytes": 12582912,
+      "max_outstanding": 3,
+      "consumer_wait_empty_seconds": 0.054802819911856204,
+      "producer_wait_full_seconds": 1.9529834389686584e-06,
+      "producer_wait_capacity_seconds": 4.488043487071991e-06,
+      "ready_depth_seconds": {
+        "0": 0.23716221092035994,
+        "1": 4.113704198971391e-05
+      },
+      "mean_ready_depth": 0.00017342397143706265,
+      "elapsed_seconds": 0.23720505100209266,
+      "preparation_batches": 1,
+      "prepare_wall_seconds": 0.05503244197461754,
+      "maximum_prepared_payload_bytes": 2408608,
+      "preparation_batch_windows": 16,
+      "queue_units": "bounded preparation batches; native requests and journals stay 256 logical cells"
+    },
+    "maximum_uncommitted_chunks": 7,
+    "peak_prepared_payload_bytes": 240043,
+    "parent_maxrss_kib": 243040,
+    "journal": {
+      "flush_count": 2,
+      "peak_pending_bytes": 80313
+    },
+    "journal_bytes": 102598,
+    "recovery_passed": true,
+    "durable": true,
+    "durable_journal_closed_before_timing_end": true,
+    "production_coverage": false
+  }
+}
