@@ -1,5 +1,5 @@
 // cuPQC-BigInt 0.6.0 division-free root preparation.
-// NOT compiled or GPU-validated by Dot; implemented against official API docs.
+// Compile/link validated; GPU arithmetic still unvalidated.
 // No production integration. Protocol is explicitly little-endian, without padding.
 #include <cuda_runtime.h>
 #include <cstdint>
