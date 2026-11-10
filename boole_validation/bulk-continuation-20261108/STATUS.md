@@ -1,20 +1,20 @@
 # Boole combined search
 
-Updated: 2026-11-10T22:15:31.306435+00:00
+Updated: 2026-11-10T22:30:30.427887+00:00
 
 State: **running**. Run **boole-preparation-20261110-08-r1**; gpu with 16 preparation workers.
-Verified replicated cursor: **7,512,002,048**.
-New replicated logical patches: **2,048** in 8 chunks.
-Combined verified selected patches, including parents: **2,048**.
-Fresh interval: `[7512000000, 7576000000]`; replicated: `[7512000000, 7512002048]`.
-Local cursor: 7,512,038,912; physical tasks group up to 4 original width-8 cells.
+Verified replicated cursor: **7,521,236,480**.
+New replicated logical patches: **9,236,480** in 36,080 chunks.
+Combined verified selected patches, including parents: **9,236,480**.
+Fresh interval: `[7512000000, 7576000000]`; replicated: `[7512000000, 7521236480]`.
+Local cursor: 7,521,988,352; physical tasks group up to 4 original width-8 cells.
 Saved-root reuse, exact host optimizations, low64 filtering and an immutable canonical task cache are enabled.
 Journal records remain separate 256-cell receipts, with up to eight buffered before a durable checkpoint.
-Dispatch chunksize: 4; ready queue: None; buffer: {'flush_count': 0, 'flush_seconds': 0.0, 'pending_bytes': 0, 'pending_chunks': 0}.
+Dispatch chunksize: 4; ready queue: {'active': 1, 'consumer_wait_empty_seconds': 0.1586985590402037, 'elapsed_seconds': 894.2371426399914, 'inflight': 1, 'max_outstanding': 3, 'maximum_prepared_payload_bytes': 7680918, 'mean_ready_depth': 0.9985112149897174, 'outstanding': 3, 'peak_outstanding': 3, 'peak_ready': 1, 'peak_reserved_bytes': 37748736, 'preparation_batch_windows': 16, 'preparation_batches': 2410, 'prepare_wall_seconds': 892.9239040552638, 'producer_wait_capacity_seconds': 0.0030277082696557045, 'producer_wait_full_seconds': 459.2758021407644, 'queue_units': 'bounded preparation batches; original execution/journal windows preserved', 'ready': 1, 'ready_depth_seconds': {'0': 1.3313246736070141, '1': 892.905815786391}, 'ready_limit': 1, 'reserved_bytes': 37748736}; buffer: {'flush_count': 4827, 'flush_seconds': 31.192237285373267, 'pending_bytes': 114136, 'pending_chunks': 6}.
 
 Journal storage: **local durable journal, verified bulk copy every minute**. New journal cap: **32 GiB**;
 free-space reserve: 16 GiB.
-Observed rate: **0 patches/s**; new independent GMP audits: 0.
+Observed rate: **11,028 patches/s**; new independent GMP audits: 302.
 Deadline: **2026-11-11T17:00:00-06:00**. Independent worker/deadline services on Boole; separate publisher on Ada.
 GitHub updates every **15 minutes**, plus startup/terminal transitions. Alerts: None reported.
 
