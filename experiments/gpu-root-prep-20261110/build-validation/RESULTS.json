@@ -1,0 +1,33 @@
+{
+  "toolchain": {
+    "nvcc": "13.2.78",
+    "runtime": "13.2.75",
+    "nvvm": "13.2.78",
+    "crt": "13.2.78",
+    "host": "g++14.2.0",
+    "arch": "sm_86"
+  },
+  "compile_link": {
+    "CGBN": [
+      4,
+      8,
+      16,
+      32
+    ],
+    "cuPQC": [
+      4,
+      8,
+      16,
+      32
+    ]
+  },
+  "gpu_execution": false,
+  "production_changes": false,
+  "cpu_exact_cases": 41200,
+  "malformed_host_cases_per_backend": 8,
+  "sources": {
+    "root_cuda.cu": "dc39bdf1f90d19fa2c6d1a908272c9f997c137bd570ec88ecefe68562da5e77f",
+    "root_cupqc.cu": "0668f0ff75d293b366d52f07c2e124a84d55ba81b67ee8077912166e351d9b4e",
+    "stage_cuda.py": "2c944d6d91d301d0df4d4790290510ab6ca065177b52947649c073b03ab43caf"
+  }
+}
