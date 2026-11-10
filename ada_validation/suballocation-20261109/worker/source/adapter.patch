@@ -1,0 +1,275 @@
+--- author/coordinator_benchmark.py
++++ scratch/coordinator_benchmark.py
+@@ -1,10 +1,5 @@
+ #!/usr/bin/env python3
+-"""Bounded CPU-local coordinator experiment; no CUDA or production launcher.
+-
+-Use only a separate scratch checkout. This does not acquire ADA production
+-leases; do not run on ADA until production/publisher have exited and the normal
+-resource guard has granted leases. All modes prepare and certify fresh geometry.
+-"""
++"""Bounded scratch CPU/CUDA adapter; requires external ADA guard and leases."""
+ import argparse
+ from contextlib import nullcontext
+ import hashlib
+@@ -20,6 +15,7 @@
+ import coordinator_pipeline as pipeline
+ from bounded_prefetch import BoundedPrefetch
+ from engine_session import EngineSession
++from adapter_runtime import open_session, verify_workers, normalized_counts, normalized_hits
+ import overnight_search as night
+ import scaling_core as core
+ 
+@@ -66,12 +62,12 @@
+     try:
+         bounded_pool = DeadlinePool(pool, deadline)
+         # Warm imports/LLL once per spawned worker. Startup is reported separately.
+-        warmed = set()
++        warmed = {}
+         while len(warmed) < args.workers:
+-            warmed.update(row[0] for row in bounded_pool.map(core.worker_identity, range(args.workers * 4), 1))
++            warmed.update(bounded_pool.map(core.worker_identity, range(args.workers * 4), 1))
++        verify_workers(warmed, cpus)
+         if not args.host_only:
+-            session = EngineSession([str(args.engine), '--threads', str(args.engine_threads)],
+-                                    'emulated', deadline)
++            session = open_session(args.engine, args.backend, deadline, args.engine_threads)
+         engine = pipeline.OwnedEngine(session) if session else None
+         work = chunks(window, args.chunk_patches)
+         pipeline.verify_partition(window, work)
+@@ -121,7 +117,7 @@
+                     record = dict(hits=None, stages={}, complete=False)
+                 rows.append(dict(window=chunk.window.identity(), points=chunk.plan.points,
+                                  preparation_stages=chunk.stages, worker_seconds=chunk.worker_seconds,
+-                                 consumption_stages=record['stages'], hits=record['hits']))
++                                 consumption_stages=record['stages'], hits=record['hits'], native_batches=record.get('batches',[])))
+         steady = time.perf_counter() - steady_started
+         coordinator_cpu = time.process_time() - cpu_started
+         queue = stream.snapshot() if mode == 'prefetch' else None
+@@ -135,7 +131,7 @@
+         shutdown = time.perf_counter() - shutdown_started
+         point_count = sum(row['points'] for row in rows)
+         result = dict(mode=mode, repeat=repeat, trial=trial_id, window=window.identity(),
+-                      status='prepared_only' if args.host_only else 'exact_cpu_verified',
++                      status='prepared_only' if args.host_only else 'exact_'+args.backend+'_verified', backend=args.backend,
+                       no_full_box_claim=True, total_seconds=time.perf_counter()-started,
+                       startup_seconds=startup, steady_seconds=steady, shutdown_seconds=shutdown,
+                       coordinator_process_cpu_seconds=coordinator_cpu, warmed_workers=len(warmed),
+@@ -156,6 +152,7 @@
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('--source', type=Path, default=ROOT.parent/'lattice_prototype')
++    parser.add_argument('--backend', choices=('emulated','gpu'), default='emulated')
+     parser.add_argument('--engine', type=Path, default=ROOT/'bin/scaling_cpu')
+     parser.add_argument('--output', type=Path, required=True)
+     parser.add_argument('--lo', type=int, default=4096)
+@@ -193,11 +190,11 @@
+     os.sched_setaffinity(0, set(cpus))
+     night.initialize(source)
+     fingerprint = source_identity(source, args.engine)
+-    config = dict(source_identity=fingerprint, cpus=cpus, workers=args.workers,
++    config = dict(source_identity=fingerprint, backend=args.backend, cpus=cpus, workers=args.workers,
+                   engine_threads=args.engine_threads, ready_chunks=args.ready_chunks,
+                   max_total_outstanding_chunks=args.ready_chunks+1, chunk_patches=args.chunk_patches,
+                   map_chunksize=args.map_chunksize, repeats=args.repeats,
+-                  host_only=args.host_only, physical_core_topology_verified=False,
++                  host_only=args.host_only, physical_core_topology_verified=len({(Path(f'/sys/devices/system/cpu/cpu{c}/topology/physical_package_id').read_text().strip(), Path(f'/sys/devices/system/cpu/cpu{c}/topology/core_id').read_text().strip()) for c in cpus})==len(cpus),
+                   allocation='All workers, coordinator and CPU engine share this affinity set; not an ADA 16-physical-core comparison')
+     night.atomic_json(args.output/'config.json', config)
+     results = []
+--- author/coordinator_batch_sweep.py
++++ scratch/coordinator_batch_sweep.py
+@@ -1,11 +1,5 @@
+ #!/usr/bin/env python3
+-"""CPU-local fixed-work packet-size sweep; no GPU or production launcher.
+-
+-All tasks are freshly prepared for each trial. Checkpoints still commit at the
+-original 256-patch boundaries, after every routed response is exactly decoded.
+-The native engine generates coefficients from task descriptors; this does not
+-materialize a huge coefficient vector on the CPU.
+-"""
++"""Bounded scratch CPU/CUDA adapter; requires external ADA guard and leases."""
+ import argparse
+ import hashlib
+ import json
+@@ -19,6 +13,7 @@
+ import coordinator_batching as batching
+ import coordinator_pipeline as pipeline
+ from engine_session import EngineSession
++from adapter_runtime import open_session, verify_workers, normalized_counts, normalized_hits
+ import overnight_search as night
+ import scaling_core as core
+ 
+@@ -54,13 +49,15 @@
+                 window=chunks[chunk_index].window.identity(),batch=len(record['batches']),
+                 packet_sha256=packet_hash,native_batch=native_batch_id,native_request_id=response.get('request_id'),
+                 native_task_ids=locals_),points=subbatch.points,patch_ids=[t.id for t in subbatch.tasks],
+-                response_sha256=response_hash))
++                response_sha256=response_hash, backend=engine.backend,
++                native_counts=normalized_counts(batch,response,locals_),
++                native_hit_records=normalized_hits(batch,response,locals_)))
+         timings['exact_decode_seconds'] += time.perf_counter()-began
+         timings['rpc_seconds'] += rpc_seconds
+         timings['engine_seconds'] += response.get('engine_seconds',0.)
+         timings['packets'].append(dict(tasks=len(batch.tasks),points=batch.points,packet_bytes=len(batch.packet.encode()),
+                                        rpc_seconds=rpc_seconds,engine_seconds=response.get('engine_seconds'),
+-                                       kernel_seconds=None,transfer_seconds=None))
++                                       kernel_seconds=response.get('kernel_seconds') if engine.backend=='gpu' else None,transfer_seconds=None))
+     for record in records:
+         record['hits']=sorted(record['hits'])
+     return records,timings
+@@ -73,10 +70,11 @@
+     session=None
+     try:
+         bounded=benchmark.DeadlinePool(pool,deadline)
+-        warmed=set()
++        warmed={}
+         while len(warmed)<args.workers:
+-            warmed.update(row[0] for row in bounded.map(core.worker_identity,range(args.workers*4),1))
+-        session=EngineSession([str(args.engine),'--threads','1'],'emulated',deadline)
++            warmed.update(bounded.map(core.worker_identity,range(args.workers*4),1))
++        verify_workers(warmed,args.cpus)
++        session=open_session(args.engine,args.backend,deadline,1)
+         trial=f'batch-{max_tasks}-{repeat}-{uuid.uuid4().hex}'
+         startup=time.perf_counter()-started;begin=time.perf_counter()
+         chunks=tuple(pipeline.prepare_chunk(bounded,window,'packed') for window in benchmark.chunks(args.window,256))
+@@ -95,15 +93,17 @@
+         commit=time.perf_counter()-commit_start
+         end_to_end=time.perf_counter()-begin
+         signature=[dict(window=c.window.identity(),patches=c.patches,geometry_sha256=c.geometry_sha256,
+-                        certificate_sha256=c.plan.certificate_sha256,hits=r['hits']) for c,r in zip(chunks,records)]
++                        certificate_sha256=c.plan.certificate_sha256,hits=r['hits'],
++                        native_counts=sorted(v for b in r['batches'] for v in b['native_counts']),
++                        native_hit_records=sorted(v for b in r['batches'] for v in b['native_hit_records'])) for c,r in zip(chunks,records)]
+         shutdown_start=time.perf_counter();session.close();session=None;pool.close();pool.join()
+-        return dict(max_packet_tasks=max_tasks,repeat=repeat,trial=trial,status='exact_cpu_verified',
++        return dict(max_packet_tasks=max_tasks,repeat=repeat,trial=trial,status='exact_'+args.backend+'_verified',backend=args.backend,
+                     source_identity=args.fingerprint,patches=args.window.last-args.window.first,points=plan.points,
+                     original_checkpoint_chunk_patches=256,checkpoint_commits=len(chunks),
+                     serialized_payload_bytes=payload,startup_seconds=startup,preparation_seconds=preparation,
+                     aggregation_seconds=aggregate,commit_seconds=commit,end_to_end_seconds=end_to_end,
+                     shutdown_seconds=time.perf_counter()-shutdown_start,total_seconds=time.perf_counter()-started,
+-                    timings=timings,signatures=signature,gpu_measured=False,transfer_seconds=None,
++                    timings=timings,signatures=signature,gpu_measured=args.backend=='gpu',transfer_seconds=None,
+                     no_full_box_claim=True)
+     finally:
+         if session:session.close()
+@@ -114,6 +114,7 @@
+     parser=argparse.ArgumentParser(description=__doc__)
+     root=Path(__file__).resolve().parents[1]
+     parser.add_argument('--source',type=Path,default=root/'lattice_prototype')
++    parser.add_argument('--backend', choices=('emulated','gpu'), default='emulated')
+     parser.add_argument('--engine',type=Path,required=True)
+     parser.add_argument('--output',type=Path,required=True)
+     parser.add_argument('--workers',type=int,default=4)
+@@ -140,7 +141,7 @@
+                 end_to_end_seconds=result['end_to_end_seconds'],rpc_seconds=result['timings']['rpc_seconds'])),flush=True)
+     night.atomic_json(args.output/'summary.json',dict(status='passed',window=args.window.identity(),cpus=args.cpus,
+         workers=args.workers,repeats=args.repeats,trials=trials,exact_union_certificates_geometry_hits_equal=True,
+-        cuda_executed=False,transfer_measurement='Unavailable in CPU-only environment',no_full_box_claim=True))
++        cuda_executed=args.backend=='gpu',backend=args.backend,transfer_measurement='Not separately instrumented',no_full_box_claim=True))
+ 
+ 
+ if __name__=='__main__':main()
+--- author/host_optimization_benchmark.py
++++ scratch/host_optimization_benchmark.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Scratch-only fresh exact arithmetic/width trials. Never uses ADA or CUDA."""
++"""Bounded scratch CPU/CUDA adapter; requires external ADA guard and leases."""
+ import argparse
+ import hashlib
+ import json
+@@ -15,6 +15,7 @@
+ import coordinator_packing
+ import coordinator_pipeline as pipeline
+ from engine_session import EngineSession
++from adapter_runtime import open_session, verify_workers, normalized_counts, normalized_hits
+ import exact_host_opt
+ import overnight_search as night
+ import scaling_core as core
+@@ -44,10 +45,11 @@
+                                                   initargs=(args.source,args.cpus,mode))
+     session=None
+     try:
+-        limited=helpers.DeadlinePool(pool,deadline);warmed=set()
++        limited=helpers.DeadlinePool(pool,deadline);warmed={}
+         while len(warmed)<args.workers:
+-            warmed.update(row[0] for row in limited.map(core.worker_identity,range(args.workers*4),1))
+-        session=EngineSession([str(args.engine),'--threads','1'],'emulated',deadline)
++            warmed.update(limited.map(core.worker_identity,range(args.workers*4),1))
++        verify_workers(warmed,args.cpus)
++        session=open_session(args.engine,args.backend,deadline,1)
+         engine=pipeline.OwnedEngine(session)
+         name=f'{mode}-'+(f'w{width}-' if width else '')+f'{repeat}-{uuid.uuid4().hex}'
+         startup=time.perf_counter()-began;started=time.perf_counter();cpu_started=time.process_time()
+@@ -84,12 +86,12 @@
+             committed=False
+         seconds=time.perf_counter()-started;coordinator_cpu=time.process_time()-cpu_started
+         shutdown_start=time.perf_counter();session.close();session=None;pool.close();pool.join()
+-        return dict(mode=mode,width=width,repeat=repeat,trial=name,status='exact_cpu_verified',
++        return dict(mode=mode,width=width,repeat=repeat,trial=name,status='exact_'+args.backend+'_verified',backend=args.backend,
+                     steady_seconds=seconds,startup_seconds=startup,shutdown_seconds=time.perf_counter()-shutdown_start,
+                     total_seconds=time.perf_counter()-began,coordinator_cpu_seconds=coordinator_cpu,
+                     workers=args.workers,warmed_workers=len(warmed),cpus=args.cpus,
+                     points=points,patches=patches,hits=sorted(hits),signatures=signatures,rows=rows,
+-                    durable_commits_included=committed,cuda_executed=False,no_full_box_claim=True)
++                    durable_commits_included=committed,cuda_executed=args.backend=='gpu',no_full_box_claim=True)
+     finally:
+         if session:session.close()
+         pool.terminate();pool.join()
+@@ -99,11 +101,13 @@
+     if sys.flags.optimize:raise SystemExit('Exact checks require ordinary Python')
+     parser=argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('--source',type=Path,default=ROOT.parent/'lattice_prototype')
++    parser.add_argument('--backend', choices=('emulated','gpu'), default='emulated')
+     parser.add_argument('--engine',type=Path,required=True)
+     parser.add_argument('--output',type=Path,required=True)
+     parser.add_argument('--workers',type=int,default=4)
+     parser.add_argument('--repeats',type=int,default=5)
+     parser.add_argument('--width-sweep',action='store_true')
++    parser.add_argument('--widths',type=int,nargs='+',choices=widths.WIDTHS,default=list(widths.WIDTHS))
+     args=parser.parse_args()
+     if not 1<=args.workers<=16 or not 1<=args.repeats<=5:parser.error('Finite worker/repeat limits exceeded')
+     args.source,args.engine=args.source.resolve(),args.engine.resolve()
+@@ -112,7 +116,7 @@
+     os.sched_setaffinity(0,set(args.cpus));night.initialize(args.source)
+     args.fingerprint=helpers.source_identity(args.source,args.engine)
+     args.output.mkdir(parents=True,exist_ok=False)
+-    cases=list(widths.WIDTHS) if args.width_sweep else list(exact_host_opt.MODES)
++    cases=list(args.widths) if args.width_sweep else list(exact_host_opt.MODES)
+     expected={};hits_expected=None;results=[]
+     try:
+         for repeat in range(args.repeats):
+@@ -132,7 +136,7 @@
+         night.atomic_json(args.output/'summary.json',dict(status='passed',source_identity=args.fingerprint,
+             regime='nested-width-union' if args.width_sweep else 'same-patch-arithmetic',repeats=args.repeats,
+             modes=summary,all_exact_identities_equal_within_each_grid=True,all_hit_sets_equal=True,
+-            coverage_claim='Selected windows only',cuda_executed=False,
++            coverage_claim='Selected windows only',cuda_executed=args.backend=='gpu',
+             durable_commits_included=not args.width_sweep,
+             shared_ratio_union=[widths.pair(widths.LEFT),widths.pair(widths.RIGHT)] if args.width_sweep else None))
+     except BaseException as error:
+--- author/coordinator_pipeline.py
++++ scratch/coordinator_pipeline.py
+@@ -19,6 +19,7 @@
+ import packing_opt
+ import coordinator_packing
+ import scaling_core as core
++from adapter_runtime import normalized_counts, normalized_hits
+ 
+ 
+ class GuardedPatch(ValueError):
+@@ -228,7 +229,11 @@
+         with stages.time('exact_output_verification'):
+             validate_response_types(response)
+             hits |= core.decode_batch(batch, response, engine.backend)
+-        records.append(dict(identity=identity, points=batch.points, patch_ids=[t.id for t in batch.tasks], rpc_seconds=rpc_seconds,
++        records.append(dict(identity=identity, points=batch.points, patch_ids=[t.id for t in batch.tasks], rpc_seconds=rpc_seconds, backend=engine.backend,
++                            engine_seconds=response.get('engine_seconds'),
++                            kernel_seconds=response.get('kernel_seconds') if engine.backend=='gpu' else None,
++                            transfer_seconds=None, native_counts=normalized_counts(batch,response),
++                            native_hit_records=normalized_hits(batch,response),
+                             response_sha256=hashlib.sha256(json.dumps(response, sort_keys=True,
+                                                                     separators=(',', ':')).encode()).hexdigest()))
+     return dict(window=chunk.window.identity(), patches=chunk.patches, points=chunk.plan.points,

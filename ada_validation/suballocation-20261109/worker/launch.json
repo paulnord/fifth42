@@ -1,0 +1,62 @@
+{
+  "started_utc": "2026-11-10T00:34:31.978425+00:00",
+  "stop_local": "2026-11-10T17:00:00-06:00",
+  "resume_cursor": 4631300224,
+  "commands": [
+    {
+      "kind": "timer",
+      "command": [
+        "systemd-run",
+        "--user",
+        "--unit=ada-suballocation-20261109-deadline",
+        "--collect",
+        "--service-type=oneshot",
+        "--on-calendar=2026-11-10 22:59:50 UTC",
+        "--timer-property=AccuracySec=1s",
+        "--timer-property=RandomizedDelaySec=0",
+        "--timer-property=Persistent=no",
+        "/usr/bin/systemctl",
+        "--user",
+        "stop",
+        "ada-suballocation-20261109.service"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Running timer as unit: ada-suballocation-20261109-deadline.timer\nWill run service as unit: ada-suballocation-20261109-deadline.service\n"
+    },
+    {
+      "kind": "service",
+      "command": [
+        "systemd-run",
+        "--user",
+        "--unit=ada-suballocation-20261109",
+        "--collect",
+        "--service-type=exec",
+        "--description=Sixteen-worker fifth-power weekend continuation",
+        "--property=RuntimeMaxSec=80718",
+        "--property=TimeoutStopSec=8s",
+        "--property=KillMode=mixed",
+        "--property=Restart=no",
+        "--property=Nice=19",
+        "--property=CPUAffinity=0-15",
+        "--property=UMask=0077",
+        "--working-directory=/home/pnord/ada-suballocation-20261109/worker",
+        "--property=StandardOutput=append:/home/pnord/ada-suballocation-20261109/worker/service.stdout.log",
+        "--property=StandardError=append:/home/pnord/ada-suballocation-20261109/worker/service.stderr.log",
+        "--setenv=PYTHONDONTWRITEBYTECODE=1",
+        "--setenv=PYTHONUNBUFFERED=1",
+        "--setenv=CUDA_VISIBLE_DEVICES=0",
+        "/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python",
+        "-B",
+        "-u",
+        "/home/pnord/ada-suballocation-20261109/worker/search_supervisor.py",
+        "--config",
+        "/home/pnord/ada-suballocation-20261109/worker/config.json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "Running as unit: ada-suballocation-20261109.service; invocation ID: 2c72c199840742db9fa29561d5e8e81d\n"
+    }
+  ],
+  "status": "service_started"
+}
