@@ -1,0 +1,789 @@
+[
+  {
+    "name": "package-checksums",
+    "argv": [
+      "sha256sum",
+      "--check",
+      "SHA256SUMS"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110",
+    "started_epoch": 1794334633.2377121,
+    "seconds": 0.003905057907104492,
+    "returncode": 0,
+    "stdout": "logs/package-checksums.stdout.log",
+    "stderr": "logs/package-checksums.stderr.log"
+  },
+  {
+    "name": "nvidia-smi",
+    "argv": [
+      "nvidia-smi",
+      "-q"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334633.2418888,
+    "seconds": 0.16396379470825195,
+    "returncode": 0,
+    "stdout": "logs/nvidia-smi.stdout.log",
+    "stderr": "logs/nvidia-smi.stderr.log"
+  },
+  {
+    "name": "nvcc-version",
+    "argv": [
+      "nvcc",
+      "--version"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334633.4061267,
+    "seconds": 0.003624439239501953,
+    "returncode": 0,
+    "stdout": "logs/nvcc-version.stdout.log",
+    "stderr": "logs/nvcc-version.stderr.log"
+  },
+  {
+    "name": "host-compiler",
+    "argv": [
+      "g++-13",
+      "--version"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334633.4101374,
+    "seconds": 0.0015938282012939453,
+    "returncode": 0,
+    "stdout": "logs/host-compiler.stdout.log",
+    "stderr": "logs/host-compiler.stderr.log"
+  },
+  {
+    "name": "cpu",
+    "argv": [
+      "lscpu"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334633.4119673,
+    "seconds": 0.015695810317993164,
+    "returncode": 0,
+    "stdout": "logs/cpu.stdout.log",
+    "stderr": "logs/cpu.stderr.log"
+  },
+  {
+    "name": "memory",
+    "argv": [
+      "free",
+      "-h"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334633.4279299,
+    "seconds": 0.001537322998046875,
+    "returncode": 0,
+    "stdout": "logs/memory.stdout.log",
+    "stderr": "logs/memory.stderr.log"
+  },
+  {
+    "name": "unrelated-cpu-activity",
+    "argv": [
+      "ps",
+      "-eo",
+      "pid,comm,pcpu,pmem",
+      "--sort=-pcpu"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334633.4296896,
+    "seconds": 0.0317225456237793,
+    "returncode": 0,
+    "stdout": "logs/unrelated-cpu-activity.stdout.log",
+    "stderr": "logs/unrelated-cpu-activity.stderr.log"
+  },
+  {
+    "name": "python-gmp",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "-c",
+      "import sys,gmpy2;print(sys.version);print(gmpy2.version());print(gmpy2.mp_version())"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334633.4617236,
+    "seconds": 0.015684127807617188,
+    "returncode": 0,
+    "stdout": "logs/python-gmp.stdout.log",
+    "stderr": "logs/python-gmp.stderr.log"
+  },
+  {
+    "name": "exact-cpu-correctness",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/test_cpu.py"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334633.4778235,
+    "seconds": 0.364163875579834,
+    "returncode": 0,
+    "stdout": "logs/exact-cpu-correctness.stdout.log",
+    "stderr": "logs/exact-cpu-correctness.stderr.log"
+  },
+  {
+    "name": "archived-oracle-correctness",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/validate.py",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/lattice_prototype/compiled_experiment/lattice5_snapshot.py"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334633.8423274,
+    "seconds": 0.11391115188598633,
+    "returncode": 0,
+    "stdout": "logs/archived-oracle-correctness.stdout.log",
+    "stderr": "logs/archived-oracle-correctness.stderr.log"
+  },
+  {
+    "name": "fixture-gmp-256",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/record_fixtures.py",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/gpu_check.py",
+      "256",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/fixtures-256"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334633.9568212,
+    "seconds": 0.06389427185058594,
+    "returncode": 0,
+    "stdout": "logs/fixture-gmp-256.stdout.log",
+    "stderr": "logs/fixture-gmp-256.stderr.log"
+  },
+  {
+    "name": "fixture-gmp-1024",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/record_fixtures.py",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/gpu_check.py",
+      "1024",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/fixtures-1024"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334634.0211105,
+    "seconds": 0.06390547752380371,
+    "returncode": 0,
+    "stdout": "logs/fixture-gmp-1024.stdout.log",
+    "stderr": "logs/fixture-gmp-1024.stderr.log"
+  },
+  {
+    "name": "fixture-gmp-4096",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/record_fixtures.py",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/gpu_check.py",
+      "4096",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/fixtures-4096"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334634.0854464,
+    "seconds": 0.11387777328491211,
+    "returncode": 0,
+    "stdout": "logs/fixture-gmp-4096.stdout.log",
+    "stderr": "logs/fixture-gmp-4096.stderr.log"
+  },
+  {
+    "name": "cgbn-pin",
+    "argv": [
+      "git",
+      "checkout",
+      "--detach",
+      "114601b07ae8c3e4d46b250208ea8d9def7a12f0"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/CGBN",
+    "started_epoch": 1794334634.1997163,
+    "seconds": 0.0036690235137939453,
+    "returncode": 0,
+    "stdout": "logs/cgbn-pin.stdout.log",
+    "stderr": "logs/cgbn-pin.stderr.log"
+  },
+  {
+    "name": "cgbn-build-tpi4",
+    "argv": [
+      "nvcc",
+      "-O3",
+      "-std=c++17",
+      "-arch=sm_86",
+      "-DROOT_TPI=4",
+      "-I/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/CGBN/include",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/root_cuda.cu",
+      "-o",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/root-tpi4"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334634.3785746,
+    "seconds": 2.6673169136047363,
+    "returncode": 0,
+    "stdout": "logs/cgbn-build-tpi4.stdout.log",
+    "stderr": "logs/cgbn-build-tpi4.stderr.log"
+  },
+  {
+    "name": "cgbn-correctness-tpi4",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/gpu_check.py",
+      "--binary",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/root-tpi4",
+      "--count",
+      "256",
+      "--output",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn-tpi4"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334637.0464904,
+    "seconds": 0.3641986846923828,
+    "returncode": 0,
+    "stdout": "logs/cgbn-correctness-tpi4.stdout.log",
+    "stderr": "logs/cgbn-correctness-tpi4.stderr.log"
+  },
+  {
+    "name": "cgbn-build-tpi8",
+    "argv": [
+      "nvcc",
+      "-O3",
+      "-std=c++17",
+      "-arch=sm_86",
+      "-DROOT_TPI=8",
+      "-I/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/CGBN/include",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/root_cuda.cu",
+      "-o",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/root-tpi8"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334637.4113007,
+    "seconds": 1.8663341999053955,
+    "returncode": 0,
+    "stdout": "logs/cgbn-build-tpi8.stdout.log",
+    "stderr": "logs/cgbn-build-tpi8.stderr.log"
+  },
+  {
+    "name": "cgbn-correctness-tpi8",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/gpu_check.py",
+      "--binary",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/root-tpi8",
+      "--count",
+      "256",
+      "--output",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn-tpi8"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334639.2782114,
+    "seconds": 0.3141922950744629,
+    "returncode": 0,
+    "stdout": "logs/cgbn-correctness-tpi8.stdout.log",
+    "stderr": "logs/cgbn-correctness-tpi8.stderr.log"
+  },
+  {
+    "name": "cgbn-build-tpi16",
+    "argv": [
+      "nvcc",
+      "-O3",
+      "-std=c++17",
+      "-arch=sm_86",
+      "-DROOT_TPI=16",
+      "-I/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/CGBN/include",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/root_cuda.cu",
+      "-o",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/root-tpi16"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334639.5929556,
+    "seconds": 1.616041898727417,
+    "returncode": 0,
+    "stdout": "logs/cgbn-build-tpi16.stdout.log",
+    "stderr": "logs/cgbn-build-tpi16.stderr.log"
+  },
+  {
+    "name": "cgbn-correctness-tpi16",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/gpu_check.py",
+      "--binary",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/root-tpi16",
+      "--count",
+      "256",
+      "--output",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn-tpi16"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334641.209646,
+    "seconds": 0.36420774459838867,
+    "returncode": 0,
+    "stdout": "logs/cgbn-correctness-tpi16.stdout.log",
+    "stderr": "logs/cgbn-correctness-tpi16.stderr.log"
+  },
+  {
+    "name": "cgbn-build-tpi32",
+    "argv": [
+      "nvcc",
+      "-O3",
+      "-std=c++17",
+      "-arch=sm_86",
+      "-DROOT_TPI=32",
+      "-I/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/CGBN/include",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/root_cuda.cu",
+      "-o",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/root-tpi32"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334641.574513,
+    "seconds": 1.5658392906188965,
+    "returncode": 0,
+    "stdout": "logs/cgbn-build-tpi32.stdout.log",
+    "stderr": "logs/cgbn-build-tpi32.stderr.log"
+  },
+  {
+    "name": "cgbn-correctness-tpi32",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/gpu_check.py",
+      "--binary",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/root-tpi32",
+      "--count",
+      "256",
+      "--output",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn-tpi32"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334643.1409829,
+    "seconds": 0.3142814636230469,
+    "returncode": 0,
+    "stdout": "logs/cgbn-correctness-tpi32.stdout.log",
+    "stderr": "logs/cgbn-correctness-tpi32.stderr.log"
+  },
+  {
+    "name": "cgbn-reject-overwidth",
+    "argv": [
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/root-tpi8",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn/rejections/overwidth.input.bin",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn/rejections/overwidth.output.bin",
+      "1"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334643.4560397,
+    "seconds": 0.0036067962646484375,
+    "returncode": 1,
+    "stdout": "logs/cgbn-reject-overwidth.stdout.log",
+    "stderr": "logs/cgbn-reject-overwidth.stderr.log"
+  },
+  {
+    "name": "cgbn-reject-outside-unit-interval",
+    "argv": [
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/root-tpi8",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn/rejections/outside-unit-interval.input.bin",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn/rejections/outside-unit-interval.output.bin",
+      "1"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334643.460174,
+    "seconds": 0.001504659652709961,
+    "returncode": 1,
+    "stdout": "logs/cgbn-reject-outside-unit-interval.stdout.log",
+    "stderr": "logs/cgbn-reject-outside-unit-interval.stderr.log"
+  },
+  {
+    "name": "cgbn-reject-zero-denominator",
+    "argv": [
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/root-tpi8",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn/rejections/zero-denominator.input.bin",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn/rejections/zero-denominator.output.bin",
+      "1"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334643.462143,
+    "seconds": 0.0014753341674804688,
+    "returncode": 1,
+    "stdout": "logs/cgbn-reject-zero-denominator.stdout.log",
+    "stderr": "logs/cgbn-reject-zero-denominator.stderr.log"
+  },
+  {
+    "name": "cgbn-reject-zero-bits",
+    "argv": [
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/root-tpi8",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn/rejections/zero-bits.input.bin",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn/rejections/zero-bits.output.bin",
+      "1"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334643.4640791,
+    "seconds": 0.001459360122680664,
+    "returncode": 1,
+    "stdout": "logs/cgbn-reject-zero-bits.stdout.log",
+    "stderr": "logs/cgbn-reject-zero-bits.stderr.log"
+  },
+  {
+    "name": "cgbn-reject-bits-223",
+    "argv": [
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/root-tpi8",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn/rejections/bits-223.input.bin",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn/rejections/bits-223.output.bin",
+      "1"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334643.4659805,
+    "seconds": 0.0014259815216064453,
+    "returncode": 1,
+    "stdout": "logs/cgbn-reject-bits-223.stdout.log",
+    "stderr": "logs/cgbn-reject-bits-223.stderr.log"
+  },
+  {
+    "name": "cgbn-reject-truncated",
+    "argv": [
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/root-tpi8",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn/rejections/truncated.input.bin",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn/rejections/truncated.output.bin",
+      "1"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334643.4678428,
+    "seconds": 0.001382589340209961,
+    "returncode": 1,
+    "stdout": "logs/cgbn-reject-truncated.stdout.log",
+    "stderr": "logs/cgbn-reject-truncated.stderr.log"
+  },
+  {
+    "name": "cgbn-reject-trailing",
+    "argv": [
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/root-tpi8",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn/rejections/trailing.input.bin",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn/rejections/trailing.output.bin",
+      "1"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334643.4696696,
+    "seconds": 0.0014202594757080078,
+    "returncode": 1,
+    "stdout": "logs/cgbn-reject-trailing.stdout.log",
+    "stderr": "logs/cgbn-reject-trailing.stderr.log"
+  },
+  {
+    "name": "cgbn-reject-zero-count",
+    "argv": [
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/root-tpi8",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn/rejections/zero-count.input.bin",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cgbn/rejections/zero-count.output.bin",
+      "1"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334643.4715517,
+    "seconds": 0.0014338493347167969,
+    "returncode": 1,
+    "stdout": "logs/cgbn-reject-zero-count.stdout.log",
+    "stderr": "logs/cgbn-reject-zero-count.stderr.log"
+  },
+  {
+    "name": "cupqc-build-tpi4",
+    "argv": [
+      "nvcc",
+      "-O3",
+      "-std=c++17",
+      "-arch=sm_86",
+      "-DROOT_TPI=4",
+      "-dlto",
+      "-DROOT_SM=860",
+      "-I/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-sdk-0.6.0-x86_64/include/cupqc",
+      "-I/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-sdk-0.6.0-x86_64/include",
+      "-L/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-sdk-0.6.0-x86_64/lib",
+      "-L/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-sdk-0.6.0-x86_64/lib64",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/root_cupqc.cu",
+      "-lcupqc-bigint",
+      "-o",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-tpi4"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334643.473816,
+    "seconds": 12.931022644042969,
+    "returncode": 0,
+    "stdout": "logs/cupqc-build-tpi4.stdout.log",
+    "stderr": "logs/cupqc-build-tpi4.stderr.log"
+  },
+  {
+    "name": "cupqc-correctness-tpi4",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/gpu_check.py",
+      "--binary",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-tpi4",
+      "--count",
+      "256",
+      "--output",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc-tpi4"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334656.4055772,
+    "seconds": 0.36423373222351074,
+    "returncode": 0,
+    "stdout": "logs/cupqc-correctness-tpi4.stdout.log",
+    "stderr": "logs/cupqc-correctness-tpi4.stderr.log"
+  },
+  {
+    "name": "cupqc-build-tpi8",
+    "argv": [
+      "nvcc",
+      "-O3",
+      "-std=c++17",
+      "-arch=sm_86",
+      "-DROOT_TPI=8",
+      "-dlto",
+      "-DROOT_SM=860",
+      "-I/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-sdk-0.6.0-x86_64/include/cupqc",
+      "-I/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-sdk-0.6.0-x86_64/include",
+      "-L/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-sdk-0.6.0-x86_64/lib",
+      "-L/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-sdk-0.6.0-x86_64/lib64",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/root_cupqc.cu",
+      "-lcupqc-bigint",
+      "-o",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-tpi8"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334656.7706156,
+    "seconds": 11.7792227268219,
+    "returncode": 0,
+    "stdout": "logs/cupqc-build-tpi8.stdout.log",
+    "stderr": "logs/cupqc-build-tpi8.stderr.log"
+  },
+  {
+    "name": "cupqc-correctness-tpi8",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/gpu_check.py",
+      "--binary",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-tpi8",
+      "--count",
+      "256",
+      "--output",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc-tpi8"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334668.5505803,
+    "seconds": 0.3642714023590088,
+    "returncode": 0,
+    "stdout": "logs/cupqc-correctness-tpi8.stdout.log",
+    "stderr": "logs/cupqc-correctness-tpi8.stderr.log"
+  },
+  {
+    "name": "cupqc-build-tpi16",
+    "argv": [
+      "nvcc",
+      "-O3",
+      "-std=c++17",
+      "-arch=sm_86",
+      "-DROOT_TPI=16",
+      "-dlto",
+      "-DROOT_SM=860",
+      "-I/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-sdk-0.6.0-x86_64/include/cupqc",
+      "-I/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-sdk-0.6.0-x86_64/include",
+      "-L/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-sdk-0.6.0-x86_64/lib",
+      "-L/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-sdk-0.6.0-x86_64/lib64",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/root_cupqc.cu",
+      "-lcupqc-bigint",
+      "-o",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-tpi16"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334668.9157567,
+    "seconds": 11.98445439338684,
+    "returncode": 0,
+    "stdout": "logs/cupqc-build-tpi16.stdout.log",
+    "stderr": "logs/cupqc-build-tpi16.stderr.log"
+  },
+  {
+    "name": "cupqc-correctness-tpi16",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/gpu_check.py",
+      "--binary",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-tpi16",
+      "--count",
+      "256",
+      "--output",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc-tpi16"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334680.9010136,
+    "seconds": 0.36460041999816895,
+    "returncode": 0,
+    "stdout": "logs/cupqc-correctness-tpi16.stdout.log",
+    "stderr": "logs/cupqc-correctness-tpi16.stderr.log"
+  },
+  {
+    "name": "cupqc-build-tpi32",
+    "argv": [
+      "nvcc",
+      "-O3",
+      "-std=c++17",
+      "-arch=sm_86",
+      "-DROOT_TPI=32",
+      "-dlto",
+      "-DROOT_SM=860",
+      "-I/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-sdk-0.6.0-x86_64/include/cupqc",
+      "-I/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-sdk-0.6.0-x86_64/include",
+      "-L/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-sdk-0.6.0-x86_64/lib",
+      "-L/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-sdk-0.6.0-x86_64/lib64",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/root_cupqc.cu",
+      "-lcupqc-bigint",
+      "-o",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-tpi32"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334681.2664533,
+    "seconds": 11.98118782043457,
+    "returncode": 0,
+    "stdout": "logs/cupqc-build-tpi32.stdout.log",
+    "stderr": "logs/cupqc-build-tpi32.stderr.log"
+  },
+  {
+    "name": "cupqc-correctness-tpi32",
+    "argv": [
+      "/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python3",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/gpu_check.py",
+      "--binary",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-tpi32",
+      "--count",
+      "256",
+      "--output",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc-tpi32"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334693.24848,
+    "seconds": 0.3642725944519043,
+    "returncode": 0,
+    "stdout": "logs/cupqc-correctness-tpi32.stdout.log",
+    "stderr": "logs/cupqc-correctness-tpi32.stderr.log"
+  },
+  {
+    "name": "cupqc-reject-overwidth",
+    "argv": [
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-tpi8",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc/rejections/overwidth.input.bin",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc/rejections/overwidth.output.bin",
+      "1"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334693.6137817,
+    "seconds": 0.0036745071411132812,
+    "returncode": 1,
+    "stdout": "logs/cupqc-reject-overwidth.stdout.log",
+    "stderr": "logs/cupqc-reject-overwidth.stderr.log"
+  },
+  {
+    "name": "cupqc-reject-outside-unit-interval",
+    "argv": [
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-tpi8",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc/rejections/outside-unit-interval.input.bin",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc/rejections/outside-unit-interval.output.bin",
+      "1"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334693.6181407,
+    "seconds": 0.003614187240600586,
+    "returncode": 1,
+    "stdout": "logs/cupqc-reject-outside-unit-interval.stdout.log",
+    "stderr": "logs/cupqc-reject-outside-unit-interval.stderr.log"
+  },
+  {
+    "name": "cupqc-reject-zero-denominator",
+    "argv": [
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-tpi8",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc/rejections/zero-denominator.input.bin",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc/rejections/zero-denominator.output.bin",
+      "1"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334693.6224606,
+    "seconds": 0.0035309791564941406,
+    "returncode": 1,
+    "stdout": "logs/cupqc-reject-zero-denominator.stdout.log",
+    "stderr": "logs/cupqc-reject-zero-denominator.stderr.log"
+  },
+  {
+    "name": "cupqc-reject-zero-bits",
+    "argv": [
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-tpi8",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc/rejections/zero-bits.input.bin",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc/rejections/zero-bits.output.bin",
+      "1"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334693.6266394,
+    "seconds": 0.0035104751586914062,
+    "returncode": 1,
+    "stdout": "logs/cupqc-reject-zero-bits.stdout.log",
+    "stderr": "logs/cupqc-reject-zero-bits.stderr.log"
+  },
+  {
+    "name": "cupqc-reject-bits-223",
+    "argv": [
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-tpi8",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc/rejections/bits-223.input.bin",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc/rejections/bits-223.output.bin",
+      "1"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334693.6309116,
+    "seconds": 0.0035724639892578125,
+    "returncode": 1,
+    "stdout": "logs/cupqc-reject-bits-223.stdout.log",
+    "stderr": "logs/cupqc-reject-bits-223.stderr.log"
+  },
+  {
+    "name": "cupqc-reject-truncated",
+    "argv": [
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-tpi8",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc/rejections/truncated.input.bin",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc/rejections/truncated.output.bin",
+      "1"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334693.6351705,
+    "seconds": 0.0035538673400878906,
+    "returncode": 1,
+    "stdout": "logs/cupqc-reject-truncated.stdout.log",
+    "stderr": "logs/cupqc-reject-truncated.stderr.log"
+  },
+  {
+    "name": "cupqc-reject-trailing",
+    "argv": [
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-tpi8",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc/rejections/trailing.input.bin",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc/rejections/trailing.output.bin",
+      "1"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334693.639414,
+    "seconds": 0.0035407543182373047,
+    "returncode": 1,
+    "stdout": "logs/cupqc-reject-trailing.stdout.log",
+    "stderr": "logs/cupqc-reject-trailing.stderr.log"
+  },
+  {
+    "name": "cupqc-reject-zero-count",
+    "argv": [
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/cupqc-tpi8",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc/rejections/zero-count.input.bin",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence/correctness/cupqc/rejections/zero-count.output.bin",
+      "1"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334693.6436334,
+    "seconds": 0.0035026073455810547,
+    "returncode": 1,
+    "stdout": "logs/cupqc-reject-zero-count.stdout.log",
+    "stderr": "logs/cupqc-reject-zero-count.stderr.log"
+  },
+  {
+    "name": "published-timing-sweep",
+    "argv": [
+      "bash",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/repo/experiments/gpu-root-prep-20261110/run.sh",
+      "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7/evidence"
+    ],
+    "cwd": "/home/pnord/scratch/fifth42-gpu-root-test-r2-40cqred7",
+    "started_epoch": 1794334693.6480515,
+    "seconds": 64.54958438873291,
+    "returncode": 0,
+    "stdout": "logs/published-timing-sweep.stdout.log",
+    "stderr": "logs/published-timing-sweep.stderr.log"
+  }
+]

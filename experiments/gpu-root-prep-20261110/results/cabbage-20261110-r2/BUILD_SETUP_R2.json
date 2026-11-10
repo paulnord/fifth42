@@ -1,0 +1,41 @@
+{
+  "changes": [
+    "Use a separate CUDA layout with nvvm/lib64/libnvvm.so pointing to the existing lib/libnvvm.so.4",
+    "Pre-include the actual gmp.h and link GMP for root_cuda.cu; no guard macros disabled"
+  ],
+  "source_commit": "e6979d463aa8c22f627f5d40955750c6472850ee",
+  "dot_package_sources_unchanged": true,
+  "production_sources_unchanged": true,
+  "production_restarted": false,
+  "dependency_reuse": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/evidence",
+  "vendor_smoke_results": {
+    "results": [
+      {
+        "test": "cuda-lto-smoke",
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "",
+        "binary_sha256": "727e0e95d3e2cb054f94e9aea139bdb4c69ae842aa11848485e26ab7cc85e49e"
+      },
+      {
+        "test": "cgbn-vendor-add",
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "Generating instances ...\nCopying instances to the GPU ...\nRunning GPU kernel ...\nCopying results back to CPU ...\nVerifying the results ...\nAll results match\n",
+        "binary_sha256": "97716cd566a4df30d9a083b5a8a676ce586193f9631ddcd5ee0c4fa763d74c39"
+      },
+      {
+        "test": "cupqc-vendor-add",
+        "status": "passed",
+        "returncode": 0,
+        "stdout": "OK: 2 + 3 = 5; 10 + 20 = 30\n",
+        "binary_sha256": "2366b6866da0f4115f388417e551875368a154c82999371f4f937455c1e75db8"
+      }
+    ],
+    "production_restarted": false,
+    "original_cuda_toolkit_modified": false,
+    "local_cuda_layout": "/home/pnord/scratch/fifth42-gpu-root-test-d3wai41j/installation-check/cuda-local-layout",
+    "checked_epoch": 1794334457.1429698
+  },
+  "wrapper_sha256": "e8349feb085b1d3b21caae948c68496f61159966dcb1c9f993b14a1ca029abd8"
+}
