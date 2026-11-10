@@ -1,0 +1,90 @@
+INSTALL COMMON — tested preparation release, user-authorized10November2026
+
+1. Wait for combined/preparation-r1-20261110/READY.json on NFS. Verify its
+   immutable GitHub source commit and all SHA256SUMS. The release branch is
+   release/preparation-20261110-r1 in paulnord/fifth42. Clone/fetch that branch,
+   then checkout the exact source_commit from READY.json. Release directory:
+   releases/preparation-20261110-r1. Parent experiments and all earlier results
+   remain in this Git history. Never use a moving branch as a source identity.
+
+2. Stop your current owner with your host's graceful stop interface, recording
+   persistent controller stop intent before the worker stops. Wait for actual
+   inactive state+MainPID0, worker_exit_code0, leases_released=true, no worker
+   error, and zero pending journal bytes/records. Verify final local/NFS
+   checkpoint bytes and final-copy receipt. Audit/seal your ACTUAL final cursor.
+   Keep prior journals and sealed archives. Do not use Cabbage's cursor on a
+   different host, or derive a frontier from an ownership-only empty journal.
+
+3. Create a NEW isolated release/worker copy and NEW output paths. Preserve
+   your original NFS reservation/owner lock, GPU lease, physical-core budget,
+   arithmetic/native integer limits, disk reserve and stop guards. Extract
+   source.tar.gz into a separate scratch folder for reference; its complete
+   Cabbage configuration is host-specific. Merge only the common changes into
+   your own copied worker:
+     patch --batch --fuzz=0 --dry-run -p1 -d NEW_WORKER -i ABS/common-changes.patch
+     patch --batch --fuzz=0 -p1 -d NEW_WORKER -i ABS/common-changes.patch
+   If the dry run fails, merge the supplied common/*.py/.cu against your actual
+   baseline and review the delta, retaining your host policy. Keep the original
+   native enumeration/GMP executables and validated build identity. No live
+   source is patched in place. The patch supplies gpu_preparation.py and
+   gpu_candidate/*.py/.cu; CPU preparation does not load a CUDA proposal library.
+
+4. Update your OWN frozen host policy/configuration to admit the selected
+   settings. Start with preparation_backend='cpu', preparation_windows=16,
+   ready_queue_limit=1, gpu_request_windows=1. Keep your existing validated
+   group_limit until matched finite benchmarks at your actual cursor justify
+   another. Cabbage selected group8/dispatch_chunksize2; group4 uses4. Policies
+   must reject noninteger/bool numeric knobs and unsupported bounds. A bulk
+   queue has at most3*12MiB reserved prepared payload; original native window
+   and per-task point/integer limits stay unchanged. Keep8 journal records,
+   8MiB journal buffer and0.25s max age, local durable storage, verified60-second
+   NFS replicas and final copy. Group1/2/4/8/16 admission uses unchanged exact
+   bounds and guarded subdivision. No GPU-produced bound is trusted.
+
+   Optional GPU preparation: compile gpu_candidate/gpu_lll.cu on YOUR host
+   with its validated CUDA/compiler/SM, for example
+     nvcc -O3 -std=c++17 -arch=YOUR_SM -Xcompiler -fPIC -shared \
+       NEW_WORKER/gpu_candidate/gpu_lll.cu \
+       -o NEW_WORKER/gpu_candidate/libgpu_lll.so
+   It also needs local NumPy. If enabled explicitly, use capacity128 per worker,
+   preparation_require_lll=false; retain exact CPU independent certification,
+   native guards and cold/subdivision fallback. Benchmark the whole pipeline;
+   a kernel-only speedup does not justify selection. CPU remains the default.
+
+5. Merge the controller shutdown/stop-intent safeguards into your host's own
+   controller (cabbage-controller/ and controller-changes.patch are the tested
+   reference). Never read a final supervisor while deactivating or MainPID!=0.
+   Missing/dirty reports, failed worker, mismatching/unverified final replica
+   must fail closed. Persist stop intent BEFORE stopping the worker; a manual
+   stop cannot trigger rollover. Preserve the state of your pending allocation:
+   already consumed reservations must never be replayed. On rotation use the
+   upgraded template, preserve selected knobs, and make newly copied readonly
+   policy writable only for rebinding before freezing all sources again.
+
+6. Freeze your own manifest/configuration and new source identity. Resume at
+   the exact sealed parent cursor within its existing reservation. Parent
+   selected lineage is cursor minus reservation start across all prior runs.
+   Run actual-release validation before production: nonempty brute-force and
+   native GPU/GMP count+full-hit equality, grouped/subdivision coverage checks,
+   finite17 original windows (partial16-window batch+partial8-record flush),
+   graceful service stop and an independent short deadline timer. Both copies
+   must audit/recover identically, pending buffer must be zero, ownership must
+   exclude another process while running, and existing output reuse must fail.
+   If enabling GPU proposals, also run corrupted-U/status fallback controls.
+   The published test-evidence.tar.gz and results show exact Cabbage commands,
+   units and observations; policy/controller tests are supplied for adaptation.
+
+7. Set ALL authorized compute/controller deadlines to1794438000:
+   2026-11-11T17:00:00-06:00 (5p.m.Central). Independent timers must stop compute
+   at2026-11-11 22:59:50UTC. Retire old global/child November10 timers BEFORE
+   changing the active pointer, so an old stop helper cannot stop the new run.
+   Keep Restart=no and final-copy services independent. Use your host's
+   existing console-independent launcher/linger setup. Stop+seal again before
+   selecting another source revision; preserve every old immutable binding.
+
+8. Start your new production owner; verify advancing durable checkpoints,
+   matching original ownership, exact source/config hashes, active hard-stop
+   timer, periodic verified NFS progress and no pending/error conditions.
+   Record your deployed commit/manifest/config hashes and actual parent/new
+   cursors in your host handoff. This shared READY signals tested source and
+   complete instructions; it does not certify an untested peer installation.

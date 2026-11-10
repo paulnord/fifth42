@@ -1,0 +1,59 @@
+{
+  "status": "passed",
+  "TEST_ONLY": true,
+  "GPU_used": false,
+  "live_data_or_ledger_modified": false,
+  "tests_run": 3,
+  "failures": 0,
+  "errors": 0,
+  "results": [
+    {
+      "test": "test_fresh_claim_updates_job_range_and_policy_without_losing_baseline",
+      "status": "passed",
+      "fresh_reservation": true,
+      "selected_settings": {
+        "preparation_backend": "cpu",
+        "preparation_windows": 16,
+        "group_limit": 8,
+        "dispatch_chunksize": 2,
+        "ready_queue_limit": 1,
+        "gpu_request_windows": 1
+      },
+      "deadline": 1794438000,
+      "initial_patch": 2250000000,
+      "reservation": [
+        2250000000,
+        2300000000
+      ],
+      "archive_provenance_verified": true,
+      "immutable_template_unchanged": true,
+      "live_data_paths_remapped": true
+    },
+    {
+      "test": "test_readonly_template_rotation_preserves_selection_and_archive",
+      "status": "passed",
+      "fresh_reservation": false,
+      "selected_settings": {
+        "preparation_backend": "cpu",
+        "preparation_windows": 16,
+        "group_limit": 8,
+        "dispatch_chunksize": 2,
+        "ready_queue_limit": 1,
+        "gpu_request_windows": 1
+      },
+      "deadline": 1794438000,
+      "initial_patch": 1538849024,
+      "reservation": [
+        500000000,
+        2250000000
+      ],
+      "archive_provenance_verified": true,
+      "immutable_template_unchanged": true,
+      "live_data_paths_remapped": true
+    }
+  ],
+  "release_source": "/home/pnord/scratch/cabbage-extended-upgrade-20261110/release.py",
+  "release_source_sha256": "13636aeb403be729791e6000e021e1536581a7441741bbc12a83950833d4fb94",
+  "test_source_sha256": "9a2c85934a9b18d4fa6dde5b89459c21689bf19c24f11f14381e4ece21939d0c",
+  "unittest_log": "test_fresh_claim_updates_job_range_and_policy_without_losing_baseline (__main__.FreezeRegressionTests.test_fresh_claim_updates_job_range_and_policy_without_losing_baseline) ... ok\ntest_readonly_template_rotation_preserves_selection_and_archive (__main__.FreezeRegressionTests.test_readonly_template_rotation_preserves_selection_and_archive) ... ok\ntest_reused_run_directory_rejects_without_reusing_output (__main__.FreezeRegressionTests.test_reused_run_directory_rejects_without_reusing_output) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.021s\n\nOK\n"
+}

@@ -1,0 +1,212 @@
+{
+  "status": "passed",
+  "host": "cabbage",
+  "manifest_sha256": "10667476ea82566f527b4397d00c57b10232f88d29557c837b0fb6f468fafbd0",
+  "config_sha256": "e140f84a8e896c77704519c5d573dc5ad80806d643e72a3a855b67eb5c883a39",
+  "actual_services": true,
+  "actual_local_and_nfs": true,
+  "original_owner_lock": true,
+  "group_limit": 8,
+  "cases": [
+    {
+      "case": "finite",
+      "status": "passed",
+      "config": "/home/pnord/scratch/cabbage-extended-upgrade-20261110/test-configs/cabbage-extended-test-finite-1794339863841683003.json",
+      "chunks": 17,
+      "logical_cells": 4352,
+      "physical_tasks": 544,
+      "points": 28589482,
+      "local_cursor": 1538853376,
+      "replica_cursor": 1538853376,
+      "owner_excluded_while_running": null,
+      "leases_released": true,
+      "actual_systemd_timer": true,
+      "compute_stopped_before_deadline": true,
+      "final_copy_service_passed": true,
+      "both_copies_independently_audited": true,
+      "final_buffer_drained": true,
+      "output_reuse_rejected": true,
+      "supervisor": {
+        "TEST_ONLY": true,
+        "all_owned_processes_exited_utc": "2026-11-10T19:44:28.106016+00:00",
+        "config_sha256": "c9d75b2aaea260260ee2d0076ec65b3a846328d65ae5e53797b9d1ac3e4d91b9",
+        "error": null,
+        "leases_released": true,
+        "load_average": [
+          0.43603515625,
+          0.87841796875,
+          1.03662109375
+        ],
+        "status": "finished",
+        "updated_utc": "2026-11-10T19:44:28.106047+00:00",
+        "wall_seconds": 3.926413797016721,
+        "worker_exit_code": 0,
+        "worker_pid": 3671168
+      },
+      "seconds": 5.040629863739014,
+      "unit_files": {
+        "fifth-cabbage-extended-test-finite-1794339863841683003.service": "[Unit]\nDescription=Cabbage buffered continuation\n[Service]\nType=exec\nWorkingDirectory=/home/pnord/scratch/cabbage-extended-upgrade-20261110\nNice=19\nUMask=0077\nEnvironment=PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 BLIS_NUM_THREADS=1 SCALING_LATTICE_SOURCE=/home/pnord/scratch/cabbage-extended-upgrade-20261110/worker/source/lattice_prototype\nRestart=no\nExecStart=/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python -B -u /home/pnord/scratch/cabbage-extended-upgrade-20261110/worker/cabbage_supervisor.py --config /home/pnord/scratch/cabbage-extended-upgrade-20261110/test-configs/cabbage-extended-test-finite-1794339863841683003.json\nKillMode=mixed\nTimeoutStopSec=8\nRuntimeMaxSec=109\nStandardOutput=append:/home/pnord/fifth42-local-runs/TEST_ONLY_cabbage_extended_20261109/cabbage-extended-test-finite-1794339863841683003/service.stdout.log\nStandardError=append:/home/pnord/fifth42-local-runs/TEST_ONLY_cabbage_extended_20261109/cabbage-extended-test-finite-1794339863841683003/service.stderr.log\n",
+        "fifth-cabbage-extended-test-finite-1794339863841683003-deadline.service": "[Unit]\nDescription=Stop only fifth-cabbage-extended-test-finite-1794339863841683003.service before its absolute deadline\n[Service]\nType=oneshot\nExecStart=/usr/bin/systemctl --user stop fifth-cabbage-extended-test-finite-1794339863841683003.service\nTimeoutStartSec=9\nRestart=no\n",
+        "fifth-cabbage-extended-test-finite-1794339863841683003-deadline.timer": "[Unit]\nDescription=Independent Cabbage deadline timer\n[Timer]\nOnCalendar=2026-11-10 19:46:03 UTC\nAccuracySec=100ms\nRandomizedDelaySec=0\nPersistent=false\nUnit=fifth-cabbage-extended-test-finite-1794339863841683003-deadline.service\n",
+        "fifth-cabbage-extended-test-finite-1794339863841683003-final-copy.service": "[Unit]\nDescription=Finish verified Cabbage replica without resuming compute\n[Service]\nType=exec\nWorkingDirectory=/home/pnord/scratch/cabbage-extended-upgrade-20261110\nNice=19\nUMask=0077\nEnvironment=PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 BLIS_NUM_THREADS=1 SCALING_LATTICE_SOURCE=/home/pnord/scratch/cabbage-extended-upgrade-20261110/worker/source/lattice_prototype\nRestart=no\nExecStart=/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python -B -u /home/pnord/scratch/cabbage-extended-upgrade-20261110/worker/finalize_replica.py --config /home/pnord/scratch/cabbage-extended-upgrade-20261110/test-configs/cabbage-extended-test-finite-1794339863841683003.json --config-sha256 c9d75b2aaea260260ee2d0076ec65b3a846328d65ae5e53797b9d1ac3e4d91b9 --wait\nKillMode=mixed\nTimeoutStopSec=3\nRuntimeMaxSec=1909\nStandardOutput=append:/home/pnord/fifth42-local-runs/TEST_ONLY_cabbage_extended_20261109/cabbage-extended-test-finite-1794339863841683003/final-copy.stdout.log\nStandardError=append:/home/pnord/fifth42-local-runs/TEST_ONLY_cabbage_extended_20261109/cabbage-extended-test-finite-1794339863841683003/final-copy.stderr.log\n"
+      }
+    },
+    {
+      "case": "gpu_finite",
+      "status": "passed",
+      "config": "/home/pnord/scratch/cabbage-extended-upgrade-20261110/test-configs/cabbage-extended-test-gpu_finite-1794339868932414103.json",
+      "chunks": 17,
+      "logical_cells": 4352,
+      "physical_tasks": 544,
+      "points": 28591900,
+      "local_cursor": 1538853376,
+      "replica_cursor": 1538853376,
+      "owner_excluded_while_running": null,
+      "leases_released": true,
+      "actual_systemd_timer": true,
+      "compute_stopped_before_deadline": true,
+      "final_copy_service_passed": true,
+      "both_copies_independently_audited": true,
+      "final_buffer_drained": true,
+      "output_reuse_rejected": true,
+      "supervisor": {
+        "TEST_ONLY": true,
+        "all_owned_processes_exited_utc": "2026-11-10T19:44:33.380389+00:00",
+        "config_sha256": "e10f23dd88f8d3f54e833b286cf94905637835ce5c2ce5d7ef27c7c7403922a8",
+        "error": null,
+        "leases_released": true,
+        "load_average": [
+          0.4814453125,
+          0.880859375,
+          1.0361328125
+        ],
+        "status": "finished",
+        "updated_utc": "2026-11-10T19:44:33.380421+00:00",
+        "wall_seconds": 4.119437180983368,
+        "worker_exit_code": 0,
+        "worker_pid": 3671323
+      },
+      "seconds": 5.0560102462768555,
+      "unit_files": {
+        "fifth-cabbage-extended-test-gpu_finite-1794339868932414103.service": "[Unit]\nDescription=Cabbage buffered continuation\n[Service]\nType=exec\nWorkingDirectory=/home/pnord/scratch/cabbage-extended-upgrade-20261110\nNice=19\nUMask=0077\nEnvironment=PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 BLIS_NUM_THREADS=1 SCALING_LATTICE_SOURCE=/home/pnord/scratch/cabbage-extended-upgrade-20261110/worker/source/lattice_prototype\nRestart=no\nExecStart=/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python -B -u /home/pnord/scratch/cabbage-extended-upgrade-20261110/worker/cabbage_supervisor.py --config /home/pnord/scratch/cabbage-extended-upgrade-20261110/test-configs/cabbage-extended-test-gpu_finite-1794339868932414103.json\nKillMode=mixed\nTimeoutStopSec=8\nRuntimeMaxSec=109\nStandardOutput=append:/home/pnord/fifth42-local-runs/TEST_ONLY_cabbage_extended_20261109/cabbage-extended-test-gpu_finite-1794339868932414103/service.stdout.log\nStandardError=append:/home/pnord/fifth42-local-runs/TEST_ONLY_cabbage_extended_20261109/cabbage-extended-test-gpu_finite-1794339868932414103/service.stderr.log\n",
+        "fifth-cabbage-extended-test-gpu_finite-1794339868932414103-deadline.service": "[Unit]\nDescription=Stop only fifth-cabbage-extended-test-gpu_finite-1794339868932414103.service before its absolute deadline\n[Service]\nType=oneshot\nExecStart=/usr/bin/systemctl --user stop fifth-cabbage-extended-test-gpu_finite-1794339868932414103.service\nTimeoutStartSec=9\nRestart=no\n",
+        "fifth-cabbage-extended-test-gpu_finite-1794339868932414103-deadline.timer": "[Unit]\nDescription=Independent Cabbage deadline timer\n[Timer]\nOnCalendar=2026-11-10 19:46:08 UTC\nAccuracySec=100ms\nRandomizedDelaySec=0\nPersistent=false\nUnit=fifth-cabbage-extended-test-gpu_finite-1794339868932414103-deadline.service\n",
+        "fifth-cabbage-extended-test-gpu_finite-1794339868932414103-final-copy.service": "[Unit]\nDescription=Finish verified Cabbage replica without resuming compute\n[Service]\nType=exec\nWorkingDirectory=/home/pnord/scratch/cabbage-extended-upgrade-20261110\nNice=19\nUMask=0077\nEnvironment=PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 BLIS_NUM_THREADS=1 SCALING_LATTICE_SOURCE=/home/pnord/scratch/cabbage-extended-upgrade-20261110/worker/source/lattice_prototype\nRestart=no\nExecStart=/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python -B -u /home/pnord/scratch/cabbage-extended-upgrade-20261110/worker/finalize_replica.py --config /home/pnord/scratch/cabbage-extended-upgrade-20261110/test-configs/cabbage-extended-test-gpu_finite-1794339868932414103.json --config-sha256 e10f23dd88f8d3f54e833b286cf94905637835ce5c2ce5d7ef27c7c7403922a8 --wait\nKillMode=mixed\nTimeoutStopSec=3\nRuntimeMaxSec=1909\nStandardOutput=append:/home/pnord/fifth42-local-runs/TEST_ONLY_cabbage_extended_20261109/cabbage-extended-test-gpu_finite-1794339868932414103/final-copy.stdout.log\nStandardError=append:/home/pnord/fifth42-local-runs/TEST_ONLY_cabbage_extended_20261109/cabbage-extended-test-gpu_finite-1794339868932414103/final-copy.stderr.log\n"
+      }
+    },
+    {
+      "case": "signal",
+      "status": "passed",
+      "config": "/home/pnord/scratch/cabbage-extended-upgrade-20261110/test-configs/cabbage-extended-test-signal-1794339874027073844.json",
+      "chunks": 49,
+      "logical_cells": 12544,
+      "physical_tasks": 1568,
+      "points": 81992676,
+      "local_cursor": 1538861568,
+      "replica_cursor": 1538861568,
+      "owner_excluded_while_running": true,
+      "leases_released": true,
+      "actual_systemd_timer": true,
+      "compute_stopped_before_deadline": true,
+      "final_copy_service_passed": true,
+      "both_copies_independently_audited": true,
+      "final_buffer_drained": true,
+      "output_reuse_rejected": true,
+      "supervisor": {
+        "TEST_ONLY": true,
+        "all_owned_processes_exited_utc": "2026-11-10T19:44:43.885744+00:00",
+        "config_sha256": "429573a04e578af84384f17e888227757e25eb503ca6b5a27c37a692aba0a08e",
+        "error": null,
+        "leases_released": true,
+        "load_average": [
+          1.82080078125,
+          1.1630859375,
+          1.126953125
+        ],
+        "status": "finished",
+        "stop_trigger": "signal",
+        "updated_utc": "2026-11-10T19:44:43.885771+00:00",
+        "wall_seconds": 9.45280360803008,
+        "worker_exit_code": 0,
+        "worker_pid": 3671507
+      },
+      "seconds": 9.945707082748413,
+      "unit_files": {
+        "fifth-cabbage-extended-test-signal-1794339874027073844.service": "[Unit]\nDescription=Cabbage buffered continuation\n[Service]\nType=exec\nWorkingDirectory=/home/pnord/scratch/cabbage-extended-upgrade-20261110\nNice=19\nUMask=0077\nEnvironment=PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 BLIS_NUM_THREADS=1 SCALING_LATTICE_SOURCE=/home/pnord/scratch/cabbage-extended-upgrade-20261110/worker/source/lattice_prototype\nRestart=no\nExecStart=/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python -B -u /home/pnord/scratch/cabbage-extended-upgrade-20261110/worker/cabbage_supervisor.py --config /home/pnord/scratch/cabbage-extended-upgrade-20261110/test-configs/cabbage-extended-test-signal-1794339874027073844.json\nKillMode=mixed\nTimeoutStopSec=8\nRuntimeMaxSec=109\nStandardOutput=append:/home/pnord/fifth42-local-runs/TEST_ONLY_cabbage_extended_20261109/cabbage-extended-test-signal-1794339874027073844/service.stdout.log\nStandardError=append:/home/pnord/fifth42-local-runs/TEST_ONLY_cabbage_extended_20261109/cabbage-extended-test-signal-1794339874027073844/service.stderr.log\n",
+        "fifth-cabbage-extended-test-signal-1794339874027073844-deadline.service": "[Unit]\nDescription=Stop only fifth-cabbage-extended-test-signal-1794339874027073844.service before its absolute deadline\n[Service]\nType=oneshot\nExecStart=/usr/bin/systemctl --user stop fifth-cabbage-extended-test-signal-1794339874027073844.service\nTimeoutStartSec=9\nRestart=no\n",
+        "fifth-cabbage-extended-test-signal-1794339874027073844-deadline.timer": "[Unit]\nDescription=Independent Cabbage deadline timer\n[Timer]\nOnCalendar=2026-11-10 19:46:14 UTC\nAccuracySec=100ms\nRandomizedDelaySec=0\nPersistent=false\nUnit=fifth-cabbage-extended-test-signal-1794339874027073844-deadline.service\n",
+        "fifth-cabbage-extended-test-signal-1794339874027073844-final-copy.service": "[Unit]\nDescription=Finish verified Cabbage replica without resuming compute\n[Service]\nType=exec\nWorkingDirectory=/home/pnord/scratch/cabbage-extended-upgrade-20261110\nNice=19\nUMask=0077\nEnvironment=PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 BLIS_NUM_THREADS=1 SCALING_LATTICE_SOURCE=/home/pnord/scratch/cabbage-extended-upgrade-20261110/worker/source/lattice_prototype\nRestart=no\nExecStart=/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python -B -u /home/pnord/scratch/cabbage-extended-upgrade-20261110/worker/finalize_replica.py --config /home/pnord/scratch/cabbage-extended-upgrade-20261110/test-configs/cabbage-extended-test-signal-1794339874027073844.json --config-sha256 429573a04e578af84384f17e888227757e25eb503ca6b5a27c37a692aba0a08e --wait\nKillMode=mixed\nTimeoutStopSec=3\nRuntimeMaxSec=1909\nStandardOutput=append:/home/pnord/fifth42-local-runs/TEST_ONLY_cabbage_extended_20261109/cabbage-extended-test-signal-1794339874027073844/final-copy.stdout.log\nStandardError=append:/home/pnord/fifth42-local-runs/TEST_ONLY_cabbage_extended_20261109/cabbage-extended-test-signal-1794339874027073844/final-copy.stderr.log\n"
+      }
+    },
+    {
+      "case": "deadline",
+      "status": "passed",
+      "config": "/home/pnord/scratch/cabbage-extended-upgrade-20261110/test-configs/cabbage-extended-test-deadline-1794339884020429476.json",
+      "chunks": 2355,
+      "logical_cells": 602880,
+      "physical_tasks": 75360,
+      "points": 3947595636,
+      "local_cursor": 1539451904,
+      "replica_cursor": 1539451904,
+      "owner_excluded_while_running": true,
+      "leases_released": true,
+      "actual_systemd_timer": true,
+      "compute_stopped_before_deadline": true,
+      "final_copy_service_passed": true,
+      "both_copies_independently_audited": true,
+      "final_buffer_drained": true,
+      "output_reuse_rejected": true,
+      "supervisor": {
+        "TEST_ONLY": true,
+        "all_owned_processes_exited_utc": "2026-11-10T19:45:08.706647+00:00",
+        "config_sha256": "c010f5432b0e4c45b552464e4ca0c0a4b935bd5eb7c511da80e1f2f3eaf117e6",
+        "error": null,
+        "leases_released": true,
+        "load_average": [
+          1.6201171875,
+          1.166015625,
+          1.1279296875
+        ],
+        "status": "finished",
+        "stop_trigger": "absolute_deadline",
+        "updated_utc": "2026-11-10T19:45:08.706677+00:00",
+        "wall_seconds": 24.336674277030397,
+        "worker_exit_code": 0,
+        "worker_pid": 3671648
+      },
+      "seconds": 26.368043184280396,
+      "unit_files": {
+        "fifth-cabbage-extended-test-deadline-1794339884020429476.service": "[Unit]\nDescription=Cabbage buffered continuation\n[Service]\nType=exec\nWorkingDirectory=/home/pnord/scratch/cabbage-extended-upgrade-20261110\nNice=19\nUMask=0077\nEnvironment=PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 BLIS_NUM_THREADS=1 SCALING_LATTICE_SOURCE=/home/pnord/scratch/cabbage-extended-upgrade-20261110/worker/source/lattice_prototype\nRestart=no\nExecStart=/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python -B -u /home/pnord/scratch/cabbage-extended-upgrade-20261110/worker/cabbage_supervisor.py --config /home/pnord/scratch/cabbage-extended-upgrade-20261110/test-configs/cabbage-extended-test-deadline-1794339884020429476.json\nKillMode=mixed\nTimeoutStopSec=8\nRuntimeMaxSec=29\nStandardOutput=append:/home/pnord/fifth42-local-runs/TEST_ONLY_cabbage_extended_20261109/cabbage-extended-test-deadline-1794339884020429476/service.stdout.log\nStandardError=append:/home/pnord/fifth42-local-runs/TEST_ONLY_cabbage_extended_20261109/cabbage-extended-test-deadline-1794339884020429476/service.stderr.log\n",
+        "fifth-cabbage-extended-test-deadline-1794339884020429476-deadline.service": "[Unit]\nDescription=Stop only fifth-cabbage-extended-test-deadline-1794339884020429476.service before its absolute deadline\n[Service]\nType=oneshot\nExecStart=/usr/bin/systemctl --user stop fifth-cabbage-extended-test-deadline-1794339884020429476.service\nTimeoutStartSec=9\nRestart=no\n",
+        "fifth-cabbage-extended-test-deadline-1794339884020429476-deadline.timer": "[Unit]\nDescription=Independent Cabbage deadline timer\n[Timer]\nOnCalendar=2026-11-10 19:45:04 UTC\nAccuracySec=100ms\nRandomizedDelaySec=0\nPersistent=false\nUnit=fifth-cabbage-extended-test-deadline-1794339884020429476-deadline.service\n",
+        "fifth-cabbage-extended-test-deadline-1794339884020429476-final-copy.service": "[Unit]\nDescription=Finish verified Cabbage replica without resuming compute\n[Service]\nType=exec\nWorkingDirectory=/home/pnord/scratch/cabbage-extended-upgrade-20261110\nNice=19\nUMask=0077\nEnvironment=PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 BLIS_NUM_THREADS=1 SCALING_LATTICE_SOURCE=/home/pnord/scratch/cabbage-extended-upgrade-20261110/worker/source/lattice_prototype\nRestart=no\nExecStart=/home/pnord/scratch/saved-root-pAjTHBhR/venv/bin/python -B -u /home/pnord/scratch/cabbage-extended-upgrade-20261110/worker/finalize_replica.py --config /home/pnord/scratch/cabbage-extended-upgrade-20261110/test-configs/cabbage-extended-test-deadline-1794339884020429476.json --config-sha256 c010f5432b0e4c45b552464e4ca0c0a4b935bd5eb7c511da80e1f2f3eaf117e6 --wait\nKillMode=mixed\nTimeoutStopSec=3\nRuntimeMaxSec=1829\nStandardOutput=append:/home/pnord/fifth42-local-runs/TEST_ONLY_cabbage_extended_20261109/cabbage-extended-test-deadline-1794339884020429476/final-copy.stdout.log\nStandardError=append:/home/pnord/fifth42-local-runs/TEST_ONLY_cabbage_extended_20261109/cabbage-extended-test-deadline-1794339884020429476/final-copy.stderr.log\n"
+      }
+    }
+  ],
+  "buffering_tests": {
+    "status": "passed",
+    "TEST_ONLY": true,
+    "GPU_used": false,
+    "production_modified": false,
+    "production_restarted": false,
+    "tests_run": 7,
+    "failures": 0,
+    "errors": 0,
+    "command": [
+      "/home/pnord/scratch/fifth42-production-speed-tests-7sfz9xet/bench/venv/bin/python",
+      "/home/pnord/scratch/fifth42-production-upgrade-20261110/candidate/worker/test_preparation_upgrade.py"
+    ],
+    "unittest_log": "test_bulk_stream_rejects_changed_window_and_duplicate_ack (__main__.PreparationUpgradeTests.test_bulk_stream_rejects_changed_window_and_duplicate_ack) ... ok\ntest_configured_production_window_size_is_preserved (__main__.PreparationUpgradeTests.test_configured_production_window_size_is_preserved) ... ok\ntest_cpu_map_stop_guard_and_explicit_gpu_callback (__main__.PreparationUpgradeTests.test_cpu_map_stop_guard_and_explicit_gpu_callback) ... ok\ntest_group8_guarded_subdivision_and_exact_certificates (__main__.PreparationUpgradeTests.test_group8_guarded_subdivision_and_exact_certificates) ... ok\ntest_group8_positive_exact_packets_against_independent_GMP_and_brute (__main__.PreparationUpgradeTests.test_group8_positive_exact_packets_against_independent_GMP_and_brute) ... ok\ntest_guarded_subdivision_and_original_boundaries_preserved (__main__.PreparationUpgradeTests.test_guarded_subdivision_and_original_boundaries_preserved) ... ok\ntest_original_variable_windows_packets_and_certificates_unchanged (__main__.PreparationUpgradeTests.test_original_variable_windows_packets_and_certificates_unchanged) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.132s\n\nOK\n",
+    "files_sha256": {
+      "packed_worker.py": "76ca596e9f6dd65a2997bb4acf7696879ccf69900b266ea4254141321466bf73",
+      "scheduling.py": "49a93f12d0ed26fc04e69a67a854bc94783e752e4c5f446ae06717ff6091fbc7",
+      "buffered_pipeline.py": "9da0483676d18e56ec9c07b6904937fc0e2e279b3b2983d6ccc8b25de716f18e",
+      "width_coverage.py": "fc69a43c0fda3405c641287fd8c8ff91b7092b0f4d094cb257fbbe5141a37995",
+      "gpu_preparation.py": "c972285480188f4a6dfba0a31bec5289c08f09d02ed2fd387ea13730c27d7e36",
+      "test_preparation_upgrade.py": "f91c534b4d11aac17ee25328afaa9f53cdb95e64def21d6634890e696617a9a2"
+    }
+  },
+  "dispatch_chunksize": 2,
+  "ready_queue_limit": 1,
+  "journal_buffer_records": 8
+}
