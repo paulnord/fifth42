@@ -1,9 +1,11 @@
 INSTALL COMMON — tested preparation release, user-authorized10November2026
 
 1. Wait for combined/preparation-r1-20261110/READY.json on NFS. Verify its
-   immutable GitHub source commit and all SHA256SUMS. The release branch is
+   immutable GitHub bundle_commit in the shared GITHUB_REVISION.json and all SHA256SUMS. The release branch is
    release/preparation-20261110-r1 in paulnord/fifth42. Clone/fetch that branch,
-   then checkout the exact source_commit from READY.json. Release directory:
+   then checkout that exact bundle_commit. source_commit in READY.json identifies
+   the unchanged tested code; bundle_commit also contains final checksums/results.
+   Release directory:
    releases/preparation-20261110-r1. Parent experiments and all earlier results
    remain in this Git history. Never use a moving branch as a source identity.
 
