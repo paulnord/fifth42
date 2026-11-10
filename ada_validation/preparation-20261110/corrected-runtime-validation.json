@@ -1,0 +1,56 @@
+{
+  "status": "passed",
+  "source_manifest_sha256": "97454dbbf1864edf8ac3080e008c1eda77d001b4f22ddf40ab82337db2a04001",
+  "cases": [
+    {
+      "status": "passed",
+      "case": "finite",
+      "TEST_ONLY": true,
+      "actual_gpu": true,
+      "actual_parent_lease": true,
+      "source_manifest_sha256": "97454dbbf1864edf8ac3080e008c1eda77d001b4f22ddf40ab82337db2a04001",
+      "partial_16_window_batch": true,
+      "partial_8_record_flush": true,
+      "verification_note": "Initial harness used audit_period=1 against frozen config period=128; original successful GPU service was rechecked with its actual configured cadence, without rerunning or changing its files",
+      "new_chunks": 17,
+      "new_patches": 4352,
+      "new_gmp_audited_chunks": 1,
+      "next_patch": 5887339648,
+      "independent_gmp_every_chunk": false,
+      "gmp_audit_period": 128
+    },
+    {
+      "existing_output_rejected": true,
+      "independent_deadline_timer": null,
+      "status": "passed",
+      "case": "signal",
+      "TEST_ONLY": true,
+      "actual_gpu": true,
+      "actual_parent_lease": true,
+      "independent_gmp_every_chunk": false,
+      "source_manifest_sha256": "97454dbbf1864edf8ac3080e008c1eda77d001b4f22ddf40ab82337db2a04001",
+      "new_chunks": 82,
+      "new_patches": 20992,
+      "new_gmp_audited_chunks": 1,
+      "next_patch": 5887356288,
+      "gmp_audit_period": 128
+    },
+    {
+      "existing_output_rejected": true,
+      "independent_deadline_timer": "Calendar stop oneshot executed successfully at 14:15:53 Central; RuntimeMaxSec began stopping the GPU owner one second earlier. Worker exit=0, final copies audited and equal.",
+      "status": "passed",
+      "case": "deadline",
+      "TEST_ONLY": true,
+      "actual_gpu": true,
+      "actual_parent_lease": true,
+      "independent_gmp_every_chunk": false,
+      "source_manifest_sha256": "97454dbbf1864edf8ac3080e008c1eda77d001b4f22ddf40ab82337db2a04001",
+      "new_chunks": 5889,
+      "new_patches": 1507584,
+      "new_gmp_audited_chunks": 47,
+      "next_patch": 5888842880,
+      "gmp_audit_period": 128
+    }
+  ],
+  "clarification": "Original harness summaries carried a stale independent_gmp_every_chunk=True field. Actual frozen test configuration and full receipt audits used the production period128. Native visit counts and exact coverage were checked for every record; GMP replay checked the configured periodic samples. Original evidence is retained unchanged."
+}

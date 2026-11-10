@@ -1,0 +1,75 @@
+Ada preparation production — 10 November 2026
+===========================================
+
+Ada is running ada-preparation-20261110.service from the exact sealed cursor
+5887335296. It uses CPU preparation in batches of 16, group_limit=4,
+dispatch_chunksize=4, original 256-cell GPU requests and durable journal
+commits, 16 physical CPU workers, and the original native/GMP executables.
+Lazy iteration is retained. GPU proposal preparation is not enabled.
+
+At that actual cursor, six balanced 32,768-cell trials gave median throughput
+17,570 cells/s for one-window preparation and 19,358 for 16-window preparation:
+10.175% higher. Every candidate signature, point count, task count and hit set
+matched. These are finite steady-pipeline timings; live rates vary by region.
+
+Manifest SHA256:
+97454dbbf1864edf8ac3080e008c1eda77d001b4f22ddf40ab82337db2a04001
+Configuration SHA256:
+d60ff6006a42e5b1ebea211558c62fcaffc2e2b3cbae10987de532f319b80176
+
+Stop deadline: November 11, 2026 at 17:00 America/Chicago, epoch1794438000.
+Independent child and controller timers begin cleanup at16:59:50 Central.
+The parent lease remains held during final-copy cleanup. Services survive logout.
+
+Monitoring:
+/mnt/nfs_share/ada-preparation-publishing-20261110/status.json
+/home/pnord/ada-preparation-release-20261110/rotation-state.json
+
+Graceful stop:
+/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python -B \
+  /home/pnord/ada-preparation-release-20261110/stop_production.py
+This records stop intent before stopping the controller and its current owner.
+Independent final-copy services are left running. Do not stop the parent lease
+while another delegated child remains active.
+
+Rotation is limited to the existing Ada child claim, hard endpoint7000000000.
+Only a clean journal-cap stop can create a fresh continuation. It waits for
+MainPID0, clean supervisor/worker reports, zero pending bytes/records and the
+verified final replica, then replays every receipt and saved GMP result on the
+stopped NVMe source. Claims, source hashes, native limits and the exact cursor
+are preserved. Failed, manual, dirty or replication-lag stops require review.
+The eight decision tests, two manual-stop tests and actual TEST_ONLY successor
+metadata reconstruction passed. Production rollover has not yet occurred.
+If the assigned interval finishes before the deadline, the controller stops;
+it does not take Boole's reserved tail or claim whole-shell completion.
+
+The old 90,360,932,810-byte journal was fully audited (4,906,387 chunks and
+38,332 saved GMP audits). The final independent mirror compared its complete
+local and replica bytes and verified the checkpoint. Its original path now
+links to the verified bulk archive, reclaiming about84.16GiB on the NVMe.
+Checkpoint/status/source metadata remain in place. Offload-proof.json records
+the exact archive and raw SHA256. No live journal was moved.
+
+Actual GPU finite17-window, graceful-stop and absolute-deadline cases passed,
+with nonempty full-oracle controls, exact native counts, periodic GMP proof,
+local/replica audit equality, final flush and existing-output rejection.
+corrected-runtime-validation.json clarifies an old harness summary flag:
+the tests used the frozen production GMP cadence128, not every chunk.
+Every native receipt was checked. The original evidence is retained unchanged.
+The independent calendar stop executed; RuntimeMaxSec began stopping the
+deadline fixture one second earlier. The worker exited0 and both copies audited.
+
+Renewed parent grant and Boole handoff:
+/mnt/nfs_share/fifth42-integration-20261109/combined/parent-renewal-r2-20261110/READY.json
+Boole's sealed current cursor is7437659904. Existing signed claims and their
+original identity are unchanged. New configurations must use the supplied
+renewal guard, GRANT-r2.json SHA256
+1ad753cc304effa08f3e62906388d62aa97295754c7bc9b87ca35bf0f003e4b0,
+coordinator-state-r2.json and READY-r2.json. The exact paths and guard identity
+are in that handoff; READY-r2 is active_delegation_ready. The old grant remains
+immutable. Do not replay already consumed claims.
+
+GitHub holds the deployed source, configurations, tests and benchmark results.
+GITHUB.json records exact commits and readback verification. Full journals and
+native executables are retained in the verified local/bulk archives; the source
+tarball includes the exact small native binaries for reproduction in scratch.
