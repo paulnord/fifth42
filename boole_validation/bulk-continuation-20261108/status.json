@@ -3,7 +3,7 @@
   "alerts": [],
   "backend": "gpu",
   "checkpoint": {
-    "chunks": 88057,
+    "chunks": 103055,
     "completed_bound": null,
     "coverage_schema": "logical-width8-physical-groups-v1",
     "hits": [],
@@ -11,12 +11,12 @@
       "source_identity": "d61003d510520fcbea7df2019eb55d1755afba3daed1bb301cb43b35fc9abeea",
       "trial": "boole-range-r3-20261111-18"
     },
-    "journal_offset": 1690638750,
-    "journal_sha256": "41337bd87ee538eddd54405446c6f197747ed36a9db2dfefc45fcfba95edf7f9",
-    "next_patch": 8212160512,
-    "patches": 22542592,
-    "physical_tasks": 5635648,
-    "points": 6247329816366,
+    "journal_offset": 1978595629,
+    "journal_sha256": "3481f85985752ad7ddf748263126fc4e432b19b1126542216a71215ae4e970a3",
+    "next_patch": 8216000000,
+    "patches": 26382080,
+    "physical_tasks": 6595520,
+    "points": 7318508274460,
     "window": {
       "bits": 222,
       "cap": 42,
@@ -30,12 +30,12 @@
   },
   "combined_committed_interval": [
     8152000000,
-    8212160512
+    8216000000
   ],
-  "combined_selected_patches": 60160512,
+  "combined_selected_patches": 64000000,
   "committed_interval": [
     8189617920,
-    8212160512
+    8216000000
   ],
   "completed_bound": null,
   "config_sha256": "05308192dedf588962b3258f9dd35e417af8215a9f10e7bc3dcbbc3e1f856fc8",
@@ -50,7 +50,7 @@
   "journal_limit_bytes": 34359738368,
   "journal_storage": "local durable journal; verified bulk replica every 60 seconds",
   "ledger_claim_sha256": "a03aa47368f34cf33ef7014515d15dd3ad5187b2fa94e95a627ff6ba306ed4ed",
-  "local_next_patch": 8212817920,
+  "local_next_patch": 8216000000,
   "manifest_sha256": "e3ca3afda4ce81951708b3613fa6910c074a474dc7f67bd677581eb19313fcc2",
   "mathematical_coverage_claim": false,
   "minimum_free_disk_bytes": 17179869184,
@@ -59,23 +59,23 @@
     8152000000,
     8189617920
   ],
-  "phase": "running",
+  "phase": "stopped",
   "production_launched": true,
   "replica": {
-    "captured_epoch": 1794419039.2564602,
-    "checkpoint_sha256": "19798da3c26810cf0c4cbfef4fe1bea1fdb9091effb683d90221fbd04c1abe97",
-    "chunks": 88057,
-    "committed_bytes": 1690638750,
+    "captured_epoch": 1794419502.3324695,
+    "checkpoint_sha256": "b2caa6a7f19885d72b2ac2c373e5248b4edfab3144b99729f345357665d1eaaa",
+    "chunks": 103055,
+    "committed_bytes": 1978595629,
     "identity": {
       "source_identity": "d61003d510520fcbea7df2019eb55d1755afba3daed1bb301cb43b35fc9abeea",
       "trial": "boole-range-r3-20261111-18"
     },
-    "journal_sha256": "41337bd87ee538eddd54405446c6f197747ed36a9db2dfefc45fcfba95edf7f9",
+    "journal_sha256": "3481f85985752ad7ddf748263126fc4e432b19b1126542216a71215ae4e970a3",
     "method": "append, fsync, byte readback, audit copies, checkpoint, receipt",
-    "next_patch": 8212160512,
-    "raw_sha256": "46e29b37c8770461f5a617fa0d18bfc600b4c843bbb5f9034b8e3c0249595287",
+    "next_patch": 8216000000,
+    "raw_sha256": "27edfb4358f21df73377d43a99d11fc6e753472fdc6b64ab33d72009c1773bab",
     "status": "verified",
-    "synced_epoch": 1794419049.466606
+    "synced_epoch": 1794419510.2792354
   },
   "report_interval_seconds": 900,
   "reserved_interval": [
@@ -84,69 +84,72 @@
   ],
   "run_id": "boole-range-r3-20261111-18",
   "service": {
-    "ActiveState": "active",
-    "MainPID": "939873",
+    "ActiveState": "inactive",
+    "MainPID": "0",
     "NRestarts": "0",
-    "SubState": "running"
+    "SubState": "dead"
   },
-  "snapshot_utc": "2026-11-11T17:45:10.629457+00:00",
+  "snapshot_utc": "2026-11-11T17:52:16.315239+00:00",
   "source_identity": "d61003d510520fcbea7df2019eb55d1755afba3daed1bb301cb43b35fc9abeea",
   "stop_epoch": 1794524400,
   "stop_local": "2026-11-12T17:00:00-06:00",
   "supervisor": {
     "TEST_ONLY": false,
+    "all_owned_processes_exited_utc": "2026-11-11T17:50:56.077472+00:00",
     "config_sha256": "05308192dedf588962b3258f9dd35e417af8215a9f10e7bc3dcbbc3e1f856fc8",
     "error": null,
-    "leases_released": false,
+    "leases_released": true,
     "load_average": [
-      2.828125,
-      3.52685546875,
-      3.46044921875
+      3.29833984375,
+      3.7021484375,
+      3.57421875
     ],
-    "status": "running",
-    "updated_utc": "2026-11-11T17:45:05.667304+00:00",
+    "status": "finished",
+    "updated_utc": "2026-11-11T17:50:56.077494+00:00",
+    "wall_seconds": 2817.4957208730048,
+    "worker_exit_code": 0,
     "worker_pid": 939895
   },
   "worker_metrics": {
     "dispatch_chunksize": 4,
     "error": null,
-    "gmp_audited_chunks": 707,
+    "gmp_audited_chunks": 806,
     "journal_buffer": {
-      "flush_count": 11333,
-      "flush_seconds": 80.40489246067591,
-      "pending_bytes": 115189,
-      "pending_chunks": 6
+      "flush_count": 12908,
+      "flush_seconds": 92.16134169959696,
+      "pending_bytes": 0,
+      "pending_chunks": 0
     },
-    "patches_per_second": 9394.238648760196,
+    "patches_per_second": 9381.355693429234,
     "prefetch": {
-      "active": 1,
-      "consumer_wait_empty_seconds": 0.17039483692497015,
-      "elapsed_seconds": 2465.564209145028,
-      "inflight": 1,
+      "active": 0,
+      "consumer_wait_empty_seconds": 0.17139336321270093,
+      "elapsed_seconds": 2812.0716141419834,
+      "inflight": 0,
       "max_outstanding": 3,
       "maximum_prepared_payload_bytes": 7682831,
-      "mean_ready_depth": 0.9991745308439457,
-      "outstanding": 3,
+      "mean_ready_depth": 0.998550616844679,
+      "outstanding": 0,
       "peak_outstanding": 3,
       "peak_ready": 1,
       "peak_reserved_bytes": 37748736,
       "preparation_batch_windows": 16,
-      "preparation_batches": 5657,
-      "prepare_wall_seconds": 2465.3948222019244,
-      "producer_wait_capacity_seconds": 0.0071896337904036045,
-      "producer_wait_full_seconds": 1464.8010904969415,
+      "preparation_batches": 6441,
+      "prepare_wall_seconds": 2810.1137807115447,
+      "producer_wait_capacity_seconds": 0.008222190954256803,
+      "producer_wait_full_seconds": 1670.5469580680365,
       "queue_units": "bounded preparation batches; original execution/journal windows preserved",
-      "ready": 1,
+      "ready": 0,
       "ready_depth_seconds": {
-        "0": 2.035245156905148,
-        "1": 2463.5289619381074
+        "0": 4.075766089139506,
+        "1": 2807.99584491289
       },
       "ready_limit": 1,
-      "reserved_bytes": 37748736
+      "reserved_bytes": 0
     },
-    "reason": null,
-    "search_seconds": 2465.6746401750133,
-    "updated_utc": "2026-11-11T17:45:05.144125+00:00"
+    "reason": "Selected remaining shell endpoint reached",
+    "search_seconds": 2812.1820408619824,
+    "updated_utc": "2026-11-11T17:50:51.651526+00:00"
   },
   "workers": 16
 }
