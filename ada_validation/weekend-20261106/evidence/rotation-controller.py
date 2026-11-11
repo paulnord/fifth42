@@ -80,14 +80,14 @@ def prepare_successor(active,c,sealed,index):
  reporting=(R/'prepare_reporting.py').read_text().replace("REPORTER = Path('/home/pnord/ada-preparation-reporting-20261110')","REPORTER = ROOT/'reporting'").replace("cfg['run_id'] == 'ada-preparation-20261110'","cfg['run_id'] == "+repr(name)).replace("service_name='ada-preparation-publisher-20261110.service'","service_name=cfg['run_id']+'-publisher.service'")
  (root/'prepare_reporting.py').write_text(reporting)
  return dict(root=str(root),worker=str(w),config=str(w/'config.json'),config_sha256=sha(w/'config.json'),service=n['service_name'],collector=name+'-collector.service',publisher=name+'-publisher.service',reporter=str(root/'reporting'))
-def terminal_publication_matches(published,c,closed):
+def terminal_publication_matches(published,c,closed,phase='stopped'):
  push=published.get('latest_push',{});verified=published.get('latest_readback',{})
- return (push.get('status')=='published' and push.get('phase')=='stopped' and
+ return (push.get('status')=='published' and push.get('phase')==phase and
          push.get('run_id')==c['run_id'] and push.get('next_patch')==closed['next_patch'] and
          bool(push.get('commit')) and verified.get('status')=='passed' and
          verified.get('commit')==push['commit'] and published.get('latest_checkpoint')==closed and
          published.get('final_replica_verified') is True)
-def ensure_terminal_publication(active,timeout=240):
+def ensure_terminal_publication(active,timeout=240,phase='stopped'):
  c=read(active['config']);closed=read(Path(c['output'])/'checkpoint.json')
  reporter=Path(active['reporter']);ready=reporter/'readiness.json';until=time.monotonic()+timeout
  # A publisher may have exited on an earlier stopped snapshot before the last
@@ -95,10 +95,10 @@ def ensure_terminal_publication(active,timeout=240):
  # that stale receipt. The collector must attest final-replica verification.
  while time.monotonic()<until:
   if STOP.exists():return False
-  if ready.exists() and terminal_publication_matches(read(ready),c,closed):return True
+  if ready.exists() and terminal_publication_matches(read(ready),c,closed,phase):return True
   if unit(active['publisher'])['ActiveState'] not in ('active','activating','deactivating'):
    settings=read(reporter/'publisher-settings.json');snapshot=read(Path(settings['share'])/'status.json')
-   if (snapshot.get('run_id')==c['run_id'] and snapshot.get('phase')=='stopped' and
+   if (snapshot.get('run_id')==c['run_id'] and snapshot.get('phase')==phase and
        snapshot.get('checkpoint')==closed and snapshot.get('final_replica_verified') is True):
     try:command([PYTHON,'-B',str(reporter/'publish_bulk_worker.py'),'--once'],timeout=150)
     except (RuntimeError,subprocess.TimeoutExpired) as error:print('Final publication will retry: '+str(error),flush=True)
@@ -122,9 +122,9 @@ def wait_for_first_replica(active):
   if owner['ActiveState']=='failed':raise RuntimeError('Successor failed before its first verified replica')
   if time.monotonic()>until:raise TimeoutError('Successor has no verified first replica within its replication budget')
   time.sleep(2)
-def start_successor(previous,active):
+def start_successor(previous,active,previous_phase='stopped'):
  c=read(active['config']);root=Path(active['root']);w=Path(active['worker']);reporter=Path(active['reporter'])
- if not ensure_terminal_publication(previous):return False
+ if not ensure_terminal_publication(previous,phase=previous_phase):return False
  until=time.monotonic()+30
  while unit(previous['publisher'])['ActiveState'] in ('active','activating','deactivating'):
   if STOP.exists():return False
@@ -148,7 +148,14 @@ def active_for(config):
              service=c['service_name'],collector='ada-preparation-collector-20261110.service' if initial else name+'-collector.service',
              publisher='ada-preparation-publisher-20261110.service' if initial else name+'-publisher.service',
              reporter='/home/pnord/ada-preparation-reporting-20261110' if initial else str(root/'reporting'))
-def reviewed_staged_recovery(state,expected_sha):
+def reviewed_resource_stop_is_clean(service,supervisor,status):
+ expected='RuntimeError: Another active fifth service: fifth42-range-extension-parent-r3-20261111.service '
+ return (service.get('ActiveState')=='inactive' and service.get('MainPID')=='0' and
+         supervisor.get('status')=='guard_stopped' and supervisor.get('leases_released') is True and
+         str(supervisor.get('error','')).startswith(expected) and
+         status.get('status')=='stopped' and status.get('error') is None and status.get('reason')=='Stop requested' and
+         status.get('journal_buffer',{}).get('pending_chunks')==0 and status['journal_buffer'].get('pending_bytes')==0)
+def reviewed_staged_recovery(state,expected_sha,reviewed_resource_stop=False):
  if sha(STATE)!=expected_sha:raise RuntimeError('Reviewed controller state changed')
  if state.get('status')!='failed_closed':raise RuntimeError('Only a reviewed failed staged transition can be recovered')
  if STOP.exists():raise RuntimeError('Explicit stop intent is present')
@@ -167,8 +174,13 @@ def reviewed_staged_recovery(state,expected_sha):
  if ((local/'checkpoint.json').read_bytes()!=(Path(c['parent_run'])/'checkpoint.json').read_bytes() or
      final.get('status')!='verified' or final['receipt']['checkpoint_sha256']!=c['parent_checkpoint_sha256'] or
      final['receipt']['raw_sha256']!=c['parent_journal_raw_sha256']):raise RuntimeError('Predecessor final replica changed')
- action=decision(unit(previous['service']),read(Path(previous['worker'])/'supervisor-report.json'),
-                 read(local/'status.json'),closed,prior,False,time.time())
+ owner=unit(previous['service']);supervisor=read(Path(previous['worker'])/'supervisor-report.json');status=read(local/'status.json')
+ if reviewed_resource_stop:
+  if not reviewed_resource_stop_is_clean(owner,supervisor,status):raise RuntimeError('Reviewed resource stop does not match the fully audited owned-service incident')
+  offender=unit('fifth42-range-extension-parent-r3-20261111.service')
+  if offender['ActiveState']!='inactive' or offender['MainPID']!='0':raise RuntimeError('Conflicting standby service is still present')
+  action='rotate'
+ else:action=decision(owner,supervisor,status,closed,prior,False,time.time())
  if action!='rotate':raise RuntimeError('Predecessor is not a clean journal-cap stop')
  completed=state.get('completed',[])
  if not completed or (completed[-1]['run_id'],completed[-1]['cursor'])!=(prior['run_id'],c['initial_patch']):
@@ -177,16 +189,16 @@ def reviewed_staged_recovery(state,expected_sha):
 def run(a):
  if STATE.exists():
   if not a.recover_staged or not a.reviewed_state_sha256:raise RuntimeError('Controller state exists; manual review required')
-  state=read(STATE);previous=reviewed_staged_recovery(state,a.reviewed_state_sha256);active=state['active']
+  state=read(STATE);previous=reviewed_staged_recovery(state,a.reviewed_state_sha256,a.reviewed_resource_stop);active=state['active']
   state.update(status='starting',previous=previous,source_sha256=a.self_sha256,
-               recovery=dict(reviewed_state_sha256=a.reviewed_state_sha256,authorized_epoch=time.time(),scope='Unstarted successor of the reviewed clean archived journal-cap stop'))
+               recovery=dict(reviewed_state_sha256=a.reviewed_state_sha256,authorized_epoch=time.time(),scope='Fully audited resource-guard stop caused by the owned standby-service name; predecessor failure report retained' if a.reviewed_resource_stop else 'Unstarted successor of the reviewed clean archived journal-cap stop'))
   state.pop('error',None);atomic(STATE,state)
  else:
   if a.recover_staged:raise RuntimeError('No failed controller state to review')
   active=active_for(R/'worker/config.json');previous=None
   state=dict(status='adopting',active=active,completed=[],source_sha256=a.self_sha256,automatic_failed_resume=False)
  try:
-  if previous is not None and not start_successor(previous,active):return
+  if previous is not None and not start_successor(previous,active,previous_phase='failed' if a.reviewed_resource_stop else 'stopped'):return
   while True:
    assert sha(__file__)==a.self_sha256
    if STOP.exists():state.update(status='stop',active=active,updated_epoch=time.time());atomic(STATE,state);return
@@ -211,6 +223,7 @@ def run(a):
 def main():
  p=argparse.ArgumentParser();p.add_argument('--self-sha256',required=True)
  p.add_argument('--recover-staged',action='store_true');p.add_argument('--reviewed-state-sha256')
+ p.add_argument('--reviewed-resource-stop',action='store_true',help='Manual audited recovery of the exact owned standby-service naming incident; never automatic')
  a=p.parse_args();assert sha(__file__)==a.self_sha256
  with (R/'rotation-controller.lock').open('a+') as lock:
   fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB);run(a)
