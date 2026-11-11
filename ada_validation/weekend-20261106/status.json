@@ -1,5 +1,5 @@
 {
-  "snapshot_utc": "2026-11-11T15:50:24.150918+00:00",
+  "snapshot_utc": "2026-11-11T16:01:26.802757+00:00",
   "host": "ada",
   "TEST_ONLY": false,
   "run_id": "ada-preparation-rotation-01-20261110",
@@ -13,7 +13,7 @@
   ],
   "committed_interval": [
     6842653824,
-    6871424128
+    6882696576
   ],
   "workers": 16,
   "backend": "gpu",
@@ -21,9 +21,9 @@
   "stop_local": "2026-11-11T17:00:00-06:00",
   "stop_epoch": 1794438000,
   "service": {
-    "ActiveState": "active",
-    "SubState": "running",
-    "MainPID": "3382233",
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "MainPID": "0",
     "NRestarts": "0"
   },
   "deadline_timer": {
@@ -37,11 +37,13 @@
   "coverage_scope": "Verified selected interval and parent lineage only; no full-box bound.",
   "production_launched": true,
   "mathematical_coverage_claim": false,
-  "phase": "running",
-  "final_replica_verified": false,
-  "alerts": [],
+  "phase": "failed",
+  "final_replica_verified": true,
+  "alerts": [
+    "RuntimeError: Another active fifth service: fifth42-range-extension-parent-r3-20261111.service loaded active running [systemd-run] /usr/bin/python3 -B -u /home/pnord/fifth42-range-extension-20261111/parent_coordinator.py --grant /mnt/nfs_share/fifth42-integration-20261109/combined/range-extension-r3-20261111/GRANT-r3.json --grant-sha256 14cd2aca8cafafc80799473cb9497e9c86be4b6f866a8b72c4d6b67a1c696df9 --wait"
+  ],
   "checkpoint": {
-    "chunks": 112384,
+    "chunks": 156417,
     "completed_bound": null,
     "coverage_schema": "logical-width8-physical-groups-v1",
     "hits": [],
@@ -49,12 +51,12 @@
       "source_identity": "5cb24e6fef80d4eb5d207554d6cc2243157a49712019189cbeee284620ec91fb",
       "trial": "ada-preparation-rotation-01-20261110"
     },
-    "journal_offset": 2070709164,
-    "journal_sha256": "3285522c1d086533a7c21de333042725641899e91c15dadeab6888dfb85b0a57",
-    "next_patch": 6871424128,
-    "patches": 28770304,
-    "physical_tasks": 7192576,
-    "points": 4113407636332,
+    "journal_offset": 2882075192,
+    "journal_sha256": "843fdbb85c74687ffb35000b3a8ab0991015736677f7dd1bb21b15bc605470d1",
+    "next_patch": 6882696576,
+    "patches": 40042752,
+    "physical_tasks": 10010690,
+    "points": 5740901393078,
     "window": {
       "bits": 222,
       "cap": 42,
@@ -67,43 +69,43 @@
     }
   },
   "worker_metrics": {
-    "updated_utc": "2026-11-11T15:50:19.997209+00:00",
-    "patches_per_second": 16302.009463002889,
-    "gmp_audited_chunks": 907,
-    "search_seconds": 1821.113407360972,
+    "updated_utc": "2026-11-11T16:00:58.744138+00:00",
+    "patches_per_second": 16278.465655488484,
+    "gmp_audited_chunks": 1223,
+    "search_seconds": 2459.8603361920104,
     "error": null,
-    "reason": null,
+    "reason": "Stop requested",
     "prefetch": {
-      "active": 1,
-      "consumer_wait_empty_seconds": 347.533392211888,
-      "elapsed_seconds": 1821.1112760090036,
-      "inflight": 1,
+      "active": 0,
+      "consumer_wait_empty_seconds": 468.69806533603696,
+      "elapsed_seconds": 2459.858213827014,
+      "inflight": 0,
       "max_outstanding": 3,
-      "maximum_prepared_payload_bytes": 7680500,
-      "mean_ready_depth": 0.43865599453146337,
-      "outstanding": 3,
+      "maximum_prepared_payload_bytes": 7685285,
+      "mean_ready_depth": 0.43948960296598627,
+      "outstanding": 0,
       "peak_outstanding": 3,
       "peak_ready": 1,
       "peak_reserved_bytes": 37748736,
       "preparation_batch_windows": 16,
-      "preparation_batches": 7250,
-      "prepare_wall_seconds": 1820.1641896012588,
-      "producer_wait_capacity_seconds": 0.0067829746985808015,
-      "producer_wait_full_seconds": 542.3080164734856,
+      "preparation_batches": 9778,
+      "prepare_wall_seconds": 2458.67693903076,
+      "producer_wait_capacity_seconds": 0.009162068774458021,
+      "producer_wait_full_seconds": 734.5516578398529,
       "queue_units": "bounded preparation batches; original execution/journal windows preserved",
-      "ready": 1,
+      "ready": 0,
       "ready_depth_seconds": {
-        "0": 1022.2698954538209,
-        "1": 798.8413779301918
+        "0": 1378.7761004225467,
+        "1": 1081.0821097474545
       },
       "ready_limit": 1,
-      "reserved_bytes": 37748736
+      "reserved_bytes": 0
     },
     "journal_buffer": {
-      "flush_count": 14496,
-      "flush_seconds": 91.81420942541445,
-      "pending_bytes": 18426,
-      "pending_chunks": 1
+      "flush_count": 19553,
+      "flush_seconds": 124.67170330137014,
+      "pending_bytes": 0,
+      "pending_chunks": 0
     },
     "dispatch_chunksize": 4
   },
@@ -111,7 +113,7 @@
     "automatic_resume": false,
     "config": "/home/pnord/ada-preparation-release-20261110/stages/ada-preparation-rotation-01-20261110/worker/config.json",
     "config_sha256": "0227f617d80707eee731912335e89d4a11862ae3215a42f0a475b836c15b9ae3",
-    "error": null,
+    "error": "RuntimeError: Another active fifth service: fifth42-range-extension-parent-r3-20261111.service loaded active running [systemd-run] /usr/bin/python3 -B -u /home/pnord/fifth42-range-extension-20261111/parent_coordinator.py --grant /mnt/nfs_share/fifth42-integration-20261109/combined/range-extension-r3-20261111/GRANT-r3.json --grant-sha256 14cd2aca8cafafc80799473cb9497e9c86be4b6f866a8b72c4d6b67a1c696df9 --wait",
     "held_leases": [
       "/home/pnord/fifth-lattice-optimizations-ada-20261105/cpu-benchmark.lock",
       "/home/pnord/fifth-lattice-gpu/validation.lock",
@@ -133,10 +135,11 @@
       "/home/pnord/ada-preparation-release-20261110/stages/ada-preparation-rotation-01-20261110/worker/coordinator.lock"
     ],
     "idle_load_limit": 2,
+    "leases_released": true,
     "load_average": [
-      5.58642578125,
-      6.3681640625,
-      5.7001953125
+      6.81982421875,
+      6.521484375,
+      6.1015625
     ],
     "minimum_free_memory_gib": 4,
     "parent_cursor": 6842653824,
@@ -145,28 +148,28 @@
     "resource_helper_sha256": "a73715d1473fd52c2a86670f05cfe747800d3ccca688b6e0a9e7593d25e5aed9",
     "running_load_limit": 20.0,
     "service": "ada-preparation-rotation-01-20261110.service",
-    "status": "running",
+    "status": "guard_stopped",
     "stop_epoch": 1794438000,
     "stop_local": "2026-11-11T17:00:00-06:00",
-    "updated_utc": "2026-11-11T15:50:20.071399+00:00",
+    "updated_utc": "2026-11-11T16:01:01.839778+00:00",
     "worker_pid": 3382256
   },
-  "local_next_patch": 6872413312,
+  "local_next_patch": 6882696576,
   "replica": {
-    "captured_epoch": 1794412163.0234532,
-    "checkpoint_sha256": "5b42a4142b21607d94930f2e541b16363a418c3eefef55a9667511661dbc5efb",
-    "chunks": 112384,
-    "committed_bytes": 2070709164,
+    "captured_epoch": 1794412864.9819338,
+    "checkpoint_sha256": "dd7351c3f47fbc67bc7cacab9b0a11523f349f05c7d34b35708fbdeee487b920",
+    "chunks": 156417,
+    "committed_bytes": 2882075192,
     "identity": {
       "source_identity": "5cb24e6fef80d4eb5d207554d6cc2243157a49712019189cbeee284620ec91fb",
       "trial": "ada-preparation-rotation-01-20261110"
     },
-    "journal_sha256": "3285522c1d086533a7c21de333042725641899e91c15dadeab6888dfb85b0a57",
+    "journal_sha256": "843fdbb85c74687ffb35000b3a8ab0991015736677f7dd1bb21b15bc605470d1",
     "method": "append, fsync, byte readback, audit copies, checkpoint, receipt",
-    "next_patch": 6871424128,
-    "raw_sha256": "fcf8401b39f1ef9ec3ee8e2cf73fd7df377842a4bc5cbc17b3019e33fb9e1d37",
+    "next_patch": 6882696576,
+    "raw_sha256": "a6bcfd9064006d86e4ad0150b6608695fa2b1b1d6c796fb367b088f583a4ae5b",
     "status": "verified",
-    "synced_epoch": 1794412168.643596
+    "synced_epoch": 1794412866.323961
   },
   "group_limit": 4,
   "journal_storage": "local durable journal; verified bulk replica every 60 seconds",
@@ -176,8 +179,8 @@
   ],
   "combined_committed_interval": [
     3750000000,
-    6871424128
+    6882696576
   ],
-  "combined_selected_patches": 3121424128,
+  "combined_selected_patches": 3132696576,
   "parent_audit_sha256": "6da2f2251d036ea60e7f5ab5f7c2927b1de8cace6c99696dfebc651496190b56"
 }
