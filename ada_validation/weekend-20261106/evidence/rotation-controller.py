@@ -31,12 +31,14 @@ def load_helpers(admission):
     return q
 
 def verify(admission,pin):
-    require(sha(ROOT/'ADMISSION.json')==pin,'Memory-r2 admission changed')
+    require(sha(ROOT/'ADMISSION-v2.json')==pin,'Memory-r2 admission changed')
     require(sha(__file__)==admission['controller_sha256'],'Memory-r2 controller changed')
     for name,digest in admission['original_r3_pins'].items():
         require(sha(Path(admission['r3_directory'])/name)==digest,'Original r3 evidence changed: '+name)
     for name,digest in admission['review_evidence_sha256'].items():
         require(sha(ROOT/name)==digest,'Frozen review evidence changed: '+name)
+    for name,digest in admission.get('current_publisher_sources_sha256',{}).items():
+        require(sha(name)==digest,'Reviewed current publisher adapter changed: '+name)
     proof=read(ROOT/'ANALYTIC-TAIL-ADMISSION.json')
     require(proof['status']=='approved_analytic_exclusion' and proof['analytic_interval']==[10881882043,11250000001]
             and proof['native_stop_threshold']==10881882112,'Unexpected analytic tail admission')
@@ -63,6 +65,12 @@ def previous_binding(q,previous):
         if all(s['ActiveState']=='inactive' and s['MainPID']=='0' for s in states):return None
     return previous
 
+def adoption_matches(spec,c,live,owner):
+    return (owner.get('ActiveState')=='active' and int(owner.get('MainPID','0'))>0 and
+            live.get('run_id')==c['run_id'] and live.get('config_sha256')==spec['config_sha256'] and
+            live.get('manifest_sha256')==c['manifest_sha256'] and
+            live.get('phase')=='running' and live.get('alerts')==[])
+
 def terminal_prefix_valid(owner,supervisor,native,cp,c,threshold):
     require(owner['ActiveState']=='inactive' and owner['MainPID']=='0','Tail compute owner has not exited')
     require(supervisor.get('error') is None and supervisor.get('worker_exit_code')==0 and supervisor.get('leases_released') is True,
@@ -87,23 +95,30 @@ def startup_readback(q,c):
 def main(pin):
     require(os.uname().nodename.split('.')[0]=='ada','Controller belongs on physical Ada')
     lock=(ROOT/'controller.lock').open('a+');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
-    require(not(ROOT/'STATE.json').exists(),'Existing controller state requires explicit reconciliation')
-    a=read(ROOT/'ADMISSION.json');proof=verify(a,pin);q=load_helpers(a)
+    require(not(ROOT/'STATE-v2.json').exists(),'Existing controller state requires explicit reconciliation')
+    a=read(ROOT/'ADMISSION-v2.json');proof=verify(a,pin);q=load_helpers(a)
     state=dict(status='starting',generation='ada-memory-r2-20261111',stop_epoch=a['stop_epoch'],
         admission_sha256=pin,active=None,completed=[],sealed_recovery_prefix=a['sealed_recovery_prefix'],
         analytic_tail_status='armed_not_yet_reached',error=None)
     def save():
-        state['updated_epoch']=time.time();atomic(ROOT/'STATE.json',state);atomic(SHARE/'STATE.json',state)
+        state['updated_epoch']=time.time();atomic(ROOT/'STATE-v2.json',state);atomic(SHARE/'STATE.json',state)
         atomic(Path(a['r3_directory'])/'ADA_QUEUE_STATUS.json',state)
     previous=a['previous'];save()
     try:
-        for spec in a['stages']:
+        for index,spec in enumerate(a['stages']):
             verify(a,pin);c=verify_stage(spec)
             if STOP.exists() or time.time()>=a['stop_epoch']-120:
                 state['status']='stopped_at_original_deadline_or_request';save();return
-            require(not Path(c['output']).exists() and not Path(c['replica_output']).exists(),'Existing output cannot be resumed automatically')
-            state.update(status='launching',active=spec);save()
-            require(q.launch(spec,c,previous_binding(q,previous)),'Explicit stop prevented launch')
+            adopting=index==0 and a.get('adopt_first_running_stage') is True
+            if adopting:
+                live=read(STATUS/'status.json')
+                require(adoption_matches(spec,c,live,q.unit(c['service_name'])),
+                        'Live worker differs from the byte-exact admitted adoption')
+                state.update(status='adopting_verified_running_stage',active=spec);save()
+            else:
+                require(not Path(c['output']).exists() and not Path(c['replica_output']).exists(),'Existing output cannot be resumed automatically')
+                state.update(status='launching',active=spec);save()
+                require(q.launch(spec,c,previous_binding(q,previous)),'Explicit stop prevented launch')
             state.update(status='running',startup_publication=startup_readback(q,c));save()
             analytic_stop=False
             while q.unit(c['service_name'])['ActiveState'] in ('active','activating','deactivating'):

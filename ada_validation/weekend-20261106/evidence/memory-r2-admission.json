@@ -1,4 +1,7 @@
 {
+  "adopt_first_running_stage": true,
+  "adoption_reason": "Keep the healthy native worker running; fix prompt running-phase publication and fresh predecessor resource observations for later claims.",
+  "adoption_source_admission_sha256": "b05e713e35d504458f437a20221c3951a0ba998b51c5537faab8d98aa2c673a0",
   "analytic_tail": {
     "analytic_interval": [
       10881882043,
@@ -44,7 +47,12 @@
     "status": "approved_analytic_exclusion",
     "stop_epoch": 1794524400
   },
-  "controller_sha256": "66e465c85db2fdbe94c5c91b1fbff3b27e8bee3f01f3eee795dd66c1532d050f",
+  "controller_sha256": "2de7f9c0af36a91ba821f377569958f5e1cb57426f9e73d5cf4bb87877fcf4a5",
+  "current_publisher_sources_sha256": {
+    "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-recovery-52-20261111/reporting-r2/bridge_base.py": "bd39e83ac346886c9b42d8fbdd4b157d233cecdcde60c38f00369d2757907edc",
+    "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-recovery-52-20261111/reporting-r2/publish_bulk_worker.py": "517fbe2ceeacfe699e0a6f61fd4607c490cad1ef7527cb7b4ac3bfcf0169037d",
+    "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-recovery-52-20261111/reporting-r2/publisher-settings.json": "c7fbb02bc8afca9cdb6d50b0cc35b2d0e0c6a5bff5def577af376e10b383d542"
+  },
   "original_r3_pins": {
     "ACK-ada.json": "1b74732687ef99876347b396050c684df24266ee797db71ba6973f940946a02d",
     "ACK-boole.json": "df7d76e658689ff8590a8c155504aecec567400469fa895628e114378bf3c83d",
@@ -109,8 +117,8 @@
       "first": 10337095936,
       "last": 10392000000,
       "manifest_sha256": "4e4ce7c2368c0077b131f1fcb51d5e1903be3b17c8cbd2cd2780cab10ef40b59",
-      "publisher": "ada-memory-r2-recovery-52-20261111-publisher.service",
-      "reporter": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-recovery-52-20261111/reporting",
+      "publisher": "ada-memory-r2-recovery-52-20261111-publisher-r2.service",
+      "reporter": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-recovery-52-20261111/reporting-r2",
       "root": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-recovery-52-20261111",
       "root_files_sha256": {
         "collector.py": "ce7345b5accc4522a9f724752d0929de84518d23583e493bd7b146538ef1326f",
@@ -132,14 +140,14 @@
     },
     {
       "collector": "ada-memory-r2-job-53-20261111-collector.service",
-      "config": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-53-20261111/worker/config.json",
-      "config_sha256": "963e20e9cdf7b290c05819b333e7e544baa1097cfdc1f9049451eecf3322ddb2",
+      "config": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-53-20261111/worker/config.json",
+      "config_sha256": "72f35075bff1949833c1ceaf0bc9a14edb04dd541896865cbceb28f1656b000b",
       "first": 10392000000,
       "last": 10456000000,
       "manifest_sha256": "4e4ce7c2368c0077b131f1fcb51d5e1903be3b17c8cbd2cd2780cab10ef40b59",
       "publisher": "ada-memory-r2-job-53-20261111-publisher.service",
-      "reporter": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-53-20261111/reporting",
-      "root": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-53-20261111",
+      "reporter": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-53-20261111/reporting",
+      "root": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-53-20261111",
       "root_files_sha256": {
         "collector.py": "ce7345b5accc4522a9f724752d0929de84518d23583e493bd7b146538ef1326f",
         "configuration-state.json": "9771cd8b21018423e17c5b686c5e47fd352939ba42cc3c149373ab5fec922036",
@@ -147,7 +155,7 @@
         "parent-audit.json": "78d61ad7259b856c492088efc4a05309f83f36f342945496ec3a865d562ed06d",
         "parent_coordinator.py": "18c3f082edcac83bd4fb96db76df12be7f246cf9d27d6ac19ed430eb9ec3d5f2",
         "prepare_launch.py": "442436118cd6e369cd49c58fb34c8a5e2d803f1e575b08b38d4c3a7542117a09",
-        "prepare_reporting.py": "f55f81e00fa7d3f315df5761d3378679bfbe9d0900152f288bef4141bdd8bf29",
+        "prepare_reporting.py": "ed8e65c1e1db53fd16d202135a4d5bbd62d1b867e2c9caba8a947c362d359cca",
         "publish_buffered.py": "517fbe2ceeacfe699e0a6f61fd4607c490cad1ef7527cb7b4ac3bfcf0169037d",
         "rollover-validation.json": "8b231bf62bdbd2d4b51d436d6c71a1c9f4647bc4e69b64aa5fcd7b5a231689fd",
         "runtime-validation.json": "453d080a1adf16c71e600206d8ec8f83eae8139095b6e4773bab4900b9156aca",
@@ -156,18 +164,18 @@
       },
       "run_id": "ada-memory-r2-job-53-20261111",
       "service": "ada-memory-r2-job-53-20261111.service",
-      "worker": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-53-20261111/worker"
+      "worker": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-53-20261111/worker"
     },
     {
       "collector": "ada-memory-r2-job-54-20261111-collector.service",
-      "config": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-54-20261111/worker/config.json",
-      "config_sha256": "a132cf321a4c0480c540939ab028d7a1baf27334eb51bbc6ac56780a8ca8c5bb",
+      "config": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-54-20261111/worker/config.json",
+      "config_sha256": "6c8b5da2bb446c8839b62ed9f272cbe5f9f2f392e486c1cd79005b6aa1b48237",
       "first": 10456000000,
       "last": 10520000000,
       "manifest_sha256": "4e4ce7c2368c0077b131f1fcb51d5e1903be3b17c8cbd2cd2780cab10ef40b59",
       "publisher": "ada-memory-r2-job-54-20261111-publisher.service",
-      "reporter": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-54-20261111/reporting",
-      "root": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-54-20261111",
+      "reporter": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-54-20261111/reporting",
+      "root": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-54-20261111",
       "root_files_sha256": {
         "collector.py": "ce7345b5accc4522a9f724752d0929de84518d23583e493bd7b146538ef1326f",
         "configuration-state.json": "9771cd8b21018423e17c5b686c5e47fd352939ba42cc3c149373ab5fec922036",
@@ -175,7 +183,7 @@
         "parent-audit.json": "78d61ad7259b856c492088efc4a05309f83f36f342945496ec3a865d562ed06d",
         "parent_coordinator.py": "18c3f082edcac83bd4fb96db76df12be7f246cf9d27d6ac19ed430eb9ec3d5f2",
         "prepare_launch.py": "442436118cd6e369cd49c58fb34c8a5e2d803f1e575b08b38d4c3a7542117a09",
-        "prepare_reporting.py": "210d0c2fe209b1ae3926a8a7bdc1a68f1eb844d69acea8d63cc73e07258f087d",
+        "prepare_reporting.py": "f50278b359a30bde6b77a5217ed89f1e4b97f5980067eddfe548c5ddfc0fde78",
         "publish_buffered.py": "517fbe2ceeacfe699e0a6f61fd4607c490cad1ef7527cb7b4ac3bfcf0169037d",
         "rollover-validation.json": "8b231bf62bdbd2d4b51d436d6c71a1c9f4647bc4e69b64aa5fcd7b5a231689fd",
         "runtime-validation.json": "453d080a1adf16c71e600206d8ec8f83eae8139095b6e4773bab4900b9156aca",
@@ -184,18 +192,18 @@
       },
       "run_id": "ada-memory-r2-job-54-20261111",
       "service": "ada-memory-r2-job-54-20261111.service",
-      "worker": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-54-20261111/worker"
+      "worker": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-54-20261111/worker"
     },
     {
       "collector": "ada-memory-r2-job-55-20261111-collector.service",
-      "config": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-55-20261111/worker/config.json",
-      "config_sha256": "704fdf3254718509bc302fcb9e27c5dbe52a0da417b7424d3fd1d8d2c98b9d43",
+      "config": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-55-20261111/worker/config.json",
+      "config_sha256": "05e7ab60e100b69806e5afaeaadbb8610c9b6319077fa6fba1bfa68ac51cd87c",
       "first": 10520000000,
       "last": 10584000000,
       "manifest_sha256": "4e4ce7c2368c0077b131f1fcb51d5e1903be3b17c8cbd2cd2780cab10ef40b59",
       "publisher": "ada-memory-r2-job-55-20261111-publisher.service",
-      "reporter": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-55-20261111/reporting",
-      "root": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-55-20261111",
+      "reporter": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-55-20261111/reporting",
+      "root": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-55-20261111",
       "root_files_sha256": {
         "collector.py": "ce7345b5accc4522a9f724752d0929de84518d23583e493bd7b146538ef1326f",
         "configuration-state.json": "9771cd8b21018423e17c5b686c5e47fd352939ba42cc3c149373ab5fec922036",
@@ -203,7 +211,7 @@
         "parent-audit.json": "78d61ad7259b856c492088efc4a05309f83f36f342945496ec3a865d562ed06d",
         "parent_coordinator.py": "18c3f082edcac83bd4fb96db76df12be7f246cf9d27d6ac19ed430eb9ec3d5f2",
         "prepare_launch.py": "442436118cd6e369cd49c58fb34c8a5e2d803f1e575b08b38d4c3a7542117a09",
-        "prepare_reporting.py": "e3de4c1bcb546a23d13f279e6c7fc98f0180f712ef6800973e7f442c246be69a",
+        "prepare_reporting.py": "90793376af692c39f9a550e7edbf1c90bf709622e53fd31aef302ff30cce5fdb",
         "publish_buffered.py": "517fbe2ceeacfe699e0a6f61fd4607c490cad1ef7527cb7b4ac3bfcf0169037d",
         "rollover-validation.json": "8b231bf62bdbd2d4b51d436d6c71a1c9f4647bc4e69b64aa5fcd7b5a231689fd",
         "runtime-validation.json": "453d080a1adf16c71e600206d8ec8f83eae8139095b6e4773bab4900b9156aca",
@@ -212,18 +220,18 @@
       },
       "run_id": "ada-memory-r2-job-55-20261111",
       "service": "ada-memory-r2-job-55-20261111.service",
-      "worker": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-55-20261111/worker"
+      "worker": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-55-20261111/worker"
     },
     {
       "collector": "ada-memory-r2-job-56-20261111-collector.service",
-      "config": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-56-20261111/worker/config.json",
-      "config_sha256": "b585134f7a05d21b1696cb9f5007834e55ce025e361f111dbe8ffe6d68ceb6f2",
+      "config": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-56-20261111/worker/config.json",
+      "config_sha256": "1e699d3765ae05d4a59844af0ccf6ab16435964e71f4adec117905eecf0110c7",
       "first": 10584000000,
       "last": 10648000000,
       "manifest_sha256": "4e4ce7c2368c0077b131f1fcb51d5e1903be3b17c8cbd2cd2780cab10ef40b59",
       "publisher": "ada-memory-r2-job-56-20261111-publisher.service",
-      "reporter": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-56-20261111/reporting",
-      "root": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-56-20261111",
+      "reporter": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-56-20261111/reporting",
+      "root": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-56-20261111",
       "root_files_sha256": {
         "collector.py": "ce7345b5accc4522a9f724752d0929de84518d23583e493bd7b146538ef1326f",
         "configuration-state.json": "9771cd8b21018423e17c5b686c5e47fd352939ba42cc3c149373ab5fec922036",
@@ -231,7 +239,7 @@
         "parent-audit.json": "78d61ad7259b856c492088efc4a05309f83f36f342945496ec3a865d562ed06d",
         "parent_coordinator.py": "18c3f082edcac83bd4fb96db76df12be7f246cf9d27d6ac19ed430eb9ec3d5f2",
         "prepare_launch.py": "442436118cd6e369cd49c58fb34c8a5e2d803f1e575b08b38d4c3a7542117a09",
-        "prepare_reporting.py": "98732f6cb42e4cf8f6347b89d6c485a51ea46b67e7a5584d3a4b62da20fe8afe",
+        "prepare_reporting.py": "2ca7f82f1d232bef128b37b1ecbba270d5d5f9f07c062b6f7e38248db9988c5a",
         "publish_buffered.py": "517fbe2ceeacfe699e0a6f61fd4607c490cad1ef7527cb7b4ac3bfcf0169037d",
         "rollover-validation.json": "8b231bf62bdbd2d4b51d436d6c71a1c9f4647bc4e69b64aa5fcd7b5a231689fd",
         "runtime-validation.json": "453d080a1adf16c71e600206d8ec8f83eae8139095b6e4773bab4900b9156aca",
@@ -240,18 +248,18 @@
       },
       "run_id": "ada-memory-r2-job-56-20261111",
       "service": "ada-memory-r2-job-56-20261111.service",
-      "worker": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-56-20261111/worker"
+      "worker": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-56-20261111/worker"
     },
     {
       "collector": "ada-memory-r2-job-57-20261111-collector.service",
-      "config": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-57-20261111/worker/config.json",
-      "config_sha256": "9ea8fd0bff69d1dd01bbe8d4dcb03089c8d743c66cf2d84b3323fc786834fcd2",
+      "config": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-57-20261111/worker/config.json",
+      "config_sha256": "6526cdbbab819ff784eba9b239c2a73908c718c758ce1b16d4d9b87566346116",
       "first": 10648000000,
       "last": 10712000000,
       "manifest_sha256": "4e4ce7c2368c0077b131f1fcb51d5e1903be3b17c8cbd2cd2780cab10ef40b59",
       "publisher": "ada-memory-r2-job-57-20261111-publisher.service",
-      "reporter": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-57-20261111/reporting",
-      "root": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-57-20261111",
+      "reporter": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-57-20261111/reporting",
+      "root": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-57-20261111",
       "root_files_sha256": {
         "collector.py": "ce7345b5accc4522a9f724752d0929de84518d23583e493bd7b146538ef1326f",
         "configuration-state.json": "9771cd8b21018423e17c5b686c5e47fd352939ba42cc3c149373ab5fec922036",
@@ -259,7 +267,7 @@
         "parent-audit.json": "78d61ad7259b856c492088efc4a05309f83f36f342945496ec3a865d562ed06d",
         "parent_coordinator.py": "18c3f082edcac83bd4fb96db76df12be7f246cf9d27d6ac19ed430eb9ec3d5f2",
         "prepare_launch.py": "442436118cd6e369cd49c58fb34c8a5e2d803f1e575b08b38d4c3a7542117a09",
-        "prepare_reporting.py": "09910660d401021476dbd69db132501162f7ee4b07bad7e66c4dce0319fe7123",
+        "prepare_reporting.py": "e1d57107b22d64281a0b2d4b37e81fca48523360aa52935eff037a1b5a3e4749",
         "publish_buffered.py": "517fbe2ceeacfe699e0a6f61fd4607c490cad1ef7527cb7b4ac3bfcf0169037d",
         "rollover-validation.json": "8b231bf62bdbd2d4b51d436d6c71a1c9f4647bc4e69b64aa5fcd7b5a231689fd",
         "runtime-validation.json": "453d080a1adf16c71e600206d8ec8f83eae8139095b6e4773bab4900b9156aca",
@@ -268,18 +276,18 @@
       },
       "run_id": "ada-memory-r2-job-57-20261111",
       "service": "ada-memory-r2-job-57-20261111.service",
-      "worker": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-57-20261111/worker"
+      "worker": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-57-20261111/worker"
     },
     {
       "collector": "ada-memory-r2-job-58-20261111-collector.service",
-      "config": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-58-20261111/worker/config.json",
-      "config_sha256": "a9f5e786d7ca68fb07cb1e6e6d959c9a0c61b29c50c0a1b356a49c1a5f5ea043",
+      "config": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-58-20261111/worker/config.json",
+      "config_sha256": "c6f2689260dcce3822827f87fef043c634e4e7708ca6399a22aa2620777ba54b",
       "first": 10712000000,
       "last": 10776000000,
       "manifest_sha256": "4e4ce7c2368c0077b131f1fcb51d5e1903be3b17c8cbd2cd2780cab10ef40b59",
       "publisher": "ada-memory-r2-job-58-20261111-publisher.service",
-      "reporter": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-58-20261111/reporting",
-      "root": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-58-20261111",
+      "reporter": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-58-20261111/reporting",
+      "root": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-58-20261111",
       "root_files_sha256": {
         "collector.py": "ce7345b5accc4522a9f724752d0929de84518d23583e493bd7b146538ef1326f",
         "configuration-state.json": "9771cd8b21018423e17c5b686c5e47fd352939ba42cc3c149373ab5fec922036",
@@ -287,7 +295,7 @@
         "parent-audit.json": "78d61ad7259b856c492088efc4a05309f83f36f342945496ec3a865d562ed06d",
         "parent_coordinator.py": "18c3f082edcac83bd4fb96db76df12be7f246cf9d27d6ac19ed430eb9ec3d5f2",
         "prepare_launch.py": "442436118cd6e369cd49c58fb34c8a5e2d803f1e575b08b38d4c3a7542117a09",
-        "prepare_reporting.py": "18b4cdd0713bc9b0b06d05007d660c7f161dadbab3d3de0695bba03d07ac0338",
+        "prepare_reporting.py": "c4062fd23c32a066f69348c9d2174dc0f45bdb69fba137ff21b8bd900666f1c4",
         "publish_buffered.py": "517fbe2ceeacfe699e0a6f61fd4607c490cad1ef7527cb7b4ac3bfcf0169037d",
         "rollover-validation.json": "8b231bf62bdbd2d4b51d436d6c71a1c9f4647bc4e69b64aa5fcd7b5a231689fd",
         "runtime-validation.json": "453d080a1adf16c71e600206d8ec8f83eae8139095b6e4773bab4900b9156aca",
@@ -296,18 +304,18 @@
       },
       "run_id": "ada-memory-r2-job-58-20261111",
       "service": "ada-memory-r2-job-58-20261111.service",
-      "worker": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-58-20261111/worker"
+      "worker": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-58-20261111/worker"
     },
     {
       "collector": "ada-memory-r2-job-59-20261111-collector.service",
-      "config": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-59-20261111/worker/config.json",
-      "config_sha256": "586fe9a4880dce1a2a0f90ab510aad992465cf6c292acc601fad835690042d98",
+      "config": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-59-20261111/worker/config.json",
+      "config_sha256": "bc5305dab0a0f79b1a416de298983b9f8c6ea7a7e8b172d07314e933b7c1ceca",
       "first": 10776000000,
       "last": 10840000000,
       "manifest_sha256": "4e4ce7c2368c0077b131f1fcb51d5e1903be3b17c8cbd2cd2780cab10ef40b59",
       "publisher": "ada-memory-r2-job-59-20261111-publisher.service",
-      "reporter": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-59-20261111/reporting",
-      "root": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-59-20261111",
+      "reporter": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-59-20261111/reporting",
+      "root": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-59-20261111",
       "root_files_sha256": {
         "collector.py": "ce7345b5accc4522a9f724752d0929de84518d23583e493bd7b146538ef1326f",
         "configuration-state.json": "9771cd8b21018423e17c5b686c5e47fd352939ba42cc3c149373ab5fec922036",
@@ -315,7 +323,7 @@
         "parent-audit.json": "78d61ad7259b856c492088efc4a05309f83f36f342945496ec3a865d562ed06d",
         "parent_coordinator.py": "18c3f082edcac83bd4fb96db76df12be7f246cf9d27d6ac19ed430eb9ec3d5f2",
         "prepare_launch.py": "442436118cd6e369cd49c58fb34c8a5e2d803f1e575b08b38d4c3a7542117a09",
-        "prepare_reporting.py": "2fe0d1beef45d2e4371cae95ad1eea7976c4f48afd5c15130e7a97786673ef97",
+        "prepare_reporting.py": "46b87bfa4341e5e0862e7f671e5c9edd5e733fb0dbabd3e8096601bfd09bb365",
         "publish_buffered.py": "517fbe2ceeacfe699e0a6f61fd4607c490cad1ef7527cb7b4ac3bfcf0169037d",
         "rollover-validation.json": "8b231bf62bdbd2d4b51d436d6c71a1c9f4647bc4e69b64aa5fcd7b5a231689fd",
         "runtime-validation.json": "453d080a1adf16c71e600206d8ec8f83eae8139095b6e4773bab4900b9156aca",
@@ -324,18 +332,18 @@
       },
       "run_id": "ada-memory-r2-job-59-20261111",
       "service": "ada-memory-r2-job-59-20261111.service",
-      "worker": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-59-20261111/worker"
+      "worker": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-59-20261111/worker"
     },
     {
       "collector": "ada-memory-r2-job-60-20261111-collector.service",
-      "config": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-60-20261111/worker/config.json",
-      "config_sha256": "3479aef2d885d74ba754f7fe5a6e6be4e670dc5562226e53e1a3b5e6e3f83c0f",
+      "config": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-60-20261111/worker/config.json",
+      "config_sha256": "c4977d3fb497dad5e8be7999a0d738061a9dfecea048f7d90927afd8a6a412ec",
       "first": 10840000000,
       "last": 10904000000,
       "manifest_sha256": "4e4ce7c2368c0077b131f1fcb51d5e1903be3b17c8cbd2cd2780cab10ef40b59",
       "publisher": "ada-memory-r2-job-60-20261111-publisher.service",
-      "reporter": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-60-20261111/reporting",
-      "root": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-60-20261111",
+      "reporter": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-60-20261111/reporting",
+      "root": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-60-20261111",
       "root_files_sha256": {
         "collector.py": "ce7345b5accc4522a9f724752d0929de84518d23583e493bd7b146538ef1326f",
         "configuration-state.json": "9771cd8b21018423e17c5b686c5e47fd352939ba42cc3c149373ab5fec922036",
@@ -343,7 +351,7 @@
         "parent-audit.json": "78d61ad7259b856c492088efc4a05309f83f36f342945496ec3a865d562ed06d",
         "parent_coordinator.py": "18c3f082edcac83bd4fb96db76df12be7f246cf9d27d6ac19ed430eb9ec3d5f2",
         "prepare_launch.py": "442436118cd6e369cd49c58fb34c8a5e2d803f1e575b08b38d4c3a7542117a09",
-        "prepare_reporting.py": "d048c7fa971279af3f0fac39991a23d124e705d283a133327207ea7fbb465cd6",
+        "prepare_reporting.py": "b504c5db3774baa457e01f05419274b2b28b47df77185309de46b82016ebdd65",
         "publish_buffered.py": "517fbe2ceeacfe699e0a6f61fd4607c490cad1ef7527cb7b4ac3bfcf0169037d",
         "rollover-validation.json": "8b231bf62bdbd2d4b51d436d6c71a1c9f4647bc4e69b64aa5fcd7b5a231689fd",
         "runtime-validation.json": "453d080a1adf16c71e600206d8ec8f83eae8139095b6e4773bab4900b9156aca",
@@ -352,7 +360,7 @@
       },
       "run_id": "ada-memory-r2-job-60-20261111",
       "service": "ada-memory-r2-job-60-20261111.service",
-      "worker": "/home/pnord/ada-memory-r2-20261111/stages/ada-memory-r2-job-60-20261111/worker"
+      "worker": "/home/pnord/ada-memory-r2-20261111/stages-v2/ada-memory-r2-job-60-20261111/worker"
     }
   ],
   "status": "reviewed_for_exact_prefix_and_analytic_tail",
