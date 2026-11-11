@@ -135,7 +135,7 @@ Observed rate: **{metrics['patches_per_second']:,.0f} patches/s**; new independe
 Deadline: **{row['stop_local']}**. Independent worker/deadline services on {node}; separate publisher on Ada.
 GitHub updates every **15 minutes**, plus startup/terminal transitions. Alerts: {row['alerts'] or 'None reported'}.
 
-The fresh trial starts at the exact final parent cursor under a child claim capped at 7,000,000,000. A separate coordinator holds the original parent lease while child searches run.
+This run uses its assigned child claim. Historical coverage is imported only for a recorded continuation; fresh claims keep their reference parent separate. A shared coordinator holds the original parent lease.
 [Configuration](evidence/configuration.json), [parent audit](evidence/parent-audit.json),
 [verified archive](evidence/parent-archive-receipt.json), [source manifest](evidence/source-manifest.json).
 Archived receipt integrity was verified; historical coefficients were not recomputed.

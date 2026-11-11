@@ -1,75 +1,87 @@
-"""Hold the legacy parent claim while independently leased child jobs run."""
-import argparse,fcntl,hashlib,json,os,signal,sys,time
+"""Acquire the original parent only after old workers and queues are sealed."""
 from pathlib import Path
-ROOT=Path(__file__).resolve().parent
-sys.path[:0]=[str(ROOT/'worker')]
-import ada_export_store,suballocation_guard as guard
-from durable_mirror import atomic
-STOP=False
-def read(p):return json.loads(Path(p).read_bytes())
-def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
-def parent_claim(store,job):
-    until=time.monotonic()+5
-    while True:
-        try:return store.claim(job)
-        except ada_export_store.Busy:
-            if time.monotonic()>=until:raise
-            time.sleep(.05)
+import argparse
+import fcntl
+import json
+import os
+import signal
+import time
+import allocation_guard as guard
+
+def verify_acknowledgments(grant,folder,expected):
+    proofs={}
+    for host in ('ada','boole','cabbage'):
+        path=Path(folder)/('ACK-'+host+'.json');proof=guard.read(path)
+        guard.require(proof.get('host')==host and proof.get('grant_sha256')==expected and proof.get('status')=='ready_for_generation','Host acknowledgment is missing or for another generation: '+host)
+        guard.require(proof.get('native_validation')=='passed' and proof.get('new_deadline_timers_prepared') is True,'Host has not validated its new runtime/deadline: '+host)
+        validation_path=Path(proof['validation_file']);validation=guard.read(validation_path)
+        guard.require(guard.sha(validation_path)==proof['validation_sha256'] and validation.get('status')=='passed' and
+                      validation.get('host')==host and validation.get('grant_sha256')==expected and
+                      validation.get('stop_epoch')==grant['stop_epoch'] and
+                      validation.get('first_middle_last_native_gmp')=='passed' and
+                      validation.get('signal_and_deadline_cleanup')=='passed','Host validation does not identify this allocation: '+host)
+        if not grant['TEST_ONLY']:
+            guard.require(validation.get('native_binaries')==grant['native_binaries'][host],'Native binaries changed: '+host)
+        if host in ('ada','boole'):
+            guard.require(proof.get('legacy_controller_stopped') is True and proof.get('legacy_stop_intent_persisted') is True and proof.get('worker_leases_released') is True,'Legacy owner can still restart: '+host)
+            run=Path(proof['sealed_replica']);raw=(run/'checkpoint.json').read_bytes();cp=json.loads(raw);status=guard.read(run/'status.json')
+            guard.require(guard.sha(run/'checkpoint.json')==proof['checkpoint_sha256'] and cp['next_patch']==proof['next_patch'],'Sealed frontier changed: '+host)
+            guard.require(status.get('status')=='stopped' and status.get('error') is None,'Predecessor did not stop cleanly: '+host)
+            guard.require(status.get('journal_buffer',{}).get('pending_chunks')==0 and status['journal_buffer'].get('pending_bytes')==0,'Predecessor has pending records: '+host)
+            receipt=guard.read(run/'replica-state.json')
+            guard.require(receipt.get('status')=='verified' and receipt['checkpoint_sha256']==guard.sha(run/'checkpoint.json') and receipt['committed_bytes']==cp['journal_offset'] and receipt['journal_sha256']==cp['journal_sha256'] and receipt['next_patch']==cp['next_patch'],'Final replica mismatch: '+host)
+            guard.require((run/'coverage.jsonl').stat().st_size==cp['journal_offset'],'Final replica length mismatch: '+host)
+        else:
+            guard.require(proof.get('current_owner_completion_required_before_launch') is True,'Cabbage must finish/stop its independent owner before launching')
+        proofs[host]=dict(path=str(path),sha256=guard.sha(path),next_patch=proof.get('next_patch'))
+    return proofs
+
 class Coordinator:
-    def __init__(self,grant_path,grant_sha,retained_config,test=False):
-        self.path=Path(grant_path);self.sha=grant_sha;self.g=guard.load_grant(self.path,grant_sha,test)
-        self.cfg_path=Path(retained_config);self.test=test;self.context=None;self.fd=None;self.active=False;self.activation_audit=None
-        if not test:guard.require(sha(__file__)==self.g['coordinator_source_sha256'],'Coordinator source differs from grant')
+    def __init__(self,path,expected,test=False):
+        self.path=Path(path);self.expected=expected;self.test=test;self.g=guard.load_grant(path,expected,test);self.fd=None
+        guard.require(guard.sha(__file__)==self.g['coordinator_source_sha256'],'Coordinator source differs from grant')
+        guard.require(guard.sha(guard.__file__)==self.g['guard_source_sha256'],'Allocation guard differs from grant')
     def acquire(self):
-        g=self.g;store=ada_export_store.Store(g['parent_ledger'])
-        self.context=store.locked(store.root/'jobs'/g['parent_job']/'journal.jsonl')
-        self.fd=self.context.__enter__();self.store=store
-        claim=parent_claim(store,g['parent_job'])
-        guard.require((claim['sha256'],claim['first'],claim['last'])==(g['parent_claim_sha256'],g['parent_first'],g['parent_last']),'Original parent claim changed')
-        self.cfg=read(self.cfg_path);self.cfg_sha=sha(self.cfg_path)
-        c=self.cfg;a=g['assignments']['ada']
-        guard.require(c['TEST_ONLY'] is self.test and [c['initial_patch'],c['range_end']]==a,'Retained configuration does not enforce its hard cap')
-        guard.require(c['stop_epoch']==g['stop_epoch'] and c['manifest_sha256']==g['retained_manifest_sha256'],'Retained source/deadline changed')
-        guard.require(Path(c['ledger_root'])==Path(g['child_ledger']) and c['suballocation_grant_sha256']==self.sha,'Retained grant/child ledger mismatch')
-        if not self.test:
-            guard.require(sha(c['manifest'])==c['manifest_sha256'],'Retained manifest changed')
-            m=read(c['manifest']);w=Path(c['manifest']).parent
-            for n,h in m['files'].items():guard.require(sha(w/n)==h,'Retained runtime changed: '+n)
-            guard.require((w/'base-config.json').read_bytes()==self.cfg_path.read_bytes(),'Retained immutable base differs')
+        g=self.g;guard.verify_mount(g['child_ledger'],self.test)
+        self.proofs=verify_acknowledgments(g,self.path.parent,self.expected)
+        parent=guard.claim(g['parent_ledger'],g['parent_job'])
+        guard.require((parent['sha256'],parent['first'],parent['last'])==(g['parent_claim_sha256'],g['parent_first'],g['parent_last']),'Original parent reservation changed')
+        for row in g['assignments']:
+            original=guard.claim(g['child_ledger'],row['job'])
+            guard.require((original['sha256'],original['first'],original['last'],original['identity'])==(row['claim_sha256'],row['first'],row['last'],row['claim_identity']),'Original child reservation changed: '+row['job'])
+            guard.require(not guard.locked_by_other(Path(g['child_ledger'])/'jobs'/row['job']/'journal.jsonl'),'Legacy child owner remains active: '+row['job'])
+        path=Path(g['parent_ledger'])/'jobs'/g['parent_job']/'journal.jsonl'
+        self.fd=os.open(path,os.O_RDWR|os.O_NOFOLLOW)
+        try:fcntl.lockf(self.fd,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        except BaseException:os.close(self.fd);self.fd=None;raise
+        self.inode=(os.fstat(self.fd).st_dev,os.fstat(self.fd).st_ino)
         self.heartbeat()
+        guard.atomic(self.path.parent/g['active_file'],dict(status='active_allocation_ready',grant_sha256=self.expected,stop_epoch=g['stop_epoch'],acknowledgments=self.proofs,coordinator_pid=os.getpid(),activated_epoch=time.time(),coverage_claimed=False))
     def heartbeat(self):
-        guard.require(self.fd is not None,'Parent lease not acquired')
-        g=self.g;path=Path(g['parent_ledger'])/'jobs'/g['parent_job']/'journal.jsonl'
-        a,b=os.fstat(self.fd),path.stat();guard.require((a.st_dev,a.st_ino)==(b.st_dev,b.st_ino),'Parent lease inode was replaced')
-        guard.require(sha(self.path)==self.sha and sha(self.cfg_path)==self.cfg_sha,'Frozen grant/retained configuration changed')
-        guard.require(parent_claim(self.store,g['parent_job'])['sha256']==g['parent_claim_sha256'],'Parent reservation changed while delegated')
-        if not self.active:
-            p=Path(self.cfg['output']);cp=p/'checkpoint.json';status=p/'status.json';controls=p/'controls.json'
-            if cp.exists() and status.exists() and controls.exists():
-                state=read(status);point=read(cp);control=read(controls)
-                fingerprint=hashlib.sha256(json.dumps(dict(manifest_sha256=self.cfg['manifest_sha256'],config=self.cfg),sort_keys=True,separators=(',',':')).encode()).hexdigest()
-                if state['status'] in (('running','completed_test') if self.test else ('running',)) and state['error'] is None and point['next_patch']>self.cfg['initial_patch']:
-                    guard.require(point['identity']==dict(trial=self.cfg['run_id'],source_identity=fingerprint),'Retained live identity mismatch')
-                    guard.require(point['window']['last']==g['assignments']['ada'][1] and point['next_patch']<=g['assignments']['ada'][1],'Retained live window exceeds cap')
-                    guard.require(control['status']=='passed' and all(x['full_oracle_equal'] and x['hits'] for x in control['cases']),'Retained nonempty controls failed')
-                    if not self.test:
-                        import audit_grouped
-                        audited=audit_grouped.audit_suffix(p,dict(checkpoint=dict(next_patch=self.cfg['initial_patch']),config=self.cfg),point,'fresh',self.cfg['gmp_audit_period'])
-                        self.activation_audit=dict(status='passed',**audited)
-                    self.active=True
-        atomic(Path(g['child_ledger'])/g.get('coordinator_state_file','coordinator-state.json'),dict(status='active' if self.active else 'prepared',grant_sha256=self.sha,coordinator_pid=os.getpid(),parent_job=g['parent_job'],parent_claim_sha256=g['parent_claim_sha256'],retained_configuration_sha256=self.cfg_sha,retained_manifest_sha256=g['retained_manifest_sha256'],retained_range_end=g['assignments']['ada'][1],activation_audit=self.activation_audit,stop_epoch=g['stop_epoch'],updated_epoch=time.time(),TEST_ONLY=self.test))
+        g=self.g;guard.require(self.fd is not None and guard.sha(self.path)==self.expected,'Grant changed or parent not acquired')
+        guard.require(guard.sha(__file__)==g['coordinator_source_sha256'] and guard.sha(guard.__file__)==g['guard_source_sha256'],'Coordinator source changed')
+        stat=(Path(g['parent_ledger'])/'jobs'/g['parent_job']/'journal.jsonl').stat()
+        guard.require((stat.st_dev,stat.st_ino)==self.inode,'Stable parent lease inode was replaced')
+        # Never reopen the parent lease inode here: closing any such descriptor
+        # would release this process's POSIX record lock.
+        for proof in self.proofs.values():guard.require(guard.sha(proof['path'])==proof['sha256'],'Accepted host acknowledgment changed')
+        guard.atomic(self.path.parent/g['state_file'],dict(status='active',grant_sha256=self.expected,stop_epoch=g['stop_epoch'],coordinator_pid=os.getpid(),updated_epoch=time.time(),TEST_ONLY=self.test))
     def close(self):
-        if self.context:
-            self.context.__exit__(None,None,None);self.context=None;self.fd=None
+        if self.fd is not None:os.close(self.fd);self.fd=None
+
 def main():
-    global STOP
-    p=argparse.ArgumentParser();p.add_argument('--grant',type=Path,required=True);p.add_argument('--grant-sha256',required=True);p.add_argument('--retained-config',type=Path,required=True);p.add_argument('--test-only',action='store_true');a=p.parse_args()
-    signal.signal(signal.SIGTERM,lambda *_:globals().__setitem__('STOP',True));signal.signal(signal.SIGINT,lambda *_:globals().__setitem__('STOP',True))
-    c=Coordinator(a.grant,a.grant_sha256,a.retained_config,a.test_only)
+    parser=argparse.ArgumentParser();parser.add_argument('--grant',required=True);parser.add_argument('--grant-sha256',required=True);parser.add_argument('--wait',action='store_true');parser.add_argument('--test-only',action='store_true');args=parser.parse_args()
+    guard.require(os.uname().nodename.split('.')[0]=='ada','Parent coordinator runs on Ada')
+    coordinator=Coordinator(args.grant,args.grant_sha256,args.test_only);stopping=[False]
+    signal.signal(signal.SIGTERM,lambda *_:stopping.__setitem__(0,True));signal.signal(signal.SIGINT,lambda *_:stopping.__setitem__(0,True))
     try:
-        c.acquire()
-        while not STOP and time.time()<c.g['stop_epoch']+1800:c.heartbeat();time.sleep(1)
-    except BaseException as error:
-        atomic(Path(c.g['child_ledger'])/'coordinator-failure.json',dict(error=repr(error),epoch=time.time()));raise
-    finally:c.close()
+        while not stopping[0] and time.time()<coordinator.g['stop_epoch']-60:
+            try:coordinator.acquire();break
+            except (FileNotFoundError,BlockingIOError):
+                if not args.wait:raise
+                guard.atomic(Path(args.grant).parent/'WAITING.json',dict(status='waiting_for_host_acknowledgments_or_parent_lease',updated_epoch=time.time(),compute_started=False));time.sleep(2)
+        while coordinator.fd is not None and not stopping[0] and time.time()<coordinator.g['stop_epoch']+1800:
+            coordinator.heartbeat();time.sleep(1)
+    finally:coordinator.close()
+
 if __name__=='__main__':main()
