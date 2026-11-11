@@ -1,12 +1,12 @@
 # Ada combined search
 
-Updated: 2026-11-11T11:24:49.227745+00:00
+Updated: 2026-11-11T15:19:51.080842+00:00
 
 State: **stopped**. Run **ada-preparation-20261110**; gpu with 16 preparation workers.
-Verified replicated cursor: **6,841,746,560**.
-New replicated logical patches: **954,411,264** in 3,728,169 chunks.
-Combined verified selected patches, including parents: **3,091,746,560**.
-Fresh interval: `[5887335296, 7000000000]`; replicated: `[5887335296, 6841746560]`.
+Verified replicated cursor: **6,842,653,824**.
+New replicated logical patches: **955,318,528** in 3,731,713 chunks.
+Combined verified selected patches, including parents: **3,092,653,824**.
+Fresh interval: `[5887335296, 7000000000]`; replicated: `[5887335296, 6842653824]`.
 Local cursor: 6,842,653,824; physical tasks group up to 4 original width-8 cells.
 Saved-root reuse, exact host optimizations, low64 filtering and an immutable canonical task cache are enabled.
 Journal records remain separate 256-cell receipts, with up to eight buffered before a durable checkpoint.
