@@ -1,9 +1,59 @@
 {
-  "native_validation": "/home/pnord/fifth42-range-extension-20261111/ADA_NATIVE_VALIDATION.json",
-  "reason": "Stay within unchanged coefficient and prepared-payload budgets in the denser upper range",
-  "retained_group_limit": 4,
-  "status": "selected_with_actual_validation",
-  "upper_group_limit": 1,
-  "upper_preparation_windows": 1,
-  "upper_ready_queue_limit": 3
+  "comparisons": {
+    "current": {
+      "complete_native_counts_and_GMP": true,
+      "exact_same_profile_repeatability": true,
+      "logical_coverage_and_hits_equal": true,
+      "medians_cells_per_second": {
+        "1": 5672.955398005258,
+        "16": 8288.890224281244
+      },
+      "ratio": 1.4611238133823172,
+      "samples_cells_per_second": {
+        "1": [
+          5695.0178829378265,
+          5625.890936767365,
+          5672.955398005258
+        ],
+        "16": [
+          8334.924700815316,
+          8282.814758570112,
+          8288.890224281244
+        ]
+      }
+    },
+    "end": {
+      "complete_native_counts_and_GMP": true,
+      "exact_same_profile_repeatability": true,
+      "logical_coverage_and_hits_equal": true,
+      "medians_cells_per_second": {
+        "1": 5441.222743572816,
+        "16": 6622.492752417645
+      },
+      "ratio": 1.217096425659131,
+      "samples_cells_per_second": {
+        "1": [
+          5444.470430969144,
+          5441.222743572816,
+          5423.785714196037
+        ],
+        "16": [
+          6566.56216783656,
+          6622.492752417645,
+          6670.39438323068
+        ]
+      }
+    }
+  },
+  "selected_profile": {
+    "cap": 42,
+    "dispatch_chunksize": 4,
+    "group_limit": 2,
+    "preparation_backend": "cpu",
+    "preparation_batch_bytes": 134217728,
+    "preparation_windows": 16,
+    "ready_queue_limit": 1
+  },
+  "software_rates_are_separate_from_analytic_exclusion": true,
+  "status": "passed"
 }

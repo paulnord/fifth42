@@ -1,0 +1,87 @@
+{
+  "schema": "exact-empty-quintic-tail-v1",
+  "status": "proved_empty",
+  "domain": "1 <= a <= b < c; abs(a^5+b^5-c^5) <=100",
+  "shell": [
+    100000000001,
+    200000000000
+  ],
+  "width": 8,
+  "grid_count": 11250000001,
+  "interval": [
+    10881882043,
+    11250000001
+  ],
+  "excluded_cells": 368117958,
+  "cap": 100,
+  "ratio_lower_bound": [
+    97936938387,
+    112500000010
+  ],
+  "proof_steps": [
+    "For every i>=K, original cell membership gives a/c>=9*i/(10*N)>=x0=9*K/(10*N).",
+    "Since b>=a>0, a^5+b^5-c^5>=2*a^5-c^5>=c^5*(2*x0^5-1).",
+    "The exact coefficient2*x0^5-1 is positive, so c>=cmin implies r>=cmin^5*(2*x0^5-1)>100.",
+    "Thus every canonical point in cells[K,N) has positive residual strictly greater than100."
+  ],
+  "threshold_method": "Exact integer binary search for the smallest grid-edge index satisfying the stated uniform inequality; no floating-point threshold is used.",
+  "exact_large_integers_as_decimal_strings": {
+    "factor_numerator": "6882058941256429351188571743898363695529181414",
+    "factor_denominator": "18020324715040283204548828125126562500005625000000100000",
+    "strict_inequality_margin_at_K": "68820589416005322982582752703991175326647008987135692332198095731169041705855569507926570695519181414",
+    "inequality_margin_at_K_minus1": "-13979080017570853874492511648092440333090522885744454012160663107774518190030231942853500176379703264"
+  },
+  "arithmetic_checks": {
+    "grid_count_matches_registry": true,
+    "factor_positive": true,
+    "strict_residual_lower_bound_greater_than100": true,
+    "K_minus1_not_certified_by_this_inequality": true
+  },
+  "source_conventions": {
+    "source/lattice_gpu/overnight_search.py": {
+      "sha256": "feaed593fa4c48c10f97eab56471ee9882a88d75f111032f390175256d3919e2",
+      "lines": {
+        "grid_count": 37,
+        "shell_specs_generates_all_indices": 41
+      }
+    },
+    "width_coverage.py": {
+      "sha256": "fc69a43c0fda3405c641287fd8c8ff91b7092b0f4d094cb257fbbe5141a37995",
+      "lines": {
+        "edge_a_over_c": 29
+      }
+    },
+    "source/lattice_prototype/lattice5.py": {
+      "sha256": "52c99797f2e950834bc6a4838a3c4cc6a740181ab245d7d7e3c93a14c4797710",
+      "lines": {
+        "Patch.contains_a_over_c": 255,
+        "canonical_order_filter": 303
+      }
+    },
+    "native-baseline/src/kernel.hpp": {
+      "sha256": "3715d7636b404e172371a3828c2b7f112de8351d0b1c7b53c0f36f75fe2a9def",
+      "lines": {
+        "canonical_order_rejects_a_greater_b_without_swap": 56
+      }
+    },
+    "source/lattice_gpu/scaling_core.py": {
+      "sha256": "588fed56a4024ea4e9a491dbb9a2440faf9805fb7a06611e110dd4523f290e5f",
+      "lines": {
+        "reconstruct_c_a_b": 210,
+        "canonical_order_check": 212
+      }
+    }
+  },
+  "symmetry_check": "The exact native and Python decoders reject a>b; they do not swap a and b during cell evaluation. The tail is therefore empty in the actual canonical cell domain. Signed-domain reduction exceptions are outside this certificate.",
+  "already_in_base_verified_union_cells": 0,
+  "base_coverage_snapshot_utc": "2026-11-11T21:46:47.869393+00:00",
+  "native_points_visited": 0,
+  "coverage_kind": "independent analytical empty-domain proof, not native enumeration coverage",
+  "ledger_changes": false,
+  "source_changes": false,
+  "production_mutations": false,
+  "software_skip_activated": false,
+  "current_software_behavior": "shell_specs and packed_worker windows still enumerate cells through their configured end. This proof does not modify software checkpoints, assigned ranges, admission maps or publication policy.",
+  "full_box_bound_claimed": false,
+  "checked_utc": "2026-11-11T21:52:25.506658+00:00"
+}

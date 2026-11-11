@@ -1,0 +1,45 @@
+{
+  "analytic_interval": [
+    10881882043,
+    11250000001
+  ],
+  "analytic_native_visits": 0,
+  "controller_adoption": "Stop after verified crossing native window; keep native counters unchanged",
+  "domain": "1<=a<=b<c; |a^5+b^5-c^5|<=100",
+  "exact_integer_margin": "68820589416005322982582752703991175326647008987135692332198095731169041705855569507926570695519181414",
+  "excluded_cells": 368117958,
+  "grant_ACK_VALIDATION_unchanged": true,
+  "grid_count": 11250000001,
+  "independent_peer_check_sha256": "fe45f39e8ef90d39a7786985fff0eb05655b30dd642f5c049619ac99090943bd",
+  "mathematical_empty_cells": 368117958,
+  "native_checkpoint_counters_changed": false,
+  "native_points_visited": 0,
+  "native_stop_threshold": 10881882112,
+  "overlap_native_and_analytic_cells": 69,
+  "physical_hostname": "ada",
+  "previous_cell_margin": "-13979080017570853874492511648092440333090522885744454012160663107774518190030231942853500176379703264",
+  "proof": "For all cells i>=K, a/c>=9K/(10N). Since b>=a, residual>=c^5*(2*(9K/(10N))^5-1)>=lo^5*(2*(9K/(10N))^5-1)>100. All comparisons use integers. Native work completes the crossing 256-cell window before analytic-only coverage begins.",
+  "proof_sha256": "3012cdfd03f70c2b19d0671f201bcc14c9758ab772770e24a8721253b2f88512",
+  "proposed_native_stop": 10881882112,
+  "residual_caps_supported": [
+    42,
+    100
+  ],
+  "schema": "fifth42-ada-analytic-tail-review-v1",
+  "shell": [
+    100000000001,
+    200000000000
+  ],
+  "skipped_native_cells": 368117889,
+  "source_certificate": "/mnt/nfs_share/fifth42-integration-20261109/combined/range-extension-r3-20261111/ANALYTIC-TAIL-PROOF-20261111/TAIL-EMPTY-PROOF.json",
+  "source_certificate_sha256": "3012cdfd03f70c2b19d0671f201bcc14c9758ab772770e24a8721253b2f88512",
+  "sources_verified": {
+    "native-baseline/src/kernel.hpp": "3715d7636b404e172371a3828c2b7f112de8351d0b1c7b53c0f36f75fe2a9def",
+    "source/lattice_gpu/overnight_search.py": "feaed593fa4c48c10f97eab56471ee9882a88d75f111032f390175256d3919e2",
+    "source/lattice_gpu/scaling_core.py": "588fed56a4024ea4e9a491dbb9a2440faf9805fb7a06611e110dd4523f290e5f",
+    "source/lattice_prototype/lattice5.py": "52c99797f2e950834bc6a4838a3c4cc6a740181ab245d7d7e3c93a14c4797710",
+    "width_coverage.py": "fc69a43c0fda3405c641287fd8c8ff91b7092b0f4d094cb257fbbe5141a37995"
+  },
+  "status": "approved_analytic_exclusion",
+  "stop_epoch": 1794524400
+}

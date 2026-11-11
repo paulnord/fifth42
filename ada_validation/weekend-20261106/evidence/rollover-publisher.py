@@ -211,5 +211,20 @@ def main():
     return bridge.main()
 
 
+
+_native_snapshot=snapshot
+def snapshot():
+    row=_native_snapshot()
+    cursor=(row.get('checkpoint') or {}).get('next_patch',0)
+    row['analytic_tail']=dict(interval=[10881882043,11250000001],
+        excluded_cells=368117958,residual_caps_supported=[42,100],native_visits=0,
+        proof_evidence='evidence/analytic-tail-proof.json',
+        controller_status='native_boundary_reached' if cursor>=10881882112 and row['phase']=='stopped' else 'armed',
+        native_counters_preserved=True)
+    return row
+_native_render=render
+def render(row):
+    return _native_render(row)+'\nAn independent exact symmetry proof excludes cells [10881882043, 11250000001) for absolute residuals at most 100. These 368,117,958 cells are analytic coverage with zero native visits. Native counters above retain their journal meaning. The controller stops after the crossing native window; overlapping native and analytic intervals are counted once. See [the exact proof](evidence/analytic-tail-proof.json).\n'
+
 if __name__ == '__main__':
     raise SystemExit(main())
