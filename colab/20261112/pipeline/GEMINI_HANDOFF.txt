@@ -1,0 +1,40 @@
+Run the Fifth42 CPU-preparation/local-pipeline notebook in this GitHub directory.
+Use the current CUDA GPU runtime. If the A100 is still connected, keep it for this
+test; if starting fresh, L4 is sufficient. Record actual GPU and credit rate if
+visible. This experiment tests CPU worker scaling, not another GPU comparison.
+
+Run the notebook from top to bottom. It verifies the immutable original input
+bundle, downloads and checks the frozen planner, installs libgmp-dev and a
+separate Python 3.12 environment, installs exact pinned dependencies, and rebuilds
+the native binaries for the assigned GPU. Keep original Python/dependency guards.
+
+The runner command is:
+pipeline-venv/bin/python pipeline/pipeline_bench.py --backend gpu \
+  --workers 1 2 4 8 --repeats 3 --max-seconds 480
+
+Limit the entire session to fifteen minutes. Do not change source guards, native
+limits, mathematical settings, input windows or exact checks. Stop on any failure
+and retain the failure report/log. No production search or new coverage is allowed.
+
+Required checks:
+- All 42 original packets match independent GMP, including fresh GMP reproduction,
+  nonempty controls and rejection of an intentionally incomplete response.
+- Every trial regenerates nine original windows, 23 byte-identical native packets,
+  matching exact certificates and 775,687,194 positions over 2,304 logical cells.
+- Exact native counts/hits agree with independent supplied GMP records.
+- All local journals flush and reopen with complete durable cursors/hash chains.
+
+Report median pipeline time and cells/second for each available worker count,
+speedup over one worker, producer/consumer queue waits, preparation/certification
+worker sums, RPC/kernel time, local durable-write time and the top preparation
+profile functions. Keep startup, fresh-GMP preflight, serial profiling and journal
+recovery separate. Overlapping stage times are not additive or GPU utilization.
+
+Explain whether extra CPU workers improve the local pipeline and what the measured
+limiting stage appears to be. Do not claim distributed/full-production throughput:
+network delivery, remote checkpoints and the production GMP audit cadence are absent.
+Mark unavailable account values unknown. No new scientific coverage is established.
+
+Download Fifth42_Pipeline_Results.zip, including the report, preparation profile,
+build details and durable trial journals. Verify the ZIP is saved before ending
+the runtime. Give the ZIP to Codex for review before any adoption decision.

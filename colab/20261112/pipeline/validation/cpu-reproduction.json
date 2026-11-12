@@ -1,0 +1,761 @@
+{
+  "status": "passed",
+  "TEST_ONLY": true,
+  "new_scientific_coverage": false,
+  "backend": "cpu",
+  "hardware": {
+    "python": "3.12.16",
+    "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+    "logical_cpus": 32,
+    "available_cpu_affinity": 32,
+    "system_ram_gib": 125.68777084350586,
+    "gpu": "Not used: CPU-only reproduction. Device process details removed for publication.",
+    "nvcc": "unavailable"
+  },
+  "trials": [
+    {
+      "workers": 8,
+      "repeat": 0,
+      "windows": 9,
+      "requests": 23,
+      "verified_positions": 775687194,
+      "pipeline_seconds": 4.166075125918724,
+      "logical_cells": 2304,
+      "cells_per_second": 553.0385147559984,
+      "stages": {
+        "prepare_worker_wall_seconds": 0.5580126506974921,
+        "prepare_worker_cpu_seconds": 0.5529376699999997,
+        "certify_worker_wall_seconds": 0.5244610973168164,
+        "certify_worker_cpu_seconds": 0.5114478230000001,
+        "prepared_consistency_seconds": 0.022355433204211295,
+        "engine_rpc_seconds": 4.07539272273425,
+        "exact_verification_seconds": 0.0024721246445551515,
+        "kernel_seconds": 0.0,
+        "journal_accept_seconds": 0.025087382062338293,
+        "journal_close_seconds": 0.00318985094781965
+      },
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 2,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 4,
+        "consumer_wait_empty_seconds": 0.02998993801884353,
+        "producer_wait_full_seconds": 3.045279224985279,
+        "producer_wait_capacity_seconds": 1.4327815733850002e-05,
+        "ready_depth_seconds": {
+          "0": 0.3470877408981323,
+          "1": 0.31121820106636733,
+          "2": 3.5045366840204224
+        },
+        "mean_ready_depth": 1.7584833267787554,
+        "elapsed_seconds": 4.162843888043426,
+        "preparation_batches": 9,
+        "prepare_wall_seconds": 3.299834584351629,
+        "maximum_prepared_payload_bytes": 959633,
+        "preparation_batch_windows": 1,
+        "maximum_item_payload_bytes": 8388608,
+        "queue_units": "bounded preparation batches; original execution/journal windows preserved"
+      },
+      "journal_setup_seconds": 0.0007550859590992332,
+      "journal_flush_seconds": 0.019815551000647247,
+      "journal_flush_count": 5,
+      "durable_recovery_seconds": 0.0327008489985019,
+      "durable_recovery_passed": true,
+      "regenerated_packet_bytes_match": true
+    },
+    {
+      "workers": 1,
+      "repeat": 0,
+      "windows": 9,
+      "requests": 23,
+      "verified_positions": 775687194,
+      "pipeline_seconds": 4.321580801974051,
+      "logical_cells": 2304,
+      "cells_per_second": 533.1382439841361,
+      "stages": {
+        "prepare_worker_wall_seconds": 0.5126274045323953,
+        "prepare_worker_cpu_seconds": 0.49350136599999916,
+        "certify_worker_wall_seconds": 0.48284920502919704,
+        "certify_worker_cpu_seconds": 0.46496115899999935,
+        "prepared_consistency_seconds": 0.021805463009513915,
+        "engine_rpc_seconds": 4.132648178958334,
+        "exact_verification_seconds": 0.002643437241204083,
+        "kernel_seconds": 0.0,
+        "journal_accept_seconds": 0.029040145920589566,
+        "journal_close_seconds": 0.0030961650190874934
+      },
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 2,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 4,
+        "consumer_wait_empty_seconds": 0.12443874089512974,
+        "producer_wait_full_seconds": 2.2640226829098538,
+        "producer_wait_capacity_seconds": 9.35560092329979e-06,
+        "ready_depth_seconds": {
+          "0": 0.5300438810372725,
+          "1": 0.4464084298815578,
+          "2": 3.341988315107301
+        },
+        "mean_ready_depth": 1.6511473706624968,
+        "elapsed_seconds": 4.318442548974417,
+        "preparation_batches": 9,
+        "prepare_wall_seconds": 3.3998672700254247,
+        "maximum_prepared_payload_bytes": 959633,
+        "preparation_batch_windows": 1,
+        "maximum_item_payload_bytes": 8388608,
+        "queue_units": "bounded preparation batches; original execution/journal windows preserved"
+      },
+      "journal_setup_seconds": 0.0005001380341127515,
+      "journal_flush_seconds": 0.023131788009777665,
+      "journal_flush_count": 5,
+      "durable_recovery_seconds": 0.015617890981957316,
+      "durable_recovery_passed": true,
+      "regenerated_packet_bytes_match": true
+    },
+    {
+      "workers": 4,
+      "repeat": 0,
+      "windows": 9,
+      "requests": 23,
+      "verified_positions": 775687194,
+      "pipeline_seconds": 4.235491439932957,
+      "logical_cells": 2304,
+      "cells_per_second": 543.9746562293772,
+      "stages": {
+        "prepare_worker_wall_seconds": 0.5305872322060168,
+        "prepare_worker_cpu_seconds": 0.5201455449999999,
+        "certify_worker_wall_seconds": 0.4933572618756443,
+        "certify_worker_cpu_seconds": 0.4885876559999998,
+        "prepared_consistency_seconds": 0.025548899080604315,
+        "engine_rpc_seconds": 4.112370950053446,
+        "exact_verification_seconds": 0.0024337428621947765,
+        "kernel_seconds": 0.0,
+        "journal_accept_seconds": 0.028963702148757875,
+        "journal_close_seconds": 0.0029708899091929197
+      },
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 2,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 4,
+        "consumer_wait_empty_seconds": 0.053661413956433535,
+        "producer_wait_full_seconds": 2.942993878154084,
+        "producer_wait_capacity_seconds": 1.2295902706682682e-05,
+        "ready_depth_seconds": {
+          "0": 0.4072226920397952,
+          "1": 0.3458239221945405,
+          "2": 3.479443428805098
+        },
+        "mean_ready_depth": 1.7258656359130453,
+        "elapsed_seconds": 4.232491004979238,
+        "preparation_batches": 9,
+        "prepare_wall_seconds": 3.3110073417192325,
+        "maximum_prepared_payload_bytes": 959633,
+        "preparation_batch_windows": 1,
+        "maximum_item_payload_bytes": 8388608,
+        "queue_units": "bounded preparation batches; original execution/journal windows preserved"
+      },
+      "journal_setup_seconds": 0.0004787880461663008,
+      "journal_flush_seconds": 0.02269174309913069,
+      "journal_flush_count": 5,
+      "durable_recovery_seconds": 0.018413392012007535,
+      "durable_recovery_passed": true,
+      "regenerated_packet_bytes_match": true
+    },
+    {
+      "workers": 2,
+      "repeat": 0,
+      "windows": 9,
+      "requests": 23,
+      "verified_positions": 775687194,
+      "pipeline_seconds": 4.3219433730700985,
+      "logical_cells": 2304,
+      "cells_per_second": 533.0935186139078,
+      "stages": {
+        "prepare_worker_wall_seconds": 0.5345087450696155,
+        "prepare_worker_cpu_seconds": 0.5209050729999998,
+        "certify_worker_wall_seconds": 0.505176795180887,
+        "certify_worker_cpu_seconds": 0.48992959999999963,
+        "prepared_consistency_seconds": 0.0264239099342376,
+        "engine_rpc_seconds": 4.179906076868065,
+        "exact_verification_seconds": 0.0021703902166336775,
+        "kernel_seconds": 0.0,
+        "journal_accept_seconds": 0.03269253112375736,
+        "journal_close_seconds": 0.0026632630033418536
+      },
+      "queue": {
+        "ready": 0,
+        "inflight": 0,
+        "active": 0,
+        "outstanding": 0,
+        "peak_outstanding": 4,
+        "peak_ready": 2,
+        "ready_limit": 2,
+        "reserved_bytes": 0,
+        "peak_reserved_bytes": 33554432,
+        "max_outstanding": 4,
+        "consumer_wait_empty_seconds": 0.0698292477754876,
+        "producer_wait_full_seconds": 2.704918460105546,
+        "producer_wait_capacity_seconds": 1.2353179045021534e-05,
+        "ready_depth_seconds": {
+          "0": 0.44746572303120047,
+          "1": 0.39098806492984295,
+          "2": 3.4808019360061735
+        },
+        "mean_ready_depth": 1.7022818539534241,
+        "elapsed_seconds": 4.319256484974176,
+        "preparation_batches": 9,
+        "prepare_wall_seconds": 3.3541522008599713,
+        "maximum_prepared_payload_bytes": 959633,
+        "preparation_batch_windows": 1,
+        "maximum_item_payload_bytes": 8388608,
+        "queue_units": "bounded preparation batches; original execution/journal windows preserved"
+      },
+      "journal_setup_seconds": 0.0006702760001644492,
+      "journal_flush_seconds": 0.02631981484591961,
+      "journal_flush_count": 5,
+      "durable_recovery_seconds": 0.022172759985551238,
+      "durable_recovery_passed": true,
+      "regenerated_packet_bytes_match": true
+    }
+  ],
+  "compute_units_per_hour_observed_by_user": null,
+  "exclusions": "Fixed replay windows only; no new reservation, ownership or search coverage.",
+  "limitations": "Local pipeline: CPU planning, exact certification, packets, native execution, exact verification and fsynced local journals. Network delivery, remote mirrors/checkpoints and production GMP audit cadence are excluded. Fresh independent GMP verification of all 42 packets is a separately timed preflight.",
+  "packet_export_sha256": "3916c409f159cace521d9fdc24534dfadb61b514a33ada1eaf5f42e1b3203a92",
+  "planner_source_identity": "350e06c101ad1b8aa885212c2e03f37777cac9846168bc3e60b442e258fcd0fb",
+  "dependencies": {
+    "sympy": "1.14.0",
+    "fpylll": "0.6.4",
+    "cysignals": "1.12.5",
+    "numpy": "2.3.5",
+    "gmpy2": "2.2.2"
+  },
+  "worker_counts": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "skipped_worker_counts": [],
+  "policy": {
+    "group_limit": 2,
+    "logical_window_cells": 256,
+    "preparation_batch_windows": 1,
+    "ready_limit": 2,
+    "journal_buffer_records": 8,
+    "journal_max_age_seconds": 0.25,
+    "native_max_packet_positions": 50000000,
+    "native_max_task_positions": 10000000
+  },
+  "binary_sha256": "28a75e4de049c5dc75f952b33f7a8086520564b9f83d7a9e80a11e0635d2ac38",
+  "windows": [
+    {
+      "bits": 222,
+      "cap": 42,
+      "first": 10840000000,
+      "geometry_policy": "adaptive",
+      "hi": 200000000000,
+      "last": 10840000256,
+      "lo": 100000000001,
+      "width": 8
+    },
+    {
+      "bits": 222,
+      "cap": 42,
+      "first": 10840000256,
+      "geometry_policy": "adaptive",
+      "hi": 200000000000,
+      "last": 10840000512,
+      "lo": 100000000001,
+      "width": 8
+    },
+    {
+      "bits": 222,
+      "cap": 42,
+      "first": 10840000512,
+      "geometry_policy": "adaptive",
+      "hi": 200000000000,
+      "last": 10840000768,
+      "lo": 100000000001,
+      "width": 8
+    },
+    {
+      "bits": 222,
+      "cap": 42,
+      "first": 10840000768,
+      "geometry_policy": "adaptive",
+      "hi": 200000000000,
+      "last": 10840001024,
+      "lo": 100000000001,
+      "width": 8
+    },
+    {
+      "bits": 222,
+      "cap": 42,
+      "first": 10881881856,
+      "geometry_policy": "adaptive",
+      "hi": 200000000000,
+      "last": 10881882112,
+      "lo": 100000000001,
+      "width": 8
+    },
+    {
+      "bits": 222,
+      "cap": 42,
+      "first": 10048000000,
+      "geometry_policy": "adaptive",
+      "hi": 200000000000,
+      "last": 10048000256,
+      "lo": 100000000001,
+      "width": 8
+    },
+    {
+      "bits": 222,
+      "cap": 42,
+      "first": 10048000256,
+      "geometry_policy": "adaptive",
+      "hi": 200000000000,
+      "last": 10048000512,
+      "lo": 100000000001,
+      "width": 8
+    },
+    {
+      "bits": 222,
+      "cap": 42,
+      "first": 10048000512,
+      "geometry_policy": "adaptive",
+      "hi": 200000000000,
+      "last": 10048000768,
+      "lo": 100000000001,
+      "width": 8
+    },
+    {
+      "bits": 222,
+      "cap": 42,
+      "first": 10048000768,
+      "geometry_policy": "adaptive",
+      "hi": 200000000000,
+      "last": 10048001024,
+      "lo": 100000000001,
+      "width": 8
+    }
+  ],
+  "pool_startup_seconds": {
+    "1": 0.14813849399797618,
+    "2": 0.13829395803622901,
+    "4": 0.1403498820727691,
+    "8": 0.18104680196847767
+  },
+  "journal_directory": "pipeline-journals-1794505476389149506",
+  "engine_startup_seconds": 0.0014616000698879361,
+  "preflight": {
+    "all_42_packets_match_gmp": true,
+    "fresh_gmp_all_42_packets": true,
+    "incomplete_response_rejected": true,
+    "seconds": 23.331583624938503
+  },
+  "preparation_profile": {
+    "seconds": 0.30347367096692324,
+    "functions": [
+      {
+        "file": "buffered_pipeline.py",
+        "line": 71,
+        "function": "prepare_cached",
+        "primitive_calls": 2,
+        "calls": 2,
+        "self_seconds": 0.0017077540000000001,
+        "cumulative_seconds": 0.29987837900000003
+      },
+      {
+        "file": "pipeline_bench.py",
+        "line": 98,
+        "function": "map",
+        "primitive_calls": 2,
+        "calls": 2,
+        "self_seconds": 0.00012299900000000002,
+        "cumulative_seconds": 0.26962598200000004
+      },
+      {
+        "file": "width_coverage.py",
+        "line": 39,
+        "function": "prepare_segment",
+        "primitive_calls": 256,
+        "calls": 256,
+        "self_seconds": 0.00038690700000000003,
+        "cumulative_seconds": 0.26950298300000003
+      },
+      {
+        "file": "coordinator_pipeline.py",
+        "line": 61,
+        "function": "prepare_certified",
+        "primitive_calls": 256,
+        "calls": 256,
+        "self_seconds": 0.000255758,
+        "cumulative_seconds": 0.262979774
+      },
+      {
+        "file": "coordinator_pipeline.py",
+        "line": 47,
+        "function": "_prepare",
+        "primitive_calls": 256,
+        "calls": 256,
+        "self_seconds": 0.00050842,
+        "cumulative_seconds": 0.133269357
+      },
+      {
+        "file": "exact_host_opt.py",
+        "line": 58,
+        "function": "prepare_task",
+        "primitive_calls": 256,
+        "calls": 256,
+        "self_seconds": 0.001611641,
+        "cumulative_seconds": 0.131919911
+      },
+      {
+        "file": "coordinator_pipeline.py",
+        "line": 53,
+        "function": "_certify",
+        "primitive_calls": 256,
+        "calls": 256,
+        "self_seconds": 0.0006368130000000001,
+        "cumulative_seconds": 0.129454659
+      },
+      {
+        "file": "exact_host_opt.py",
+        "line": 70,
+        "function": "certify_task",
+        "primitive_calls": 256,
+        "calls": 256,
+        "self_seconds": 0.004388622,
+        "cumulative_seconds": 0.124551858
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.sum>",
+        "primitive_calls": 12297,
+        "calls": 12297,
+        "self_seconds": 0.068587639,
+        "cumulative_seconds": 0.108924878
+      },
+      {
+        "file": "lattice5_snapshot.py",
+        "line": 57,
+        "function": "matmul",
+        "primitive_calls": 1024,
+        "calls": 1024,
+        "self_seconds": 0.0048981300000000005,
+        "cumulative_seconds": 0.08591132600000001
+      },
+      {
+        "file": "exact_host_opt.py",
+        "line": 52,
+        "function": "bounds",
+        "primitive_calls": 512,
+        "calls": 512,
+        "self_seconds": 0.000514357,
+        "cumulative_seconds": 0.080885125
+      },
+      {
+        "file": "exact_host_opt.py",
+        "line": 33,
+        "function": "coefficient_bounds_from_patch",
+        "primitive_calls": 512,
+        "calls": 512,
+        "self_seconds": 0.011290647000000001,
+        "cumulative_seconds": 0.08037076800000001
+      },
+      {
+        "file": "lattice5_snapshot.py",
+        "line": 167,
+        "function": "reduce_basis",
+        "primitive_calls": 256,
+        "calls": 256,
+        "self_seconds": 0.00048628100000000003,
+        "cumulative_seconds": 0.066213797
+      },
+      {
+        "file": "lattice5_snapshot.py",
+        "line": 138,
+        "function": "fpylll_lll",
+        "primitive_calls": 256,
+        "calls": 256,
+        "self_seconds": 0.038562107000000005,
+        "cumulative_seconds": 0.065727516
+      },
+      {
+        "file": "lattice5_snapshot.py",
+        "line": 58,
+        "function": "<genexpr>",
+        "primitive_calls": 36864,
+        "calls": 36864,
+        "self_seconds": 0.036019375,
+        "cumulative_seconds": 0.036019375
+      },
+      {
+        "file": "packing_opt.py",
+        "line": 9,
+        "function": "task_payload",
+        "primitive_calls": 512,
+        "calls": 512,
+        "self_seconds": 0.0015475970000000002,
+        "cumulative_seconds": 0.030718787
+      },
+      {
+        "file": "__init__.py",
+        "line": 183,
+        "function": "dumps",
+        "primitive_calls": 512,
+        "calls": 512,
+        "self_seconds": 0.0010371500000000001,
+        "cumulative_seconds": 0.028219725
+      },
+      {
+        "file": "encoder.py",
+        "line": 183,
+        "function": "encode",
+        "primitive_calls": 512,
+        "calls": 512,
+        "self_seconds": 0.000747686,
+        "cumulative_seconds": 0.026856263000000002
+      },
+      {
+        "file": "encoder.py",
+        "line": 205,
+        "function": "iterencode",
+        "primitive_calls": 512,
+        "calls": 512,
+        "self_seconds": 0.025818650000000002,
+        "cumulative_seconds": 0.025818650000000002
+      },
+      {
+        "file": "lattice5_snapshot.py",
+        "line": 263,
+        "function": "make_patch",
+        "primitive_calls": 512,
+        "calls": 512,
+        "self_seconds": 0.015836007000000003,
+        "cumulative_seconds": 0.023853887
+      },
+      {
+        "file": "scaling_core.py",
+        "line": 59,
+        "function": "read",
+        "primitive_calls": 512,
+        "calls": 512,
+        "self_seconds": 0.018594989000000003,
+        "cumulative_seconds": 0.018658528
+      },
+      {
+        "file": "packing_opt.py",
+        "line": 15,
+        "function": "task_digest",
+        "primitive_calls": 256,
+        "calls": 256,
+        "self_seconds": 0.000299733,
+        "cumulative_seconds": 0.017772846000000002
+      },
+      {
+        "file": "buffered_pipeline.py",
+        "line": 35,
+        "function": "immutable",
+        "primitive_calls": 256,
+        "calls": 23552,
+        "self_seconds": 0.008935294,
+        "cumulative_seconds": 0.009439797
+      },
+      {
+        "file": "lattice5_snapshot.py",
+        "line": 248,
+        "function": "basis",
+        "primitive_calls": 512,
+        "calls": 512,
+        "self_seconds": 0.008563484,
+        "cumulative_seconds": 0.008563484
+      },
+      {
+        "file": "lattice5_snapshot.py",
+        "line": 41,
+        "function": "root_bracket",
+        "primitive_calls": 1024,
+        "calls": 1024,
+        "self_seconds": 0.0036865960000000003,
+        "cumulative_seconds": 0.006822534000000001
+      },
+      {
+        "file": "width_coverage.py",
+        "line": 33,
+        "function": "specification",
+        "primitive_calls": 256,
+        "calls": 256,
+        "self_seconds": 0.000823513,
+        "cumulative_seconds": 0.006136302000000001
+      },
+      {
+        "file": "scaling_core.py",
+        "line": 58,
+        "function": "wire",
+        "primitive_calls": 512,
+        "calls": 512,
+        "self_seconds": 0.000429278,
+        "cumulative_seconds": 0.004838454000000001
+      },
+      {
+        "file": "overnight_search.py",
+        "line": 71,
+        "function": "native_safe",
+        "primitive_calls": 256,
+        "calls": 256,
+        "self_seconds": 0.000422313,
+        "cumulative_seconds": 0.0034947430000000002
+      },
+      {
+        "file": "scaling_core.py",
+        "line": 58,
+        "function": "<genexpr>",
+        "primitive_calls": 6144,
+        "calls": 6144,
+        "self_seconds": 0.003217272,
+        "cumulative_seconds": 0.003217272
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.all>",
+        "primitive_calls": 514,
+        "calls": 514,
+        "self_seconds": 0.000491715,
+        "cumulative_seconds": 0.0031512370000000003
+      },
+      {
+        "file": "exact_root_opt.py",
+        "line": 21,
+        "function": "exact_iroot",
+        "primitive_calls": 1024,
+        "calls": 1024,
+        "self_seconds": 0.001265049,
+        "cumulative_seconds": 0.003135938
+      },
+      {
+        "file": "precision_policy.py",
+        "line": 7,
+        "function": "geometry_bits",
+        "primitive_calls": 256,
+        "calls": 256,
+        "self_seconds": 0.00287731,
+        "cumulative_seconds": 0.0030335320000000002
+      },
+      {
+        "file": "exact_host_opt.py",
+        "line": 49,
+        "function": "<genexpr>",
+        "primitive_calls": 6144,
+        "calls": 6144,
+        "self_seconds": 0.002678572,
+        "cumulative_seconds": 0.002678572
+      },
+      {
+        "file": "scaling_core.py",
+        "line": 63,
+        "function": "ceil_sqrt",
+        "primitive_calls": 1536,
+        "calls": 1536,
+        "self_seconds": 0.0020374950000000003,
+        "cumulative_seconds": 0.0022314030000000003
+      },
+      {
+        "file": "width_coverage.py",
+        "line": 29,
+        "function": "edge",
+        "primitive_calls": 512,
+        "calls": 512,
+        "self_seconds": 0.000681796,
+        "cumulative_seconds": 0.002194789
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method _hashlib.openssl_sha256>",
+        "primitive_calls": 516,
+        "calls": 516,
+        "self_seconds": 0.0021754310000000002,
+        "cumulative_seconds": 0.0021754310000000002
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method builtins.any>",
+        "primitive_calls": 768,
+        "calls": 768,
+        "self_seconds": 0.000626944,
+        "cumulative_seconds": 0.0021258450000000003
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method math.lcm>",
+        "primitive_calls": 256,
+        "calls": 256,
+        "self_seconds": 0.0020902710000000003,
+        "cumulative_seconds": 0.0020902710000000003
+      },
+      {
+        "file": "overnight_search.py",
+        "line": 75,
+        "function": "<genexpr>",
+        "primitive_calls": 1024,
+        "calls": 1024,
+        "self_seconds": 0.000464823,
+        "cumulative_seconds": 0.001834403
+      },
+      {
+        "file": "~",
+        "line": 0,
+        "function": "<built-in method time.process_time>",
+        "primitive_calls": 1024,
+        "calls": 1024,
+        "self_seconds": 0.001416347,
+        "cumulative_seconds": 0.001416347
+      }
+    ],
+    "scope": "Two serial preparation profiles outside pipeline timings; exact packet bytes checked."
+  },
+  "summary": {
+    "median_pipeline_seconds": {
+      "1": 4.321580801974051,
+      "2": 4.3219433730700985,
+      "4": 4.235491439932957,
+      "8": 4.166075125918724
+    },
+    "speedup_vs_one_worker": {
+      "1": 1.0,
+      "2": 0.9999161092442101,
+      "4": 1.0203257079519577,
+      "8": 1.037326661511183
+    },
+    "fastest_tested_worker_count": 8,
+    "stage_warning": "Worker sums and producer/consumer timings overlap; do not add them or call queue wait GPU utilization."
+  },
+  "elapsed_seconds": 41.58178136497736,
+  "validation_scope": "One CPU repetition for each of 1/2/4/8 workers, all nine windows; not a Colab GPU performance result. An earlier three-window 1/2-worker smoke also passed."
+}
