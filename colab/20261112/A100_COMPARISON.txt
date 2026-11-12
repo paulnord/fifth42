@@ -1,0 +1,38 @@
+Run one matched A100 comparison of the validated Fifth42 prepared-packet replay.
+
+Before switching, record the L4 compute-unit rate if visible. Select A100 under
+Runtime > Change runtime type. If an A100 is unavailable, report that and stop.
+Record the actual GPU after connection; do not assume the requested GPU arrived.
+
+Use this corrected immutable notebook:
+https://colab.research.google.com/github/paulnord/fifth42/blob/daac4d600cfdd01c34349e3d1da25fc7cde95953/colab/20261112/Fifth42_Colab_Tests.ipynb
+
+Run all its cells in the fresh A100 runtime. It installs libgmp-dev, verifies all
+source/data hashes, rebuilds with nvcc -arch=native, and runs:
+python3 colab_bench.py --backend gpu --repeats 7 --max-seconds 180 --verify-gmp
+
+Keep the supplied inputs, native limits, filters and verification unchanged.
+Stop on any build or exact-check failure. This is a benchmark with zero new
+scientific coverage. Limit this comparison to five minutes including setup;
+report any timeout or resource limitation. Do not launch a production search.
+
+Record the GPU, VRAM, CPU affinity, compiler versions, observed compute-unit rate
+and starting/ending balance if visible. Mark unavailable account values unknown.
+All 42 original packets must match independent GMP, fresh GMP reproduction must
+pass, and the intentionally incomplete response must be rejected.
+
+Compare the seven-repeat medians with the second L4 run:
+- Production-sized: 775,687,194 positions, 23 requests; replay 35.404418 ms,
+  kernel 17.611814 ms, engine RPC 23.981398 ms.
+- Tiny separate: replay 4.092285 ms; combined: replay 0.726874 ms (5.62998x).
+- Production-sized requests are byte-identical after batching: no batching ratio.
+
+Report A100/L4 replay speedup and, if both observed rates are available,
+prepared-replay throughput per compute unit. Compare the A100 speedup with the
+A100/L4 compute-unit-rate ratio. Keep startup and full benchmark duration separate.
+These measurements exclude CPU planning, network delivery and durable journals;
+they do not establish sustained full-pipeline search throughput.
+
+Download the results ZIP as Fifth42_A100_Results.zip. Include account observations
+in a separate text/JSON note if available. End the runtime after the download is
+safely saved. No additional GPU runs are needed for this assignment.

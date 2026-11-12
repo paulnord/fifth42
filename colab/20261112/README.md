@@ -50,8 +50,9 @@ with 17.61 ms kernel time; tiny batching improved 5.63x. Its
 [artifact review](results/colab-l4-r2-review.json) confirms the same inputs and
 seven repetitions per case. Cost remains unrecorded.
 
-The next bounded experiment is the [matched H100 comparison](H100_COMPARISON.txt),
-using the corrected notebook and the second L4 run as its baseline.
+H100 was unavailable in the user's session. The next bounded experiment is the
+[matched A100 comparison](A100_COMPARISON.txt), using the corrected notebook and
+the second L4 run as its baseline. If A100 is unavailable too, keep L4.
 
 ## Run
 
