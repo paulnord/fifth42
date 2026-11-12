@@ -3,7 +3,7 @@
   "alerts": [],
   "backend": "gpu",
   "checkpoint": {
-    "chunks": 186401,
+    "chunks": 218665,
     "completed_bound": null,
     "coverage_schema": "logical-width8-physical-groups-v1",
     "hits": [],
@@ -11,12 +11,12 @@
       "source_identity": "a60f5eb78dc5655a7e563eb2c4ada0987178786e3084e8d06c12ff090d2b0b91",
       "trial": "cabbage-extended-memory-r2-cap100-20261111-job-50"
     },
-    "journal_offset": 6864316072,
-    "journal_sha256": "4036827b1eacc83e1fb418e11bf2a9adb72a62531e6c2dd0e0feec48837692fb",
-    "next_patch": 10247718656,
-    "patches": 47718656,
-    "physical_tasks": 23859328,
-    "points": 11766468866278,
+    "journal_offset": 8052472784,
+    "journal_sha256": "513eeb01bfd03810728de14db363638d6a3b559003d6117a53c3a730be9d5d0d",
+    "next_patch": 10255978240,
+    "patches": 55978240,
+    "physical_tasks": 27989120,
+    "points": 13848085327420,
     "window": {
       "bits": 222,
       "cap": 100,
@@ -30,12 +30,12 @@
   },
   "combined_committed_interval": [
     10200000000,
-    10247718656
+    10255978240
   ],
-  "combined_selected_patches": 47718656,
+  "combined_selected_patches": 55978240,
   "committed_interval": [
     10200000000,
-    10247718656
+    10255978240
   ],
   "completed_bound": null,
   "config_sha256": "3711c02e10b2224cfc355902ddd0be7a9f8da4d6bb3ee54378309ef851781bf3",
@@ -66,7 +66,7 @@
   "journal_limit_bytes": 34359738368,
   "journal_storage": "local durable journal; verified bulk replica every 60 seconds",
   "ledger_claim_sha256": "430451ddaa87146279273022795380b30a88f8c2d90b0abab057b35e7d097d02",
-  "local_next_patch": 10248232704,
+  "local_next_patch": 10256164352,
   "manifest_sha256": "125e1248b84bd234207b454028573817a82291a1416550b3a600ada1ac06d6d7",
   "mathematical_coverage_claim": false,
   "minimum_free_disk_bytes": 17179869184,
@@ -82,20 +82,20 @@
   "prefix_exclusion_sha256": null,
   "production_launched": true,
   "replica": {
-    "captured_epoch": 1794521482.834331,
-    "checkpoint_sha256": "bbbb4e2782e13966c51af0348040414e367f5e780d6416618df0f786f8e23787",
-    "chunks": 186401,
-    "committed_bytes": 6864316072,
+    "captured_epoch": 1794522422.0705335,
+    "checkpoint_sha256": "57f6f478ef5180ce9bcad0d73e4f888aa702cd396e585dcbca76409f55feb825",
+    "chunks": 218665,
+    "committed_bytes": 8052472784,
     "identity": {
       "source_identity": "a60f5eb78dc5655a7e563eb2c4ada0987178786e3084e8d06c12ff090d2b0b91",
       "trial": "cabbage-extended-memory-r2-cap100-20261111-job-50"
     },
-    "journal_sha256": "4036827b1eacc83e1fb418e11bf2a9adb72a62531e6c2dd0e0feec48837692fb",
+    "journal_sha256": "513eeb01bfd03810728de14db363638d6a3b559003d6117a53c3a730be9d5d0d",
     "method": "append, fsync, byte readback, audit copies, checkpoint, receipt",
-    "next_patch": 10247718656,
-    "raw_sha256": "d3b893c023d0ab93dbc6a9c12afa9d2ee6816bbed7c172de9a301b2f8afaf34f",
+    "next_patch": 10255978240,
+    "raw_sha256": "304f7282cdcb0125abdf8cf28ced889a923a39eb137434b1e713fd2d852a81ac",
     "status": "verified",
-    "synced_epoch": 1794521490.2762263
+    "synced_epoch": 1794522428.167545
   },
   "report_interval_seconds": 900,
   "reserved_interval": [
@@ -110,7 +110,7 @@
     "NRestarts": "0",
     "SubState": "running"
   },
-  "snapshot_utc": "2026-11-12T22:12:20.544854+00:00",
+  "snapshot_utc": "2026-11-12T22:27:22.895195+00:00",
   "source_identity": "a60f5eb78dc5655a7e563eb2c4ada0987178786e3084e8d06c12ff090d2b0b91",
   "stop_epoch": 1794524400,
   "stop_local": "2026-11-12T17:00:00-06:00",
@@ -120,55 +120,55 @@
     "error": null,
     "leases_released": false,
     "load_average": [
-      5.17919921875,
-      5.99560546875,
-      6.44384765625
+      7.3388671875,
+      6.67822265625,
+      6.57177734375
     ],
     "status": "running",
-    "updated_utc": "2026-11-12T22:12:19.434765+00:00",
+    "updated_utc": "2026-11-12T22:27:19.193595+00:00",
     "worker_pid": 2974447
   },
   "worker_metrics": {
     "dispatch_chunksize": 8,
     "error": null,
-    "gmp_audited_chunks": 1472,
+    "gmp_audited_chunks": 1714,
     "journal_buffer": {
-      "flush_count": 23571,
-      "flush_seconds": 211.37417277577333,
-      "pending_bytes": 0,
-      "pending_chunks": 0
+      "flush_count": 27446,
+      "flush_seconds": 246.85203694971278,
+      "pending_bytes": 36817,
+      "pending_chunks": 1
     },
-    "patches_per_second": 8875.284032401236,
+    "patches_per_second": 8863.92657073819,
     "prefetch": {
       "active": 1,
-      "consumer_wait_empty_seconds": 598.7643049973994,
-      "elapsed_seconds": 5430.717486968031,
+      "consumer_wait_empty_seconds": 696.5689323201077,
+      "elapsed_seconds": 6332.268585946062,
       "inflight": 1,
       "max_outstanding": 3,
       "maximum_item_payload_bytes": 134217728,
       "maximum_prepared_payload_bytes": 15356723,
-      "mean_ready_depth": 0.47001596405065127,
+      "mean_ready_depth": 0.47071478924063465,
       "outstanding": 3,
       "peak_outstanding": 3,
       "peak_ready": 1,
       "peak_reserved_bytes": 402653184,
       "preparation_batch_windows": 16,
-      "preparation_batches": 11770,
-      "prepare_wall_seconds": 5429.407188725076,
-      "producer_wait_capacity_seconds": 0.010236881789751351,
-      "producer_wait_full_seconds": 1575.1448579181451,
+      "preparation_batches": 13706,
+      "prepare_wall_seconds": 6330.931102446397,
+      "producer_wait_capacity_seconds": 0.011913637048564851,
+      "producer_wait_full_seconds": 1842.7367850068258,
       "queue_units": "bounded preparation batches; original execution/journal windows preserved",
       "ready": 1,
       "ready_depth_seconds": {
-        "0": 2878.1935681770556,
-        "1": 2552.5239151240094
+        "0": 3351.5761101723183,
+        "1": 2980.692472848692
       },
       "ready_limit": 1,
       "reserved_bytes": 402653184
     },
     "reason": null,
-    "search_seconds": 5431.035651820013,
-    "updated_utc": "2026-11-12T22:12:18.554438+00:00"
+    "search_seconds": 6332.586755095981,
+    "updated_utc": "2026-11-12T22:27:20.105540+00:00"
   },
   "workers": 16
 }
