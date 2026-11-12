@@ -1,20 +1,20 @@
 # Cabbage combined search
 
-Updated: 2026-11-12T06:55:20.501830+00:00
+Updated: 2026-11-12T07:09:41.318601+00:00
 
-State: **running**. Run **cabbage-extended-memory-r2-cap100-20261111-job-42**; gpu with 16 preparation workers.
-Verified replicated cursor: **9,743,326,976**.
-New replicated logical patches: **55,326,976** in 216,121 chunks.
-Combined verified selected patches, including parents: **55,326,976**.
-Fresh interval: `[9688000000, 9752000000]`; replicated: `[9688000000, 9743326976]`.
-Local cursor: 9,743,615,744; physical tasks group up to 2 original width-8 cells.
+State: **stopped**. Run **cabbage-extended-memory-r2-cap100-20261111-job-42**; gpu with 16 preparation workers.
+Verified replicated cursor: **9,752,000,000**.
+New replicated logical patches: **64,000,000** in 250,000 chunks.
+Combined verified selected patches, including parents: **64,000,000**.
+Fresh interval: `[9688000000, 9752000000]`; replicated: `[9688000000, 9752000000]`.
+Local cursor: 9,752,000,000; physical tasks group up to 2 original width-8 cells.
 Saved-root reuse, exact host optimizations, low64 filtering and an immutable canonical task cache are enabled.
 Journal records remain separate 256-cell receipts, with up to eight buffered before a durable checkpoint.
-Dispatch chunksize: 8; ready queue: {'active': 1, 'consumer_wait_empty_seconds': 1006.7394629190676, 'elapsed_seconds': 5407.049305450055, 'inflight': 1, 'max_outstanding': 3, 'maximum_item_payload_bytes': 134217728, 'maximum_prepared_payload_bytes': 15357601, 'mean_ready_depth': 0.3705968660477912, 'outstanding': 2, 'peak_outstanding': 3, 'peak_ready': 1, 'peak_reserved_bytes': 402653184, 'preparation_batch_windows': 16, 'preparation_batches': 13564, 'prepare_wall_seconds': 5406.801421683165, 'producer_wait_capacity_seconds': 0.011805267655290663, 'producer_wait_full_seconds': 1087.4029549724655, 'queue_units': 'bounded preparation batches; original execution/journal windows preserved', 'ready': 0, 'ready_depth_seconds': {'0': 3403.2137755093863, '1': 2003.8355271656765}, 'ready_limit': 1, 'reserved_bytes': 268435456}; buffer: {'flush_count': 27157, 'flush_seconds': 222.81471503619105, 'pending_bytes': 176523, 'pending_chunks': 5}.
+Dispatch chunksize: 8; ready queue: {'active': 0, 'consumer_wait_empty_seconds': 1158.7293403393123, 'elapsed_seconds': 6233.323413860053, 'inflight': 0, 'max_outstanding': 3, 'maximum_item_payload_bytes': 134217728, 'maximum_prepared_payload_bytes': 15357601, 'mean_ready_depth': 0.3709957850196421, 'outstanding': 0, 'peak_outstanding': 3, 'peak_ready': 1, 'peak_reserved_bytes': 402653184, 'preparation_batch_windows': 16, 'preparation_batches': 15625, 'prepare_wall_seconds': 6232.0564352757065, 'producer_wait_capacity_seconds': 0.013600740698166192, 'producer_wait_full_seconds': 1254.997709589661, 'queue_units': 'bounded preparation batches; original execution/journal windows preserved', 'ready': 0, 'ready_depth_seconds': {'0': 3920.78669707675, '1': 2312.5367132063257}, 'ready_limit': 1, 'reserved_bytes': 0}; buffer: {'flush_count': 31284, 'flush_seconds': 256.84134267736226, 'pending_bytes': 0, 'pending_chunks': 0}.
 
 Journal storage: **local durable journal, verified bulk copy every minute**. New journal cap: **32 GiB**;
 free-space reserve: 16 GiB.
-Observed rate: **10,274 patches/s**; new independent GMP audits: 1,696.
+Observed rate: **10,267 patches/s**; new independent GMP audits: 1,954.
 Deadline: **2026-11-12T17:00:00-06:00**. Independent worker/deadline services on Cabbage; separate publisher on Ada.
 GitHub updates every **15 minutes**, plus startup/terminal transitions. Alerts: None reported.
 
