@@ -1,0 +1,128 @@
+{
+  "BOINC_already_installed_or_tested_by_this_handoff": false,
+  "acceptance": [
+    "Actual BOINC server/client CPU execution and independent validation",
+    "Malformed/incomplete/forged output rejection",
+    "Actual checkpoint interruption/recovery",
+    "Actual failed-attempt retry/reassignment with canonical-result accounting",
+    "Actual version A to B application distribution with hash evidence",
+    "Actual authorized CUDA run with correct allocated device and independent GMP equivalence",
+    "Reproducible setup/operation and an evidence-based migration proposal"
+  ],
+  "benchmark_scope": {
+    "TEST_ONLY": true,
+    "new_scientific_coverage": false,
+    "packets": 42,
+    "realistic_original_windows": 9,
+    "realistic_packets": 23,
+    "realistic_positions": 775687194,
+    "tiny_packets": 16
+  },
+  "created_utc": "2026-11-12T21:31:16.284994+00:00",
+  "first_controls": [
+    {
+      "cap": 100,
+      "expected_signed_residual": 12,
+      "name": "control-cap100-r12",
+      "positions": 3
+    },
+    {
+      "cap": 42,
+      "expected_signed_residual": 12,
+      "name": "control-cap42-r12",
+      "positions": 3
+    },
+    {
+      "cap": 2951,
+      "expected_signed_residual": -2002,
+      "name": "control-cap2951-r-2002",
+      "positions": 3
+    }
+  ],
+  "handoff_sha256": "cbf523277c60950c29a178006381ce9a7f55f9d8127b145e701dd931ad654fd3",
+  "input_archive_sha256": "299ee7890560eff3b3b5a44b7ff1206b7347cd931d6c7cda0367e0c8000dc07a",
+  "input_transport_manifest_sha256": "57d6965885da6c397f5cc1265fe71d15e7d1bc9c95434a3e166343f14f03bcae",
+  "native_input_asset_commit": "4668a27951f2b9d7d533896d1aa32684808341d4",
+  "native_input_files": {
+    "build.py": {
+      "sha256": "b1d640458081662554d394b1346283aafc2ed9c1aa30118c9400c2ecb68624f2",
+      "url": "https://github.com/paulnord/fifth42/blob/4668a27951f2b9d7d533896d1aa32684808341d4/colab/20261112/build.py"
+    },
+    "colab_bench.py": {
+      "sha256": "9f6401e1d3533a9834bd2105186ad6e846375c6c7ff98cb6bbcd3b2f88ad6d3e",
+      "url": "https://github.com/paulnord/fifth42/blob/4668a27951f2b9d7d533896d1aa32684808341d4/colab/20261112/colab_bench.py"
+    },
+    "engine_session.py": {
+      "sha256": "dc15e640bdb0a2a7d61673484fc17a5ef1c74af62065d387127ec9973540ea05",
+      "url": "https://github.com/paulnord/fifth42/blob/4668a27951f2b9d7d533896d1aa32684808341d4/colab/20261112/engine_session.py"
+    },
+    "load_bundle.py": {
+      "sha256": "58ca34acf5ae7fac0648b4b95a5d270f178d69c271053be82847bb4a65c7e611",
+      "url": "https://github.com/paulnord/fifth42/blob/4668a27951f2b9d7d533896d1aa32684808341d4/colab/20261112/load_bundle.py"
+    },
+    "native/independent/gmp_reference.cpp": {
+      "sha256": "3d9bbe87413c52cde6f2d4f631c6da06148d85be0e39b3b09fe140753097ce3c",
+      "url": "https://github.com/paulnord/fifth42/blob/4668a27951f2b9d7d533896d1aa32684808341d4/colab/20261112/native/independent/gmp_reference.cpp"
+    },
+    "native/src/scaling_cpu.cpp": {
+      "sha256": "cc3d53fbad6f1de6827961f6e89b648ae4fd65a5dda05127e3c06a3894f42f07",
+      "url": "https://github.com/paulnord/fifth42/blob/4668a27951f2b9d7d533896d1aa32684808341d4/colab/20261112/native/src/scaling_cpu.cpp"
+    },
+    "native/src/scaling_gpu.cu": {
+      "sha256": "5b6d7e3270ac0b9c43f42fa56af2fe1ef98c1b20b37ed147fcfd91e37bdc6977",
+      "url": "https://github.com/paulnord/fifth42/blob/4668a27951f2b9d7d533896d1aa32684808341d4/colab/20261112/native/src/scaling_gpu.cu"
+    },
+    "native/src/stream_io.hpp": {
+      "sha256": "ba26ad17dd5533d537ea97d61529005c508c93035842cba5af389465a2bdc3b6",
+      "url": "https://github.com/paulnord/fifth42/blob/4668a27951f2b9d7d533896d1aa32684808341d4/colab/20261112/native/src/stream_io.hpp"
+    },
+    "transport/manifest.json": {
+      "sha256": "57d6965885da6c397f5cc1265fe71d15e7d1bc9c95434a3e166343f14f03bcae",
+      "url": "https://github.com/paulnord/fifth42/blob/4668a27951f2b9d7d533896d1aa32684808341d4/colab/20261112/transport/manifest.json"
+    }
+  },
+  "native_limits": {
+    "packet_positions": 50000000,
+    "task_positions": 10000000,
+    "tasks_per_packet": 4096
+  },
+  "native_protocol": {
+    "frame_max_bytes": 16777216,
+    "independent_GMP": "Raw packet on stdin; one JSON response",
+    "ready": "JSON line with ready=true, backend and persistent=true",
+    "reply": "JSON bound to request_id",
+    "request": "RUN <strictly increasing request_id> <packet_byte_count> followed by exact UTF-8 packet bytes",
+    "shutdown": "QUIT"
+  },
+  "optional_planning_assets": {
+    "commit": "99a6821796bc444e7541337edb0d1bf0815c8ad2",
+    "dependencies": {
+      "cysignals": "1.12.5",
+      "fpylll": "0.6.4",
+      "gmpy2": "2.2.2",
+      "mpmath": "1.3.0",
+      "numpy": "2.3.5",
+      "sympy": "1.14.0"
+    },
+    "manifest_sha256": "20ea3d091882c1f3b468ee12ec657174dbea8756d95e804762580b8499e9f4d2",
+    "path": "colab/20261112/pipeline",
+    "provenance_sha256": "350e06c101ad1b8aa885212c2e03f37777cac9846168bc3e60b442e258fcd0fb",
+    "python": "3.12"
+  },
+  "packet_jsonl_sha256": "3916c409f159cace521d9fdc24534dfadb61b514a33ada1eaf5f42e1b3203a92",
+  "production_activation_authorized": false,
+  "prototype_only": true,
+  "public_context_commit": "fea848d07fe82febed04aa0a9e8b583238d0a823",
+  "repository": "https://github.com/paulnord/fifth42",
+  "schema": "fifth42-boinc-dot-handoff-assets-v1",
+  "task": "Use stock BOINC server/client/wrapper for an isolated Fifth42 proof of fit; return actual CPU, checkpoint, update and GPU evidence plus migration proposal",
+  "upstream_references": [
+    "https://github.com/BOINC/boinc/wiki/CreateProjectCookbook",
+    "https://github.com/BOINC/boinc/wiki/WrapperApp",
+    "https://github.com/BOINC/boinc/wiki/BOINC-apps-%28introduction%29",
+    "https://github.com/BOINC/boinc/wiki/Specifying-plan-classes-in-XML",
+    "https://github.com/BOINC/boinc/wiki/Adding-app-versions",
+    "https://github.com/BOINC/boinc/wiki/Job-processing-%28introduction%29",
+    "https://github.com/BOINC/boinc/wiki/Server-release-notes"
+  ]
+}

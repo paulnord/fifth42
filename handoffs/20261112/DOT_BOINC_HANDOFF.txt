@@ -1,0 +1,216 @@
+Dot: prototype Fifth42 using stock BOINC software
+Prepared November 12, 2026. Owner: pnord. Prototype assignment; no production cutover.
+
+The user wants a Folding@home-style search service with a durable work queue,
+standard workers, centrally distributed application versions, and dependable
+status. The existing separate host controllers and manual agent handoffs have
+made iteration tedious. Use BOINC itself: its server, client, supplied wrapper,
+work distribution, application releases and job lifecycle. Build the necessary
+Fifth42 application integration. The deliverable is a working, reproducible
+prototype and an evidence-based migration recommendation, not another custom
+scheduler or an architecture-only proposal.
+
+This assignment is separate from the ongoing Ada/Boole/Cabbage deadline rollout
+and from the Colab performance experiment. Do not install this prototype over
+their workers or start a competing production search.
+
+1. Establish the stock BOINC baseline.
+
+Use an isolated project database, server environment and client data directory.
+Choose a supported upstream deployment method; pin and record the actual BOINC
+server, client and wrapper versions, source commits or image digests. A sample
+BOINC job can establish that the server/client installation works, but it does
+not satisfy the Fifth42 acceptance criteria. Keep setup and operation scriptable
+with a short set of documented start, submit, status, drain and cleanup commands.
+Use the standard status tools/pages first; a new dashboard is not a prerequisite.
+
+Start with one client on a development host. A second isolated client is useful
+for retry testing. Use existing project computers only after checking their
+current resource ownership; no computer is assumed idle. Private prototype
+access is sufficient. Public volunteer enrollment is outside this assignment.
+
+2. Reuse the published Fifth42 numerical code and known inputs.
+
+Repository: https://github.com/paulnord/fifth42
+Public source/data baseline: 4668a27951f2b9d7d533896d1aa32684808341d4
+Paths under that commit: colab/20261112/
+The companion DOT_BOINC_ASSETS.json gives immutable URLs and SHA256 identities.
+
+From a fresh working checkout, create an isolated inputs worktree and runtime:
+
+    git fetch origin 4668a27951f2b9d7d533896d1aa32684808341d4
+    git worktree add --detach ../fifth42-boinc-inputs 4668a27951f2b9d7d533896d1aa32684808341d4
+    python3 ../fifth42-boinc-inputs/colab/20261112/load_bundle.py --destination ../fifth42-boinc-runtime
+    cd ../fifth42-boinc-runtime
+    python3 build.py
+
+The loader validates the transport chunks, archive, extracted files and input
+catalog. Its destination must not already exist. CPU building needs a C++17
+compiler, pthread support and GMP development headers (Ubuntu: g++, libgmp-dev).
+Use a Linux x86_64 execution environment for this first native build; the existing
+engine uses Linux parent-process guards in sys/prctl.h. A Mac development host
+can use a Linux VM or separate Linux execution point.
+Use the local package installation method appropriate to the isolated host.
+Do not change GPU drivers or the production Python environment to build this.
+
+The initial packet replay is Python-standard-library-only and needs no lattice
+planner, fpylll pool or campus filesystem. If later adding fresh planning, use
+the separately published pipeline sources and their original Python 3.12/exact
+dependency pins. Do not weaken those guards to make a new environment work.
+
+data/packets.jsonl contains 42 JSON records with name, group, packet text,
+packet_sha256, cap, point count and independently checked expected count/hit data.
+Start with control-cap100-r12: only 3 coefficient positions, positive residual 12.
+Then include control-cap42-r12 and control-cap2951-r-2002; their nonzero signed
+residuals and differing caps are intentional TEST_ONLY fixtures. The catalog also
+contains 16 tiny packets and 23 representative larger packets from nine windows.
+The latter total 775,687,194 coefficient positions. These are regenerated test
+inputs, not assignments copied from a live worker. Replaying them earns zero new
+scientific coverage.
+
+Important protocol detail verified in the source:
+bin/scaling_cpu and bin/scaling_gpu are persistent framed engines. They emit a
+JSON readiness line, accept RUN <request_id> <byte_count> followed by packet bytes,
+return a response bound to request_id, and accept QUIT. A raw packet redirected
+to their stdin is not a valid standalone job interface. Reuse engine_session.py
+and the exact reconstruction/count/hit checks in colab_bench.py. A thin bounded
+application driver can present a normal file/command-line interface to BOINC.
+The independent bin/gmp_reference DOES accept the raw packet on stdin.
+
+For an isolated full native baseline, the supplied command is:
+
+    python3 colab_bench.py --backend cpu --repeats 1 --max-seconds 180 --verify-gmp
+
+Start BOINC integration with the 3-position control rather than the full benchmark.
+Using a shell command to run the native baseline alone is not a BOINC success.
+
+3. Run a real Fifth42 work unit through BOINC's supplied wrapper.
+
+Package the CPU engine, the minimal session/driver code and dependencies as an
+ordinary BOINC application version. Submit an immutable work-unit manifest and
+input files, let a real BOINC client download and execute them, upload the output,
+and run server-side scientific validation. Keep server job IDs, client job IDs,
+application version, binary/input hashes, attempt identity and result provenance.
+Use BOINC's supported file mapping and logical filenames inside its slot directory.
+The input manifest must retain exact mathematical parameters and native limits.
+
+The custom pieces should be the work generator, bounded science driver and
+validator. Keep scheduling, retries, CPU/GPU allocation and application delivery
+in BOINC. Existing live packed_worker/policy/supervisor scripts hardcode host
+paths, grants and ownership; they are not drop-in BOINC applications. Reuse their
+numerical and evidence logic where useful, without recreating their host-specific
+control machinery inside BOINC.
+
+Validate the actual uploaded output against the independently checked input:
+complete strictly typed total/per-task counts, exact candidate reconstruction,
+all signed hits, packet identity and complete task coverage. Use independent GMP
+as the oracle for the known packets. Test rejection of a truncated result, wrong
+input identity and forged visit count even when an output file exists and the
+worker exits 0. BOINC's trivial file-presence validator is insufficient for this.
+Distinguish job execution success from scientific acceptance.
+
+4. Demonstrate durable interruption recovery and retries.
+
+Use a bounded multi-packet job with immutable packet order and an explicit durable
+completed-packet prefix. Save a checkpoint only after the corresponding result
+receipt is durable. A test-only pause after a real committed packet is acceptable
+to make interruption deterministic; do not fabricate native work or counts.
+Show actual app/client stop and restart, output preservation, correct checkpoint
+recognition by the wrapper, and completion from a valid saved prefix. Recompute
+an uncommitted packet when necessary; do not credit it twice or count prefetched
+work. Checkpoint/progress files are application responsibilities even when the
+wrapper reports them to the client.
+
+Separately exercise a failed/lost job attempt and a BOINC retry or reassignment
+using shortened TEST_ONLY deadlines. Losing a host may require repeating the
+whole work unit. Record each attempt and accept logical job coverage once through
+BOINC's canonical-result/validation handling. BOINC is not assumed to migrate an
+arbitrary live checkpoint to another machine. Demonstrate the actual supported
+behavior and bound the resulting recomputation. No exactly-once execution promise
+is required; correct accepted results and accounting are required.
+
+5. Demonstrate the iterative-upgrade workflow the user actually needs.
+
+Publish version A through BOINC and start a real work unit. Stage/version/sign a
+version B application through BOINC's normal release mechanism, using a harmless
+identifiable build/version change with unchanged mathematics. Show how existing
+work and newly assigned work bind to their actual executable version. Retain old
+application/input identities; use BOINC's required immutable filenames. Prove the
+client obtains the intended new version without per-host source editing or a
+new controller protocol. Verify results from both builds with the same independent
+oracle. Record any scheduler caching or client-update steps actually needed;
+do not claim rolling updates merely because two executable files were uploaded.
+
+6. Add CUDA through BOINC resource scheduling after the CPU path works.
+
+Only use a genuinely free, authorized test GPU. Register an appropriate NVIDIA
+application/plan class, request the GPU and CPU resources needed, and use the
+allocated GPU device rather than assuming device 0. BOINC's wrapper exposes
+$GPU_DEVICE_NUM and $NTHREADS; establish the correct interaction with device
+visibility on the chosen setup. Build for the actual compatible GPU architecture
+and retain binary/source provenance. Do not let BOINC and an existing production
+worker compete for the same device. If a GPU is unavailable, finish the independent
+CPU/integration work and report the precise pending GPU checks.
+
+Run the positive/negative controls, then the full 42-packet CPU/GPU/GMP comparisons
+and at least one representative larger work unit end to end through BOINC.
+Original limits remain: 50 million coefficient positions per packet, 10 million per
+task, 4096 tasks, plus the existing exact arithmetic/range/response guards. Keep
+TEST_ONLY scope explicit. Measure scheduler/transfer/startup overhead separately
+from numerical runtime. Use those measurements to propose a sensible work-unit
+duration; do not turn each millisecond native call into a separate network job
+or pick a production batch size without evidence.
+
+Acceptance evidence to return:
+
+- Stock BOINC server/client/wrapper identities, installation/run instructions,
+  isolated configuration and a reproducible project/application package.
+- Real server and client job records and uploaded artifacts for the tiny positive
+  and negative controls, complete independent scientific validation, and each
+  deliberately rejected corrupt/incomplete output.
+- A real interruption/restart trace with exact durable-prefix accounting, plus
+  a separate retry/reassignment trace and one accepted logical result per job.
+- A real version A-to-version B rollout trace with actual downloaded executable
+  hashes and correctly validated old/new results.
+- CUDA resource-selection and native/GMP equivalence evidence, or a precise
+  hardware/availability blocker with the CPU prototype still reproducible.
+- Known limitations, timing/transfer/storage overhead, and an adopt/adjust/reject
+  recommendation grounded in what was actually executed. Separate simulations,
+  direct numerical tests and real BOINC integration results. A notebook, mocked
+  server, source review or proposed configuration alone is not end-to-end proof.
+
+Put changes on an isolated prototype branch, suggested:
+prototype/boinc-fifth42-dot-20261112
+Publish source, setup/operation commands and concise evidence through the existing
+GitHub repository. Keep credentials, private keys, database passwords, generated
+binaries and bulky run directories out of Git. Supply hashes and a separately
+located evidence archive where needed. A short written blocker report is useful
+if upstream setup cannot be completed; do not silently replace BOINC with custom
+queue code. HTCondor is an existing alternative if BOINC has a demonstrated fit
+problem, not a requirement to run a parallel framework comparison now.
+
+Migration is a proposal for review, not part of production activation:
+
+Explain how a later cutover would import exact accepted coverage and outstanding
+regions without overlap or omission, preserve cap 42 versus cap 100 scope, drain
+old workers, and establish the new authoritative queue. Include operational
+ownership, restart/backup behavior and a safe recovery plan. Existing native
+evidence and original claims remain unchanged. Benchmark fixtures must never be
+promoted to scientific coverage. Dot should stop at the reviewable prototype and
+migration proposal; do not rewrite live grants, reservations, shared deadlines,
+timers or deployed workers. Another agent is handling the current deadline work.
+
+Upstream references checked November 12, 2026:
+https://github.com/BOINC/boinc/wiki/CreateProjectCookbook
+https://github.com/BOINC/boinc/wiki/WrapperApp
+https://github.com/BOINC/boinc/wiki/BOINC-apps-%28introduction%29
+https://github.com/BOINC/boinc/wiki/Specifying-plan-classes-in-XML
+https://github.com/BOINC/boinc/wiki/Adding-app-versions
+https://github.com/BOINC/boinc/wiki/Job-processing-%28introduction%29
+https://github.com/BOINC/boinc/wiki/Server-release-notes
+These document real project creation, wrappers, resource matching, application
+version distribution and validation. Recheck supported upstream versions during
+implementation; the handoff does not prescribe an unverified deployment image.
+
+The task is to prove that existing BOINC software can operate Fifth42 with a
+small scientific integration, while leaving the running search undisturbed.
