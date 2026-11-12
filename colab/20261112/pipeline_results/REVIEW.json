@@ -1,0 +1,75 @@
+{
+  "status": "passed",
+  "original_zip_sha256": "6b813382aa78d96c6d26045d9006cabc61f0610d8e235947fa0e4ae43bb0a1c6",
+  "original_zip_bytes": 1187144,
+  "result_members": 82,
+  "all_export_checksums_verified": true,
+  "source_and_input_identities_verified": true,
+  "native_binary_identity_matches_build": true,
+  "preflight_reported_passed": {
+    "all_42_packets_match_gmp": true,
+    "fresh_gmp_all_42_packets": true,
+    "incomplete_response_rejected": true,
+    "seconds": 40.14259395399995
+  },
+  "journal_hash_chains_and_cursors_independently_verified": 36,
+  "exact_window_records_verified": 108,
+  "native_packet_receipts_matched_to_gmp_oracle": 276,
+  "certificate_identities_and_packet_identities_verified": true,
+  "gpu": "NVIDIA L4",
+  "worker_medians": {
+    "1": {
+      "pipeline_seconds": 2.049833293000006,
+      "cells_per_second": 1123.9938427519692,
+      "wait_for_preparation_seconds": 1.8796324879996291,
+      "kernel_seconds": 0.017756088,
+      "engine_rpc_seconds": 0.026159342000141805,
+      "prepared_consistency_seconds": 0.06833812900026714,
+      "journal_flush_seconds": 0.04835051999998541,
+      "mean_ready_depth": 0.0006077068845097103,
+      "worker_prepare_and_certify_cpu_seconds": 1.724045191000004,
+      "speedup_vs_one_worker": 1.0
+    },
+    "2": {
+      "pipeline_seconds": 1.1449219030000677,
+      "cells_per_second": 2012.3643315432876,
+      "wait_for_preparation_seconds": 0.9901253329999236,
+      "kernel_seconds": 0.01782362000000001,
+      "engine_rpc_seconds": 0.029173546000379247,
+      "prepared_consistency_seconds": 0.06838509800002157,
+      "journal_flush_seconds": 0.030559280999909788,
+      "mean_ready_depth": 0.002470841454806455,
+      "worker_prepare_and_certify_cpu_seconds": 1.7286979280000025,
+      "speedup_vs_one_worker": 1.7903695331784433
+    },
+    "4": {
+      "pipeline_seconds": 0.7121947539999383,
+      "cells_per_second": 3235.0701645300237,
+      "wait_for_preparation_seconds": 0.5569288029998916,
+      "kernel_seconds": 0.017829882,
+      "engine_rpc_seconds": 0.030874318999849493,
+      "prepared_consistency_seconds": 0.06777305899981911,
+      "journal_flush_seconds": 0.02821843499998522,
+      "mean_ready_depth": 0.004135120730773582,
+      "worker_prepare_and_certify_cpu_seconds": 1.7481469179999949,
+      "speedup_vs_one_worker": 2.878192069637435
+    },
+    "8": {
+      "pipeline_seconds": 0.6063811230000056,
+      "cells_per_second": 3799.5905753154175,
+      "wait_for_preparation_seconds": 0.37574944200002847,
+      "kernel_seconds": 0.017818542000000003,
+      "engine_rpc_seconds": 0.03210876100013138,
+      "prepared_consistency_seconds": 0.12181865799982461,
+      "journal_flush_seconds": 0.030044781000015064,
+      "mean_ready_depth": 0.005034722975019304,
+      "worker_prepare_and_certify_cpu_seconds": 2.2776384300000023,
+      "speedup_vs_one_worker": 3.3804371792754293
+    }
+  },
+  "eight_vs_four_throughput_ratio": 1.1745002062010623,
+  "compute_unit_cost_available": false,
+  "production_changes": false,
+  "new_scientific_coverage": false,
+  "limitations": "Local pipeline: CPU planning, exact certification, packets, native execution, exact verification and fsynced local journals. Network delivery, remote mirrors/checkpoints and production GMP audit cadence are excluded. Fresh independent GMP verification of all 42 packets is a separately timed preflight. One short Colab session with three repetitions per worker count. Worker/stage times overlap; queue wait is not GPU utilization. No local GPU rerun."
+}

@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "commands": [
+    [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-O3",
+      "native/src/scaling_cpu.cpp",
+      "-pthread",
+      "-o",
+      "bin/scaling_cpu"
+    ],
+    [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-O3",
+      "native/independent/gmp_reference.cpp",
+      "-lgmpxx",
+      "-lgmp",
+      "-o",
+      "bin/gmp_reference"
+    ],
+    [
+      "/usr/local/cuda/bin/nvcc",
+      "-std=c++17",
+      "-O3",
+      "-arch=native",
+      "native/src/scaling_gpu.cu",
+      "-o",
+      "bin/scaling_gpu"
+    ]
+  ],
+  "compiler": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "binaries": {
+    "gmp_reference": "00b0f8d8051b5c181ed5ce9ce6e89cbd8c69e6e32c46f0cca00a7c57d13676bb",
+    "scaling_gpu": "b849e2cebd69ff5e5a5b2faefca39dac17aeaabda144e7d9a084f00a61f186c1",
+    "scaling_cpu": "9d2af7eb331439a438f92fe56e6ce0819134fe3a8c6ed1e2b00a4ee65c546f7f"
+  }
+}
