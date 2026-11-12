@@ -63,6 +63,24 @@ L4's **35.40 ms** (A100 took 4.06% longer); kernel time was **18.86 ms** versus
 the validated replay backend; the next useful measurement is CPU preparation and
 full-pipeline throughput. Compute-unit rates remain unrecorded. H100 was unavailable.
 
+## Next test: CPU preparation and local pipeline scaling
+
+**[Open the pipeline test in Colab](https://colab.research.google.com/github/paulnord/fifth42/blob/421164a6a7e55091a027b2d1a1dc2a5631fa620b/colab/20261112/pipeline/Fifth42_Pipeline_Tests.ipynb)** ·
+[Gemini instructions](pipeline/GEMINI_HANDOFF.txt) · [Scope and interpretation](pipeline/README.md)
+
+Use the GPU already connected. Compare 1, 2, 4 and 8 CPU preparation workers over
+three randomized repetitions, including exact planning/certification, GPU replay,
+verification and locally durable journals. The same nine windows must regenerate
+the original 23 packet byte streams and certificates. All 42 independent GMP
+checks and durable journal recovery must pass. Python 3.12 and the original exact
+dependency guards are preserved in an isolated runtime environment.
+
+Local CPU reproduction passed at all four worker counts with all nine windows;
+Colab GPU pipeline results remain pending. Download Fifth42_Pipeline_Results.zip
+before releasing the runtime. The runner is bounded to eight minutes and the
+whole notebook to fifteen minutes. Remote mirrors/network delivery and the
+production GMP audit cadence are excluded; there is zero new search coverage.
+
 ## Run
 
 The notebook rebuilds native code for the GPU actually assigned using
