@@ -1,0 +1,46 @@
+Run Fifth42_Batching_Tests.ipynb from this GitHub directory, top to bottom.
+Use the current CUDA GPU; L4 is sufficient. Record actual GPU, CPU affinity and
+compute-unit rate/balances if visible. Leave unavailable account values unknown.
+
+This follows the worker-scaling result. Hold preparation at eight workers and
+compare windows-per-CPU-batch 1/2/4/8 crossed with map chunk sizes 8/32. Use three
+randomized repetitions of every policy, including the matched windows=1/chunks=8
+baseline. Each trial makes three passes over the same nine published windows.
+
+The notebook checks every source/input hash, installs GMP development headers,
+creates an isolated pinned Python 3.12 environment, and rebuilds the native GPU
+binary with -arch=native. Keep all original dependency and mathematical guards.
+
+Run:
+pipeline-venv/bin/python batching/batch_bench.py --backend gpu --workers 8 \
+  --batch-windows 1 2 4 8 --map-chunksizes 8 32 --passes 3 --repeats 3 \
+  --max-seconds 480
+
+Limit setup/testing to fifteen minutes. Stop on any failure and retain its log
+and failure report. Do not change input windows, mathematical settings, native
+limits, exact checks or per-original-window durable receipts. No production
+search, ownership change or new scientific coverage is allowed.
+
+Required checks:
+- Fresh independent GMP agrees on all 42 original packets and nonempty controls;
+  an intentionally incomplete response must be rejected.
+- Each trial performs 27 window visits and 69 requests, retaining nine unique
+  windows. All native packets and certificate identities remain byte-identical
+  to the published independently checked originals.
+- All 2,327,061,582 coefficient positions per trial have complete exact native
+  counts/hits; all three passes have separate journals and complete durable cursors.
+- Every local journal flushes and reopens with its original hash chain intact.
+- CPU dispatch includes exactly 3,456 original physical-segment arguments per
+  trial, with ceil(27 / batch_windows) map calls. No work may be omitted/coalesced.
+
+Report median pipeline time, throughput and speedup relative to the matched
+windows=1/chunks=8 baseline. Report map call count/wall time, consumer preparation
+waits, payload/reservation sizes, parent consistency checks, native RPC/kernel time
+and local journal writes. Keep startup, fresh GMP checks and recovery separate.
+Map wall time includes arithmetic and IPC; do not call it isolated serialization
+cost. Worker/stage sums overlap, and queue items represent batches of different
+sizes. The scheduler uses ready depth 2 for single windows and 1 for larger batches.
+
+Download Fifth42_Batching_Results.zip before ending the runtime, and give the ZIP
+to Codex for review. Explain whether a tested policy improves this local pipeline;
+do not infer sustained production or cost efficiency without the relevant evidence.
