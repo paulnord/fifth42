@@ -1,12 +1,12 @@
 # Boole combined search
 
-Updated: 2026-11-12T15:22:21.630211+00:00
+Updated: 2026-11-12T15:22:51.759267+00:00
 
-State: **stopping**. Run **boole-range-r3-20261111-27-recovery1**; gpu with 16 preparation workers.
-Verified replicated cursor: **8,791,633,664**.
-New replicated logical patches: **63,633,664** in 248,569 chunks.
-Combined verified selected patches, including parents: **63,633,664**.
-Fresh interval: `[8728000000, 8792000000]`; replicated: `[8728000000, 8791633664]`.
+State: **stopped**. Run **boole-range-r3-20261111-27-recovery1**; gpu with 16 preparation workers.
+Verified replicated cursor: **8,792,000,000**.
+New replicated logical patches: **64,000,000** in 250,000 chunks.
+Combined verified selected patches, including parents: **64,000,000**.
+Fresh interval: `[8728000000, 8792000000]`; replicated: `[8728000000, 8792000000]`.
 Local cursor: 8,792,000,000; physical tasks group up to 4 original width-8 cells.
 Saved-root reuse, exact host optimizations, low64 filtering and an immutable canonical task cache are enabled.
 Journal records remain separate 256-cell receipts, with up to eight buffered before a durable checkpoint.
