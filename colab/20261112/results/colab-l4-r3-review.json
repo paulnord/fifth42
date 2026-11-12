@@ -1,0 +1,47 @@
+{
+  "status": "passed",
+  "scope": "Third supplied artifact review; no local GPU rerun.",
+  "requested_comparison_gpu": "A100",
+  "recorded_gpu": "NVIDIA L4",
+  "a100_comparison_valid": false,
+  "original_zip_sha256": "d9b9c6c42461c41ff0630c7ab648edfe02323a6411aba020753c347724462795",
+  "original_files_sha256": {
+    "results/benchmark-gpu.json": "7b5c3d1b341f8f5bfb9bcb3c8186b3c0fefa5233a2b6ddcda0dc9434d4369e84",
+    "results/build.json": "b01012acec32721eee6034befa7da29e1980f9e40e2e9fb12aae51102088c0d6",
+    "SHA256SUMS": "2c6849ed1fb73303b0191912b4db70015083484cb4f705158255189e2b8ac0fe",
+    "data/export.json": "94024deb38db7a1a7c5af836268b739cdd9c21052e1f42e3f5c4a5c486de1f9d"
+  },
+  "source_data_matches_pinned_bundle": true,
+  "all_42_packets_match_gmp_reported": true,
+  "repetitions_per_case": 7,
+  "trial_count": 21,
+  "medians_seconds": {
+    "realistic": {
+      "separate": {
+        "total_replay_seconds": 0.035363969999991696,
+        "rpc_seconds": 0.02387372599991977,
+        "kernel_seconds": 0.017600466,
+        "engine_seconds": 0.020973186
+      }
+    },
+    "tiny": {
+      "separate": {
+        "total_replay_seconds": 0.004102652000028684,
+        "rpc_seconds": 0.003631956999981867,
+        "kernel_seconds": 0.002254848,
+        "engine_seconds": 0.0028918719999999998
+      },
+      "combined": {
+        "total_replay_seconds": 0.0007279280000034305,
+        "rpc_seconds": 0.0005168480000179443,
+        "kernel_seconds": 0.000342016,
+        "engine_seconds": 0.000417443
+      }
+    }
+  },
+  "tiny_replay_speedup": 5.636068402382309,
+  "previous_realistic_replay_seconds": 0.03540441800001304,
+  "realistic_replay_change_percent": -0.11424562895322454,
+  "compute_unit_cost_available": false,
+  "limitations": "Prepared packet replay only. CPU planning, network transfer, durable cloud checkpoints and production journal costs are not included. No new search coverage."
+}

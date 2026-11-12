@@ -50,6 +50,12 @@ with 17.61 ms kernel time; tiny batching improved 5.63x. Its
 [artifact review](results/colab-l4-r2-review.json) confirms the same inputs and
 seven repetitions per case. Cost remains unrecorded.
 
+A [third supplied ZIP](results/benchmark-l4-r3.json) reports **NVIDIA L4** in its
+hardware record, although it was supplied for the A100 comparison. All 42 checks
+passed and production-sized replay was 35.36 ms. It is archived as another L4
+result; **no A100 performance measurement is established**. The A100 assignment
+now requires a device-name check before building or benchmarking.
+
 H100 was unavailable in the user's session. The next bounded experiment is the
 [matched A100 comparison](A100_COMPARISON.txt), using the corrected notebook and
 the second L4 run as its baseline. If A100 is unavailable too, keep L4.

@@ -4,6 +4,20 @@ Before switching, record the L4 compute-unit rate if visible. Select A100 under
 Runtime > Change runtime type. If an A100 is unavailable, report that and stop.
 Record the actual GPU after connection; do not assume the requested GPU arrived.
 
+Before setup, run this cell and stop if the check fails:
+
+import subprocess
+gpu_names = subprocess.check_output(
+    ["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"], text=True
+).strip()
+print(gpu_names)
+if not gpu_names or "A100" not in gpu_names.splitlines()[0]:
+    raise RuntimeError("A100 required: change and reconnect the runtime before continuing")
+
+The latest supplied comparison ZIP still recorded NVIDIA L4. Its checks passed,
+but it cannot be used as an A100 result. Verify the actual connected GPU again
+before rerunning; the requested runtime setting alone is insufficient evidence.
+
 Use this corrected immutable notebook:
 https://colab.research.google.com/github/paulnord/fifth42/blob/daac4d600cfdd01c34349e3d1da25fc7cde95953/colab/20261112/Fifth42_Colab_Tests.ipynb
 
