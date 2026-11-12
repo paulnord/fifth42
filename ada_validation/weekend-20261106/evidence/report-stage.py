@@ -1,4 +1,4 @@
-"""Prepare reporting for one delegated early Ada claim after its old binding retires.
+"""Prepare identity-pinned r4 reporting only after the old Ada binding is retired.
 
 No service, native process or network operation is launched here. Existing
 collector/publisher logic is reused; new evidence describes the r4 continuation
@@ -12,6 +12,7 @@ import os
 import time
 
 ROOT = Path(__file__).resolve().parent
+BASE = Path('/home/pnord/fifth42-deadline-extension-r5-20261112')
 SHARE = Path('/mnt/nfs_share/ada-preparation-publishing-20261110')
 CUTOVER = 1794526200
 # Legacy fixture value; reporting admits the frozen plan/grant deadline.
@@ -72,43 +73,21 @@ def generic_publisher(source):
     # exact readback,15-minute cadence and terminal lifecycle logic unchanged.
     old = ('The fresh trial starts at the exact final parent cursor under a child claim capped at 7,000,000,000. '
            'A separate coordinator holds the original parent lease while child searches run.')
-    new = ('This run covers a separately delegated claim31 suffix under its unchanged original reservation. '
+    new = ('This run covers its assigned sealed r4 suffix under an unchanged original child claim. '
            'The predecessor journal is provenance; only this run\'s native interval advances here. '
-           'The original coordinator retains its parent lease; this early grant ends by its existing cutoff.')
+           'The renewed coordinator holds the original parent lease until the new cutoff.')
     assert source.count(old) == 1, 'Unexpected generic publisher description'
     return source.replace(old, new)
 
-
-
-def validate_early_reporting(config, plan):
-    from early_support import read as checked_read, sha as checked_sha, require, unit
-    from early_guard import check
-    cfg=checked_read(config) if isinstance(config,(str,Path)) else config
-    check(cfg,force=True)
-    terminal=Path(plan['prior_ada_terminal_file'])
-    require(checked_sha(terminal)==plan['prior_ada_terminal_sha256'],'Original Ada terminal proof changed')
-    row=checked_read(terminal)
-    require(row.get('status')=='native_work_complete_with_verified_analytic_tail'
-            and row.get('error') is None and row.get('active') is None,'Original Ada search has not settled')
-    evidence=Path(plan['prior_ada_readback_file'])
-    require(checked_sha(evidence)==plan['prior_ada_readback_sha256'],'Original Ada readback changed')
-    proof=checked_read(evidence)
-    require(proof.get('status')=='passed_actual_existing_ada_readback'
-            and proof.get('verified',{}).get('host')=='ada','Original Ada terminal readback is missing')
-    require(plan.get('retired_reporting_units'), 'Reporting retirement set is missing')
-    for name in plan['retired_reporting_units']:
-        old=unit(name)
-        require(old.get('ActiveState')=='inactive' and old.get('MainPID')=='0',
-                'Previous Ada reporter remains active: '+name)
 
 def prepare(stage_root, config, plan):
     """Return the standard queue spec after preparing a fresh stage's reporter.
 
     Call only after the previous Ada terminal publication has been remotely read
     back and its collector/publisher have been retired. This is additionally
-    admitted by the separate early-delegation guard after old reporting retires.
+    gated to the17:30 cutover; no live shared binding can be changed beforehand.
     """
-    validate_early_reporting(config, plan)
+    assert time.time() >= CUTOVER, 'r4 reporting cannot rebind live Ada reporting before17:30'
     stage = Path(stage_root)
     worker = stage / 'worker'
     path = worker / 'config.json'
@@ -123,7 +102,14 @@ def prepare(stage_root, config, plan):
     parsed = datetime.fromisoformat(cfg['stop_local'])
     assert parsed.tzinfo is not None and parsed.timestamp() == deadline
     assert cfg['initial_patch'] < cfg['range_end']
-    assert not Path(cfg['output']).exists() and not Path(cfg['replica_output']).exists()
+    if Path(cfg['output']).exists() or Path(cfg['replica_output']).exists():
+        assert plan.get('adopt_running_run_id') == cfg['run_id'], 'Existing output requires exact running adoption'
+        local = Path(cfg['output'])
+        assert (local/'run-config.json').read_bytes() == raw, 'Running output configuration differs'
+        identity = dict(trial=cfg['run_id'], source_identity=sha(json.dumps(
+            dict(manifest_sha256=cfg['manifest_sha256'],config=cfg),
+            sort_keys=True,separators=(',',':')).encode()))
+        assert read(local/'checkpoint.json')['identity'] == identity, 'Running native identity differs'
     manifest_path = Path(cfg['manifest'])
     manifest_raw = manifest_path.read_bytes()
     assert manifest_path == worker / 'release-manifest.json'
@@ -146,10 +132,10 @@ def prepare(stage_root, config, plan):
     sources = {
         'delegation-grant.json': grant_path,
         'extension-inventory.json': inventory,
-        'extension-plan.json': Path(plan['controller_plan_file']),
-        'extension-parent.py': Path(plan['original_parent_source_file']),
-        'extension-guard.py': ROOT / 'early_guard.py',
-        'extension-controller.py': ROOT / 'early_controller.py',
+        'extension-plan.json': Path(plan.get('plan_file', ROOT / 'PLAN.json')),
+        'extension-parent.py': BASE / 'parent_extension.py',
+        'extension-guard.py': ROOT / 'sharing_guard.py',
+        'extension-controller.py': ROOT / 'queue_controller.py',
         'source-review.json': ROOT / 'SOURCE-REVIEW.json',
         'configuration.json': path,
         'source-manifest.json': manifest_path,

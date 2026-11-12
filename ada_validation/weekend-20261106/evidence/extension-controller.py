@@ -1,215 +1,118 @@
-"""Run only delegated claim31, then leave its exact sealed prefix to R5."""
-from datetime import datetime,timezone
-import argparse
-import fcntl
-import json
-import os
-from pathlib import Path
-import signal
-import subprocess
-import time
-import uuid
+"""Ada sharing queue for claims30,31,34; existing R5 parent remains untouched.
 
-from early_support import atomic,command,load,read,require,sha,unit
-import early_build
-import early_guard
-from phase_admission import freeze_phase,desired_changed,request_phase_drain
+Fresh per-stage child grants pin the prepared source. A desired-time edit drains
+the current child at its durable batch, audits/publishes it, then pauses for a
+new coordinator-issued deadline grant; no future old-deadline child is started.
+"""
+from datetime import datetime,timezone
+from pathlib import Path
+import argparse,fcntl,hashlib,importlib.util,json,os,subprocess,time,traceback
 
 ROOT=Path(__file__).resolve().parent
-LIVE=Path('/home/pnord/fifth42-deadline-extension-20261112')
-SHARED=Path('/mnt/nfs_share/fifth42-integration-20261109/combined/ada-early-claim31-interim-20261112')
-SETTINGS=Path('/mnt/nfs_share/fifth42-integration-20261109/SEARCH_SETTINGS.json')
 PY='/home/pnord/fifth-lattice-optimizations-ada-20261105/venv/bin/python'
-STOP=False
+JOBS=['boole-delegated-20261109-'+str(n) for n in (30,31,34)]
 
 
-def checked(row,name):
-    require(sha(row[name+'_file'])==row[name+'_sha256'],'Changed early input: '+name)
-    return read(row[name+'_file'])
+def require(value,message):
+    if not value:raise RuntimeError(message)
+def read(p):return json.loads(Path(p).read_bytes())
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def atomic(p,v):
+    p=Path(p);p.parent.mkdir(mode=0o700,parents=True,exist_ok=True);temp=p.with_name(p.name+'.'+str(os.getpid())+'.tmp')
+    with temp.open('w') as f:json.dump(v,f,indent=2);f.write('\n');f.flush();os.fsync(f.fileno())
+    os.replace(temp,p)
+def load(name,path):
+    s=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
+def command(args,timeout=90):
+    p=subprocess.run(args,text=True,capture_output=True,timeout=timeout)
+    require(p.returncode==0,repr(args)+' '+p.stderr[-4000:]);return p.stdout
+
+def verify_plan(plan,path,pin):
+    require(sha(path)==pin,'Sharing queue plan changed')
+    require(plan['schema']=='fifth42-ada-sharing-queue-v1' and plan['jobs']==JOBS,'Unreviewed Ada queue scope/order')
+    for p,h in plan['source_files'].items():require(sha(p)==h,'Pinned queue input changed: '+p)
+    m=read(plan['ownership_file'])
+    require(m['status']=='admitted' and all(m['executors'][job]=='ada' for job in JOBS),'Ownership differs from Ada queue')
+    require(m['stop_epoch']==plan['parent_stop_epoch'],'Queue changed parent cutoff')
+    return m
+
+def effective_request(plan,previous,boundary):
+    try:value=boundary.read_request(plan['settings_file'])
+    except (OSError,ValueError,TypeError):return previous
+    return dict(value,effective_stop_epoch=min(value['stop_epoch'],plan['parent_stop_epoch']))
+
+def request_drain(cfg,request_id,reason):
+    path=Path(cfg['suballocation_grant_file']).parent/'DRAIN-ada.json'
+    value=dict(status='draining',host='ada',participants=['ada'],grant_sha256=cfg['suballocation_grant_sha256'],request_id=request_id,reason=reason)
+    if path.exists():require(read(path)==value,'Another child drain request already exists')
+    else:atomic(path,value)
+    return dict(value,drain_file_sha256=sha(path))
+
+def terminal(q,spec,cfg):
+    owner=q.unit(cfg['service_name']);out=Path(cfg['output']);sup=read(Path(spec['worker'])/'supervisor-report.json');native=read(out/'status.json')
+    require(owner['ActiveState']=='inactive' and owner['MainPID']=='0' and owner['Result']=='success','Sharing native owner did not exit cleanly')
+    require(sup.get('error') is None and sup.get('worker_exit_code')==0 and sup.get('leases_released') is True,'Sharing supervisor failed/retained leases')
+    buffer=native.get('journal_buffer')
+    require(native.get('status')=='stopped' and native.get('error') is None and (buffer is None or all(buffer.get(k)==0 for k in ('pending_chunks','pending_bytes'))),'Sharing native journal is not cleanly drained')
+    cp=read(out/'checkpoint.json');require(cfg['initial_patch']<=cp['next_patch']<=cfg['range_end'] and cp['patches']==cp['next_patch']-cfg['initial_patch'],'Sharing checkpoint escaped exact child interval')
+    return cp
 
 
-def verify(plan,path,pin):
-    require(sha(path)==pin and plan.get('activation_enabled') is True,'Early controller plan is not admitted')
-    for source,want in plan['source_files'].items():require(sha(source)==want,'Early controller source changed: '+source)
-    checked(plan,'fence_ack');checked(plan,'fallback_retirement')
-
-
-def desired(previous=None):
-    try:return load(LIVE/'boundary_settings.py').read_request(SETTINGS)
-    except (OSError,ValueError,TypeError):
-        if previous is None:raise
-        return previous
-
-
-def launcher_commands(worker,config):
-    code=('import json,sys;sys.path.insert(0,sys.argv[1]);'
-          'import policy,launch_weekend;'
-          'c=policy.load_config(sys.argv[2]);print(json.dumps(launch_weekend.commands(c)))')
-    return json.loads(command([PY,'-B','-c',code,str(worker),str(config)],90))
-
-
-def stop_owned(name):
-    actual=unit(name)
-    if actual['ActiveState']!='inactive' or actual.get('MainPID','0')!='0':
-        subprocess.run(['systemctl','--user','stop',name],capture_output=True,timeout=25)
-    actual=unit(name)
-    require(actual['ActiveState']=='inactive' and actual.get('MainPID','0')=='0','Owned unit remains active: '+name)
-
-
-def phase(plan,reference,index,request):
-    old=checked(plan,'original_parent_grant')
-    directory=SHARED/'admissions'/('phase-%04d-'%index+uuid.uuid4().hex[:12])
-    capped=freeze_phase(directory,request,old,execution_request_id=plan['execution_request_id'])
-    claim=checked(plan,'claim')
-    inventory=directory/'PREPARED-INVENTORY.json'
-    first=reference['next_patch'] if reference.get('same_claim') else claim['first']
-    atomic(inventory,dict(status='prepared_exact_single_claim',ledger_job=claim['job'],
-        first=first,last=claim['last'],native_coverage_imported=0,claim=claim,reference=reference),exclusive=True)
-    name='ada-early31-p%04d-'%index+directory.name.rsplit('-',1)[1]
-    prepared=early_build.prepare_runtime(ROOT/'stages'/name,claim,reference,inventory)
-    g=dict(schema=early_guard.SCHEMA,generation=early_guard.GENERATION,status='admitted',TEST_ONLY=False,
-        executor='ada',execution_request_id=plan['execution_request_id'],original_assignment=plan['original_assignment'],
-        initial_patch=first,range_end=claim['last'],runtime_profile=early_guard.PROFILE,
-        runtime_source_files=prepared['runtime_source_files'],runtime_external_files=prepared['runtime_external_files'],
-        worker_guard_sha256=sha(Path(prepared['worker'])/'suballocation_guard.py'),
-        native_binaries=old['native_binaries']['ada'],phase_settings_file=capped['deadline_settings_file'],
-        original_guard_file=plan['original_guard_file'],original_guard_sha256=plan['original_guard_sha256'],
-        original_parent_unit=plan['original_parent_unit'],original_parent_pid=plan['original_parent_pid'],
-        original_parent_source_file=plan['original_parent_source_file'],
-        original_parent_source_sha256=plan['original_parent_source_sha256'],
-        stop_epoch=capped['stop_epoch'],stop_local=capped['stop_local'],
-        phase_not_after_epoch=capped['phase_not_after_epoch'])
-    for key in ('original_parent_grant','fence_ack','fallback_retirement'):
-        for suffix in ('_file','_sha256'):g[key+suffix]=plan[key+suffix]
-    for key in ('desired_deadline_authorization','phase_deadline_authorization'):
-        for suffix in ('_file','_sha256'):g[key+suffix]=capped[key+suffix]
-    grant=directory/'GRANT.json';atomic(grant,g,exclusive=True)
-    cfg=early_build.bind_configuration(prepared,grant,reference,ROOT/'SOURCE-REVIEW.json',inventory)
-    early_guard.check(cfg,force=True)
-    stageplan=dict(plan,stop_epoch=g['stop_epoch'],stop_local=g['stop_local'],inventory_file=str(inventory),
-                   controller_plan_file=plan['controller_plan_file'])
-    from early_report_stage import prepare
-    spec=prepare(prepared['root'],cfg,stageplan)
-    atomic(directory/'CONFIG-BINDING.json',dict(spec=spec,config_sha256=spec['config_sha256']),exclusive=True)
-    return spec,cfg,grant
-
-
-def seal(spec,cfg,grant,q,previous):
-    worker=Path(spec['worker']);output=Path(cfg['output'])
-    native=read(output/'status.json');supervisor=read(worker/'supervisor-report.json')
-    require(supervisor.get('worker_exit_code')==0 and supervisor.get('error') is None
-            and supervisor.get('leases_released') is True,'Early supervisor did not settle')
-    require(native.get('status')=='stopped' and native.get('error') is None
-            and all(native.get('journal_buffer',{}).get(k,0)==0 for k in ('pending_chunks','pending_bytes')),
-            'Early native journal did not stop cleanly')
-    cp=q.wait_replica(spec,cfg,final=True)
-    q.settle_publication(spec,cfg,cp)
-    archived=q.archive(spec,cfg,cp)
-    folder=SHARED/'sealed'/cfg['run_id'];folder.mkdir(mode=0o700,parents=True,exist_ok=False)
-    paths={}
-    for key,source in (('publication_status',Path('/mnt/nfs_share/ada-preparation-publishing-20261110/status.json')),
-                       ('publication_readback',Path(spec['reporter'])/'readiness.json')):
-        raw=source.read_bytes();destination=folder/(key+'.json');destination.write_bytes(raw)
-        paths[key+'_file']=str(destination);paths[key+'_sha256']=sha(destination)
-    replica=Path(archived['archive']);receipt=replica/'ARCHIVE_RECEIPT.json'
-    row=dict(schema='fifth42-early-child-seal-v1',status='verified_early_seal',TEST_ONLY=False,
-        execution_request_id=read(grant)['execution_request_id'],host='ada',ledger_job=cfg['ledger_job'],
-        first=cfg['initial_patch'],last=cp['next_patch'],initial_patch=cfg['initial_patch'],next_patch=cp['next_patch'],
-        range_end=cfg['range_end'],parent_run=str(replica),config_file=spec['config'],config_sha256=spec['config_sha256'],
-        source_manifest_file=cfg['manifest'],source_manifest_sha256=cfg['manifest_sha256'],
-        checkpoint_sha256=sha(replica/'checkpoint.json'),raw_sha256=read(receipt)['raw_sha256'],
-        audit_file=archived['audit'],audit_sha256=sha(archived['audit']),
-        archive_receipt_file=str(receipt),archive_receipt_sha256=sha(receipt),
-        early_grant_file=str(grant),early_grant_sha256=sha(grant),
-        fence_ack_file=read(grant)['fence_ack_file'],fence_ack_sha256=read(grant)['fence_ack_sha256'],
-        native_gmp_audit='passed',exact_terminal_readback='passed',**paths)
-    if previous:row.update(previous_seal_file=str(previous),previous_seal_sha256=sha(previous))
-    target=folder/'EARLY-SEAL.json';atomic(target,row,exclusive=True)
-    atomic(ROOT/'EARLY-BOUNDARY.json',dict(execution_request_id=row['execution_request_id'],
-        early_grant_file=str(grant),early_grant_sha256=sha(grant),seal_file=str(target),seal_sha256=sha(target)))
-    return target,row
-
-
-def run(plan,path,pin):
-    global STOP
-    verify(plan,path,pin)
-    require(unit(plan['future_controller_unit'])['ActiveState']=='active','Complete overnight replacement is not armed')
-    for name in plan['retired_reporting_units']:
-        stop_owned(name)
-    q=load(ROOT/'queue_helper.py');q.ROOT=ROOT;q.STOP=ROOT/'STOP_EARLY';q.atomic=atomic
-    reference=checked(plan,'initial_reference');lastseal=None;index=0;request=desired()
-    state=dict(status='preparing_early_phase',active=None,error=None,completed=[],future_cutover_epoch=1794526200)
+def main(path,pin):
+    plan=read(path);ownership=verify_plan(plan,path,pin)
+    lock=(ROOT/'queue.lock').open('a+');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+    require(not (ROOT/'QUEUE-STATE.json').exists(),'Existing sharing queue state requires explicit reconciliation')
+    q=load('sharing_queue_helpers',ROOT/'queue_helpers.py');q.ROOT=ROOT;q.STOP=ROOT/'STOP';q.atomic=atomic
+    builder=load('sharing_builder',ROOT/'build_stage.py');issuer=load('sharing_grant_issuer',ROOT/'issue_grant.py');reporter=load('sharing_report_stage',ROOT/'report_stage.py')
+    boundary=load('sharing_request_parser',plan['boundary_parser_file'])
+    request=dict(stop_epoch=plan['parent_stop_epoch'],effective_stop_epoch=plan['parent_stop_epoch'],stop_local=ownership['stop_local'],setting_sha256=sha(plan['settings_file']))
+    state=dict(status='starting',completed=[],active=None,error=None,parent_unchanged=True,plan_sha256=pin)
     def save():
-        state['updated_utc']=datetime.now(timezone.utc).isoformat();atomic(ROOT/'STATE.json',state)
-        atomic(SHARED/'STATUS.json',state)
-    save()
-    while reference.get('same_claim') is not True or reference['next_patch']<plan['original_assignment']['last']:
-        verify(plan,path,pin);request=desired(request)
-        if STOP or (ROOT/'STOP_EARLY').exists() or time.time()>=min(request['stop_epoch'],1794524400)-120:
-            state.update(status='early_phase_sealed_waiting_for_overnight',active=None);save();return
-        index+=1;spec,cfg,grant=phase(plan,reference,index,request)
-        state.update(status='launching_early_native',active=spec,effective_stop_epoch=cfg['stop_epoch'],
-                     desired_stop_epoch=request['stop_epoch']);save()
-        worker=Path(spec['worker'])
-        command([PY,'-B',str(worker/'search_supervisor.py'),'--config',spec['config'],'--check-only'],90)
-        command(q.service(cfg['run_id']+'-final-copy',spec['root'],worker/'finalize_replica.py',
-                ['--config',spec['config'],'--config-sha256',spec['config_sha256'],'--wait'],cfg['stop_epoch']))
-        command(q.service(spec['collector'].removesuffix('.service'),spec['reporter'],Path(spec['reporter'])/'collector.py',[],cfg['stop_epoch']))
-        commands=launcher_commands(worker,spec['config'])
-        command(commands['timer'])
-        invocation=launcher_commands(worker,spec['config'])['service'];invocation.insert(1,'--wait')
-        stdout=open(Path(spec['root'])/'systemd-run-wait.stdout','x');stderr=open(Path(spec['root'])/'systemd-run-wait.stderr','x')
-        process=subprocess.Popen(invocation,stdout=stdout,stderr=stderr)
-        try:
+        state['updated_utc']=datetime.now(timezone.utc).isoformat();atomic(ROOT/'QUEUE-STATE.json',state);atomic(Path(plan['shared_directory'])/'ADA-QUEUE-STATUS.json',state)
+    previous=None
+    try:
+        for index,job in enumerate(plan['jobs']):
+            ownership=verify_plan(plan,path,pin);request=effective_request(plan,request,boundary)
+            if index and (request['effective_stop_epoch']!=plan['parent_stop_epoch'] or request['effective_stop_epoch']<=time.time()+120):
+                state.update(status='paused_for_fresh_deadline_delegation',requested=request);save();return
+            if index==0:
+                bound=read(plan['first_bound_file']);prepared=bound['prepared'];cfg=read(bound['config_file'])
+                require(sha(bound['config_file'])==bound['config_sha256'] and cfg['ledger_job']==job,'First running stage binding changed')
+            else:
+                task=next(t for t in ownership['tasks'] if t['ledger_job']==job)
+                prepared=builder.prepare_runtime(task,task['predecessor_seal'],worker_guard_file=ROOT/'sharing_guard.py',worker_guard_sha256=ownership['guard_source_sha256'])
+                issued=issuer.issue(plan['ownership_file'],'ada',job,Path(prepared['worker'])/'release-manifest.json','suballocation_guard.py',Path(plan['shared_directory'])/'children'/prepared['run_id']/'GRANT.json')
+                cfg=builder.bind_configuration(prepared,issued['file'],deadline_settings_file=plan['effective_settings_file'],inventory_file=plan['inventory_file'],source_review_file=ROOT/'SOURCE-REVIEW.json',previous=previous)
+            worker=Path(prepared['worker']);guard=load('sharing_worker_guard_'+str(index),worker/'suballocation_guard.py');guard.check(cfg,force=True)
+            if previous:
+                for key in ('publisher','collector'):command(['systemctl','--user','stop',previous[key]],20)
+            context=dict(plan,adopt_running_run_id=cfg['run_id'] if index==0 else None,plan_file=str(path))
+            spec=reporter.prepare(prepared['root'],cfg,context)
+            command(q.service(spec['collector'].removesuffix('.service'),spec['reporter'],Path(spec['reporter'])/'collector.py',[],cfg['stop_epoch']))
+            if index:
+                command(q.service(cfg['run_id']+'-final-copy',spec['root'],worker/'finalize_replica.py',['--config',spec['config'],'--config-sha256',spec['config_sha256']],cfg['stop_epoch']))
+                command([PY,'-B',str(worker/'launch_weekend.py'),'--launch'],90)
+            state.update(status='running',active=spec);save()
             q.wait_replica(spec,cfg)
             command(q.service(spec['publisher'].removesuffix('.service'),spec['reporter'],Path(spec['reporter'])/'publish_bulk_worker.py',[],cfg['stop_epoch']))
-            state['status']='running_early_production';save()
-            while process.poll() is None:
-                verify(plan,path,pin);latest=desired(request)
-                if STOP or (ROOT/'STOP_EARLY').exists() or desired_changed(request,latest):
-                    request_phase_drain(cfg,request_id='early-time-edit-'+uuid.uuid4().hex)
-                state['observed_requested_stop_epoch']=latest['stop_epoch'];save();time.sleep(1)
-            require(process.returncode==0,'Early native systemd service did not finish successfully')
-        finally:
-            stdout.close();stderr.close()
-        previous=lastseal;lastseal,row=seal(spec,cfg,grant,q,previous)
-        drain=load(worker/'boundary_settings.py').read_drain(cfg)
-        if drain:
-            atomic(Path(grant).parent/'DRAIN_ACK-ada.json',dict(status='drained',host='ada',
-                request_id=drain['request_id'],participants=drain['participants'],grant_sha256=cfg['suballocation_grant_sha256'],
-                drain_file_sha256=drain['drain_file_sha256'],old_admission_fenced=True,
-                compute_child_resource_leases_released=True,seal_file=str(lastseal),seal_sha256=sha(lastseal)),exclusive=True)
-        for name in (spec['publisher'],spec['collector'],cfg['deadline_service_name'].replace('.service','.timer')):
-            stop_owned(name)
-        reference=dict(parent_run=row['parent_run'],checkpoint_sha256=row['checkpoint_sha256'],raw_sha256=row['raw_sha256'],
-            audit_file=row['audit_file'],audit_sha256=row['audit_sha256'],archive_receipt_file=row['archive_receipt_file'],
-            archive_receipt_sha256=row['archive_receipt_sha256'],config_file=row['config_file'],config_sha256=row['config_sha256'],
-            same_claim=True,next_patch=row['next_patch'])
-        state['completed'].append(dict(seal_file=str(lastseal),seal_sha256=sha(lastseal),next_patch=row['next_patch']))
-        state.update(status='early_native_sealed',active=None);save()
-    state['status']='early_claim31_complete';save()
-
-
-def main():
-    global STOP
-    parser=argparse.ArgumentParser();parser.add_argument('--plan',type=Path,required=True);parser.add_argument('--plan-sha256',required=True)
-    args=parser.parse_args();plan=read(args.plan);verify(plan,args.plan,args.plan_sha256)
-    lock=(ROOT/'early-controller.lock').open('a+');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
-    require(not (ROOT/'STATE.json').exists(),'Existing early state requires explicit reconciliation')
-    def stop(*_):
-        global STOP
-        STOP=True
-    signal.signal(signal.SIGTERM,stop);signal.signal(signal.SIGINT,stop)
-    try:run(plan,args.plan,args.plan_sha256)
+            drain=None
+            while q.unit(cfg['service_name'])['ActiveState'] in ('active','activating','deactivating'):
+                verify_plan(plan,path,pin);request=effective_request(plan,request,boundary)
+                if drain is None and (request['effective_stop_epoch']!=cfg['stop_epoch'] or (ROOT/'STOP').exists()):
+                    drain=request_drain(cfg,'sharing-deadline-'+str(int(time.time())), 'Operator end time edit or explicit sharing queue stop')
+                    state.update(status='draining_for_fresh_deadline_delegation',requested=request);save()
+                time.sleep(2)
+            cp=terminal(q,spec,cfg);q.wait_replica(spec,cfg,final=True);q.settle_publication(spec,cfg,cp);archived=q.archive(spec,cfg,cp)
+            state['completed'].append(archived);state['active']=None;save()
+            if drain:
+                atomic(Path(cfg['suballocation_grant_file']).parent/'DRAIN_ACK-ada.json',dict(status='drained',host='ada',participants=['ada'],request_id=drain['request_id'],grant_sha256=cfg['suballocation_grant_sha256'],boundary_sha256=sha(Path(archived['audit'])),native_next_patch=cp['next_patch'],drain_file_sha256=drain['drain_file_sha256'],old_admission_fenced=True,compute_child_resource_leases_released=True))
+            if drain or cp['next_patch']!=cfg['range_end']:
+                state.update(status='paused_for_fresh_suffix_or_deadline_delegation',requested=request);save();return
+            previous=dict(spec,config=spec['config'],config_sha256=spec['config_sha256'])
+        state.update(status='all_assigned_ada_work_complete',active=None);save()
     except BaseException as error:
-        state=read(ROOT/'STATE.json') if (ROOT/'STATE.json').exists() else {}
-        current=state.get('active')
-        if current:
-            try:command(['systemctl','--user','stop',current['service']],25)
-            except BaseException:pass
-        atomic(ROOT/'FAILURE.json',dict(status='attention_required',error=repr(error)))
-        raise
-    finally:lock.close()
+        state.update(status='attention_required',error=repr(error),traceback=traceback.format_exc());save();raise
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    p=argparse.ArgumentParser();p.add_argument('--plan',type=Path,required=True);p.add_argument('--plan-sha256',required=True);a=p.parse_args();main(a.plan,a.plan_sha256)

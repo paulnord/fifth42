@@ -1,44 +1,75 @@
 {
   "TEST_ONLY": false,
-  "desired_deadline_authorization_file": "/mnt/nfs_share/fifth42-integration-20261109/combined/ada-early-claim31-interim-20261112/admissions/phase-0001-560f185a37b6/DESIRED-DEADLINE.json",
-  "desired_deadline_authorization_sha256": "6421fead5053653c216e0705f3a3e5455bb4ecda97ea6a7c93c78abbce5f965f",
-  "execution_request_id": "ada-early31-20261112-r1",
+  "child_ledger": "/mnt/nfs_share/fifth42-shared-20261107/suballocations/ada-boole-20261109-r1",
+  "claim": {
+    "coverage": {
+      "allocation_kind": "new_uncomputed_parent_subclaim",
+      "coverage_claimed": false,
+      "grant_sha256": "7c8422f5e9086519db3bc8ad2e8eeab8d7d1d60706f9b327766ba0a069c6a389",
+      "role": "boole"
+    },
+    "created_ns": 1794270822354266112,
+    "first": 8920000000,
+    "grid": {
+      "cap": 42,
+      "cmax": 200000000000,
+      "cmin": 100000000001,
+      "count": 11250000001,
+      "width": 8
+    },
+    "identity": "7c8422f5e9086519db3bc8ad2e8eeab8d7d1d60706f9b327766ba0a069c6a389",
+    "job": "boole-delegated-20261109-30",
+    "last": 8984000000,
+    "sha256": "a5446be97967cbc6b1292c6572850ba910868f82e8bb2b4ad8669174db8588ab"
+  },
+  "coverage_claimed": false,
+  "deadline_authorization_file": "/mnt/nfs_share/fifth42-integration-20261109/combined/overnight-sharing-20261112/evidence-r1/R5-DEADLINE.json",
+  "deadline_authorization_sha256": "265f9638efe4b90224266f2cb6017fbd97080940bd9c9bb58427d0496e8ce42e",
   "executor": "ada",
-  "fallback_retirement_file": "/mnt/nfs_share/fifth42-integration-20261109/combined/ada-early-claim31-interim-20261112/ADA-FALLBACK-RETIRED-r1.json",
-  "fallback_retirement_sha256": "5863a2f5c798975b4d8e5e7e86f16343ac1cf82881457a9b5a2b8a713de8df17",
-  "fence_ack_file": "/mnt/nfs_share/fifth42-integration-20261109/combined/ada-early-claim31-interim-20261112/BOOLE-CLAIM31-FENCE-ACK.json",
-  "fence_ack_sha256": "be0c060dc330b7b2cf82bc83e348c5596a58ef8c0cb6931519a7a26abd66fefe",
-  "generation": "ada-early-claim31-20261112",
-  "initial_patch": 8984000000,
+  "generation": "shared-deadline-distributed-r1-r-sharing",
+  "grid": {
+    "cap": 42,
+    "cmax": 200000000000,
+    "cmin": 100000000001,
+    "count": 11250000001,
+    "width": 8
+  },
+  "initial_patch": 8968873728,
+  "ledger_job": "boole-delegated-20261109-30",
   "native_binaries": {
-    "bin/gmp_reference": "8d514a59a5488de9a16a2f7ab0ecd351fdc13816298ddb777a18d9aa94158eb6",
-    "bin/scaling_gpu": "1a856b0dd7d7e3ada25fa15c6433b75ac03806a778920515367bf091921e1160"
+    "ada": {
+      "bin/gmp_reference": "8d514a59a5488de9a16a2f7ab0ecd351fdc13816298ddb777a18d9aa94158eb6",
+      "bin/scaling_gpu": "1a856b0dd7d7e3ada25fa15c6433b75ac03806a778920515367bf091921e1160"
+    },
+    "boole": {
+      "bin/gmp_reference": "8d514a59a5488de9a16a2f7ab0ecd351fdc13816298ddb777a18d9aa94158eb6",
+      "bin/scaling_gpu": "690581e2d68d89d5d02fea261fae3a2552f679b73d5ddcc97d17d4965b65680b"
+    },
+    "cabbage": {
+      "bin/gmp_reference": "8d514a59a5488de9a16a2f7ab0ecd351fdc13816298ddb777a18d9aa94158eb6",
+      "bin/scaling_gpu": "2b1c4651a957de9f73207b4932b1a0a0aea544170cb1a327bfed8d833bcf4048"
+    }
   },
   "original_assignment": {
     "claim_identity": "7c8422f5e9086519db3bc8ad2e8eeab8d7d1d60706f9b327766ba0a069c6a389",
-    "claim_sha256": "e0ce4327e6fcc3ba2a9647f63b5375dca1e62ea598188ccb2f04450d0f902f59",
-    "first": 8984000000,
-    "job": "boole-delegated-20261109-31",
-    "last": 9048000000,
-    "owner": "boole"
+    "claim_sha256": "a5446be97967cbc6b1292c6572850ba910868f82e8bb2b4ad8669174db8588ab",
+    "first": 8920000000,
+    "job": "boole-delegated-20261109-30",
+    "last": 8984000000,
+    "owner": "ada"
   },
-  "original_guard_file": "/home/pnord/fifth42-range-extension-20261111/allocation_guard.py",
-  "original_guard_sha256": "035d9163f4b00af828fff29a31ab33d6df0d4f1ae0f8740d278dc5a756c2db05",
-  "original_parent_grant_file": "/mnt/nfs_share/fifth42-integration-20261109/combined/range-extension-r3-20261111/GRANT-r3.json",
-  "original_parent_grant_sha256": "14cd2aca8cafafc80799473cb9497e9c86be4b6f866a8b72c4d6b67a1c696df9",
-  "original_parent_pid": 3416330,
-  "original_parent_source_file": "/home/pnord/fifth42-range-extension-20261111/parent_coordinator.py",
-  "original_parent_source_sha256": "18c3f082edcac83bd4fb96db76df12be7f246cf9d27d6ac19ed430eb9ec3d5f2",
-  "original_parent_unit": "ada-range-extension-parent-r3-20261111.service",
-  "phase_deadline_authorization_file": "/mnt/nfs_share/fifth42-integration-20261109/combined/ada-early-claim31-interim-20261112/admissions/phase-0001-560f185a37b6/PHASE-DEADLINE.json",
-  "phase_deadline_authorization_sha256": "6b3363270422f0234ed67a559b396becd0d76e95074a785ccd41ab5e47aacd6d",
-  "phase_not_after_epoch": 1794524400,
-  "phase_settings_file": "/mnt/nfs_share/fifth42-integration-20261109/combined/ada-early-claim31-interim-20261112/admissions/phase-0001-560f185a37b6/PHASE-SETTINGS.json",
-  "range_end": 9048000000,
+  "original_claim_identity": "7c8422f5e9086519db3bc8ad2e8eeab8d7d1d60706f9b327766ba0a069c6a389",
+  "ownership_manifest_file": "/mnt/nfs_share/fifth42-integration-20261109/combined/overnight-sharing-20261112/OWNERSHIP.json",
+  "ownership_manifest_sha256": "5c9e8486dbb5ac0477fb1b7166b11c8c11f1ef8cf3f1d3be4cb252c4dc733873",
+  "parent_claim_sha256": "7d6b55c80d480208b324d6748fcc3660e12a0b70a7f2a21ad8c28bf0b0a16b33",
+  "parent_first": 3917103232,
+  "parent_job": "20261107T213849Z-precision",
+  "parent_last": 11250000001,
+  "parent_ledger": "/mnt/nfs_share/fifth42-shared-20261107",
+  "range_end": 8984000000,
   "runtime_external_files": {
     "/home/pnord/fifth-lattice-optimizations-ada-20261105/benchmark_ada.py": "a73715d1473fd52c2a86670f05cfe747800d3ccca688b6e0a9e7593d25e5aed9",
-    "/home/pnord/fifth42-low64-review-20261106/handoff/bundle/fifth42-coordinator-20261105/lattice_gpu/benchmark.py": "18266c0d47f8d6945fd82b6075087d6db5e05927e6c4b42dac7acd0698e7983c",
-    "/home/pnord/fifth42-range-extension-20261111/allocation_guard.py": "035d9163f4b00af828fff29a31ab33d6df0d4f1ae0f8740d278dc5a756c2db05"
+    "/home/pnord/fifth42-low64-review-20261106/handoff/bundle/fifth42-coordinator-20261105/lattice_gpu/benchmark.py": "18266c0d47f8d6945fd82b6075087d6db5e05927e6c4b42dac7acd0698e7983c"
   },
   "runtime_profile": {
     "automatic_resume": false,
@@ -96,9 +127,9 @@
     "bounded_check.py": "29c31fa6d5a64c19ae6a2141ac614456b41b8e470d1b3308e8e2b71090dcb6e5",
     "buffered_pipeline.py": "9da0483676d18e56ec9c07b6904937fc0e2e279b3b2983d6ccc8b25de716f18e",
     "bulk_data_store.py": "83c383b56a8489c7b451158f001c7713c0a430d6ad1afb9bcd263b5a1af4afcf",
-    "child-claim.json": "cdef3cf833ce9c662d355022bdb17d72b9f04b71e1ea575ab89fb9cd339c51ae",
+    "child-claim.json": "c0587e255351f37a381befb864567cd430f87af038cb322885456d876038bf61",
     "durable_mirror.py": "ab50ae934203c0b7b000a4071abcc5f7844315a78d6df418720447cc5a2ff41c",
-    "final-coverage.json": "7da0e4a2435dab93620e8b9895814b55c1dc1ecea19520cea276edd8c5a84b0c",
+    "final-coverage.json": "9f0fedb4f1c6d4bac78c614cd07d46b9f886db68dc122c912508355c24f8ba3b",
     "finalize_replica.py": "8ea38954b4b308145176a3efec07946163d896552ef96ea61dc44fe029c158af",
     "gpu_candidate/candidate_reduction.py": "322e9eada9a284b35dba5322933113c0f770f6ec770bc034e7b411bd98b80005",
     "gpu_candidate/gpu_lll.cu": "ccdeef0483bf5464d00bff2d8e6222c21263f2281bf6ec483bcd21f925c27431",
@@ -117,7 +148,7 @@
     "origin-claim.json": "8c8229880ce9ea9fb51c670a4e3a43c768f7fad36570f18786aa8e14d521945a",
     "origin-config.json": "30ebd4dabba29e083ff8bbabffe4e1244ccd7217661b014111fc079d3d6394f4",
     "packed_worker.py": "eee00a3316b9ae7475284842b5133b9f9eb1efd6c2d0b23cd650249489f24b43",
-    "parent-audit.json": "c2ece2084d825601d5a8fdbf5725e871f1188710b9c98122466ab6821220b773",
+    "parent-audit.json": "d08a581c68594f7394587013fe07b5190439017ff333930412c8030149ec1c24",
     "policy.py": "facddc4bd9f6f94a469e7dd440301bf0ce3f1245ae8a1509b249262edad8c4cf",
     "precision/PRECISION.md": "3b8a38d9dcd91575be5a79cdc3435807f5489d2f9d74b0a8a484ee89637194d1",
     "precision/precision_policy.py": "e0ba8905f7af276b445e12debf68bfe71ddc0d711045d4c41105c9e0b2400495",
@@ -279,14 +310,14 @@
     "source/lattice_prototype/vendor/search_cpu.cpp": "a326bb00e1f0085ea693e131352b0948845a4aad65d12378857cb8506c912ab5",
     "source/lattice_prototype/vendor/search_emulated.cpp": "fb1b5609fae8e9c446c58651743a9cf767512f994b9af87cfc3a0dcecf3885d0",
     "source/lattice_prototype/vendor/tuning_options.hpp": "715d3b6d82f9c55609362877415e9d37bc5e93d968552a59f56e6fffb2397c96",
-    "suballocation_guard.py": "f2bfeb3428bf5577c7b06458a048e88cf6ee91e7a8630e21ba7af1a2baa67e80",
+    "suballocation_guard.py": "9534d2a842e15c6fbf50d21ec9e3cde287cb4a411b3ca866f45235fab180f3d8",
     "test_bulk_policy.py": "254f5bc7307a7eb4b17c7c4db8a43bdbb685f519bcea87f229f4cd6754e887b4",
     "transition_resources.py": "45e319fc17755d88bd3a2bc600f2ca210c5d14933997196cf617dee648411479",
     "width_coverage.py": "fc69a43c0fda3405c641287fd8c8ff91b7092b0f4d094cb257fbbe5141a37995"
   },
-  "schema": "fifth42-interim-child-delegation-v1",
+  "schema": "fifth42-overnight-child-delegation-v1",
   "status": "admitted",
-  "stop_epoch": 1794524400,
-  "stop_local": "2026-11-12T17:00:00-06:00",
-  "worker_guard_sha256": "f2bfeb3428bf5577c7b06458a048e88cf6ee91e7a8630e21ba7af1a2baa67e80"
+  "stop_epoch": 1794582000,
+  "stop_local": "2026-11-13T09:00:00-06:00",
+  "worker_guard_sha256": "9534d2a842e15c6fbf50d21ec9e3cde287cb4a411b3ca866f45235fab180f3d8"
 }
