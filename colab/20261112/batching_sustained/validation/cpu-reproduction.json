@@ -1,0 +1,109 @@
+{
+  "all_export_checksums_verified": true,
+  "backend": "cpu",
+  "certificate_identities_and_packet_identities_verified": true,
+  "checked_source_sha256": {
+    "batch_bench.py": "ed085baacffea31d55d51fd0d41261f44650f2df869f02e3dd94ce57a701f7d8",
+    "review_results.py": "d7f69bee923ae2673ee22c03030d355d5ea6a2b7f86c79c1d963ed98c92b1582"
+  },
+  "compute_unit_cost_available": false,
+  "eight_vs_four_repeat_ratios": [
+    0.9421851235430413
+  ],
+  "eight_vs_four_throughput_ratio": 0.9421851235430413,
+  "fastest_tested_variant": "windows-1-chunks-8",
+  "fresh_GPU_execution": false,
+  "full_GPU_profile_pending": true,
+  "journal_hash_chains_and_cursors_independently_verified": 9,
+  "limitations": "Repeated-input local pipeline policy comparison. Queue behavior changes with batching under the frozen scheduler. Map time includes computation, IPC and deserialization, not isolated serialization cost. Network/remote mirrors and production GMP audit cadence are excluded. No new scientific coverage. One repeated-input local session; a longer workload does not establish production throughput, thermal steady state or a global optimum. No local GPU rerun.",
+  "native_binary_identity_matches_build": true,
+  "native_receipts_matched_to_gmp_oracle": 69,
+  "negative_cases": [
+    {
+      "case": "forged-native-count",
+      "reason": "Timed native counts/hits differ from independent GMP",
+      "rejected": true
+    },
+    {
+      "case": "missing-checkpoint",
+      "reason": "Missing pass-specific region journals",
+      "rejected": true
+    },
+    {
+      "case": "reject---passes-13",
+      "rejected": true
+    },
+    {
+      "case": "reject---repeats-6",
+      "rejected": true
+    }
+  ],
+  "new_scientific_coverage": false,
+  "notebook_export_cell_executed_with_stub_download": true,
+  "original_window_visit_records_verified": 27,
+  "original_zip_bytes": 303113,
+  "original_zip_sha256": "c593efcde37de2f14df42eba51e7f8e59647cb1d66c6d8a93db28a30bc217fc6",
+  "practical_colab_followup": "Compare repeat-level four/eight ratios and payloads; report a tie if samples overlap",
+  "preflight_reported_passed": {
+    "all_42_packets_match_gmp": true,
+    "fresh_gmp_all_42_packets": true,
+    "incomplete_response_rejected": true,
+    "seconds": 20.370222604018636
+  },
+  "production_changes": false,
+  "repeats_where_eight_beats_four": 0,
+  "repetitions": 1,
+  "replay_passes": 1,
+  "result_members": 27,
+  "scope": "Local CPU smoke only:2 workers,1 pass,1 matched repetition of all3 policies; not the default GPU timing experiment",
+  "source_and_input_identities_verified": true,
+  "status": "passed",
+  "variant_medians": {
+    "windows-1-chunks-8": {
+      "journal_flush_seconds": 0.031051407917402685,
+      "kernel_seconds": 0.0,
+      "logical_cell_visits_per_second": 589.0901846292319,
+      "map_calls": 9,
+      "map_wall_seconds": 0.5666746478527784,
+      "maximum_prepared_payload_bytes": 959633,
+      "observed_pipeline_seconds": [
+        3.911115920986049
+      ],
+      "pipeline_seconds": 3.911115920986049,
+      "prepared_consistency_seconds": 0.01885789807420224,
+      "speedup_vs_matched_baseline": 1.0,
+      "wait_for_preparation_seconds": 0.05874613381456584
+    },
+    "windows-4-chunks-8": {
+      "journal_flush_seconds": 0.0332650690106675,
+      "kernel_seconds": 0.0,
+      "logical_cell_visits_per_second": 568.165782046086,
+      "map_calls": 3,
+      "map_wall_seconds": 0.5051600830629468,
+      "maximum_prepared_payload_bytes": 3834699,
+      "observed_pipeline_seconds": [
+        4.055154451052658
+      ],
+      "pipeline_seconds": 4.055154451052658,
+      "prepared_consistency_seconds": 0.0168519108556211,
+      "speedup_vs_matched_baseline": 0.9644801371180278,
+      "wait_for_preparation_seconds": 0.2283589739818126
+    },
+    "windows-8-chunks-8": {
+      "journal_flush_seconds": 0.031379364896565676,
+      "kernel_seconds": 0.0,
+      "logical_cell_visits_per_second": 535.3173475500201,
+      "map_calls": 2,
+      "map_wall_seconds": 0.4535660188412294,
+      "maximum_prepared_payload_bytes": 7667797,
+      "observed_pipeline_seconds": [
+        4.303989046020433
+      ],
+      "pipeline_seconds": 4.303989046020433,
+      "prepared_consistency_seconds": 0.01768466818612069,
+      "speedup_vs_matched_baseline": 0.9087188371453585,
+      "wait_for_preparation_seconds": 0.4495475541334599
+    }
+  },
+  "workers": 2
+}

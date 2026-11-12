@@ -1,0 +1,37 @@
+Run Fifth42_Sustained_Batching_Tests.ipynb top to bottom on the current CUDA GPU.
+This follows the completed short batching experiment; it is a NEW longer test.
+Do not rerun the previous broad chunk-size sweep.
+
+The notebook obtains all source/data from immutable GitHub commits and verifies
+their hashes. It installs libgmp-dev, uses the pinned separate Python3.12 planner
+environment and imports google.colab.files before download. No campus paths or
+manual uploads are needed. Require eight CPU preparation workers plus coordinator
+space (at least nine allocated CPUs); record the actual GPU/CPU assignment.
+
+Compare windows-per-CPU-batch1/4/8, map chunk8,12 replay passes per trial and five
+randomized matched repetitions. Keep every original native packet, mathematical
+limit, certificate, exact count/hit check and journal guard. Native requests are
+not combined. Each trial must execute108 window visits,276 native requests,
+27,648 logical-cell visits and9,308,246,328 coefficient positions. The complete
+15-trial run must retain540 journal chains,1,620 window visit records and4,140
+native receipts. There are only nine unique input windows and no new search
+coverage. Account rates/balances are optional; leave unavailable values unknown.
+
+The new runner only changes the bounded repeated workload and selected policies.
+Fresh independent GMP must match all42 original packets and nonempty controls,
+and an intentionally incomplete native response must be rejected. Every timed
+packet/certificate must match its original independent oracle. Every per-pass,
+per-region journal must flush and reopen at its exact complete durable cursor.
+
+Use the notebook's finite limits: eight-minute runner, fifteen-minute whole
+session,96MiB export ceiling. Stop on any failure; run the final export cell to
+retain its failure report/log. Do not remove a guard to obtain a passing run.
+
+Report medians plus each repetition's four-versus-eight comparison. Show baseline
+1-window throughput, preparation waiting, map calls/time, native kernel/RPC time,
+local journal cost and prepared payload sizes. Stage times overlap. Map time is
+arithmetic plus IPC/deserialization, not isolated serialization cost. A near tie
+is a legitimate result. Do not infer production speedup or cost efficiency.
+
+Download Fifth42_Sustained_Batching_Results.zip before releasing the runtime and
+give it to Codex for independent review. No production search or service change.
