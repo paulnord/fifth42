@@ -1,0 +1,373 @@
+{
+  "status": "passed",
+  "TEST_ONLY": true,
+  "new_scientific_coverage": false,
+  "backend": "gpu",
+  "hardware": {
+    "python": "3.13.16",
+    "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+    "logical_cpus": 12,
+    "available_cpu_affinity": 12,
+    "system_ram_gib": 52.95807647705078,
+    "gpu": "Thu Nov 12 17:04:26 2026       \n+-----------------------------------------------------------------------------------------+\n| NVIDIA-SMI 580.82.07              Driver Version: 580.82.07      CUDA Version: 13.0     |\n+-----------------------------------------+------------------------+----------------------+\n| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n|                                         |                        |               MIG M. |\n|=========================================+========================+======================|\n|   0  NVIDIA L4                      Off |   00000000:00:03.0 Off |                    0 |\n| N/A   39C    P8             15W /   72W |       0MiB /  23034MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n\n+-----------------------------------------------------------------------------------------+\n| Processes:                                                                              |\n|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n|        ID   ID                                                               Usage      |\n|=========================================================================================|\n|  No running processes found                                                             |\n+-----------------------------------------------------------------------------------------+\n",
+    "nvcc": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:58:59_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0\n"
+  },
+  "packet_export_sha256": "3916c409f159cace521d9fdc24534dfadb61b514a33ada1eaf5f42e1b3203a92",
+  "trials": [
+    {
+      "repeat": 0,
+      "group": "realistic",
+      "variant": "separate",
+      "total_replay_seconds": 0.036100821999980326,
+      "rpc_seconds": 0.02428744399981042,
+      "kernel_seconds": 0.017629226,
+      "engine_seconds": 0.021254429999999998,
+      "requests": 23,
+      "verified_points": 775687194
+    },
+    {
+      "repeat": 0,
+      "group": "tiny",
+      "variant": "combined",
+      "total_replay_seconds": 0.0007237449999593082,
+      "rpc_seconds": 0.0005153360000349494,
+      "kernel_seconds": 0.00034304,
+      "engine_seconds": 0.000422654,
+      "requests": 1,
+      "verified_points": 13748364
+    },
+    {
+      "repeat": 0,
+      "group": "tiny",
+      "variant": "separate",
+      "total_replay_seconds": 0.004257368000025963,
+      "rpc_seconds": 0.0037808150002547336,
+      "kernel_seconds": 0.0022620159999999995,
+      "engine_seconds": 0.0029103000000000006,
+      "requests": 16,
+      "verified_points": 13748364
+    },
+    {
+      "repeat": 1,
+      "group": "realistic",
+      "variant": "separate",
+      "total_replay_seconds": 0.03541513999994095,
+      "rpc_seconds": 0.023913517999062606,
+      "kernel_seconds": 0.017571760000000002,
+      "engine_seconds": 0.021069501999999997,
+      "requests": 23,
+      "verified_points": 775687194
+    },
+    {
+      "repeat": 1,
+      "group": "tiny",
+      "variant": "combined",
+      "total_replay_seconds": 0.0007361240000136604,
+      "rpc_seconds": 0.0005393820001700078,
+      "kernel_seconds": 0.000346112,
+      "engine_seconds": 0.000435903,
+      "requests": 1,
+      "verified_points": 13748364
+    },
+    {
+      "repeat": 1,
+      "group": "tiny",
+      "variant": "separate",
+      "total_replay_seconds": 0.004115005999892674,
+      "rpc_seconds": 0.003668688999823644,
+      "kernel_seconds": 0.002266112,
+      "engine_seconds": 0.002918276,
+      "requests": 16,
+      "verified_points": 13748364
+    },
+    {
+      "repeat": 2,
+      "group": "realistic",
+      "variant": "separate",
+      "total_replay_seconds": 0.035357832000045164,
+      "rpc_seconds": 0.02398177500026577,
+      "kernel_seconds": 0.017613847999999994,
+      "engine_seconds": 0.02113211700000001,
+      "requests": 23,
+      "verified_points": 775687194
+    },
+    {
+      "repeat": 2,
+      "group": "tiny",
+      "variant": "separate",
+      "total_replay_seconds": 0.00410292199990181,
+      "rpc_seconds": 0.003641781000624178,
+      "kernel_seconds": 0.0022527999999999997,
+      "engine_seconds": 0.0029162750000000003,
+      "requests": 16,
+      "verified_points": 13748364
+    },
+    {
+      "repeat": 2,
+      "group": "tiny",
+      "variant": "combined",
+      "total_replay_seconds": 0.0007289119998858951,
+      "rpc_seconds": 0.0005129969999870809,
+      "kernel_seconds": 0.00034304,
+      "engine_seconds": 0.000419366,
+      "requests": 1,
+      "verified_points": 13748364
+    },
+    {
+      "repeat": 3,
+      "group": "realistic",
+      "variant": "separate",
+      "total_replay_seconds": 0.03545373700012533,
+      "rpc_seconds": 0.024064232999990054,
+      "kernel_seconds": 0.017622974,
+      "engine_seconds": 0.021138169,
+      "requests": 23,
+      "verified_points": 775687194
+    },
+    {
+      "repeat": 3,
+      "group": "tiny",
+      "variant": "combined",
+      "total_replay_seconds": 0.0007271960000707622,
+      "rpc_seconds": 0.0005235900000570837,
+      "kernel_seconds": 0.000352192,
+      "engine_seconds": 0.000428442,
+      "requests": 1,
+      "verified_points": 13748364
+    },
+    {
+      "repeat": 3,
+      "group": "tiny",
+      "variant": "separate",
+      "total_replay_seconds": 0.004090550999990228,
+      "rpc_seconds": 0.003630438999607577,
+      "kernel_seconds": 0.002248672,
+      "engine_seconds": 0.002889498,
+      "requests": 16,
+      "verified_points": 13748364
+    },
+    {
+      "repeat": 4,
+      "group": "realistic",
+      "variant": "separate",
+      "total_replay_seconds": 0.035347164999848246,
+      "rpc_seconds": 0.02395096400005059,
+      "kernel_seconds": 0.017572872000000003,
+      "engine_seconds": 0.021029552,
+      "requests": 23,
+      "verified_points": 775687194
+    },
+    {
+      "repeat": 4,
+      "group": "tiny",
+      "variant": "combined",
+      "total_replay_seconds": 0.0007245960000545892,
+      "rpc_seconds": 0.000520388000040839,
+      "kernel_seconds": 0.000351232,
+      "engine_seconds": 0.000424409,
+      "requests": 1,
+      "verified_points": 13748364
+    },
+    {
+      "repeat": 4,
+      "group": "tiny",
+      "variant": "separate",
+      "total_replay_seconds": 0.004077850000157923,
+      "rpc_seconds": 0.0036272200002258614,
+      "kernel_seconds": 0.0022445759999999994,
+      "engine_seconds": 0.0028756369999999995,
+      "requests": 16,
+      "verified_points": 13748364
+    },
+    {
+      "repeat": 5,
+      "group": "realistic",
+      "variant": "separate",
+      "total_replay_seconds": 0.03539989199998672,
+      "rpc_seconds": 0.023927492000439088,
+      "kernel_seconds": 0.01758206,
+      "engine_seconds": 0.021083143,
+      "requests": 23,
+      "verified_points": 775687194
+    },
+    {
+      "repeat": 5,
+      "group": "tiny",
+      "variant": "combined",
+      "total_replay_seconds": 0.0007381030000033206,
+      "rpc_seconds": 0.0005252549999568146,
+      "kernel_seconds": 0.000352256,
+      "engine_seconds": 0.000425539,
+      "requests": 1,
+      "verified_points": 13748364
+    },
+    {
+      "repeat": 5,
+      "group": "tiny",
+      "variant": "separate",
+      "total_replay_seconds": 0.00405822600009742,
+      "rpc_seconds": 0.0036144309997325763,
+      "kernel_seconds": 0.002242624,
+      "engine_seconds": 0.0028892020000000004,
+      "requests": 16,
+      "verified_points": 13748364
+    },
+    {
+      "repeat": 6,
+      "group": "realistic",
+      "variant": "separate",
+      "total_replay_seconds": 0.035522908999837455,
+      "rpc_seconds": 0.024148189000243292,
+      "kernel_seconds": 0.01763215,
+      "engine_seconds": 0.021192628999999998,
+      "requests": 23,
+      "verified_points": 775687194
+    },
+    {
+      "repeat": 6,
+      "group": "tiny",
+      "variant": "combined",
+      "total_replay_seconds": 0.0007199660001333541,
+      "rpc_seconds": 0.000524719999930312,
+      "kernel_seconds": 0.00035328,
+      "engine_seconds": 0.000433526,
+      "requests": 1,
+      "verified_points": 13748364
+    },
+    {
+      "repeat": 6,
+      "group": "tiny",
+      "variant": "separate",
+      "total_replay_seconds": 0.004035096000052363,
+      "rpc_seconds": 0.0035943669995504024,
+      "kernel_seconds": 0.002249728,
+      "engine_seconds": 0.00288934,
+      "requests": 16,
+      "verified_points": 13748364
+    }
+  ],
+  "compute_units_per_hour_observed_by_user": null,
+  "sizes": {
+    "realistic": {
+      "original_packets": 23,
+      "combined_requests": 23,
+      "requests_byte_identical": true,
+      "points": 775687194,
+      "packet_points": [
+        49491764,
+        49258164,
+        10262910,
+        49234620,
+        49649300,
+        10301476,
+        49599707,
+        49473480,
+        11369369,
+        49404220,
+        49655446,
+        10171542,
+        49200246,
+        49621699,
+        17455885,
+        49698899,
+        5579345,
+        49952133,
+        5839795,
+        49793901,
+        5646741,
+        49866958,
+        5159594
+      ],
+      "task_counts": [
+        58,
+        58,
+        12,
+        58,
+        58,
+        12,
+        57,
+        58,
+        13,
+        58,
+        58,
+        12,
+        54,
+        55,
+        19,
+        115,
+        13,
+        115,
+        13,
+        115,
+        13,
+        116,
+        12
+      ]
+    },
+    "tiny": {
+      "original_packets": 16,
+      "combined_requests": 1,
+      "requests_byte_identical": false,
+      "points": 13748364,
+      "packet_points": [
+        888615,
+        884247,
+        843661,
+        851295,
+        836325,
+        842639,
+        870975,
+        850563,
+        856375,
+        861869,
+        822463,
+        848331,
+        841491,
+        922625,
+        859947,
+        866943
+      ],
+      "task_counts": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "limitations": "Prepared packet replay only. CPU planning, network transfer, durable cloud checkpoints and production journal costs are not included. No new search coverage.",
+  "engine_startup_seconds": 0.20343376699997862,
+  "all_original_packet_counts_and_hits_equal_gmp": true,
+  "fresh_local_gmp_all_packets": true,
+  "incomplete_response_rejected": true,
+  "summary": {
+    "realistic": {
+      "medians": {
+        "separate": 0.03541513999994095
+      },
+      "separate_over_combined": null,
+      "conclusion": "Request streams are byte-identical; no distinct coalescing performance claim."
+    },
+    "tiny": {
+      "medians": {
+        "separate": 0.004090550999990228,
+        "combined": 0.0007271960000707622
+      },
+      "separate_over_combined": 5.625101072602411,
+      "conclusion": "Distinct request streams; engine-only replay comparison."
+    }
+  },
+  "elapsed_seconds": 41.083785288999934
+}

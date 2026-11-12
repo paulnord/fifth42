@@ -19,9 +19,9 @@ Tasks:
    compiler. Record compute-unit rate and starting/ending balance if visible;
    otherwise mark account usage unavailable rather than guessing.
 2. Verify the downloaded archive checksum and every extracted file checksum.
-3. Run python3 build.py --gpu. This rebuilds for the allocated GPU with
-   -arch=native. If needed, install libgmp-dev/g++ in this Colab runtime. Preserve
-   compiler compatibility errors; do not suppress them.
+3. Run the build cell: it installs libgmp-dev with apt-get before running
+   python3 build.py --gpu. This rebuilds for the allocated GPU with -arch=native.
+   Preserve package-installation and compiler errors; do not suppress them.
 4. Run python3 colab_bench.py --backend gpu --repeats 7 --max-seconds 180 --verify-gmp.
    All 42 supplied packets must match fresh independent GMP counts and exact raw
    hit records. Controls recover positive residual12 and negative residual-2002.
@@ -41,5 +41,8 @@ Tasks:
 
 The inputs are regenerated representative windows from frozen validated code at
 Ada upper/crossing and Cabbage ratios, not captures from a live Ada process.
-Colab GPU results are pending; the published CPU/GMP reproduction passed.
+The first NVIDIA L4 replay passed all 42 packet/GMP checks. Its seven-repeat
+results and artifact review are published in results/benchmark-l4.json and
+results/colab-l4-review.json. Tiny replay improved 5.63x; production-sized requests
+were unchanged. Cost and full-pipeline performance remain unmeasured.
 Keep the Pro notebook open and download results before releasing its runtime.

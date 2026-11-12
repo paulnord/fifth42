@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "scope": "Artifact review; reported GPU/GMP checks, exported-source identities, trial completeness and timing summaries. No local GPU rerun.",
+  "original_zip_sha256": "8b810c714b275056b5761f382a3de96f18359778e88fd0d836bcc4f3b416e557",
+  "original_zip_bytes": 4975,
+  "original_files_sha256": {
+    "results/benchmark-gpu.json": "9e1758fe58e70b77f49e99223c5cf40d9eb3c5734727f0f4cf2ad16e5f1e3b83",
+    "results/build.json": "5ae371a7cd3967432ff626821e59156a79e0d6a4c9ce8b589da9253fd0bbc160",
+    "SHA256SUMS": "2c6849ed1fb73303b0191912b4db70015083484cb4f705158255189e2b8ac0fe",
+    "data/export.json": "94024deb38db7a1a7c5af836268b739cdd9c21052e1f42e3f5c4a5c486de1f9d"
+  },
+  "all_manifest_files_match_pinned_bundle": true,
+  "original_packet_count": 42,
+  "repetitions_per_case": 7,
+  "trial_count": 21,
+  "medians_seconds": {
+    "realistic": {
+      "separate": {
+        "total_replay_seconds": 0.03541513999994095,
+        "rpc_seconds": 0.02398177500026577,
+        "kernel_seconds": 0.017613847999999994,
+        "engine_seconds": 0.02113211700000001
+      }
+    },
+    "tiny": {
+      "separate": {
+        "total_replay_seconds": 0.004090550999990228,
+        "rpc_seconds": 0.003630438999607577,
+        "kernel_seconds": 0.002249728,
+        "engine_seconds": 0.002889498
+      },
+      "combined": {
+        "total_replay_seconds": 0.0007271960000707622,
+        "rpc_seconds": 0.0005235900000570837,
+        "kernel_seconds": 0.000351232,
+        "engine_seconds": 0.000425539
+      }
+    }
+  },
+  "tiny_replay_speedup": 5.625101072602411,
+  "compute_unit_cost_available": false,
+  "limitations": "Prepared packet replay only. CPU planning, network transfer, durable cloud checkpoints and production journal costs are not included. No new search coverage."
+}
