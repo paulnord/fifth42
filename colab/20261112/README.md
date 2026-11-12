@@ -1,5 +1,7 @@
 # Fifth42: Colab GPU tests for Gemini
 
+**[Open and run in Google Colab](https://colab.research.google.com/github/paulnord/fifth42/blob/cfbe8059d452e2e60923b0a01a9a1ae7eb52236d/colab/20261112/Fifth42_Colab_Tests.ipynb)**
+
 Open [Fifth42_Colab_Tests.ipynb](Fifth42_Colab_Tests.ipynb) in Google Colab and give
 Gemini [GEMINI_HANDOFF.txt](GEMINI_HANDOFF.txt). Select **L4 GPU** for the first run
 if offered. The notebook obtains all sources and data from an immutable GitHub
