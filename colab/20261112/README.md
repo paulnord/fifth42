@@ -88,6 +88,23 @@ bounded to eight minutes and the whole notebook to fifteen minutes. Remote
 mirrors/network delivery and production GMP audit scheduling are excluded;
 there is zero new search coverage and no demonstrated production speedup.
 
+## Next test: CPU preparation batching and dispatch
+
+**[Open the new batching notebook in Colab](https://colab.research.google.com/github/paulnord/fifth42/blob/a552a30d30eb86ad5ee4f0800c6df5ae3691486a/colab/20261112/batching/Fifth42_Batching_Tests.ipynb)** ·
+[Gemini instructions](batching/GEMINI_HANDOFF.txt) · [Scope and policies](batching/README.md)
+
+Hold preparation at eight workers. Compare batches of 1/2/4/8 original windows
+and process-pool map chunk sizes 8/32, with three randomized repetitions. Each
+trial makes three passes over the same verified nine windows, retaining separate
+per-pass journals and unchanged native packet bytes/certificate identities.
+The matched windows=1/chunks=8 baseline is included in every repetition.
+
+All eight policies passed local CPU correctness and repeated-pass recovery checks;
+Colab GPU timing results remain pending. No original dependency/math/native guards
+are removed. Run top to bottom on a CUDA GPU with at least nine allocated logical
+CPUs, then download **Fifth42_Batching_Results.zip**. Setup/testing is bounded to
+fifteen minutes. This is a local replay policy test with zero new search coverage.
+
 ## Run
 
 The notebook rebuilds native code for the GPU actually assigned using
