@@ -1,8 +1,8 @@
 # Cabbage combined search
 
-Updated: 2026-11-12T08:57:38.786276+00:00
+Updated: 2026-11-12T08:58:08.952020+00:00
 
-State: **stopping**. Run **cabbage-extended-memory-r2-cap100-20261111-job-43**; gpu with 16 preparation workers.
+State: **stopped**. Run **cabbage-extended-memory-r2-cap100-20261111-job-43**; gpu with 16 preparation workers.
 Verified replicated cursor: **9,816,000,000**.
 New replicated logical patches: **64,000,000** in 250,000 chunks.
 Combined verified selected patches, including parents: **64,000,000**.
