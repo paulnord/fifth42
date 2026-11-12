@@ -1,20 +1,20 @@
 # Ada combined search
 
-Updated: 2026-11-12T17:30:49.487220+00:00
+Updated: 2026-11-12T17:45:57.908019+00:00
 
 State: **running**. Run **ada-memory-r2-job-60-20261111**; gpu with 16 preparation workers.
-Verified replicated cursor: **10,845,996,544**.
-New replicated logical patches: **5,996,544** in 23,424 chunks.
-Combined verified selected patches, including parents: **5,996,544**.
-Fresh interval: `[10840000000, 10904000000]`; replicated: `[10840000000, 10845996544]`.
-Local cursor: 10,846,232,064; physical tasks group up to 2 original width-8 cells.
+Verified replicated cursor: **10,852,017,664**.
+New replicated logical patches: **12,017,664** in 46,944 chunks.
+Combined verified selected patches, including parents: **12,017,664**.
+Fresh interval: `[10840000000, 10904000000]`; replicated: `[10840000000, 10852017664]`.
+Local cursor: 10,852,353,536; physical tasks group up to 2 original width-8 cells.
 Saved-root reuse, exact host optimizations, low64 filtering and an immutable canonical task cache are enabled.
 Journal records remain separate 256-cell receipts, with up to eight buffered before a durable checkpoint.
-Dispatch chunksize: 4; ready queue: {'active': 1, 'consumer_wait_empty_seconds': 146.67296034062747, 'elapsed_seconds': 915.7758623689879, 'inflight': 1, 'max_outstanding': 3, 'maximum_item_payload_bytes': 134217728, 'maximum_prepared_payload_bytes': 15346881, 'mean_ready_depth': 0.5279566681143473, 'outstanding': 2, 'peak_outstanding': 3, 'peak_ready': 1, 'peak_reserved_bytes': 402653184, 'preparation_batch_windows': 16, 'preparation_batches': 1509, 'prepare_wall_seconds': 915.7166670148727, 'producer_wait_capacity_seconds': 0.0015414883382618427, 'producer_wait_full_seconds': 378.8161467470927, 'queue_units': 'bounded preparation batches; original execution/journal windows preserved', 'ready': 0, 'ready_depth_seconds': {'0': 432.28588706918526, '1': 483.48997303587385}, 'ready_limit': 1, 'reserved_bytes': 268435456}; buffer: {'flush_count': 3016, 'flush_seconds': 21.451968325534835, 'pending_bytes': 37270, 'pending_chunks': 1}.
+Dispatch chunksize: 4; ready queue: {'active': 1, 'consumer_wait_empty_seconds': 297.05448834237177, 'elapsed_seconds': 1831.2227713150205, 'inflight': 1, 'max_outstanding': 3, 'maximum_item_payload_bytes': 134217728, 'maximum_prepared_payload_bytes': 15346881, 'mean_ready_depth': 0.5270047306997807, 'outstanding': 2, 'peak_outstanding': 3, 'peak_ready': 1, 'peak_reserved_bytes': 402653184, 'preparation_batch_windows': 16, 'preparation_batches': 3015, 'prepare_wall_seconds': 1831.1154721437488, 'producer_wait_capacity_seconds': 0.0030719604110345244, 'producer_wait_full_seconds': 756.9883238166803, 'queue_units': 'bounded preparation batches; original execution/journal windows preserved', 'ready': 0, 'ready_depth_seconds': {'0': 866.1597049608827, '1': 965.0630634481786}, 'ready_limit': 1, 'reserved_bytes': 268435456}; buffer: {'flush_count': 6028, 'flush_seconds': 39.229819889878854, 'pending_bytes': 37272, 'pending_chunks': 1}.
 
 Journal storage: **local durable journal, verified bulk copy every minute**. New journal cap: **32 GiB**;
 free-space reserve: 16 GiB.
-Observed rate: **6,745 patches/s**; new independent GMP audits: 189.
+Observed rate: **6,742 patches/s**; new independent GMP audits: 377.
 Deadline: **2026-11-12T17:00:00-06:00**. Independent worker/deadline services on Ada; separate publisher on Ada.
 GitHub updates every **15 minutes**, plus startup/terminal transitions. Alerts: None reported.
 
