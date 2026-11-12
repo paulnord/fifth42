@@ -1,6 +1,6 @@
 {
-  "allocation_generation": "range-extension-r3-20261111",
-  "authorized_deadline": "2026-11-12T17:00:00-06:00",
+  "allocation_generation": "shared-deadline-distributed-r1-r-sharing",
+  "authorized_deadline": 1794582000,
   "build_commands": [
     [
       "/home/pnord/scratch/saved-root-pAjTHBhR/cuda-13.2/nvidia/cu13/bin/nvcc",
@@ -28,16 +28,20 @@
     ]
   ],
   "execution_residual_cap": 100,
+  "external_files": {
+    "/home/pnord/scratch/cabbage-overnight-r1-20261112/stages/cabbage-extended-overnight-sharing-claim33-20261112/collector.py": "18de3696a2b660b055d2fe08d856565adec4ddc2169a9e14f25aacaf2236b108",
+    "/home/pnord/scratch/cabbage-overnight-r1-20261112/stages/cabbage-extended-overnight-sharing-claim33-20261112/units.py": "3eb1e03cbfb766f83de404a0e4b8166178cdda4693076fb0117fc5f9c2a2f4cd"
+  },
   "files": {
     "ada_export_store.py": "a96c2abbc266951cf356b6157b7ed31b665fd3849bbbdbe6147cb56986ce2a37",
-    "allocation_guard.py": "035d9163f4b00af828fff29a31ab33d6df0d4f1ae0f8740d278dc5a756c2db05",
+    "allocation_guard.py": "9534d2a842e15c6fbf50d21ec9e3cde287cb4a411b3ca866f45235fab180f3d8",
     "audit_grouped.py": "3741e418bc72f69f7105bdf1f78347d2f48f9317b707d8bd8d1099ac0c8d1652",
     "bin/gmp_reference": "8d514a59a5488de9a16a2f7ab0ecd351fdc13816298ddb777a18d9aa94158eb6",
     "bin/scaling_gpu": "2b1c4651a957de9f73207b4932b1a0a0aea544170cb1a327bfed8d833bcf4048",
     "bounded_check.py": "29c31fa6d5a64c19ae6a2141ac614456b41b8e470d1b3308e8e2b71090dcb6e5",
     "buffered_pipeline.py": "837c56bc1155b1567581c994426fcff22822abdab5ca6da5d958be9f9e7bc5a9",
     "bulk_data_store.py": "048c522e649fe6c7b29b7377c93f7fe4223eff2ff2732cfcdccdcafa9d99ff54",
-    "cabbage_policy.py": "56f0edbd660824c2af99c89b16c013eeadc5a866e7c204516980b94af48a20f6",
+    "cabbage_policy.py": "fb8fc27ce3ca124dba1634250229d259ebf7cf7837ad4574de23fa8c98a06d8a",
     "cabbage_supervisor.py": "5358799dee058df90f3b05f1b867ed4906f25f1166715d05fe19065aef033816",
     "durable_mirror.py": "ab50ae934203c0b7b000a4071abcc5f7844315a78d6df418720447cc5a2ff41c",
     "finalize_replica.py": "8ea38954b4b308145176a3efec07946163d896552ef96ea61dc44fe029c158af",
@@ -59,11 +63,11 @@
     "native-baseline/src/scaling_gpu.cu": "5b6d7e3270ac0b9c43f42fa56af2fe1ef98c1b20b37ed147fcfd91e37bdc6977",
     "native-baseline/src/stream_io.hpp": "ba26ad17dd5533d537ea97d61529005c508c93035842cba5af389465a2bdc3b6",
     "native-baseline/vendor/exact.hpp": "9679861f05d33d22e31fd352a9120b6fc65b59fced65560faec0d7a7c89b8245",
-    "origin-claim.json": "ee56defc04ad7092ba966bfa2509f37c350744336eed79eb148603cbe6e42ea2",
-    "origin-config.json": "887e28d5d7dd71f839c7f69532f6ee96ce399985b5fe6dc5a7d767669e0d80b5",
+    "origin-claim.json": "a39ab8334a562a15326e37e32f6c07137cf6a677510edb4c3a76cc15582112f0",
+    "origin-config.json": "3711c02e10b2224cfc355902ddd0be7a9f8da4d6bb3ee54378309ef851781bf3",
     "packed_worker.py": "126f761696edb2fe0c17176f26beb9d27c8cfc46d1507520fccdd1fe6f7936d9",
-    "parent-archive-receipt.json": "5580205974b775c32321119e9c81d0348dd6bd3bda98e5eadbb22b7d35ee3ea6",
-    "parent-audit.json": "1beee0fc373c92594b487fe09d84f9e8cb687dd721d8a32df1281518d8c9ef61",
+    "parent-archive-receipt.json": "ca4ce290cf3e923ce663821238fe9f41dfa51d850e0e1c52851a9cab7d938721",
+    "parent-audit.json": "d71b0c5e125d050806cd0c1b38a20e15b7b9559f00d6ba5a64a82f43e0f675b5",
     "policy.py": "15d2417fa3cc3499747fa42636c2bc69dc595282a54c4689668f3c2988dfa7a1",
     "precision/PRECISION.md": "3b8a38d9dcd91575be5a79cdc3435807f5489d2f9d74b0a8a484ee89637194d1",
     "precision/precision_policy.py": "e0ba8905f7af276b445e12debf68bfe71ddc0d711045d4c41105c9e0b2400495",
@@ -73,6 +77,7 @@
     "precision/test_precision_policy.py": "30e27ddf11e6f6b7b8c8ccae995b639b6ac0c949a34b7889cb16a6a8afe5c79f",
     "prefix_exclusion.py": "3c7d067553076fa07dd028d220ba9660cd59ed5dd2af308d7a57135342eb46f1",
     "prepare_handoff.py": "5d399d533fdc19f7d959c9b6b6c52840470af48548d6f6dde9153bb41e4cdaf2",
+    "private-deadline.json": "f119260ed720ffddf00768cf4b9d1702d9fa333b851ac8fff4fe687c862106c0",
     "reservation-metadata.json": "ed17388f0772edaa80786729b9df584c25ad4b84e6fd463d06209efdaafedbb5",
     "residual_reporting.py": "bd762aefdae7587ff352867a2954e323692c1eb1af8504889caf06cede5d65f6",
     "runtime_initialize.py": "50c7d4ebe490260a7a30363df79579af6d14e9ff920646d43dab088185fd2e87",
@@ -237,10 +242,11 @@
   "native_source": "native-baseline/src/scaling_gpu.cu",
   "original_runtime_manifest_sha256": "dd225c6717217f7e3a9dc7b9586e3c97542e01bf5ba5f775fb8fbe8ee4aa4dde",
   "ownership_grid_cap": 42,
-  "predecessor_manifest_sha256": "9a67717c8d58df708b5f8d67376ae9de932e5e69f101baff848f9394104c00cc",
+  "predecessor_manifest_sha256": "125e1248b84bd234207b454028573817a82291a1416550b3a600ada1ac06d6d7",
   "recovery_reason": "Original next reservation failed before committing; exact empty-prefix proof permits fresh selected suffix.",
+  "release_version": "cabbage-overnight-sharing-claim33-20261112",
   "saved_root_sha256": "52c99797f2e950834bc6a4838a3c4cc6a740181ab245d7d7e3c93a14c4797710",
-  "scientific_scope": "0 < absolute residual <=100",
+  "scientific_scope": "Fresh original claim33 native cap100; original cap42 ownership unchanged; retained cap100 parent provides provenance only and contributes zero coverage.",
   "source_bundle_sha256": "a5149bdfdaa050c998576f8f07b22b39fb88a0b1fd3befb75fceefaffeb5b4f4",
   "status": "frozen_cabbage_extended"
 }
