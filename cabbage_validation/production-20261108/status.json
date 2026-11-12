@@ -2,107 +2,19 @@
   "TEST_ONLY": false,
   "alerts": [],
   "backend": "gpu",
-  "checkpoint": {
-    "chunks": 250000,
-    "completed_bound": null,
-    "coverage_schema": "logical-width8-physical-groups-v1",
-    "hits": [],
-    "identity": {
-      "source_identity": "74d4ada5683cd8126a401fcca83cb93061a3ee846302e0b7d205095ca47a3de5",
-      "trial": "cabbage-extended-memory-r2-cap100-20261111-job-43"
-    },
-    "journal_offset": 8825821271,
-    "journal_sha256": "1122025b569287fbfd85cf0e368dd6d780b15e8dbc05b82ad6d06c31e9aab3ad",
-    "next_patch": 9816000000,
-    "patches": 64000000,
-    "physical_tasks": 32000000,
-    "points": 11501781014676,
-    "window": {
-      "bits": 222,
-      "cap": 100,
-      "first": 9752000000,
-      "geometry_policy": "adaptive",
-      "hi": 200000000000,
-      "last": 9816000000,
-      "lo": 100000000001,
-      "width": 8
-    }
-  },
-  "combined_committed_interval": [
-    9752000000,
-    9816000000
-  ],
-  "combined_selected_patches": 64000000,
+  "checkpoint": null,
   "committed_interval": [
-    9752000000,
+    9816000000,
     9816000000
   ],
   "completed_bound": null,
-  "config_sha256": "72545cc8b2026c6e678648ecfdb483ad3dced49f690196a2be7f5763091d6901",
+  "config_sha256": "90c8b93145df0312eab18234e864b04a425f0d012621205450079d8e920a9cf6",
   "controller": {
-    "history": [
-      {
-        "claim_sha256": "21fa50b0c6ce330d62919f257645bb6656d65fb2354dd94a7202b6b416c9ccf5",
-        "config": "/home/pnord/scratch/cabbage-extended-memory-r2-active-20261111/production-config.json",
-        "final_checkpoint_sha256": "2109c0584bb88ea545c023db0c9d9772f2b542832ffece3a95e62c91ff38f8f7",
-        "first": 9368000000,
-        "last": 9432000000,
-        "run_id": "cabbage-extended-memory-r2-cap100-20261111-job-37"
-      },
-      {
-        "claim_sha256": "08f62b72edabfc14d30d1a081c16b3387f61ee394a24d91c427cf3447bd0f1ad",
-        "config": "/home/pnord/scratch/cabbage-extended-memory-r2-active-20261111/stages/cabbage-extended-memory-r2-cap100-20261111-job-38/production-config.json",
-        "final_checkpoint_sha256": "09f834c0d595062132c6df99c3b619841a53ed6a365f3c601b3c392274e0bcc5",
-        "first": 9432000000,
-        "last": 9496000000,
-        "run_id": "cabbage-extended-memory-r2-cap100-20261111-job-38"
-      },
-      {
-        "claim_sha256": "411a2d5756b8206875fd1d81174a7d520873d554ad89b26bcfdf1c4cde832e36",
-        "config": "/home/pnord/scratch/cabbage-extended-memory-r2-active-20261111/stages/cabbage-extended-memory-r2-cap100-20261111-job-39/production-config.json",
-        "final_checkpoint_sha256": "512d85a5455710083aa5e550fa66cec829f08a55677b36b85666023e9e224b73",
-        "first": 9496000000,
-        "last": 9560000000,
-        "run_id": "cabbage-extended-memory-r2-cap100-20261111-job-39"
-      },
-      {
-        "claim_sha256": "a262c8a91a41a0847b50e8e72e771ccf36a4f8142ae193acf2ee365bbd7249a8",
-        "config": "/home/pnord/scratch/cabbage-extended-memory-r2-active-20261111/stages/cabbage-extended-memory-r2-cap100-20261111-job-40/production-config.json",
-        "final_checkpoint_sha256": "8e64bf3e7cb94920907f4916e865ec0caddca402d81c548b85708b67a033dffe",
-        "first": 9560000000,
-        "last": 9624000000,
-        "run_id": "cabbage-extended-memory-r2-cap100-20261111-job-40"
-      },
-      {
-        "claim_sha256": "593feee57b71f48046d1da38692d00ddb285b2afe0a753ad9a4208b6db95c998",
-        "config": "/home/pnord/scratch/cabbage-extended-memory-r2-active-20261111/stages/cabbage-extended-memory-r2-cap100-20261111-job-41/production-config.json",
-        "final_checkpoint_sha256": "18d58771b150471a1b0113fc84fba2633069de95b96bc788481c39ab14d8e596",
-        "first": 9624000000,
-        "last": 9688000000,
-        "run_id": "cabbage-extended-memory-r2-cap100-20261111-job-41"
-      },
-      {
-        "claim_sha256": "82159f456908a305a3a95a63053e6bd14fc903780a78fe13c1b06d6b610f231a",
-        "config": "/home/pnord/scratch/cabbage-extended-memory-r2-active-20261111/stages/cabbage-extended-memory-r2-cap100-20261111-job-42/production-config.json",
-        "final_checkpoint_sha256": "a168dba65777085d43b7056944f009e41d35f6bfa83af1556be07112e87c01fb",
-        "first": 9688000000,
-        "last": 9752000000,
-        "run_id": "cabbage-extended-memory-r2-cap100-20261111-job-42"
-      },
-      {
-        "claim_sha256": "c7cfa1fe466dfd4b901f18e5763d3bd652ce012f67deb3d88d0793ae948c31f8",
-        "config": "/home/pnord/scratch/cabbage-extended-memory-r2-active-20261111/stages/cabbage-extended-memory-r2-cap100-20261111-job-43/production-config.json",
-        "final_checkpoint_sha256": "8f6ef735c8bf76aa561fadc7934e60724d643ddfce16f4cc184d5fdfa2736985",
-        "first": 9752000000,
-        "last": 9816000000,
-        "run_id": "cabbage-extended-memory-r2-cap100-20261111-job-43"
-      }
-    ],
-    "next_patch": 9816000000,
-    "phase": "awaiting_final_publication",
-    "run_id": "cabbage-extended-memory-r2-cap100-20261111-job-43",
+    "config": "/home/pnord/scratch/cabbage-extended-memory-r2-active-20261111/stages/cabbage-extended-memory-r2-cap100-20261111-job-44/production-config.json",
+    "phase": "running",
+    "run_id": "cabbage-extended-memory-r2-cap100-20261111-job-44",
     "stop_epoch": 1794524400,
-    "updated_epoch": 1794473887.5274239
+    "updated_epoch": 1794474063.0316906
   },
   "coverage_scope": "Verified selected interval and parent lineage only; no full-box bound.",
   "deadline_timer": {
@@ -123,113 +35,49 @@
   "host": "cabbage",
   "journal_limit_bytes": 34359738368,
   "journal_storage": "local durable journal; verified bulk replica every 60 seconds",
-  "ledger_claim_sha256": "c7cfa1fe466dfd4b901f18e5763d3bd652ce012f67deb3d88d0793ae948c31f8",
-  "local_next_patch": 9816000000,
-  "manifest_sha256": "9cfa687b70fe9ad099c74267138bc458e04c71f580b9c365ad3e9958d361b036",
+  "ledger_claim_sha256": "837f772572772968c2def0086bf5d08166000befb37c6356924d4706bf009ad1",
+  "local_next_patch": 9816014336,
+  "manifest_sha256": "5810ba13eae013e4bb586d07fffdbd6cdcf7c8496cc81bf80f7d0305c5663abb",
   "mathematical_coverage_claim": false,
   "minimum_free_disk_bytes": 17179869184,
-  "original_ledger_job": "boole-delegated-20261109-43",
-  "parent_audit_sha256": "1beee0fc373c92594b487fe09d84f9e8cb687dd721d8a32df1281518d8c9ef61",
-  "parent_committed_interval": [
-    9752000000,
-    9752000000
-  ],
+  "original_ledger_job": "boole-delegated-20261109-44",
   "parent_coverage_cap": 42,
   "parent_is_provenance_only": true,
-  "phase": "stopped",
+  "phase": "admitted_not_started",
   "prefix_exclusion_sha256": null,
-  "production_launched": true,
-  "replica": {
-    "captured_epoch": 1794473860.96101,
-    "checkpoint_sha256": "8f6ef735c8bf76aa561fadc7934e60724d643ddfce16f4cc184d5fdfa2736985",
-    "chunks": 250000,
-    "committed_bytes": 8825821271,
-    "identity": {
-      "source_identity": "74d4ada5683cd8126a401fcca83cb93061a3ee846302e0b7d205095ca47a3de5",
-      "trial": "cabbage-extended-memory-r2-cap100-20261111-job-43"
-    },
-    "journal_sha256": "1122025b569287fbfd85cf0e368dd6d780b15e8dbc05b82ad6d06c31e9aab3ad",
-    "method": "append, fsync, byte readback, audit copies, checkpoint, receipt",
-    "next_patch": 9816000000,
-    "raw_sha256": "3612b84852d37de6da05399de90d11730b9d69d8d25cec53eb91395f7d148ff3",
-    "status": "verified",
-    "synced_epoch": 1794473861.7419262
-  },
+  "production_launched": false,
+  "replica": null,
   "report_interval_seconds": 900,
   "reserved_interval": [
-    9752000000,
-    9816000000
+    9816000000,
+    9880000000
   ],
   "residual_cap": 100,
-  "run_id": "cabbage-extended-memory-r2-cap100-20261111-job-43",
+  "run_id": "cabbage-extended-memory-r2-cap100-20261111-job-44",
   "service": {
-    "ActiveState": "inactive",
-    "MainPID": "0",
+    "ActiveState": "active",
+    "MainPID": "2073387",
     "NRestarts": "0",
-    "SubState": "dead"
+    "SubState": "running"
   },
-  "snapshot_utc": "2026-11-12T08:58:08.952020+00:00",
-  "source_identity": "74d4ada5683cd8126a401fcca83cb93061a3ee846302e0b7d205095ca47a3de5",
+  "snapshot_utc": "2026-11-12T09:01:06.142826+00:00",
+  "source_identity": "7b9f94528629738d1ae31a727c24012686328dca9e61a12414d7d40938664a5a",
   "stop_epoch": 1794524400,
   "stop_local": "2026-11-12T17:00:00-06:00",
   "supervisor": {
     "TEST_ONLY": false,
-    "all_owned_processes_exited_utc": "2026-11-12T08:57:35.152906+00:00",
-    "config_sha256": "72545cc8b2026c6e678648ecfdb483ad3dced49f690196a2be7f5763091d6901",
+    "config_sha256": "90c8b93145df0312eab18234e864b04a425f0d012621205450079d8e920a9cf6",
     "error": null,
-    "leases_released": true,
+    "leases_released": false,
     "load_average": [
-      4.42529296875,
-      6.7451171875,
-      6.8720703125
+      2.083984375,
+      4.76416015625,
+      6.07763671875
     ],
-    "status": "finished",
-    "updated_utc": "2026-11-12T08:57:35.152935+00:00",
-    "wall_seconds": 6315.967655287939,
-    "worker_exit_code": 0,
-    "worker_pid": 1942007
+    "status": "running",
+    "updated_utc": "2026-11-12T09:01:03.183512+00:00",
+    "worker_pid": 2073397
   },
-  "worker_metrics": {
-    "dispatch_chunksize": 8,
-    "error": null,
-    "gmp_audited_chunks": 1954,
-    "journal_buffer": {
-      "flush_count": 31273,
-      "flush_seconds": 263.6392592827324,
-      "pending_bytes": 0,
-      "pending_chunks": 0
-    },
-    "patches_per_second": 10139.658877579086,
-    "prefetch": {
-      "active": 0,
-      "consumer_wait_empty_seconds": 1157.113544522901,
-      "elapsed_seconds": 6311.517212909996,
-      "inflight": 0,
-      "max_outstanding": 3,
-      "maximum_item_payload_bytes": 134217728,
-      "maximum_prepared_payload_bytes": 15356087,
-      "mean_ready_depth": 0.3727264650770638,
-      "outstanding": 0,
-      "peak_outstanding": 3,
-      "peak_ready": 1,
-      "peak_reserved_bytes": 402653184,
-      "preparation_batch_windows": 16,
-      "preparation_batches": 15625,
-      "prepare_wall_seconds": 6310.197582441382,
-      "producer_wait_capacity_seconds": 0.01390390342567116,
-      "producer_wait_full_seconds": 1297.1603525721002,
-      "queue_units": "bounded preparation batches; original execution/journal windows preserved",
-      "ready": 0,
-      "ready_depth_seconds": {
-        "0": 3959.0477092120564,
-        "1": 2352.4695000409847
-      },
-      "ready_limit": 1,
-      "reserved_bytes": 0
-    },
-    "reason": "Selected remaining shell endpoint reached",
-    "search_seconds": 6311.84941946296,
-    "updated_utc": "2026-11-12T08:57:31.761936+00:00"
-  },
+  "worker_metrics": {},
   "workers": 16
 }
