@@ -112,6 +112,31 @@ logical CPUs, then download **Fifth42_Batching_Results.zip**. No original
 dependency/math/native guards are removed. Setup/testing is bounded to fifteen
 minutes. This is repeated local benchmark work with zero new search coverage.
 
+## Longer matched batching test
+
+**[Open the longer batching test in Colab](https://colab.research.google.com/github/paulnord/fifth42/blob/f661135700f3283e2b30cdd9e28ca3643d57abf9/colab/20261112/batching_sustained/Fifth42_Sustained_Batching_Tests.ipynb)** ·
+[Gemini instructions](batching_sustained/GEMINI_HANDOFF.txt) · [Scope](batching_sustained/README.md)
+
+This is the follow-up to the completed short batching test. Compare **1/4/8
+windows**, hold map chunk size at **8**, and run **five matched randomized
+repetitions**, each with **12 passes** through the same nine original windows.
+Use the current CUDA GPU with eight preparation workers and at least nine
+allocated CPUs. Every original exact/native check and pass-specific durable
+journal remains in place. The default run has 15 trials, 540 journals, 1,620
+window visits and 4,140 native receipts, with zero new scientific coverage.
+
+The local CPU/GMP smoke reproduction passed all 42 fresh packet checks, native
+count/hit verification and exact journal recovery. Its independent reviewer
+checked nine chains, 27 original-window records and 69 receipts, and rejected a
+forged count and a missing checkpoint. This validates the smaller CPU reproduction;
+**the full longer GPU experiment is ready to run, with results pending**.
+
+Run top to bottom and download **Fifth42_Sustained_Batching_Results.zip** before
+disconnecting. Setup/testing is bounded to fifteen minutes, the runner to eight
+minutes and the complete result export to 96 MiB. Use per-repetition comparisons to
+judge four versus eight windows; a near tie is a legitimate result. Production
+remains unchanged.
+
 ## Run
 
 The notebook rebuilds native code for the GPU actually assigned using
