@@ -1,0 +1,69 @@
+{
+  "status": "passed",
+  "scope": "Supplied A100 artifact review and matched prepared-packet comparison; no local GPU rerun.",
+  "recorded_gpu": "NVIDIA A100-SXM4-40GB",
+  "a100_comparison_valid": true,
+  "original_zip_sha256": "b4b475341c38e7be73f9191aa08a7ce60ed0ef858831a00830fd2cf48bf36d8d",
+  "original_files_sha256": {
+    "results/benchmark-gpu.json": "57c18516dd115f9c29f5b34db232bc15f35b9a35309c8a1ffba97aa7a6da84c0",
+    "results/build.json": "ed83b5387904701a7ed49a73822a4a3aa1c95367fc100ec4b926ac1fb99fe050",
+    "SHA256SUMS": "2c6849ed1fb73303b0191912b4db70015083484cb4f705158255189e2b8ac0fe",
+    "data/export.json": "94024deb38db7a1a7c5af836268b739cdd9c21052e1f42e3f5c4a5c486de1f9d"
+  },
+  "source_data_matches_pinned_bundle": true,
+  "all_42_packets_match_gmp_reported": true,
+  "repetitions_per_case": 7,
+  "trial_count": 21,
+  "medians_seconds": {
+    "realistic": {
+      "separate": {
+        "total_replay_seconds": 0.03684042600002613,
+        "rpc_seconds": 0.02545308100013699,
+        "kernel_seconds": 0.018855942000000004,
+        "engine_seconds": 0.022598933999999998
+      }
+    },
+    "tiny": {
+      "separate": {
+        "total_replay_seconds": 0.00609166300000652,
+        "rpc_seconds": 0.005624341999805438,
+        "kernel_seconds": 0.003956736000000001,
+        "engine_seconds": 0.004823586
+      },
+      "combined": {
+        "total_replay_seconds": 0.0007304749999548221,
+        "rpc_seconds": 0.0005282019999981458,
+        "kernel_seconds": 0.000346112,
+        "engine_seconds": 0.000436153
+      }
+    }
+  },
+  "replay_ranges_seconds": {
+    "realistic": {
+      "separate": [
+        0.03260543400000415,
+        0.037879579999980706
+      ]
+    },
+    "tiny": {
+      "separate": [
+        0.005180862000031539,
+        0.0061939349999988735
+      ],
+      "combined": [
+        0.0006504219999783345,
+        0.0007717000000297958
+      ]
+    }
+  },
+  "tiny_replay_speedup": 8.339317567861011,
+  "baseline_report": "benchmark-l4-r2.json",
+  "l4_realistic_replay_seconds": 0.03540441800001304,
+  "a100_realistic_replay_seconds": 0.03684042600002613,
+  "a100_replay_time_change_percent": 4.056013574386563,
+  "a100_replay_speedup_vs_l4": 0.961020863330623,
+  "a100_kernel_time_change_percent": 7.064167268630039,
+  "compute_unit_cost_available": false,
+  "recommendation": "Retain L4 as validated replay backend. This short A100 test shows no speed advantage; measure CPU preparation and full-pipeline throughput before changing hardware.",
+  "limitations": "Prepared packet replay only. CPU planning, network transfer, durable cloud checkpoints and production journal costs are not included. No new search coverage. Different cloud VMs; three L4 sessions and one A100 session, with seven repetitions per case in each session. No sustained-throughput or universal hardware ranking claim."
+}

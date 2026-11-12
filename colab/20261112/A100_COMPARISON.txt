@@ -14,9 +14,9 @@ print(gpu_names)
 if not gpu_names or "A100" not in gpu_names.splitlines()[0]:
     raise RuntimeError("A100 required: change and reconnect the runtime before continuing")
 
-The latest supplied comparison ZIP still recorded NVIDIA L4. Its checks passed,
-but it cannot be used as an A100 result. Verify the actual connected GPU again
-before rerunning; the requested runtime setting alone is insufficient evidence.
+A supplied comparison ZIP originally recorded L4. A later A100-SXM4-40GB run
+passed and is documented in GPU_COMPARISON.md. These instructions reproduce that
+comparison; another run is unnecessary unless testing a specific new change.
 
 Use this corrected immutable notebook:
 https://colab.research.google.com/github/paulnord/fifth42/blob/daac4d600cfdd01c34349e3d1da25fc7cde95953/colab/20261112/Fifth42_Colab_Tests.ipynb
@@ -46,6 +46,13 @@ prepared-replay throughput per compute unit. Compare the A100 speedup with the
 A100/L4 compute-unit-rate ratio. Keep startup and full benchmark duration separate.
 These measurements exclude CPU planning, network delivery and durable journals;
 they do not establish sustained full-pipeline search throughput.
+
+Before exporting, check the newly generated report in this runtime:
+
+import json
+report = json.loads((FIFTH42_DIR / "results/benchmark-gpu.json").read_text())
+if report.get("status") != "passed" or "A100" not in report.get("hardware", {}).get("gpu", ""):
+    raise RuntimeError("A fresh passed A100 report is required before export")
 
 Download the results ZIP as Fifth42_A100_Results.zip. Include account observations
 in a separate text/JSON note if available. End the runtime after the download is

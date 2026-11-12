@@ -53,12 +53,15 @@ seven repetitions per case. Cost remains unrecorded.
 A [third supplied ZIP](results/benchmark-l4-r3.json) reports **NVIDIA L4** in its
 hardware record, although it was supplied for the A100 comparison. All 42 checks
 passed and production-sized replay was 35.36 ms. It is archived as another L4
-result; **no A100 performance measurement is established**. The A100 assignment
-now requires a device-name check before building or benchmarking.
+result. The A100 assignment requires a device-name check before building or
+benchmarking. A later ZIP confirmed A100 and completed the comparison below.
 
-H100 was unavailable in the user's session. The next bounded experiment is the
-[matched A100 comparison](A100_COMPARISON.txt), using the corrected notebook and
-the second L4 run as its baseline. If A100 is unavailable too, keep L4.
+The [matched A100 comparison](GPU_COMPARISON.md) passed all 42 packet/GMP checks
+on NVIDIA A100-SXM4-40GB. Median production-sized replay was **36.84 ms** versus
+L4's **35.40 ms** (A100 took 4.06% longer); kernel time was **18.86 ms** versus
+**17.61 ms**. This short replay establishes no A100 speed advantage. Keep L4 as
+the validated replay backend; the next useful measurement is CPU preparation and
+full-pipeline throughput. Compute-unit rates remain unrecorded. H100 was unavailable.
 
 ## Run
 
