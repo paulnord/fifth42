@@ -1,6 +1,6 @@
 # Fifth42: Colab GPU tests for Gemini
 
-**[Open and run in Google Colab](https://colab.research.google.com/github/paulnord/fifth42/blob/cfbe8059d452e2e60923b0a01a9a1ae7eb52236d/colab/20261112/Fifth42_Colab_Tests.ipynb)**
+**[Open and run in Google Colab](https://colab.research.google.com/github/paulnord/fifth42/blob/daac4d600cfdd01c34349e3d1da25fc7cde95953/colab/20261112/Fifth42_Colab_Tests.ipynb)**
 
 Open [Fifth42_Colab_Tests.ipynb](Fifth42_Colab_Tests.ipynb) in Google Colab and give
 Gemini [GEMINI_HANDOFF.txt](GEMINI_HANDOFF.txt). Select **L4 GPU** for the first run
@@ -8,7 +8,9 @@ if offered. The notebook obtains all sources and data from an immutable GitHub
 commit and checks their hashes. No uploads or campus filesystem access are needed.
 
 This is a bounded exact-integer benchmark, with **zero new scientific coverage**.
-Local CPU/GMP verification passed. **Colab GPU testing remains pending.**
+Local CPU/GMP verification passed. **The first Colab L4 replay passed all 42
+packet checks against independent GMP**, including fresh GMP reproduction and
+incomplete-response rejection.
 
 ## What it tests
 
@@ -22,12 +24,34 @@ The realistic 23-request stream remains **byte-identical** after coalescing unde
 unchanged 50-million-point packet limits. The runner does not report a fictional
 batching speedup for that case. Tiny packets combine 16 requests into one.
 
+## First Colab result: NVIDIA L4
+
+The supplied [L4 report](results/benchmark-l4.json) contains seven repetitions per
+case. [Artifact review](results/colab-l4-review.json) confirmed source/data hashes,
+trial completeness and the reported timing summaries.
+
+| Prepared input | Requests | Positions | Median replay | Median kernel |
+| --- | ---: | ---: | ---: | ---: |
+| Production-sized | 23 | 775,687,194 | 35.42 ms | 17.61 ms |
+| Tiny, separate | 16 | 13,748,364 | 4.091 ms | 2.250 ms |
+| Tiny, combined | 1 | 13,748,364 | 0.727 ms | 0.351 ms |
+
+Tiny-packet replay improved 5.63x. Production-sized requests stayed byte-identical,
+so that result supplies no production batching speedup. The benchmark completed
+in 41.08 seconds including fresh GMP checks; GPU startup was 0.203 seconds.
+Compute-unit usage was not recorded, so cost efficiency remains unmeasured.
+These short packet replays do not establish sustained or full-pipeline throughput.
+Keep L4 as a validated test backend; stronger hardware needs a matched comparison
+including CPU preparation and actual credit usage before adoption.
+
 ## Run
 
 The notebook rebuilds native code for the GPU actually assigned using
 `nvcc -arch=native`. It uses Python standard-library code and C++/CUDA/GMP; the
 preparation host's pinned Python3.12/gmpy2/fpylll environment is not needed.
-If development headers are missing, install `libgmp-dev` and `g++` in Colab.
+The notebook installs `libgmp-dev` before building and imports the Colab download
+helper in the result-export cell, so a fresh runtime has both requirements.
+For a manual build, install `libgmp-dev` and ensure `g++` is available first.
 
 The GPU command is:
 
