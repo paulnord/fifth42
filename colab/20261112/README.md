@@ -44,6 +44,15 @@ These short packet replays do not establish sustained or full-pipeline throughpu
 Keep L4 as a validated test backend; stronger hardware needs a matched comparison
 including CPU preparation and actual credit usage before adoption.
 
+A [second L4 run](results/benchmark-l4-r2.json) also passed all 42 packet/GMP
+checks. Median production-sized replay was 35.40 ms (0.03% below the first run),
+with 17.61 ms kernel time; tiny batching improved 5.63x. Its
+[artifact review](results/colab-l4-r2-review.json) confirms the same inputs and
+seven repetitions per case. Cost remains unrecorded.
+
+The next bounded experiment is the [matched H100 comparison](H100_COMPARISON.txt),
+using the corrected notebook and the second L4 run as its baseline.
+
 ## Run
 
 The notebook rebuilds native code for the GPU actually assigned using

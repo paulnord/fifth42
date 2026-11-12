@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "scope": "Second supplied L4 artifact review; no local GPU rerun.",
+  "original_zip_sha256": "2d7291a4719e28688e299f672017d2cff9781c89a4d1203645dad91aea364508",
+  "original_files_sha256": {
+    "results/benchmark-gpu.json": "ef410deb08c34dd000c5d405d41883de0adc36377ba4749e1923f93b1aa88da6",
+    "results/build.json": "8c0079f696a915c943f6d7911ed1f4802e71cbf4bb024263eb7d9bd574a75271",
+    "SHA256SUMS": "2c6849ed1fb73303b0191912b4db70015083484cb4f705158255189e2b8ac0fe",
+    "data/export.json": "94024deb38db7a1a7c5af836268b739cdd9c21052e1f42e3f5c4a5c486de1f9d"
+  },
+  "source_data_matches_pinned_bundle": true,
+  "all_42_packets_match_gmp_reported": true,
+  "repetitions_per_case": 7,
+  "trial_count": 21,
+  "medians_seconds": {
+    "realistic": {
+      "separate": {
+        "total_replay_seconds": 0.03540441800001304,
+        "rpc_seconds": 0.02398139800001786,
+        "kernel_seconds": 0.017611814,
+        "engine_seconds": 0.021098325999999997
+      }
+    },
+    "tiny": {
+      "separate": {
+        "total_replay_seconds": 0.004092284999984486,
+        "rpc_seconds": 0.0036297209999816005,
+        "kernel_seconds": 0.002250816,
+        "engine_seconds": 0.002904149
+      },
+      "combined": {
+        "total_replay_seconds": 0.0007268740000085927,
+        "rpc_seconds": 0.0005261370000084753,
+        "kernel_seconds": 0.000349184,
+        "engine_seconds": 0.000424424
+      }
+    }
+  },
+  "tiny_replay_speedup": 5.629978510630603,
+  "previous_realistic_replay_seconds": 0.03541513999994095,
+  "current_realistic_replay_seconds": 0.03540441800001304,
+  "realistic_replay_change_percent": -0.030275187188100183,
+  "compute_unit_cost_available": false,
+  "limitations": "Prepared packet replay only. CPU planning, network transfer, durable cloud checkpoints and production journal costs are not included. No new search coverage."
+}
