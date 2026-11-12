@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "commands": [
+    [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-O3",
+      "native/src/scaling_cpu.cpp",
+      "-pthread",
+      "-o",
+      "bin/scaling_cpu"
+    ],
+    [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-O3",
+      "native/independent/gmp_reference.cpp",
+      "-lgmpxx",
+      "-lgmp",
+      "-o",
+      "bin/gmp_reference"
+    ]
+  ],
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0\nCopyright (C) 2025 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "binaries": {
+    "gmp_reference": "7d72e6a9267cef0bbe7f66da7445d0bb005b1ccdf9e14adff6b40dcb5c674a22",
+    "scaling_cpu": "28a75e4de049c5dc75f952b33f7a8086520564b9f83d7a9e80a11e0635d2ac38"
+  },
+  "publication_note": "Build command paths made relative; compiler identity and binary hashes retained."
+}

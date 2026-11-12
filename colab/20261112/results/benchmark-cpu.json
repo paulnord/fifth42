@@ -1,0 +1,176 @@
+{
+  "status": "passed",
+  "TEST_ONLY": true,
+  "new_scientific_coverage": false,
+  "backend": "cpu",
+  "hardware": {
+    "python": "3.14.4",
+    "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+    "logical_cpus": 32,
+    "available_cpu_affinity": 1,
+    "system_ram_gib": 125.68777084350586,
+    "gpu": "NVIDIA GeForce RTX 3060 present on the preparation host; not used in this CPU-only test.",
+    "nvcc": "Not used in CPU-only reproduction."
+  },
+  "packet_export_sha256": "3916c409f159cace521d9fdc24534dfadb61b514a33ada1eaf5f42e1b3203a92",
+  "trials": [
+    {
+      "repeat": 0,
+      "group": "realistic",
+      "variant": "separate",
+      "total_replay_seconds": 3.9768337740097195,
+      "rpc_seconds": 3.97087113535963,
+      "kernel_seconds": 0.0,
+      "engine_seconds": 3.9691966,
+      "requests": 23,
+      "verified_points": 775687194
+    },
+    {
+      "repeat": 0,
+      "group": "tiny",
+      "variant": "combined",
+      "total_replay_seconds": 0.06978428096044809,
+      "rpc_seconds": 0.06967744999565184,
+      "kernel_seconds": 0.0,
+      "engine_seconds": 0.0696194,
+      "requests": 1,
+      "verified_points": 13748364
+    },
+    {
+      "repeat": 0,
+      "group": "tiny",
+      "variant": "separate",
+      "total_replay_seconds": 0.07122544292360544,
+      "rpc_seconds": 0.07086592202540487,
+      "kernel_seconds": 0.0,
+      "engine_seconds": 0.07028028000000001,
+      "requests": 16,
+      "verified_points": 13748364
+    }
+  ],
+  "compute_units_per_hour_observed_by_user": null,
+  "sizes": {
+    "realistic": {
+      "original_packets": 23,
+      "combined_requests": 23,
+      "requests_byte_identical": true,
+      "points": 775687194,
+      "packet_points": [
+        49491764,
+        49258164,
+        10262910,
+        49234620,
+        49649300,
+        10301476,
+        49599707,
+        49473480,
+        11369369,
+        49404220,
+        49655446,
+        10171542,
+        49200246,
+        49621699,
+        17455885,
+        49698899,
+        5579345,
+        49952133,
+        5839795,
+        49793901,
+        5646741,
+        49866958,
+        5159594
+      ],
+      "task_counts": [
+        58,
+        58,
+        12,
+        58,
+        58,
+        12,
+        57,
+        58,
+        13,
+        58,
+        58,
+        12,
+        54,
+        55,
+        19,
+        115,
+        13,
+        115,
+        13,
+        115,
+        13,
+        116,
+        12
+      ]
+    },
+    "tiny": {
+      "original_packets": 16,
+      "combined_requests": 1,
+      "requests_byte_identical": false,
+      "points": 13748364,
+      "packet_points": [
+        888615,
+        884247,
+        843661,
+        851295,
+        836325,
+        842639,
+        870975,
+        850563,
+        856375,
+        861869,
+        822463,
+        848331,
+        841491,
+        922625,
+        859947,
+        866943
+      ],
+      "task_counts": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "limitations": "Prepared packet replay only. CPU planning, network transfer, durable cloud checkpoints and production journal costs are not included. No new search coverage.",
+  "engine_startup_seconds": 0.001409383025020361,
+  "all_original_packet_counts_and_hits_equal_gmp": true,
+  "fresh_local_gmp_all_packets": true,
+  "incomplete_response_rejected": true,
+  "summary": {
+    "realistic": {
+      "medians": {
+        "separate": 3.9768337740097195
+      },
+      "separate_over_combined": null,
+      "conclusion": "Request streams are byte-identical; no distinct coalescing performance claim."
+    },
+    "tiny": {
+      "medians": {
+        "separate": 0.07122544292360544,
+        "combined": 0.06978428096044809
+      },
+      "separate_over_combined": 1.0206516703091657,
+      "conclusion": "Distinct request streams; engine-only replay comparison."
+    }
+  },
+  "elapsed_seconds": 25.91888909798581,
+  "publication_note": "GPU process/PID details removed from hardware metadata; all exact comparisons and timing samples retained."
+}
