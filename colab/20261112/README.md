@@ -88,7 +88,7 @@ bounded to eight minutes and the whole notebook to fifteen minutes. Remote
 mirrors/network delivery and production GMP audit scheduling are excluded;
 there is zero new search coverage and no demonstrated production speedup.
 
-## Next test: CPU preparation batching and dispatch
+## CPU preparation batching and dispatch
 
 **[Open the new batching notebook in Colab](https://colab.research.google.com/github/paulnord/fifth42/blob/a552a30d30eb86ad5ee4f0800c6df5ae3691486a/colab/20261112/batching/Fifth42_Batching_Tests.ipynb)** ·
 [Gemini instructions](batching/GEMINI_HANDOFF.txt) · [Scope and policies](batching/README.md)
@@ -99,11 +99,18 @@ trial makes three passes over the same verified nine windows, retaining separate
 per-pass journals and unchanged native packet bytes/certificate identities.
 The matched windows=1/chunks=8 baseline is included in every repetition.
 
-All eight policies passed local CPU correctness and repeated-pass recovery checks;
-Colab GPU timing results remain pending. No original dependency/math/native guards
-are removed. Run top to bottom on a CUDA GPU with at least nine allocated logical
-CPUs, then download **Fifth42_Batching_Results.zip**. Setup/testing is bounded to
-fifteen minutes. This is a local replay policy test with zero new search coverage.
+The [Colab L4 batching results](batching_results/REPORT.md) passed all checks.
+Four-window/chunk-8 preparation improved matched local throughput **10.25%**;
+eight-window/chunk-8 preparation improved it **10.78%**, with overlapping sample
+ranges. Chunk size 8 beat 32 at every batch size. Use eight workers, four-window
+preparation batches and map chunk 8 as a conservative Colab follow-up baseline.
+The complete ZIP and independent review of 216 journal chains / 1,656 native
+receipts are published with the report. Production remains unchanged.
+
+For reproduction, run top to bottom on a CUDA GPU with at least nine allocated
+logical CPUs, then download **Fifth42_Batching_Results.zip**. No original
+dependency/math/native guards are removed. Setup/testing is bounded to fifteen
+minutes. This is repeated local benchmark work with zero new search coverage.
 
 ## Run
 
