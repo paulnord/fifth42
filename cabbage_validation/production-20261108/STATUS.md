@@ -1,12 +1,12 @@
 # Cabbage combined search
 
-Updated: 2026-11-12T22:42:24.850909+00:00
+Updated: 2026-11-12T22:42:55.040611+00:00
 
-State: **stopping**. Run **cabbage-extended-memory-r2-cap100-20261111-job-50**; gpu with 16 preparation workers.
-Verified replicated cursor: **10,263,625,472**.
-New replicated logical patches: **63,625,472** in 248,537 chunks.
-Combined verified selected patches, including parents: **63,625,472**.
-Fresh interval: `[10200000000, 10264000000]`; replicated: `[10200000000, 10263625472]`.
+State: **stopped**. Run **cabbage-extended-memory-r2-cap100-20261111-job-50**; gpu with 16 preparation workers.
+Verified replicated cursor: **10,264,000,000**.
+New replicated logical patches: **64,000,000** in 250,000 chunks.
+Combined verified selected patches, including parents: **64,000,000**.
+Fresh interval: `[10200000000, 10264000000]`; replicated: `[10200000000, 10264000000]`.
 Local cursor: 10,264,000,000; physical tasks group up to 2 original width-8 cells.
 Saved-root reuse, exact host optimizations, low64 filtering and an immutable canonical task cache are enabled.
 Journal records remain separate 256-cell receipts, with up to eight buffered before a durable checkpoint.
