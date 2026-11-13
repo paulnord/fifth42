@@ -32,6 +32,7 @@ PROFILE_KEYS = ('backend','bits','cap','chunk_patches','dispatch_chunksize','geo
     'replica_interval_seconds','running_load_limit','shell_hi','shell_lo','width','workers','automatic_resume')
 _PARENTS = set()
 _HELPERS = {}
+ORIGINAL_GUARD_SHA = "9534d2a842e15c6fbf50d21ec9e3cde287cb4a411b3ca866f45235fab180f3d8"
 
 
 def require(ok, message):
@@ -134,13 +135,94 @@ def _ownership(path, pin, test=False):
     return m, parent
 
 
+
+def _resume(g, m, parent, task, test=False):
+    """Authenticate only the exact audited Ada30 suffix of the first delegation."""
+    require(g['executor'] == 'ada' and g['ledger_job'] == 'boole-delegated-20261109-30'
+            and type(g['initial_patch']) is int and task['initial_patch'] < g['initial_patch'] < task['range_end'],
+            'Only the exact partial Ada30 task may resume')
+    seal = checked(g, 'resume_seal')
+    require(seal.get('schema') == 'fifth42-sharing-resume-seal-v1' and seal.get('status') == 'verified_sealed_prefix'
+            and seal.get('TEST_ONLY') is test and seal.get('executor') == 'ada'
+            and seal.get('ledger_job') == g['ledger_job']
+            and (seal['initial_patch'], seal['next_patch'], seal['range_end']) == (task['initial_patch'], g['initial_patch'], task['range_end']),
+            'Resume seal does not cover the adjacent original prefix')
+    old_source = Path(m['predecessor_guard_source_file'])
+    require(m['predecessor_guard_source_sha256'] == sha(old_source) == ORIGINAL_GUARD_SHA,
+            'Original sharing guard provenance changed')
+    key = ('historical-original', ORIGINAL_GUARD_SHA)
+    if key not in _HELPERS:
+        spec = importlib.util.spec_from_file_location('_original_sharing_guard', old_source)
+        module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module); _HELPERS[key] = module
+    old = _HELPERS[key].verify_historical_grant(seal['prior_grant_file'], seal['prior_grant_sha256'], test)
+    cfg = checked(seal, 'prior_config'); mf = checked(seal, 'prior_manifest')
+    require(old['executor'] == 'ada' and old['ledger_job'] == g['ledger_job']
+            and (old['initial_patch'], old['range_end']) == (task['initial_patch'], task['range_end'])
+            and old['claim'] == g['claim'] and old['original_assignment'] == g['original_assignment'], 'Resume predecessor changed task')
+    require(sha(cfg['suballocation_grant_file']) == cfg['suballocation_grant_sha256'] == seal['prior_grant_sha256']
+            and sha(cfg['manifest']) == cfg['manifest_sha256'] == seal['prior_manifest_sha256']
+            and mf['files'] == old['runtime_source_files'] and mf.get('external_files', {}) == old['runtime_external_files'],
+            'Resume predecessor config/source maps changed')
+    for name, pin in old['runtime_source_files'].items():
+        if name != 'suballocation_guard.py' and (Path(name).suffix in ('.py', '.cpp', '.cu', '.hpp', '.h', '.c') or name.startswith('bin/')):
+            require(g['runtime_source_files'].get(name) == pin, 'Resume changed reviewed math/runtime source: ' + name)
+    require(g['runtime_external_files'] == old['runtime_external_files'], 'Resume changed external arithmetic/resource helpers')
+    cp = checked(seal, 'checkpoint'); status = checked(seal, 'terminal_status')
+    fingerprint = hashlib.sha256(json.dumps(dict(manifest_sha256=cfg['manifest_sha256'], config=cfg), sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+    require(cp['identity']['source_identity'] == fingerprint, 'Resume checkpoint config/source fingerprint changed')
+    audit = checked(seal, 'native_audit'); replica = checked(seal, 'replica_receipt'); supervisor = checked(seal, 'stopped_supervisor')
+    require(cp['identity']['trial'] == cfg['run_id'] and cp['identity']['source_identity'] == status['source_identity']
+            and cp['window']['first'] == task['initial_patch'] and cp['window']['last'] == task['range_end']
+            and cp['next_patch'] == g['initial_patch'] and cp['completed_bound'] is None
+            and cp['patches'] == g['initial_patch'] - task['initial_patch'] and cp['chunks'] > 0,
+            'Resume checkpoint skipped or changed prefix')
+    require(status['status'] == 'stopped' and status['error'] is None and status['next_patch'] == cp['next_patch']
+            and status['journal_offset'] == cp['journal_offset'] and status['journal_sha256'] == cp['journal_sha256']
+            and status['run_id'] == cfg['run_id'] and status['journal_buffer']['pending_chunks'] == 0
+            and status['journal_buffer']['pending_bytes'] == 0, 'Resume worker did not seal exact prefix cleanly')
+    monitor_error = 'RuntimeError: Another active fifth service: fifth42-overnight-live-status-20261112.service loaded active running [systemd-run] /usr/bin/python3 -B /home/pnord/fifth42-overnight-sharing-20261112/live_status.py'
+    allowed_stop = ((supervisor['status'] == 'finished' and supervisor.get('error') is None)
+                    or (supervisor['status'] == 'guard_stopped' and supervisor.get('error') == monitor_error))
+    require(supervisor['leases_released'] is True and allowed_stop
+            and supervisor['config_sha256'] == seal['prior_config_sha256'], 'Resume predecessor resource release or stop cause is unproved')
+    require(audit['status'] == 'passed' and audit['final_checkpoint'] is True
+            and audit['captured_checkpoint_sha256'] == seal['checkpoint_sha256']
+            and audit['committed_chain_sha256'] == cp['journal_sha256'] and audit['committed_bytes'] == cp['journal_offset']
+            and audit['selected_interval'] == [task['initial_patch'], g['initial_patch']]
+            and audit['new_chunks'] == cp['chunks'] and audit['new_patches'] == cp['patches']
+            and audit['uncommitted_trailing_bytes'] == 0 and audit['replica_bytes_verified'] is True
+            and audit['owner_lock_released'] is True, 'Resume lacks complete exact native/GMP prefix audit')
+    require(audit['new_gmp_audited_chunks'] == (cp['chunks'] - 1) // 128 + 1, 'Resume GMP audit cadence changed')
+    require(replica['status'] == 'verified' and replica['identity'] == cp['identity']
+            and replica['checkpoint_sha256'] == seal['checkpoint_sha256'] and replica['next_patch'] == cp['next_patch']
+            and replica['committed_bytes'] == cp['journal_offset'] and replica['journal_sha256'] == cp['journal_sha256']
+            and replica['raw_sha256'] == audit['committed_raw_sha256'], 'Resume replica does not authenticate exact prefix')
+    # ACK is pinned separately from the seal, avoiding a seal/ACK hash cycle.
+    fence = checked(g, 'resume_fence')
+    boundary = Path(cfg['manifest']).parent / 'boundary_settings.py'
+    require(sha(boundary) == old['runtime_source_files'].get('boundary_settings.py'), 'Predecessor boundary source changed')
+    key = (str(boundary), sha(boundary))
+    if key not in _HELPERS:
+        spec = importlib.util.spec_from_file_location('_resume_boundary_' + key[1], boundary)
+        module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module); _HELPERS[key] = module
+    ack = _HELPERS[key].read_drain_ack(cfg)
+    expected = Path(cfg['suballocation_grant_file']).parent / 'DRAIN_ACK-ada.json'
+    require(Path(g['resume_fence_file']) == expected and ack is not None and ack.get('status') == 'drained'
+            and ack.get('ack_file_sha256') == g['resume_fence_sha256'] and fence.get('grant_sha256') == seal['prior_grant_sha256'],
+            'Resume predecessor old-grant fresh admission is not fenced')
+    return cfg
+
+
 def verify_historical_grant(path, pin, test=False):
     require(sha(path) == pin, 'Child delegation changed'); g = read(path)
     require(g.get('schema') == SCHEMA and g.get('generation') == GENERATION and g.get('TEST_ONLY') is test, 'Wrong sharing child schema/scope')
     m, parent = _ownership(g['ownership_manifest_file'], g['ownership_manifest_sha256'], test)
     job, role = g['ledger_job'], g['executor']; require(m['executors'].get(job) == role, 'Child is assigned to another executor')
     tasks = [t for t in m['tasks'] if t['ledger_job'] == job]; require(len(tasks) == 1, 'Child has no unique sealed task')
-    task = tasks[0]; require((g['initial_patch'],g['range_end']) == (task['initial_patch'],task['range_end']), 'Child changed exact sealed cursor/bounds')
+    task = tasks[0]
+    require(g['range_end'] == task['range_end'], 'Child changed exact sealed bounds')
+    resumed = g['initial_patch'] != task['initial_patch']
+    if not resumed: require(not any(k.startswith('resume_') for k in g), 'Unexpected resume proof on untouched task')
     assignments = [r for r in parent['assignments'] if r['job'] == job]
     require(len(assignments) == 1 and g['original_assignment'] == assignments[0] and g['claim'] == task['claim'], 'Original parent assignment/claim changed')
     require(claim(parent['child_ledger'],job) == task['claim'], 'Original reservation changed')
@@ -151,6 +233,7 @@ def verify_historical_grant(path, pin, test=False):
             and deadline['stop_local'] == g['stop_local'] and datetime.fromisoformat(g['stop_local']).timestamp() == g['stop_epoch'], 'Child deadline exceeds parent authorization')
     require(g['worker_guard_sha256'] == sha(__file__), 'Worker guard differs from source')
     require(type(g['runtime_source_files']) is dict and type(g['runtime_external_files']) is dict, 'Missing complete source maps')
+    if resumed: _resume(g, m, parent, task, test)
     return g
 
 
@@ -223,6 +306,10 @@ def check(config, force=False, observer_role=None):
     if observer_role is not None: return g
     require(time.time() < g['stop_epoch'], 'Fresh child compute admission expired')
     _mount()
+    if 'resume_seal_file' in g:
+        prior = checked(read(g['resume_seal_file']), 'prior_config')
+        state = _unit(prior['service_name'])
+        require(state.get('MainPID') == '0' and state.get('ActiveState') in ('inactive', 'failed'), 'Resume predecessor service is still active')
     boundary = worker/'boundary_settings.py'
     if boundary.exists():
         require(mf['files'].get('boundary_settings.py') == sha(boundary), 'Boundary helper changed')

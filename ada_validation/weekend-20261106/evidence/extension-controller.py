@@ -21,6 +21,9 @@ def atomic(p,v):
     p=Path(p);p.parent.mkdir(mode=0o700,parents=True,exist_ok=True);temp=p.with_name(p.name+'.'+str(os.getpid())+'.tmp')
     with temp.open('w') as f:json.dump(v,f,indent=2);f.write('\n');f.flush();os.fsync(f.fileno())
     os.replace(temp,p)
+    descriptor=os.open(p.parent,os.O_RDONLY|os.O_DIRECTORY)
+    try:os.fsync(descriptor)
+    finally:os.close(descriptor)
 def load(name,path):
     s=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
 def command(args,timeout=90):
@@ -29,7 +32,7 @@ def command(args,timeout=90):
 
 def verify_plan(plan,path,pin):
     require(sha(path)==pin,'Sharing queue plan changed')
-    require(plan['schema']=='fifth42-ada-sharing-queue-v1' and plan['jobs']==JOBS,'Unreviewed Ada queue scope/order')
+    require(plan['schema']=='fifth42-ada-sharing-queue-v2' and plan['jobs']==JOBS,'Unreviewed Ada queue scope/order')
     for p,h in plan['source_files'].items():require(sha(p)==h,'Pinned queue input changed: '+p)
     m=read(plan['ownership_file'])
     require(m['status']=='admitted' and all(m['executors'][job]=='ada' for job in JOBS),'Ownership differs from Ada queue')
@@ -60,15 +63,15 @@ def terminal(q,spec,cfg):
 
 def main(path,pin):
     plan=read(path);ownership=verify_plan(plan,path,pin)
-    lock=(ROOT/'queue.lock').open('a+');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
-    require(not (ROOT/'QUEUE-STATE.json').exists(),'Existing sharing queue state requires explicit reconciliation')
+    lock=(ROOT/'queue-r2.lock').open('a+');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+    require(not (ROOT/'QUEUE-STATE-R2.json').exists(),'Existing sharing queue state requires explicit reconciliation')
     q=load('sharing_queue_helpers',ROOT/'queue_helpers.py');q.ROOT=ROOT;q.STOP=ROOT/'STOP';q.atomic=atomic
-    builder=load('sharing_builder',ROOT/'build_stage.py');issuer=load('sharing_grant_issuer',ROOT/'issue_grant.py');reporter=load('sharing_report_stage',ROOT/'report_stage.py')
+    builder=load('sharing_builder',ROOT/'build_stage.py');issuer=load('sharing_grant_issuer',ROOT/'issue_grant_r2.py');reporter=load('sharing_report_stage',ROOT/'report_stage_r2.py')
     boundary=load('sharing_request_parser',plan['boundary_parser_file'])
     request=dict(stop_epoch=plan['parent_stop_epoch'],effective_stop_epoch=plan['parent_stop_epoch'],stop_local=ownership['stop_local'],setting_sha256=sha(plan['settings_file']))
     state=dict(status='starting',completed=[],active=None,error=None,parent_unchanged=True,plan_sha256=pin)
     def save():
-        state['updated_utc']=datetime.now(timezone.utc).isoformat();atomic(ROOT/'QUEUE-STATE.json',state);atomic(Path(plan['shared_directory'])/'ADA-QUEUE-STATUS.json',state)
+        state['updated_utc']=datetime.now(timezone.utc).isoformat();atomic(ROOT/'QUEUE-STATE-R2.json',state);atomic(Path(plan['shared_directory'])/'ADA-QUEUE-STATUS-R2.json',state)
     previous=None
     try:
         for index,job in enumerate(plan['jobs']):
@@ -80,21 +83,34 @@ def main(path,pin):
                 require(sha(bound['config_file'])==bound['config_sha256'] and cfg['ledger_job']==job,'First running stage binding changed')
             else:
                 task=next(t for t in ownership['tasks'] if t['ledger_job']==job)
-                prepared=builder.prepare_runtime(task,task['predecessor_seal'],worker_guard_file=ROOT/'sharing_guard.py',worker_guard_sha256=ownership['guard_source_sha256'])
+                prepared=builder.prepare_runtime(task,task['predecessor_seal'],worker_guard_file=ROOT/'sharing_guard_r2.py',worker_guard_sha256=ownership['guard_source_sha256'])
                 issued=issuer.issue(plan['ownership_file'],'ada',job,Path(prepared['worker'])/'release-manifest.json','suballocation_guard.py',Path(plan['shared_directory'])/'children'/prepared['run_id']/'GRANT.json')
-                cfg=builder.bind_configuration(prepared,issued['file'],deadline_settings_file=plan['effective_settings_file'],inventory_file=plan['inventory_file'],source_review_file=ROOT/'SOURCE-REVIEW.json',previous=previous)
+                cfg=builder.bind_configuration(prepared,issued['file'],deadline_settings_file=plan['effective_settings_file'],inventory_file=plan['inventory_file'],source_review_file=ROOT/'SOURCE-REVIEW-R2.json',previous=previous)
             worker=Path(prepared['worker']);guard=load('sharing_worker_guard_'+str(index),worker/'suballocation_guard.py');guard.check(cfg,force=True)
             if previous:
                 for key in ('publisher','collector'):command(['systemctl','--user','stop',previous[key]],20)
             context=dict(plan,adopt_running_run_id=cfg['run_id'] if index==0 else None,plan_file=str(path))
-            spec=reporter.prepare(prepared['root'],cfg,context)
-            command(q.service(spec['collector'].removesuffix('.service'),spec['reporter'],Path(spec['reporter'])/'collector.py',[],cfg['stop_epoch']))
+            existing_reporter = index==0 and plan.get('first_existing_spec_file')
+            if existing_reporter:
+                spec=read(plan['first_existing_spec_file'])
+                require(spec['config']==str(worker/'config.json') and spec['config_sha256']==sha(worker/'config.json')
+                        and spec['manifest_sha256']==sha(worker/'release-manifest.json'), 'Existing first reporter binding changed')
+                binding=read(Path(spec['reporter'])/'binding.json')
+                require(binding['run_id']==cfg['run_id'] and binding['config_sha256']==spec['config_sha256']
+                        and binding['manifest_sha256']==spec['manifest_sha256'], 'Existing reporter identity differs')
+                require(all(q.unit(spec[k])['ActiveState']=='active' for k in ('collector','publisher')),
+                        'Existing first reporting services are not running')
+            else:
+                spec=reporter.prepare(prepared['root'],cfg,context)
+                command(q.service(spec['collector'].removesuffix('.service'),spec['reporter'],Path(spec['reporter'])/'collector.py',[],cfg['stop_epoch']))
             if index:
-                command(q.service(cfg['run_id']+'-final-copy',spec['root'],worker/'finalize_replica.py',['--config',spec['config'],'--config-sha256',spec['config_sha256']],cfg['stop_epoch']))
+                command(q.service(cfg['run_id']+'-final-copy',spec['root'],worker/'finalize_replica.py',['--config',spec['config'],'--config-sha256',spec['config_sha256'],'--wait'],cfg['stop_epoch']))
                 command([PY,'-B',str(worker/'launch_weekend.py'),'--launch'],90)
             state.update(status='running',active=spec);save()
+            atomic(ROOT/'ADA-CURRENT.json',dict(config=spec['config'],config_sha256=spec['config_sha256'],queue_state_file=str(ROOT/'QUEUE-STATE-R2.json'),run_id=cfg['run_id']))
             q.wait_replica(spec,cfg)
-            command(q.service(spec['publisher'].removesuffix('.service'),spec['reporter'],Path(spec['reporter'])/'publish_bulk_worker.py',[],cfg['stop_epoch']))
+            if not existing_reporter:
+                command(q.service(spec['publisher'].removesuffix('.service'),spec['reporter'],Path(spec['reporter'])/'publish_bulk_worker.py',[],cfg['stop_epoch']))
             drain=None
             while q.unit(cfg['service_name'])['ActiveState'] in ('active','activating','deactivating'):
                 verify_plan(plan,path,pin);request=effective_request(plan,request,boundary)
