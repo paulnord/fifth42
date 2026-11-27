@@ -1,0 +1,128 @@
+\documentclass[10pt]{article}
+\usepackage[letterpaper,margin=0.83in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs}
+\usepackage[hidelinks]{hyperref}
+\newcommand{\F}{\mathbb F}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\sym}[2]{\left(\frac{#1}{#2}\right)_5}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\title{Three fifth powers: why 8, 9, and 42 are missing}
+\author{Fifth42 project}
+\date{27 November 2026 \quad\textbar\quad Short note for review}
+\begin{document}
+\maketitle
+\vspace{-1.7em}
+\textbf{Result.} Each of 8, 9, and 42 is a sum of three fifth powers modulo
+every positive integer, but none is a sum of three signed integer fifth
+powers. There is no bound on the size of the coordinates in the proof.
+The case 8 answers a question posed by S\'ebastien Palcoux in 2015~\cite{palcoux}.
+
+\section*{1. A pair of coordinates gives a test}
+Let $\zeta$ be a primitive fifth root of unity in $K=\Q(\zeta)$ and
+$\lambda=\zeta-1$. For a prime ideal $P\nmid 5$ and a unit $a$ modulo $P$,
+the quintic residue symbol $\sym{a}{P}$ is the fifth root of unity whose
+reduction is $a^{(NP-1)/5}$, where $NP$ is the residue field size.
+Multiply the symbols with their ideal multiplicities for a composite
+denominator. An element in the denominator denotes its principal ideal.
+
+Suppose $u^5+v^5+w^5=m$ for $m\in\{8,9,42\}$ and $5\nmid u+v$.
+Put $L=u+\zeta v$ and $h=v/(u+v)$ in $\F_5$. Then
+\begin{equation}
+  \sym{L}{m}=\sym{\zeta}{m}^{h}. \tag{1}
+\end{equation}
+Indeed, $L$ is prime to $5$ since it reduces to $u+v$ at the unique prime
+above $5$. Every prime $p$ dividing $m$ is among $2,3,7$, which have order
+four modulo $5$. Thus $p$ is inert in $K$, and the reduction of $\zeta$ is
+not in $\F_p$. If $L$ vanished modulo the prime over $p$, both $u$ and $v$
+would be divisible by $p$, and then so would $w$. That would give $p^5\mid m$,
+which is impossible. At any prime ideal $P$ dividing $L$, the pair cancels
+in fifth powers and $m\equiv w^5\not\equiv0\pmod P$. Thus $\sym{m}{L}=1$.
+
+Choose an integer representative for $h$. The element
+$\gamma=\zeta^{-h}L$ satisfies
+$\gamma\equiv u+v+\lambda(v-h(u+v))\equiv u+v\pmod{\lambda^2}$,
+so it is primary. Eisenstein reciprocity~\cite[Eq.~(1.1)]{sw} gives
+$\sym{\gamma}{m}=\sym{m}{\gamma}=\sym{m}{L}=1$, proving (1).
+If $\gamma$ is a unit, first apply the nonunit formulation to $q^5\gamma$
+for any rational prime $q\nmid 5m$; the extra factor contributes $1$ to
+both symbols.
+
+\section*{2. Start with 8}
+The fifth powers of $0,1,2,3,4$ modulo 25 are $0,1,7,-7,-1$,
+respectively; the base modulo 5 determines the fifth power modulo 25.
+The only unordered sum congruent to 8 takes $0,1,7$. Choose the pair whose
+bases are $2,1$. Then $h=1/3=2$ in $\F_5$.
+
+For $p=2,3,7$, write $T$ for the reduction of $\zeta$ in
+$\F_{p^4}=\F_p[T]/(1+T+T^2+T^3+T^4)$. Denote by $e_p(u,v)$ the exponent
+of $T$ in $(u+Tv)^{(p^4-1)/5}$. For $m=8=2^3$, (1) gives
+$e_2(u,v)=2e_2(0,1)=2\cdot3=1$ modulo 5, after cancelling the factor 3.
+But the pairs $(1,0),(0,1),(1,1)$ modulo 2 have exponents $0,3,4$.
+In particular $(1+T)^3=1+T+T^2+T^3=T^4$. So 8 has no representation.
+
+\clearpage
+\section*{3. The same test for 9 and 42}
+\textbf{9.} Modulo 25 the only unordered sum for 9 uses $1,1,7$. Choose
+the pair with bases $1,2$, so $h=2/3=4$ in $\F_5$. For $m=9=3^2$,
+(1) requires $e_3(u,v)=4e_3(0,1)=4$, after cancelling the factor 2.
+Scalar multiplication by a nonzero element of $\F_3$ leaves the exponent
+unchanged, since such scalars are fifth powers. The four pairs up to
+scaling, $(1,0),(0,1),(1,1),(1,-1)$, have exponents $0,1,3,3$.
+For the last two values, $T^9=T^{-1}$ gives
+$(1\pm T)^8=\pm T^{-1}$ and hence $(1\pm T)^{16}=T^3$.
+The required exponent 4 is absent.
+
+\textbf{42.} Modulo 25 the only unordered sum for 42 uses $-7,-1,0$,
+so order the bases as $(A,B,C)\equiv(3,4,0)\pmod5$.
+Define $S=e_2+e_3+e_7$. The exponents $e_p(0,1)$ are $3,1,0$,
+respectively. Equation (1) says $S(u,v)=4h$ modulo 5. The pairs
+$(A,C),(B,C),(A,B)$ have $h=0,0,2$, respectively, so
+\[
+  -S(A,C)+S(B,C)+S(A,B)\equiv3\pmod5.
+\]
+At each prime $p\mid42$, the triple is nonzero and its fifth powers sum
+to zero modulo $p$. Let $E_p=-e_p(A,C)+e_p(B,C)+e_p(A,B)$.
+Here is the complete finite calculation, with exponents taken modulo 5:
+\begin{center}
+\begin{tabular}{@{}cclc@{}}
+\toprule
+$p$ & $e_p(0,1)$ & $e_p(1,r)$ for $r=0,\ldots,p-1$ & Possible $E_p$\\
+\midrule
+2 & 3 & $0,4$ & $4$\\
+3 & 1 & $0,3,3$ & $3$\\
+7 & 0 & $0,0,1,2,4,3,0$ & $0,2,3$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The middle column of lists comes from raising $1+rT$ to $3,16,480$,
+respectively, with $1+T+T^2+T^3+T^4=0$. For the last column, scale
+the first nonzero entry to 1. Fifth powers permute $\F_p$, so the
+normalized triples are $(0,1,-1)$ and the $p$ triples $(1,b,c)$ with
+$c^5=-1-b^5$. For nonzero $u$, use $e_p(u,v)=e_p(1,v/u)$.
+This yields only $4+3+\{0,2,3\}=\{0,2,4\}$ modulo 5, never 3.
+
+\section*{4. Why no ordinary modulus can rule them out}
+Kowalczyk and Miska~\cite[Table~3]{km} show that at every prime other
+than 11, a sum of fifth powers in $\Z_p$ can be written with at most
+three summands. Each target is such a sum (use copies of $1^5$ and pad
+with zeros when needed). At 11, fifth powers are $0,\pm1$ modulo 11.
+The targets reduce to $-3,-2,-2$, respectively, and have witnesses
+$(-1,-1,-1)$ and $(-1,-1,0)$. Each lifts by Hensel's lemma since the
+derivative in a unit coordinate is nonzero modulo 11. Reduce the
+$\Z_p$ solutions modulo prime powers and combine them by the Chinese
+remainder theorem.
+
+\small
+\textit{Scope.} This AI-assisted note is for mathematical review. It treats
+integer coordinates only. The \href{https://github.com/paulnord/fifth42/blob/494c8a3a85ecce84505fd47aabadc9465303393c/docs/fifth42.pdf}{full manuscript}
+contains the rational-denominator extension and verification materials.
+
+\begin{thebibliography}{9}
+\setlength{\itemsep}{0pt}
+\bibitem{palcoux} S. Palcoux, \href{https://math.stackexchange.com/questions/1524797/can-a-sum-of-three-fifth-power-of-integers-be-8}{Can a sum of three fifth power of integers be 8?}, Mathematics Stack Exchange, 11 November 2015.
+\bibitem{sw} B. K. Spearman and K. S. Williams, \href{https://people.math.carleton.ca/~williams/papers/pdf/142.pdf}{A simple proof of Eisenstein's reciprocity law from Stickelberger's theorem}, Indian J. Pure Appl. Math. \textbf{17} (1986), 169--174.
+\bibitem{km} T. Kowalczyk and P. Miska, \href{https://doi.org/10.1112/mtk.12276}{On Waring numbers of henselian rings}, Mathematika \textbf{70} (2024), e12276.
+\end{thebibliography}
+\end{document}

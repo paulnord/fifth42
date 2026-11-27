@@ -21,6 +21,16 @@ See [coverage and timings](COVERAGE.md), the compact
 [earlier baseline results](results/coverage.json).
 All development and searches used Ada at Valparaiso; no BNL resources were used.
 
+## Proof manuscript
+
+The [two-page proof note](docs/fifth42-short.pdf) treats integer coordinates
+only. It starts with 8 and uses the same reciprocity test for 9 and 42.
+See the [LaTeX source](docs/fifth42-short.tex), the
+[full manuscript](docs/fifth42.pdf), and the
+[manuscript archive](docs/fifth42-manuscript.zip) for the source,
+supplement, and verification files. The mathematical argument is
+separate from the bounded GPU search above and awaits outside review.
+
 ## Build and validate
 
 The tested toolchain is CUDA 12.8 with `/usr/bin/g++-13`, targeting `sm_86`.
