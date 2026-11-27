@@ -29,7 +29,9 @@ See the [LaTeX source](docs/fifth42-short.tex), the
 [full manuscript](docs/fifth42.pdf), and the
 [manuscript archive](docs/fifth42-manuscript.zip) for the source,
 supplement, and verification files. The mathematical argument is
-separate from the bounded GPU search above and awaits outside review.
+separate from the bounded GPU search above and awaits outside review. The
+[Lean verification note](docs/verification/README.md) explains what the
+formal check covers and which reciprocity assumptions remain.
 
 ## Build and validate
 
