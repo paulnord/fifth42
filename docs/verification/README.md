@@ -1,5 +1,11 @@
 # Lean verification for the target 42
 
+The [complete Lean proof](complete/) now proves nonexistence of integer
+solutions for 42 without the conditional interface described below.
+It includes build instructions and the axiom audit.
+
+## Earlier conditional checkpoint
+
 With Lean 4.36.0, run `lean Fifth42Bridge.lean` from this directory.
 The file uses Lean's standard library only. It retains the archived
 finite certificate and adds an algebraic bridge to it.

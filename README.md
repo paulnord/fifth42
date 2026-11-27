@@ -30,8 +30,8 @@ See the [LaTeX source](docs/fifth42-short.tex), the
 [manuscript archive](docs/fifth42-manuscript.zip) for the source,
 supplement, and verification files. The mathematical argument is
 separate from the bounded GPU search above and awaits outside review. The
-[Lean verification note](docs/verification/README.md) explains what the
-formal check covers and which reciprocity assumptions remain.
+[Lean proof](docs/verification/complete/) checks the unrestricted
+nonexistence result for 42, without assuming Eisenstein reciprocity.
 
 ## Build and validate
 
